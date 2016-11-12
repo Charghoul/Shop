@@ -1,0 +1,24 @@
+
+package model.visitor;
+
+import persistence.*;
+
+public abstract class BestellstatusStandardVisitor implements BestellstatusVisitor {
+    
+    public void handleVorbestellung(Vorbestellung4Public vorbestellung) throws PersistenceException{
+        this.standardHandling(vorbestellung);
+    }
+    public void handleRueckversand(Rueckversand4Public rueckversand) throws PersistenceException{
+        this.standardHandling(rueckversand);
+    }
+    public void handleGeliefert(Geliefert4Public geliefert) throws PersistenceException{
+        this.standardHandling(geliefert);
+    }
+    public void handleHinversand(Hinversand4Public hinversand) throws PersistenceException{
+        this.standardHandling(hinversand);
+    }
+    public void handleAngenommen(Angenommen4Public angenommen) throws PersistenceException{
+        this.standardHandling(angenommen);
+    }
+    protected abstract void standardHandling(Bestellstatus4Public bestellstatus) throws PersistenceException;
+}

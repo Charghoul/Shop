@@ -1,0 +1,17 @@
+package serverConstants;
+
+/**
+ * Created by Jan on 08.11.2016.
+ */
+public class ToStringConstants {
+    public static final String Artikel = "Artikel: ";
+    public static final String Lieferart = "Lieferart: ";
+    public static final String LieferartManager = "Lieferarten";
+    public static final String Warenlager = "Warenlager";
+    public static final String Bestellart = "Bestellart: ";
+    public static final String Bestellstatus = "Bestellstatus: ";
+    public static final String Einkaufswagen = "Einkaufswagen";
+    public static final String ArtikelManager = "Artikelverzeichnis";
+
+    private ToStringConstants(){}
+}
