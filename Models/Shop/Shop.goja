@@ -1,0 +1,102 @@
+model Shop {
+
+server Server {
+	Service service;
+}
+
+abstract server Service {
+}
+server ServiceKunde extends Service {
+	one-to-one EinkaufsManager einkaufsManager;
+	void neuePosition(EinkaufsManager einkaufsManager, Artikel artikel, Integer menge);	
+}
+server ServiceAdmin extends Service {
+	one-to-one Warenlager warenlager;
+	one-to-one ArtikelManager artikelManager;
+	one-to-one (no-view myService) LieferartManager lieferartManager;
+	void neuerArtikel(ArtikelManager artikelManager, String artikelnummer, String bezeichnung, Fraction preis, Integer minLagerbestand, 		Integer maxLagerbestand, Integer hstLieferzeit) throws UserException;
+	void neueLieferArt(LieferartManager lieferartManager, String name, Integer lieferzeit, Fraction preis) throws ExcLieferartAlreadyExists;
+}
+server ServiceRegister extends Service {
+	active void register(String username, String passwort) throws ExcUserAlreadyExists;
+}
+class ArtikelManager{
+	Artikel ** artikelListe;
+	void neuerArtikel(String artikelnummer, String bezeichnung, Fraction preis, Integer minLagerbestand, 		Integer maxLagerbestand, Integer hstLieferzeit) throws UserException;
+	void aendereArtikel(Artikel artikel, String bezeichnung, Fraction preis, Integer minLagerbestand, Integer maxLagerbestand, Integer hstLieferzeit);
+}
+class EinkaufsManager{
+	Position ** einkaufsListe;
+	void neuePosition(Artikel artikel, Integer menge);
+	void aenderePosition(Artikel artikel, Integer menge);
+}
+
+class LieferartManager{
+	Lieferart ** lieferartenListe;
+	void neueLieferart(String name, Integer lieferzeit, Fraction preis) throws ExcLieferartAlreadyExists;
+}
+
+singleton Warenlager{
+	Position ** warenListe;
+	void artikelEentnehmen(Artikel artikel, Integer menge);
+	void artikelEinlagern(Artikel artikel, Integer menge);
+}
+class Kunde{
+	indexed prior String benutzername;
+	prior String passwort;
+	public Konto konto;
+}
+
+class Konto{
+	Fraction kontostand;
+	Fraction limit;
+}
+class Artikel {
+	prior indexed String artikelnummer;
+	prior indexed String bezeichnung;
+	prior Fraction preis;
+	prior Integer minLagerbestand;
+	prior Integer maxLagerbestand;
+	prior Integer hstLieferzeit;
+	void aendereArtikel(String bezeichnung, Fraction preis, Integer minLagerbestand, Integer maxLagerbestand, Integer hstLieferzeit);
+}
+class Bestellung{
+	public Position ** positionsListe;
+	String ID;
+	Bestellstatus bestellstatus;
+}
+class Lieferung{
+	public Bestellung bestellung;
+	 public Lieferart lieferart;
+	Integer lieferversuche;
+}
+class Position{
+	prior Artikel artikel;
+	prior Integer menge;
+}
+
+class Lieferart{
+	indexed prior String name;
+	prior Integer lieferzeit;
+	prior Fraction preis;
+	void aendereLieferart(Lieferart lieferart);
+}
+
+abstract class Artikelstatus{}
+class Neuanlage extends Artikelstatus{}
+class Verkauf extends Artikelstatus{}
+class Auslauf extends Artikelstatus{}
+
+abstract class Bestellstatus{}
+class Vorbestellung extends Bestellstatus{}
+class Hinversand extends Bestellstatus{}
+class Geliefert extends Bestellstatus{}
+class Angenommen extends Bestellstatus{}
+class Rueckversand extends Bestellstatus{}
+
+exception ExcLieferartAlreadyExists{}
+exception ExcArtikelAlreadyExists{}
+exception ExcUserAlreadyExists{}
+
+}
+
