@@ -140,6 +140,8 @@ public class ToString$Visitor extends model.visitor.ToString$Visitor {
 
 	@Override
 	public void handlePosition(Position4Public position) throws PersistenceException {
+		PersistentPosition persistentPosition = (PersistentPosition) position;
+		result = persistentPosition.getMenge() + " Stck. - " + persistentPosition.getArtikel().toString();
 	}
 
 

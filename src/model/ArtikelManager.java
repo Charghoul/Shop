@@ -1,6 +1,7 @@
 
 package model;
 
+import common.Fraction;
 import persistence.*;
 import model.visitor.*;
 
@@ -182,7 +183,7 @@ public class ArtikelManager extends PersistentObject implements PersistentArtike
     }
     public void initializeOnCreation() 
 				throws PersistenceException{
-        //TODO: implement method: initializeOnCreation
+        getThis().getArtikelListe().add(Artikel.createArtikel("1234","test", Fraction.parse("5"),10,100,3));
         
     }
     public void initializeOnInstantiation() 

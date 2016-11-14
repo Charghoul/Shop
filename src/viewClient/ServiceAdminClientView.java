@@ -311,6 +311,8 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
 
 
     interface MenuItemVisitor{
+        ImageView handle(ArtikelEinlagernPRMTRWarenlagerPRMTRArtikelPRMTRIntegerPRMTRMenuItem menuItem);
+        ImageView handle(ArtikelEntnehmenPRMTRWarenlagerPRMTRArtikelPRMTRIntegerPRMTRMenuItem menuItem);
         ImageView handle(NeueLieferArtPRMTRLieferartManagerPRMTRStringPRMTRIntegerPRMTRFractionPRMTRMenuItem menuItem);
         ImageView handle(NeuerArtikelPRMTRArtikelManagerPRMTRStringPRMTRStringPRMTRFractionPRMTRIntegerPRMTRIntegerPRMTRIntegerPRMTRMenuItem menuItem);
     }
@@ -319,6 +321,16 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
             this.setGraphic(getIconForMenuItem(this));
         }
         abstract protected ImageView accept(MenuItemVisitor visitor);
+    }
+    private class ArtikelEinlagernPRMTRWarenlagerPRMTRArtikelPRMTRIntegerPRMTRMenuItem extends ServiceAdminMenuItem{
+        protected ImageView accept(MenuItemVisitor visitor){
+            return visitor.handle(this);
+        }
+    }
+    private class ArtikelEntnehmenPRMTRWarenlagerPRMTRArtikelPRMTRIntegerPRMTRMenuItem extends ServiceAdminMenuItem{
+        protected ImageView accept(MenuItemVisitor visitor){
+            return visitor.handle(this);
+        }
     }
     private class NeueLieferArtPRMTRLieferartManagerPRMTRStringPRMTRIntegerPRMTRFractionPRMTRMenuItem extends ServiceAdminMenuItem{
         protected ImageView accept(MenuItemVisitor visitor){
@@ -370,6 +382,30 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
                 });
                 result.getItems().add(item);
             }
+            if (selected instanceof WarenlagerView){
+                item = new ArtikelEinlagernPRMTRWarenlagerPRMTRArtikelPRMTRIntegerPRMTRMenuItem();
+                item.setText("artikelEinlagern ... ");
+                item.setOnAction(new EventHandler<ActionEvent>(){
+                    public void handle(javafx.event.ActionEvent e) {
+                        final ServiceAdminArtikelEinlagernWarenlagerArtikelIntegerMssgWizard wizard = new ServiceAdminArtikelEinlagernWarenlagerArtikelIntegerMssgWizard("artikelEinlagern");
+                        wizard.setFirstArgument((WarenlagerView)selected);
+                        wizard.setWidth(getNavigationPanel().getWidth());
+                        wizard.showAndWait();
+                    }
+                });
+                result.getItems().add(item);
+                item = new ArtikelEntnehmenPRMTRWarenlagerPRMTRArtikelPRMTRIntegerPRMTRMenuItem();
+                item.setText("artikelEntnehmen ... ");
+                item.setOnAction(new EventHandler<ActionEvent>(){
+                    public void handle(javafx.event.ActionEvent e) {
+                        final ServiceAdminArtikelEntnehmenWarenlagerArtikelIntegerMssgWizard wizard = new ServiceAdminArtikelEntnehmenWarenlagerArtikelIntegerMssgWizard("artikelEntnehmen");
+                        wizard.setFirstArgument((WarenlagerView)selected);
+                        wizard.setWidth(getNavigationPanel().getWidth());
+                        wizard.showAndWait();
+                    }
+                });
+                result.getItems().add(item);
+            }
             
         }
         this.addNotGeneratedItems(result,selected);
@@ -383,6 +419,108 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
         this.preCalculatedFilters = switchOff;
     }
     
+	class ServiceAdminArtikelEinlagernWarenlagerArtikelIntegerMssgWizard extends Wizard {
+
+		protected ServiceAdminArtikelEinlagernWarenlagerArtikelIntegerMssgWizard(String operationName){
+			super(ServiceAdminClientView.this);
+			getOkButton().setText(operationName);
+			getOkButton().setGraphic(new ArtikelEinlagernPRMTRWarenlagerPRMTRArtikelPRMTRIntegerPRMTRMenuItem ().getGraphic());
+		}
+		protected void initialize(){
+			this.helpFileName = "ServiceAdminArtikelEinlagernWarenlagerArtikelIntegerMssgWizard.help";
+			super.initialize();		
+		}
+				
+		protected void perform() {
+			try {
+				getConnection().artikelEinlagern(firstArgument, (ArtikelView)((ObjectSelectionPanel)getParametersPanel().getChildren().get(0)).getResult(),
+									((IntegerSelectionPanel)getParametersPanel().getChildren().get(1)).getResult().longValue());
+				getConnection().setEagerRefresh();
+				this.close();	
+			} catch(ModelException me){
+				handleException(me);
+				this.close();
+			}
+			
+		}
+		protected String checkCompleteParameterSet(){
+			return null;
+		}
+		protected boolean isModifying () {
+			return false;
+		}
+		protected void addParameters(){
+			final ObjectSelectionPanel panel1 = new ObjectSelectionPanel("artikel", "view.ArtikelView", null, this);
+			getParametersPanel().getChildren().add(panel1);
+			panel1.setBrowserRoot((ViewRoot) getConnection().getServiceAdminView());
+			getParametersPanel().getChildren().add(new IntegerSelectionPanel("menge", this));		
+		}	
+		protected void handleDependencies(int i) {
+		}
+		
+		
+		private WarenlagerView firstArgument; 
+	
+		public void setFirstArgument(WarenlagerView firstArgument){
+			this.firstArgument = firstArgument;
+			this.setTitle(this.firstArgument.toString());
+			this.check();
+		}
+		
+		
+	}
+
+	class ServiceAdminArtikelEntnehmenWarenlagerArtikelIntegerMssgWizard extends Wizard {
+
+		protected ServiceAdminArtikelEntnehmenWarenlagerArtikelIntegerMssgWizard(String operationName){
+			super(ServiceAdminClientView.this);
+			getOkButton().setText(operationName);
+			getOkButton().setGraphic(new ArtikelEntnehmenPRMTRWarenlagerPRMTRArtikelPRMTRIntegerPRMTRMenuItem ().getGraphic());
+		}
+		protected void initialize(){
+			this.helpFileName = "ServiceAdminArtikelEntnehmenWarenlagerArtikelIntegerMssgWizard.help";
+			super.initialize();		
+		}
+				
+		protected void perform() {
+			try {
+				getConnection().artikelEntnehmen(firstArgument, (ArtikelView)((ObjectSelectionPanel)getParametersPanel().getChildren().get(0)).getResult(),
+									((IntegerSelectionPanel)getParametersPanel().getChildren().get(1)).getResult().longValue());
+				getConnection().setEagerRefresh();
+				this.close();	
+			} catch(ModelException me){
+				handleException(me);
+				this.close();
+			}
+			
+		}
+		protected String checkCompleteParameterSet(){
+			return null;
+		}
+		protected boolean isModifying () {
+			return false;
+		}
+		protected void addParameters(){
+			final ObjectSelectionPanel panel2 = new ObjectSelectionPanel("artikel", "view.ArtikelView", null, this);
+			getParametersPanel().getChildren().add(panel2);
+			panel2.setBrowserRoot((ViewRoot) getConnection().getServiceAdminView());
+			getParametersPanel().getChildren().add(new IntegerSelectionPanel("menge", this));		
+		}	
+		protected void handleDependencies(int i) {
+		}
+		
+		
+		private WarenlagerView firstArgument; 
+	
+		public void setFirstArgument(WarenlagerView firstArgument){
+			this.firstArgument = firstArgument;
+			this.setTitle(this.firstArgument.toString());
+			this.check();
+		}
+		
+		
+	}
+
 	class ServiceAdminNeueLieferArtLieferartManagerStringIntegerFractionMssgWizard extends Wizard {
 
 		protected ServiceAdminNeueLieferArtLieferartManagerStringIntegerFractionMssgWizard(String operationName){

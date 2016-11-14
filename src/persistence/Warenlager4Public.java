@@ -13,9 +13,9 @@ public interface Warenlager4Public extends Anything, AbstractPersistentProxi {
     
     public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
 				throws PersistenceException;
-    public void artikelEentnehmen(final Artikel4Public artikel, final long menge) 
-				throws PersistenceException;
     public void artikelEinlagern(final Artikel4Public artikel, final long menge) 
+				throws PersistenceException;
+    public void artikelEntnehmen(final Artikel4Public artikel, final long menge) 
 				throws PersistenceException;
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException;

@@ -5,6 +5,8 @@ public interface PersistentServiceKunde extends PersistentService, ServiceKunde4
     
     public EinkaufsManager4Public getEinkaufsManager() throws PersistenceException ;
     public void setEinkaufsManager(EinkaufsManager4Public newValue) throws PersistenceException ;
+    public Warenlager4Public getWarenlager() throws PersistenceException ;
+    public void setWarenlager(Warenlager4Public newValue) throws PersistenceException ;
     public PersistentServiceKunde getThis() throws PersistenceException ;
     
     

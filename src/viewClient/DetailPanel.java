@@ -1455,6 +1455,7 @@ class GeliefertDefaultDetailPanel extends DefaultDetailPanel{
 class ServiceKundeDefaultDetailPanel extends DefaultDetailPanel{
     
     protected static final String ServiceKunde$$einkaufsManager = "ServiceKunde$$einkaufsManager";
+    protected static final String ServiceKunde$$warenlager = "ServiceKunde$$warenlager";
     
     protected ServiceKundeDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
         super(exceptionHandler, anything);

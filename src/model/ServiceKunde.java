@@ -60,6 +60,15 @@ public class ServiceKunde extends model.Service implements PersistentServiceKund
                     if(forGUI && einkaufsManager.hasEssentialFields())einkaufsManager.toHashtable(allResults, depth, essentialLevel + 1, false, true, tdObserver);
                 }
             }
+            AbstractPersistentRoot warenlager = (AbstractPersistentRoot)this.getWarenlager();
+            if (warenlager != null) {
+                result.put("warenlager", warenlager.createProxiInformation(false, essentialLevel <= 1));
+                if(depth > 1) {
+                    warenlager.toHashtable(allResults, depth - 1, essentialLevel, forGUI, true , tdObserver);
+                }else{
+                    if(forGUI && warenlager.hasEssentialFields())warenlager.toHashtable(allResults, depth, essentialLevel + 1, false, true, tdObserver);
+                }
+            }
             String uniqueKey = common.RPCConstantsAndServices.createHashtableKey(this.getClassId(), this.getId());
             if (leaf && !allResults.containsKey(uniqueKey)) allResults.put(uniqueKey, result);
         }
@@ -70,6 +79,7 @@ public class ServiceKunde extends model.Service implements PersistentServiceKund
         ServiceKunde result = this;
         result = new ServiceKunde(this.This, 
                                   this.einkaufsManager, 
+                                  this.warenlager, 
                                   this.getId());
         result.errors = this.errors.copy(result);
         this.copyingPrivateUserAttributes(result);
@@ -80,11 +90,13 @@ public class ServiceKunde extends model.Service implements PersistentServiceKund
         return false;
     }
     protected PersistentEinkaufsManager einkaufsManager;
+    protected PersistentWarenlager warenlager;
     
-    public ServiceKunde(PersistentService This,PersistentEinkaufsManager einkaufsManager,long id) throws PersistenceException {
+    public ServiceKunde(PersistentService This,PersistentEinkaufsManager einkaufsManager,PersistentWarenlager warenlager,long id) throws PersistenceException {
         /* Shall not be used by clients for object construction! Use static create operation instead! */
         super((PersistentService)This,id);
-        this.einkaufsManager = einkaufsManager;        
+        this.einkaufsManager = einkaufsManager;
+        this.warenlager = warenlager;        
     }
     
     static public long getTypeId() {
@@ -104,6 +116,10 @@ public class ServiceKunde extends model.Service implements PersistentServiceKund
             this.getEinkaufsManager().store();
             ConnectionHandler.getTheConnectionHandler().theServiceKundeFacade.einkaufsManagerSet(this.getId(), getEinkaufsManager());
         }
+        if(this.getWarenlager() != null){
+            this.getWarenlager().store();
+            ConnectionHandler.getTheConnectionHandler().theServiceKundeFacade.warenlagerSet(this.getId(), getWarenlager());
+        }
         
     }
     
@@ -119,6 +135,20 @@ public class ServiceKunde extends model.Service implements PersistentServiceKund
         if(!this.isDelayed$Persistence()){
             newValue.store();
             ConnectionHandler.getTheConnectionHandler().theServiceKundeFacade.einkaufsManagerSet(this.getId(), newValue);
+        }
+    }
+    public Warenlager4Public getWarenlager() throws PersistenceException {
+        return this.warenlager;
+    }
+    public void setWarenlager(Warenlager4Public newValue) throws PersistenceException {
+        if (newValue == null) throw new PersistenceException("Null values not allowed!", 0);
+        if(newValue.isTheSameAs(this.warenlager)) return;
+        long objectId = newValue.getId();
+        long classId = newValue.getClassId();
+        this.warenlager = (PersistentWarenlager)PersistentProxi.createProxi(objectId, classId);
+        if(!this.isDelayed$Persistence()){
+            newValue.store();
+            ConnectionHandler.getTheConnectionHandler().theServiceKundeFacade.warenlagerSet(this.getId(), newValue);
         }
     }
     public PersistentServiceKunde getThis() throws PersistenceException {
@@ -179,6 +209,7 @@ public class ServiceKunde extends model.Service implements PersistentServiceKund
     }
     public int getLeafInfo() throws PersistenceException{
         if (this.getEinkaufsManager() != null) return 1;
+        if (this.getWarenlager() != null) return 1;
         return 0;
     }
     
@@ -214,6 +245,7 @@ public class ServiceKunde extends model.Service implements PersistentServiceKund
 				throws PersistenceException{
         super.initializeOnCreation();
 		getThis().setEinkaufsManager(EinkaufsManager.createEinkaufsManager());
+        getThis().setWarenlager(Warenlager.getTheWarenlager());
     }
     public void initializeOnInstantiation() 
 				throws PersistenceException{

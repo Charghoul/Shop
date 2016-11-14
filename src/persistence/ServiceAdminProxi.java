@@ -102,6 +102,14 @@ public class ServiceAdminProxi extends ServiceProxi implements PersistentService
 				throws PersistenceException{
         ((PersistentServiceAdmin)this.getTheObject()).signalChanged(signal);
     }
+    public void artikelEinlagern(final Warenlager4Public warenlager, final Artikel4Public artikel, final long menge) 
+				throws PersistenceException{
+        ((PersistentServiceAdmin)this.getTheObject()).artikelEinlagern(warenlager, artikel, menge);
+    }
+    public void artikelEntnehmen(final Warenlager4Public warenlager, final Artikel4Public artikel, final long menge) 
+				throws PersistenceException{
+        ((PersistentServiceAdmin)this.getTheObject()).artikelEntnehmen(warenlager, artikel, menge);
+    }
     public void connected(final String user) 
 				throws PersistenceException{
         ((PersistentServiceAdmin)this.getTheObject()).connected(user);

@@ -22,7 +22,14 @@ public class ServiceKundeProxi extends ServiceProxi implements ServiceKundeView{
             einkaufsManager = view.objects.ViewProxi.createProxi(einkaufsManager$Info,connectionKey);
             einkaufsManager.setToString(einkaufsManager$Info.getToString());
         }
-        ServiceKundeView result$$ = new ServiceKunde(errors,(EinkaufsManagerView)einkaufsManager, this.getId(), this.getClassId());
+        ViewProxi warenlager = null;
+        String warenlager$String = (String)resultTable.get("warenlager");
+        if (warenlager$String != null) {
+            common.ProxiInformation warenlager$Info = common.RPCConstantsAndServices.createProxiInformation(warenlager$String);
+            warenlager = view.objects.ViewProxi.createProxi(warenlager$Info,connectionKey);
+            warenlager.setToString(warenlager$Info.getToString());
+        }
+        ServiceKundeView result$$ = new ServiceKunde(errors,(EinkaufsManagerView)einkaufsManager,(WarenlagerView)warenlager, this.getId(), this.getClassId());
         ((ViewRoot)result$$).setToString((String) resultTable.get(common.RPCConstantsAndServices.RPCToStringFieldName));
         return result$$;
     }
@@ -34,21 +41,27 @@ public class ServiceKundeProxi extends ServiceProxi implements ServiceKundeView{
         int index = originalIndex;
         if(index == 0 && this.getEinkaufsManager() != null) return new EinkaufsManagerServiceKundeWrapper(this, originalIndex, (ViewRoot)this.getEinkaufsManager());
         if(this.getEinkaufsManager() != null) index = index - 1;
+        if(index == 0 && this.getWarenlager() != null) return new WarenlagerServiceKundeWrapper(this, originalIndex, (ViewRoot)this.getWarenlager());
+        if(this.getWarenlager() != null) index = index - 1;
         return null;
     }
     public int getChildCount() throws ModelException {
         return 0 
-            + (this.getEinkaufsManager() == null ? 0 : 1);
+            + (this.getEinkaufsManager() == null ? 0 : 1)
+            + (this.getWarenlager() == null ? 0 : 1);
     }
     public boolean isLeaf() throws ModelException {
         if (this.object == null) return this.getLeafInfo() == 0;
         return true 
-            && (this.getEinkaufsManager() == null ? true : false);
+            && (this.getEinkaufsManager() == null ? true : false)
+            && (this.getWarenlager() == null ? true : false);
     }
     public int getIndexOfChild(Object child) throws ModelException {
         int result = 0;
         if(this.getEinkaufsManager() != null && this.getEinkaufsManager().equals(child)) return result;
         if(this.getEinkaufsManager() != null) result = result + 1;
+        if(this.getWarenlager() != null && this.getWarenlager().equals(child)) return result;
+        if(this.getWarenlager() != null) result = result + 1;
         return -1;
     }
     
@@ -57,6 +70,12 @@ public class ServiceKundeProxi extends ServiceProxi implements ServiceKundeView{
     }
     public void setEinkaufsManager(EinkaufsManagerView newValue) throws ModelException {
         ((ServiceKunde)this.getTheObject()).setEinkaufsManager(newValue);
+    }
+    public WarenlagerView getWarenlager()throws ModelException{
+        return ((ServiceKunde)this.getTheObject()).getWarenlager();
+    }
+    public void setWarenlager(WarenlagerView newValue) throws ModelException {
+        ((ServiceKunde)this.getTheObject()).setWarenlager(newValue);
     }
     
     public void accept(ServiceVisitor visitor) throws ModelException {

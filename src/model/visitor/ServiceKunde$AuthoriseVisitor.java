@@ -10,5 +10,6 @@ public abstract class ServiceKunde$AuthoriseVisitor extends AnythingStandardVisi
     public abstract void handleErrorDisplay(PersistentErrorDisplay errorDisplay) throws PersistenceException;
     public abstract void handleServiceKunde(PersistentServiceKunde serviceKunde) throws PersistenceException;
     public abstract void handleArtikel(PersistentArtikel artikel) throws PersistenceException;
+    public abstract void handleWarenlager(PersistentWarenlager warenlager) throws PersistenceException;
     
 }

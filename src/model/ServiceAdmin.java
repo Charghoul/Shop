@@ -262,6 +262,16 @@ public class ServiceAdmin extends model.Service implements PersistentServiceAdmi
     
     // Start of section that contains operations that must be implemented.
     
+    public void artikelEinlagern(final Warenlager4Public warenlager, final Artikel4Public artikel, final long menge) 
+				throws PersistenceException{
+        warenlager.artikelEinlagern(artikel, menge);
+        getThis().signalChanged(true);
+    }
+    public void artikelEntnehmen(final Warenlager4Public warenlager, final Artikel4Public artikel, final long menge) 
+				throws PersistenceException{
+        warenlager.artikelEntnehmen(artikel, menge);
+        getThis().signalChanged(true);
+    }
     public void connected(final String user) 
 				throws PersistenceException{
         //TODO: implement method: connected

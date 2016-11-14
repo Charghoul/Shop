@@ -1,6 +1,7 @@
 
 package model;
 
+import common.Fraction;
 import persistence.*;
 import model.visitor.*;
 
@@ -149,29 +150,18 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
 		if(this.isTheSameAs(This)){
 		}
     }
-    public ServiceAdmin4Public inverseGetWarenlager() 
-				throws PersistenceException{
-        ServiceAdminSearchList result = null;
-		if (result == null) result = ConnectionHandler.getTheConnectionHandler().theServiceAdminFacade
-										.inverseGetWarenlager(getThis().getId(), getThis().getClassId());
-		try {
-			return result.iterator().next();
-		} catch (java.util.NoSuchElementException nsee){
-			return null;
-		}
-    }
     
     
     // Start of section that contains operations that must be implemented.
     
-    public void artikelEentnehmen(final Artikel4Public artikel, final long menge) 
-				throws PersistenceException{
-        //TODO: implement method: entnehme
-        
-    }
     public void artikelEinlagern(final Artikel4Public artikel, final long menge) 
 				throws PersistenceException{
-        //TODO: implement method: artikelEinlagern
+        getThis().getWarenListe().add(Position.createPosition(artikel, menge));
+        
+    }
+    public void artikelEntnehmen(final Artikel4Public artikel, final long menge) 
+				throws PersistenceException{
+        //TODO: implement method: artikelEentnehmen
         
     }
     public void copyingPrivateUserAttributes(final Anything copy) 
@@ -181,8 +171,8 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
     }
     public void initializeOnCreation() 
 				throws PersistenceException{
-        //TODO: implement method: initializeOnCreation
-        
+        getThis().artikelEinlagern(Artikel.createArtikel("1234","test", Fraction.parse("5"),10,100,3),20);
+
     }
     public void initializeOnInstantiation() 
 				throws PersistenceException{

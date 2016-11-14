@@ -128,27 +128,6 @@ public class ServiceAdminFacade{
             throw new PersistenceException(se.getMessage(), se.getErrorCode());
         }
     }
-    public ServiceAdminSearchList inverseGetWarenlager(long objectId, long classId)throws PersistenceException{
-        try{
-            CallableStatement callable;
-            callable = this.con.prepareCall("Begin ? := " + this.schemaName + ".SrvcAdmnFacade.iGetWrnlgr(?, ?); end;");
-            callable.registerOutParameter(1, oracle.jdbc.OracleTypes.CURSOR);
-            callable.setLong(2, objectId);
-            callable.setLong(3, classId);
-            callable.execute();
-            ResultSet list = ((oracle.jdbc.OracleCallableStatement)callable).getCursor(1);
-            ServiceAdminSearchList result = new ServiceAdminSearchList();
-            while (list.next()) {
-                if (list.getLong(3) != 0) result.add((PersistentServiceAdmin)PersistentProxi.createProxi(list.getLong(3), list.getLong(4)));
-                else result.add((PersistentServiceAdmin)PersistentProxi.createProxi(list.getLong(1), list.getLong(2)));
-            }
-            list.close();
-            callable.close();
-            return result;
-        }catch(SQLException se) {
-            throw new PersistenceException(se.getMessage(), se.getErrorCode());
-        }
-    }
     public ServiceAdminSearchList inverseGetArtikelManager(long objectId, long classId)throws PersistenceException{
         try{
             CallableStatement callable;

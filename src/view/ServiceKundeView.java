@@ -8,6 +8,8 @@ public interface ServiceKundeView extends ServiceView {
     
     public EinkaufsManagerView getEinkaufsManager()throws ModelException;
     public void setEinkaufsManager(EinkaufsManagerView newValue) throws ModelException ;
+    public WarenlagerView getWarenlager()throws ModelException;
+    public void setWarenlager(WarenlagerView newValue) throws ModelException ;
     
     public void accept(ServiceVisitor visitor) throws ModelException;
     public <R> R accept(ServiceReturnVisitor<R>  visitor) throws ModelException;

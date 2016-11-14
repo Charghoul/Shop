@@ -7,8 +7,6 @@ public interface PersistentWarenlager extends Anything, AbstractPersistentProxi,
     public PersistentWarenlager getThis() throws PersistenceException ;
     
     
-    public ServiceAdmin4Public inverseGetWarenlager() 
-				throws PersistenceException;
 
 }
 
