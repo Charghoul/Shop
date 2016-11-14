@@ -147,15 +147,6 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
     }
     
     
-    public void artikelEinlagern(final Artikel4Public artikel, final long menge, final Invoker invoker) 
-				throws PersistenceException{
-        java.sql.Date now = new java.sql.Date(new java.util.Date().getTime());
-		ArtikelEinlagernCommand4Public command = model.meta.ArtikelEinlagernCommand.createArtikelEinlagernCommand(menge, now, now);
-		command.setArtikel(artikel);
-		command.setInvoker(invoker);
-		command.setCommandReceiver(getThis());
-		model.meta.CommandCoordinator.getTheCommandCoordinator().coordinate(command);
-    }
     public void artikelEntnehmen(final Position4Public position, final long menge, final Invoker invoker) 
 				throws PersistenceException{
         java.sql.Date now = new java.sql.Date(new java.util.Date().getTime());
@@ -176,9 +167,18 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
     // Start of section that contains operations that must be implemented.
     
     public void artikelEinlagern(final Artikel4Public artikel, final long menge) 
-				throws PersistenceException{
-        getThis().getWarenListe().add(Position.createPosition(artikel, menge));
-        
+				throws model.ExcLagerbestandOverMax, PersistenceException{
+        //TODO FUNKTIONIERT *_* - gleiches beim Einkaufskorb implementieren
+        Position4Public temp = getThis().getWarenListe().findFirstException(new PredcateException<Position4Public, model.ExcLagerbestandOverMax>() {
+            @Override
+            public boolean test(Position4Public argument) throws PersistenceException, model.ExcLagerbestandOverMax {
+                return argument.artikelVorhanden(artikel) != null;
+            }
+        });
+        if( temp != null) temp.erhoeheMenge(menge);
+        else getThis().getWarenListe().add(Position.createPosition(artikel, menge));
+
+
     }
     public void artikelEntnehmen(final Position4Public position, final long menge) 
 				throws model.ExcLagerbestandUnderZero, PersistenceException{
@@ -191,7 +191,11 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
     }
     public void initializeOnCreation() 
 				throws PersistenceException{
-        getThis().artikelEinlagern(Artikel.createArtikel("1234","test", Fraction.parse("5"),10,100,3,Neuanlage.createNeuanlage()),20);
+        try {
+            getThis().artikelEinlagern(Artikel.createArtikel("1234","test", Fraction.parse("5"),10,100,3,Neuanlage.createNeuanlage()),20);
+        } catch (ExcLagerbestandOverMax excLagerbestandOverMax) {
+            excLagerbestandOverMax.printStackTrace();
+        }
 
     }
     public void initializeOnInstantiation() 

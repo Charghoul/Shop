@@ -318,6 +318,13 @@ public class Artikel extends PersistentObject implements PersistentArtikel{
         //TODO: implement method: copyingPrivateUserAttributes
         
     }
+    public BooleanX4Public groesserMax(final long menge) 
+				throws PersistenceException{
+        if(getThis().getMaxLagerbestand() < menge) {
+            return TrueX.getTheTrueX();
+        }
+        else return FalseX.getTheFalseX();
+    }
     public void initializeOnCreation() 
 				throws PersistenceException{
         //TODO: implement method: initializeOnCreation

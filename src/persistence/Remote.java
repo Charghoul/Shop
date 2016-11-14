@@ -1,9 +1,6 @@
 package persistence;
 
-import model.visitor.RemoteExceptionVisitor;
-import model.visitor.RemoteReturnExceptionVisitor;
-import model.visitor.RemoteReturnVisitor;
-import model.visitor.RemoteVisitor;
+import model.visitor.*;
 
 /* Additional import section end */
 

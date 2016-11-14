@@ -257,7 +257,7 @@ public class ServiceKunde extends model.Service implements PersistentServiceKund
     }
     public void neuePosition(final EinkaufsManager4Public einkaufsManager, final Artikel4Public artikel, final long menge) 
 				throws model.ExcArtikelAlreadyExists, PersistenceException{
-        getThis().getEinkaufsManager().neuePosition(artikel, menge);
+        getThis().getEinkaufsManager().neuePosition(artikel, menge, getThis());
     }
     
     

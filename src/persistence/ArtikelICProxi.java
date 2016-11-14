@@ -102,6 +102,10 @@ public class ArtikelICProxi extends PersistentInCacheProxiOptimistic implements 
 				throws PersistenceException{
         ((PersistentArtikel)this.getTheObject()).copyingPrivateUserAttributes(copy);
     }
+    public BooleanX4Public groesserMax(final long menge) 
+				throws PersistenceException{
+        return ((PersistentArtikel)this.getTheObject()).groesserMax(menge);
+    }
     public void initializeOnCreation() 
 				throws PersistenceException{
         ((PersistentArtikel)this.getTheObject()).initializeOnCreation();

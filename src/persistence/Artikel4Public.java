@@ -21,6 +21,8 @@ public interface Artikel4Public extends Anything, AbstractPersistentProxi {
 				throws PersistenceException;
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException;
+    public BooleanX4Public groesserMax(final long menge) 
+				throws PersistenceException;
     public void initializeOnCreation() 
 				throws PersistenceException;
     public void initializeOnInstantiation() 

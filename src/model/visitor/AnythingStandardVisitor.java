@@ -50,14 +50,14 @@ public abstract class AnythingStandardVisitor implements AnythingVisitor {
     public void handleAendereLieferartCommand(AendereLieferartCommand4Public aendereLieferartCommand) throws PersistenceException{
         this.standardHandling(aendereLieferartCommand);
     }
-    public void handleArtikelEinlagernCommand(ArtikelEinlagernCommand4Public artikelEinlagernCommand) throws PersistenceException{
-        this.standardHandling(artikelEinlagernCommand);
-    }
     public void handleGeliefert(Geliefert4Public geliefert) throws PersistenceException{
         this.standardHandling(geliefert);
     }
     public void handleServiceKunde(ServiceKunde4Public serviceKunde) throws PersistenceException{
         this.standardHandling(serviceKunde);
+    }
+    public void handleNeuePositionCommand(NeuePositionCommand4Public neuePositionCommand) throws PersistenceException{
+        this.standardHandling(neuePositionCommand);
     }
     public void handleArtikel(Artikel4Public artikel) throws PersistenceException{
         this.standardHandling(artikel);

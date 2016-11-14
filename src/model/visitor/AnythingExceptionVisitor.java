@@ -8,7 +8,6 @@ public interface AnythingExceptionVisitor<E extends model.UserException> extends
     public void handleAendereArtikelCommand(AendereArtikelCommand4Public aendereArtikelCommand) throws PersistenceException, E;
     public void handleAendereLieferartCommand(AendereLieferartCommand4Public aendereLieferartCommand) throws PersistenceException, E;
     public void handleArtikel(Artikel4Public artikel) throws PersistenceException, E;
-    public void handleArtikelEinlagernCommand(ArtikelEinlagernCommand4Public artikelEinlagernCommand) throws PersistenceException, E;
     public void handleArtikelEntnehmenCommand(ArtikelEntnehmenCommand4Public artikelEntnehmenCommand) throws PersistenceException, E;
     public void handleArtikelManager(ArtikelManager4Public artikelManager) throws PersistenceException, E;
     public void handleBestellung(Bestellung4Public bestellung) throws PersistenceException, E;
@@ -23,6 +22,7 @@ public interface AnythingExceptionVisitor<E extends model.UserException> extends
     public void handleLieferartManager(LieferartManager4Public lieferartManager) throws PersistenceException, E;
     public void handleLieferung(Lieferung4Public lieferung) throws PersistenceException, E;
     public void handleNeueLieferartCommand(NeueLieferartCommand4Public neueLieferartCommand) throws PersistenceException, E;
+    public void handleNeuePositionCommand(NeuePositionCommand4Public neuePositionCommand) throws PersistenceException, E;
     public void handleNeuerArtikelCommand(NeuerArtikelCommand4Public neuerArtikelCommand) throws PersistenceException, E;
     public void handlePosition(Position4Public position) throws PersistenceException, E;
     public void handleRegisterCommand(RegisterCommand4Public registerCommand) throws PersistenceException, E;

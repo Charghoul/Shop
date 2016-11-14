@@ -1,9 +1,6 @@
 package persistence;
 
-import model.visitor.CommandExceptionVisitor;
-import model.visitor.CommandReturnExceptionVisitor;
-import model.visitor.CommandReturnVisitor;
-import model.visitor.CommandVisitor;
+import model.visitor.*;
 
 /* Additional import section end */
 

@@ -47,6 +47,8 @@ public  class RemoteServiceAdmin extends RemoteService {
             return createOKResult();
         }catch(PersistenceException pe){
             return createExceptionResult(pe);
+        }catch(model.ExcLagerbestandOverMax e0){
+            return createExceptionResult(e0, this);
         }
     }
     
@@ -56,15 +58,6 @@ public  class RemoteServiceAdmin extends RemoteService {
             PersistentPosition position = (PersistentPosition)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(positionProxiString));
             long menge = new Long(mengeAsString).longValue();
             ((PersistentServiceAdmin)this.server).artikelEntnehmen(warenlager, position, menge);
-            return createOKResult();
-        }catch(PersistenceException pe){
-            return createExceptionResult(pe);
-        }
-    }
-    
-    public synchronized java.util.HashMap<?,?> bestellen(){
-        try {
-            ((PersistentServiceAdmin)this.server).bestellen();
             return createOKResult();
         }catch(PersistenceException pe){
             return createExceptionResult(pe);

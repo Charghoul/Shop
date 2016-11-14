@@ -30,10 +30,8 @@ public interface ServiceAdmin4Public extends Service4Public {
     public void aendereArtikel(final Artikel4Public artikel, final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
 				throws PersistenceException;
     public void artikelEinlagern(final Warenlager4Public warenlager, final Artikel4Public artikel, final long menge) 
-				throws PersistenceException;
+				throws model.ExcLagerbestandOverMax, PersistenceException;
     public void artikelEntnehmen(final Warenlager4Public warenlager, final Position4Public position, final long menge) 
-				throws PersistenceException;
-    public void bestellen() 
 				throws PersistenceException;
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException;
