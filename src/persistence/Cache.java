@@ -297,7 +297,6 @@ public class Cache {
 		this.number2NameMap.put(150, "Lieferung");
 		this.number2NameMap.put(214, "Neuanlage");
 		this.number2NameMap.put(262, "NeueLieferartCommand");
-		this.number2NameMap.put(266, "NeuePositionCommand");
 		this.number2NameMap.put(264, "NeuerArtikelCommand");
 		this.number2NameMap.put(144, "Position");
 		this.number2NameMap.put(200, "RegisterCommand");

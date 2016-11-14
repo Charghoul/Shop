@@ -228,6 +228,11 @@ public class ServiceKunde extends model.Service implements PersistentServiceKund
     
     // Start of section that contains operations that must be implemented.
     
+    public void aendereMenge(final Position4Public position, final long menge) 
+				throws model.ExcLagerbestandUnderZero, PersistenceException{
+        getThis().getEinkaufsManager().aendereMenge(position,menge);
+        
+    }
     public void bestellen(final EinkaufsManager4Public einkaufsManager) 
 				throws PersistenceException{
         //TODO: implement method: bestellen
@@ -256,8 +261,9 @@ public class ServiceKunde extends model.Service implements PersistentServiceKund
         super.initializeOnInstantiation();
     }
     public void neuePosition(final EinkaufsManager4Public einkaufsManager, final Artikel4Public artikel, final long menge) 
-				throws model.ExcArtikelAlreadyExists, PersistenceException{
-        getThis().getEinkaufsManager().neuePosition(artikel, menge, getThis());
+				throws model.UserException, PersistenceException{
+        getThis().getEinkaufsManager().neuePosition(artikel, menge);
+        getThis().signalChanged(true);
     }
     
     

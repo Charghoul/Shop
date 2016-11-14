@@ -26,9 +26,6 @@ public abstract class CommonDateStandardVisitor implements CommonDateVisitor {
     public void handleAendereArtikelCommand(AendereArtikelCommand4Public aendereArtikelCommand) throws PersistenceException{
         this.standardHandling(aendereArtikelCommand);
     }
-    public void handleNeuePositionCommand(NeuePositionCommand4Public neuePositionCommand) throws PersistenceException{
-        this.standardHandling(neuePositionCommand);
-    }
     public void handleCommonDate(CommonDate4Public commonDate) throws PersistenceException{
         this.standardHandling(commonDate);
     }

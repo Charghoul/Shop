@@ -126,7 +126,6 @@ public class ConnectionHandler {
     public GeliefertFacade theGeliefertFacade;
     public ServiceKundeFacade theServiceKundeFacade;
     public BestellstatusFacade theBestellstatusFacade;
-    public NeuePositionCommandFacade theNeuePositionCommandFacade;
     public ArtikelFacade theArtikelFacade;
     public PositionFacade thePositionFacade;
     public NeueLieferartCommandFacade theNeueLieferartCommandFacade;
@@ -192,7 +191,6 @@ public class ConnectionHandler {
             this.theGeliefertFacade= new GeliefertFacade(this.schemaName, this.con);
             this.theServiceKundeFacade= new ServiceKundeFacade(this.schemaName, this.con);
             this.theBestellstatusFacade= new BestellstatusFacade(this.schemaName, this.con);
-            this.theNeuePositionCommandFacade= new NeuePositionCommandFacade(this.schemaName, this.con);
             this.theArtikelFacade= new ArtikelFacade(this.schemaName, this.con);
             this.thePositionFacade= new PositionFacade(this.schemaName, this.con);
             this.theNeueLieferartCommandFacade= new NeueLieferartCommandFacade(this.schemaName, this.con);

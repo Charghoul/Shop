@@ -92,9 +92,6 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     public void handleAendereArtikelCommand(AendereArtikelCommand4Public aendereArtikelCommand) throws PersistenceException{
         this.handleCommonDate(aendereArtikelCommand);
     }
-    public void handleNeuePositionCommand(NeuePositionCommand4Public neuePositionCommand) throws PersistenceException{
-        this.handleCommonDate(neuePositionCommand);
-    }
     public void handleStatusVerkaufCommand(StatusVerkaufCommand4Public statusVerkaufCommand) throws PersistenceException{
         this.handleCommonDate(statusVerkaufCommand);
     }

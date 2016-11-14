@@ -23,9 +23,6 @@ public abstract class CommandStandardVisitor implements CommandVisitor {
     public void handleAendereArtikelCommand(AendereArtikelCommand4Public aendereArtikelCommand) throws PersistenceException{
         this.standardHandling(aendereArtikelCommand);
     }
-    public void handleNeuePositionCommand(NeuePositionCommand4Public neuePositionCommand) throws PersistenceException{
-        this.standardHandling(neuePositionCommand);
-    }
     public void handleRegisterCommand(RegisterCommand4Public registerCommand) throws PersistenceException{
         this.standardHandling(registerCommand);
     }

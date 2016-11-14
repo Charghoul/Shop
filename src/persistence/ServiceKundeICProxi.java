@@ -100,6 +100,10 @@ public class ServiceKundeICProxi extends ServiceICProxi implements PersistentSer
 				throws PersistenceException{
         ((PersistentServiceKunde)this.getTheObject()).signalChanged(signal);
     }
+    public void aendereMenge(final Position4Public position, final long menge) 
+				throws model.ExcLagerbestandUnderZero, PersistenceException{
+        ((PersistentServiceKunde)this.getTheObject()).aendereMenge(position, menge);
+    }
     public void bestellen(final EinkaufsManager4Public einkaufsManager) 
 				throws PersistenceException{
         ((PersistentServiceKunde)this.getTheObject()).bestellen(einkaufsManager);
@@ -137,7 +141,7 @@ public class ServiceKundeICProxi extends ServiceICProxi implements PersistentSer
         ((PersistentServiceKunde)this.getTheObject()).initializeOnInstantiation();
     }
     public void neuePosition(final EinkaufsManager4Public einkaufsManager, final Artikel4Public artikel, final long menge) 
-				throws model.ExcArtikelAlreadyExists, PersistenceException{
+				throws model.UserException, PersistenceException{
         ((PersistentServiceKunde)this.getTheObject()).neuePosition(einkaufsManager, artikel, menge);
     }
 

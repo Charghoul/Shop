@@ -24,6 +24,19 @@ public  class RemoteServiceKunde extends RemoteService {
         }
     }
     
+    public synchronized java.util.HashMap<?,?> aendereMenge(String positionProxiString, String mengeAsString){
+        try {
+            PersistentPosition position = (PersistentPosition)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(positionProxiString));
+            long menge = new Long(mengeAsString).longValue();
+            ((PersistentServiceKunde)this.server).aendereMenge(position, menge);
+            return createOKResult();
+        }catch(PersistenceException pe){
+            return createExceptionResult(pe);
+        }catch(model.ExcLagerbestandUnderZero e0){
+            return createExceptionResult(e0, this);
+        }
+    }
+    
     public synchronized java.util.HashMap<?,?> bestellen(String einkaufsManagerProxiString){
         try {
             PersistentEinkaufsManager einkaufsManager = (PersistentEinkaufsManager)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(einkaufsManagerProxiString));
@@ -43,7 +56,7 @@ public  class RemoteServiceKunde extends RemoteService {
             return createOKResult();
         }catch(PersistenceException pe){
             return createExceptionResult(pe);
-        }catch(model.ExcArtikelAlreadyExists e0){
+        }catch(model.UserException e0){
             return createExceptionResult(e0, this);
         }
     }

@@ -22,7 +22,6 @@ public interface AnythingReturnVisitor<R> extends ArtikelstatusReturnVisitor<R> 
     public R handleLieferartManager(LieferartManager4Public lieferartManager) throws PersistenceException;
     public R handleLieferung(Lieferung4Public lieferung) throws PersistenceException;
     public R handleNeueLieferartCommand(NeueLieferartCommand4Public neueLieferartCommand) throws PersistenceException;
-    public R handleNeuePositionCommand(NeuePositionCommand4Public neuePositionCommand) throws PersistenceException;
     public R handleNeuerArtikelCommand(NeuerArtikelCommand4Public neuerArtikelCommand) throws PersistenceException;
     public R handlePosition(Position4Public position) throws PersistenceException;
     public R handleRegisterCommand(RegisterCommand4Public registerCommand) throws PersistenceException;
