@@ -296,6 +296,7 @@ public class ServiceKundeClientView extends BorderPane implements ExceptionAndEv
 
 
     interface MenuItemVisitor{
+        ImageView handle(AendereMengePRMTRPositionPRMTRIntegerPRMTRMenuItem menuItem);
         ImageView handle(BestellenPRMTREinkaufsManagerPRMTRMenuItem menuItem);
         ImageView handle(NeuePositionPRMTREinkaufsManagerPRMTRArtikelPRMTRIntegerPRMTRMenuItem menuItem);
     }
@@ -304,6 +305,11 @@ public class ServiceKundeClientView extends BorderPane implements ExceptionAndEv
             this.setGraphic(getIconForMenuItem(this));
         }
         abstract protected ImageView accept(MenuItemVisitor visitor);
+    }
+    private class AendereMengePRMTRPositionPRMTRIntegerPRMTRMenuItem extends ServiceKundeMenuItem{
+        protected ImageView accept(MenuItemVisitor visitor){
+            return visitor.handle(this);
+        }
     }
     private class BestellenPRMTREinkaufsManagerPRMTRMenuItem extends ServiceKundeMenuItem{
         protected ImageView accept(MenuItemVisitor visitor){
@@ -328,6 +334,19 @@ public class ServiceKundeClientView extends BorderPane implements ExceptionAndEv
             } catch (ModelException me){
                 this.handleException(me);
                 return result;
+            }
+            if (selected instanceof PositionView){
+                item = new AendereMengePRMTRPositionPRMTRIntegerPRMTRMenuItem();
+                item.setText("aendereMenge ... ");
+                item.setOnAction(new EventHandler<ActionEvent>(){
+                    public void handle(javafx.event.ActionEvent e) {
+                        final ServiceKundeAendereMengePositionIntegerMssgWizard wizard = new ServiceKundeAendereMengePositionIntegerMssgWizard("aendereMenge");
+                        wizard.setFirstArgument((PositionView)selected);
+                        wizard.setWidth(getNavigationPanel().getWidth());
+                        wizard.showAndWait();
+                    }
+                });
+                result.getItems().add(item);
             }
             if (selected instanceof EinkaufsManagerView){
                 item = new BestellenPRMTREinkaufsManagerPRMTRMenuItem();
@@ -376,6 +395,63 @@ public class ServiceKundeClientView extends BorderPane implements ExceptionAndEv
         this.preCalculatedFilters = switchOff;
     }
     
+	class ServiceKundeAendereMengePositionIntegerMssgWizard extends Wizard {
+
+		protected ServiceKundeAendereMengePositionIntegerMssgWizard(String operationName){
+			super(ServiceKundeClientView.this);
+			getOkButton().setText(operationName);
+			getOkButton().setGraphic(new AendereMengePRMTRPositionPRMTRIntegerPRMTRMenuItem ().getGraphic());
+		}
+		protected void initialize(){
+			this.helpFileName = "ServiceKundeAendereMengePositionIntegerMssgWizard.help";
+			super.initialize();		
+		}
+				
+		protected void perform() {
+			try {
+				getConnection().aendereMenge(firstArgument, ((IntegerSelectionPanel)getParametersPanel().getChildren().get(0)).getResult().longValue());
+				getConnection().setEagerRefresh();
+				this.close();	
+			} catch(ModelException me){
+				handleException(me);
+				this.close();
+			}
+			catch(ExcLagerbestandUnderZero e) {
+				getStatusBar().setText(e.getMessage());
+			}
+			
+		}
+		protected String checkCompleteParameterSet(){
+			return null;
+		}
+		protected boolean isModifying () {
+			return false;
+		}
+		protected void addParameters(){
+			getParametersPanel().getChildren().add(new IntegerSelectionPanel("menge", this));		
+		}	
+		protected void handleDependencies(int i) {
+		}
+		
+		
+		private PositionView firstArgument; 
+	
+		public void setFirstArgument(PositionView firstArgument){
+			this.firstArgument = firstArgument;
+			this.setTitle(this.firstArgument.toString());
+			try{
+				final SelectionPanel selectionPanel0 = (SelectionPanel)getParametersPanel().getChildren().get(0);
+				selectionPanel0.preset(firstArgument.getMenge());
+				if (!selectionPanel0.check()) selectionPanel0.preset("");
+			}catch(ModelException me){
+				 handleException(me);
+			}
+			this.check();
+		}
+		
+		
+	}
+
 	class ServiceKundeNeuePositionEinkaufsManagerArtikelIntegerMssgWizard extends Wizard {
 
 		protected ServiceKundeNeuePositionEinkaufsManagerArtikelIntegerMssgWizard(String operationName){
@@ -398,7 +474,7 @@ public class ServiceKundeClientView extends BorderPane implements ExceptionAndEv
 				handleException(me);
 				this.close();
 			}
-			catch(ExcArtikelAlreadyExists e) {
+			catch(UserException e) {
 				getStatusBar().setText(e.getMessage());
 			}
 			

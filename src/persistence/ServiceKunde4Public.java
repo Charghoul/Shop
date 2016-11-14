@@ -27,6 +27,8 @@ public interface ServiceKunde4Public extends Service4Public {
 				throws PersistenceException;
     public String serviceKunde_Menu_Filter(final Anything anything) 
 				throws PersistenceException;
+    public void aendereMenge(final Position4Public position, final long menge) 
+				throws model.ExcLagerbestandUnderZero, PersistenceException;
     public void bestellen(final EinkaufsManager4Public einkaufsManager) 
 				throws PersistenceException;
     public void copyingPrivateUserAttributes(final Anything copy) 
@@ -36,7 +38,7 @@ public interface ServiceKunde4Public extends Service4Public {
     public void initializeOnInstantiation() 
 				throws PersistenceException;
     public void neuePosition(final EinkaufsManager4Public einkaufsManager, final Artikel4Public artikel, final long menge) 
-				throws model.ExcArtikelAlreadyExists, PersistenceException;
+				throws model.UserException, PersistenceException;
 
 }
 
