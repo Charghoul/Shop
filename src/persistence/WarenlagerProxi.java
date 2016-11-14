@@ -39,10 +39,6 @@ public class WarenlagerProxi extends PersistentProxi implements PersistentWarenl
     }
     
     
-    public void artikelEinlagern(final Artikel4Public artikel, final long menge, final Invoker invoker) 
-				throws PersistenceException{
-        ((PersistentWarenlager)this.getTheObject()).artikelEinlagern(artikel, menge, invoker);
-    }
     public void artikelEntnehmen(final Position4Public position, final long menge, final Invoker invoker) 
 				throws PersistenceException{
         ((PersistentWarenlager)this.getTheObject()).artikelEntnehmen(position, menge, invoker);
@@ -52,7 +48,7 @@ public class WarenlagerProxi extends PersistentProxi implements PersistentWarenl
         ((PersistentWarenlager)this.getTheObject()).initialize(This, final$$Fields);
     }
     public void artikelEinlagern(final Artikel4Public artikel, final long menge) 
-				throws PersistenceException{
+				throws model.ExcLagerbestandOverMax, PersistenceException{
         ((PersistentWarenlager)this.getTheObject()).artikelEinlagern(artikel, menge);
     }
     public void artikelEntnehmen(final Position4Public position, final long menge) 

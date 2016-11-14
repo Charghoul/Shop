@@ -206,15 +206,25 @@ public class Position extends PersistentObject implements PersistentPosition{
 				throws model.ExcLagerbestandUnderZero, PersistenceException{
         getThis().setMenge(menge);
     }
-    public BooleanX4Public artikelVorhanden(final Artikel4Public artikel) 
+    public Position4Public artikelVorhanden(final Artikel4Public artikel) 
 				throws PersistenceException{
-        if(getThis().getArtikel().equals(artikel)) return TrueX.getTheTrueX();
-        return FalseX.getTheFalseX();
+        if(getThis().getArtikel().equals(artikel)) return getThis();
+        return null;
     }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{
         //TODO: implement method: copyingPrivateUserAttributes
         
+    }
+    public void erhoeheMenge(final long menge) 
+				throws model.ExcLagerbestandOverMax, PersistenceException{
+        long temp = getThis().getMenge() + menge;
+        if(getArtikel().groesserMax(temp).equals(TrueX.getTheTrueX())){
+            throw new ExcLagerbestandOverMax(ErrorMessages.LagerbestandOverMax);
+        }
+        else {
+            getThis().setMenge(temp);
+        }
     }
     public void initializeOnCreation() 
 				throws PersistenceException{

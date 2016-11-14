@@ -8,6 +8,8 @@ import model.visitor.AnythingVisitor;
 import persistence.*;
 import serverConstants.ErrorMessages;
 
+import java.util.HashMap;
+
 
 /* Additional import section end */
 
@@ -169,12 +171,21 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
 			return null;
 		}
     }
+    public void neuePosition(final Artikel4Public artikel, final long menge, final Invoker invoker) 
+				throws PersistenceException{
+        java.sql.Date now = new java.sql.Date(new java.util.Date().getTime());
+		NeuePositionCommand4Public command = model.meta.NeuePositionCommand.createNeuePositionCommand(menge, now, now);
+		command.setArtikel(artikel);
+		command.setInvoker(invoker);
+		command.setCommandReceiver(getThis());
+		model.meta.CommandCoordinator.getTheCommandCoordinator().coordinate(command);
+    }
     
     
     // Start of section that contains operations that must be implemented.
     
     public void aendereMenge(final Position4Public position, final long menge) 
-				throws model.ExcLagerbestandUnderZero, PersistenceException{
+				throws model.ExcLagerbestandUnderZero, model.ExcLagerbestandOverMax, PersistenceException{
         position.aendereMenge(menge);
         
     }
@@ -184,6 +195,7 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
     }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{
+
     }
     public void initializeOnCreation() 
 				throws PersistenceException{
@@ -195,14 +207,12 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
         
     }
     public void neuePosition(final Artikel4Public artikel, final long menge) 
-				throws model.ExcArtikelAlreadyExists, PersistenceException{
-
+				throws model.ExcArtikelAlreadyExists, model.UserException, PersistenceException{
+        // TODO testen!! funktioniert nicht
         EinkaufsManager_EinkaufsListeProxi temp = getThis().getEinkaufsListe();
-
         temp.filter(argument -> {
-            return  argument.artikelVorhanden(artikel).equals(TrueX.getTheTrueX());}
+            return  argument.artikelVorhanden(artikel) != null;}
         );
-
         if(temp.iterator().hasNext()) throw new ExcArtikelAlreadyExists(ErrorMessages.ArtikelAlreadyInBasket);
         else getThis().getEinkaufsListe().add(Position.createPosition(artikel, menge));
 

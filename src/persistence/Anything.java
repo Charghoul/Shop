@@ -1,9 +1,6 @@
 package persistence;
 
-import model.visitor.AnythingExceptionVisitor;
-import model.visitor.AnythingReturnExceptionVisitor;
-import model.visitor.AnythingReturnVisitor;
-import model.visitor.AnythingVisitor;
+import model.visitor.*;
 
 /* Additional import section end */
 

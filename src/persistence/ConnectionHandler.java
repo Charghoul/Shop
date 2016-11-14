@@ -123,10 +123,10 @@ public class ConnectionHandler {
     public ServiceRegisterFacade theServiceRegisterFacade;
     public CommandCoordinatorFacade theCommandCoordinatorFacade;
     public AendereLieferartCommandFacade theAendereLieferartCommandFacade;
-    public ArtikelEinlagernCommandFacade theArtikelEinlagernCommandFacade;
     public GeliefertFacade theGeliefertFacade;
     public ServiceKundeFacade theServiceKundeFacade;
     public BestellstatusFacade theBestellstatusFacade;
+    public NeuePositionCommandFacade theNeuePositionCommandFacade;
     public ArtikelFacade theArtikelFacade;
     public PositionFacade thePositionFacade;
     public NeueLieferartCommandFacade theNeueLieferartCommandFacade;
@@ -189,10 +189,10 @@ public class ConnectionHandler {
             this.theServiceRegisterFacade= new ServiceRegisterFacade(this.schemaName, this.con);
             this.theCommandCoordinatorFacade= new CommandCoordinatorFacade(this.schemaName, this.con);
             this.theAendereLieferartCommandFacade= new AendereLieferartCommandFacade(this.schemaName, this.con);
-            this.theArtikelEinlagernCommandFacade= new ArtikelEinlagernCommandFacade(this.schemaName, this.con);
             this.theGeliefertFacade= new GeliefertFacade(this.schemaName, this.con);
             this.theServiceKundeFacade= new ServiceKundeFacade(this.schemaName, this.con);
             this.theBestellstatusFacade= new BestellstatusFacade(this.schemaName, this.con);
+            this.theNeuePositionCommandFacade= new NeuePositionCommandFacade(this.schemaName, this.con);
             this.theArtikelFacade= new ArtikelFacade(this.schemaName, this.con);
             this.thePositionFacade= new PositionFacade(this.schemaName, this.con);
             this.theNeueLieferartCommandFacade= new NeueLieferartCommandFacade(this.schemaName, this.con);

@@ -8,9 +8,6 @@ public abstract class CommandStandardVisitor implements CommandVisitor {
     public void handleAendereLieferartCommand(AendereLieferartCommand4Public aendereLieferartCommand) throws PersistenceException{
         this.standardHandling(aendereLieferartCommand);
     }
-    public void handleArtikelEinlagernCommand(ArtikelEinlagernCommand4Public artikelEinlagernCommand) throws PersistenceException{
-        this.standardHandling(artikelEinlagernCommand);
-    }
     public void handleNeueLieferartCommand(NeueLieferartCommand4Public neueLieferartCommand) throws PersistenceException{
         this.standardHandling(neueLieferartCommand);
     }
@@ -25,6 +22,9 @@ public abstract class CommandStandardVisitor implements CommandVisitor {
     }
     public void handleAendereArtikelCommand(AendereArtikelCommand4Public aendereArtikelCommand) throws PersistenceException{
         this.standardHandling(aendereArtikelCommand);
+    }
+    public void handleNeuePositionCommand(NeuePositionCommand4Public neuePositionCommand) throws PersistenceException{
+        this.standardHandling(neuePositionCommand);
     }
     public void handleRegisterCommand(RegisterCommand4Public registerCommand) throws PersistenceException{
         this.standardHandling(registerCommand);

@@ -8,9 +8,6 @@ public abstract class CommonDateStandardVisitor implements CommonDateVisitor {
     public void handleAendereLieferartCommand(AendereLieferartCommand4Public aendereLieferartCommand) throws PersistenceException{
         this.standardHandling(aendereLieferartCommand);
     }
-    public void handleArtikelEinlagernCommand(ArtikelEinlagernCommand4Public artikelEinlagernCommand) throws PersistenceException{
-        this.standardHandling(artikelEinlagernCommand);
-    }
     public void handleNeueLieferartCommand(NeueLieferartCommand4Public neueLieferartCommand) throws PersistenceException{
         this.standardHandling(neueLieferartCommand);
     }
@@ -28,6 +25,9 @@ public abstract class CommonDateStandardVisitor implements CommonDateVisitor {
     }
     public void handleAendereArtikelCommand(AendereArtikelCommand4Public aendereArtikelCommand) throws PersistenceException{
         this.standardHandling(aendereArtikelCommand);
+    }
+    public void handleNeuePositionCommand(NeuePositionCommand4Public neuePositionCommand) throws PersistenceException{
+        this.standardHandling(neuePositionCommand);
     }
     public void handleCommonDate(CommonDate4Public commonDate) throws PersistenceException{
         this.standardHandling(commonDate);

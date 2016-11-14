@@ -12,6 +12,7 @@ public class ErrorMessages {
     public static final String statusDidNotChange = "Der Artikel ist bereits in diesem Status";
     public static final String ArtikelAlreadyInBasket = "Der Artikel ist schon im Einkaufswagen";
     public static final String LagerbestandUnderZero = "Negativer Lagerbestand nicht möglich!";
+    public static final String LagerbestandOverMax = "maximale Lagerkapazitäten erreicht";
 
     private ErrorMessages(){}
 }

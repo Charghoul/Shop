@@ -1,9 +1,6 @@
 package persistence;
 
-import model.visitor.InvokerExceptionVisitor;
-import model.visitor.InvokerReturnExceptionVisitor;
-import model.visitor.InvokerReturnVisitor;
-import model.visitor.InvokerVisitor;
+import model.visitor.*;
 
 /* Additional import section end */
 

@@ -1,8 +1,8 @@
 
 package model.meta;
 
-import model.visitor.*;
 import persistence.*;
+import model.visitor.*;
 
 
 /* Additional import section end */

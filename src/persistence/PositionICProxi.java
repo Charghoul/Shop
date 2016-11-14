@@ -60,13 +60,17 @@ public class PositionICProxi extends PersistentInCacheProxiOptimistic implements
 				throws model.ExcLagerbestandUnderZero, PersistenceException{
         ((PersistentPosition)this.getTheObject()).aendereMenge(menge);
     }
-    public BooleanX4Public artikelVorhanden(final Artikel4Public artikel) 
+    public Position4Public artikelVorhanden(final Artikel4Public artikel) 
 				throws PersistenceException{
         return ((PersistentPosition)this.getTheObject()).artikelVorhanden(artikel);
     }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{
         ((PersistentPosition)this.getTheObject()).copyingPrivateUserAttributes(copy);
+    }
+    public void erhoeheMenge(final long menge) 
+				throws model.ExcLagerbestandOverMax, PersistenceException{
+        ((PersistentPosition)this.getTheObject()).erhoeheMenge(menge);
     }
     public void initializeOnCreation() 
 				throws PersistenceException{

@@ -1,12 +1,8 @@
 
 package model;
 
-import model.visitor.UserExceptionExceptionVisitor;
-import model.visitor.UserExceptionReturnExceptionVisitor;
-import model.visitor.UserExceptionReturnVisitor;
-import model.visitor.UserExceptionVisitor;
-import persistence.PersistenceException;
-import persistence.TDObserver;
+import persistence.*;
+import model.visitor.*;
 
 
 /* Additional import section end */

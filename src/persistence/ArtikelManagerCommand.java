@@ -1,6 +1,6 @@
 package persistence;
-import model.visitor.*;
 
+import model.visitor.*;
 
 /* Additional import section end */
 
