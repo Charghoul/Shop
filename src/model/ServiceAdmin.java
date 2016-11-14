@@ -308,7 +308,7 @@ public class ServiceAdmin extends model.Service implements PersistentServiceAdmi
     public void neueLieferArt(final LieferartManager4Public lieferartManager, final String name, final long lieferzeit, final common.Fraction preis) 
 				throws model.ExcLieferartAlreadyExists, PersistenceException{
         lieferartManager.neueLieferart(name, lieferzeit, preis);
-        getThis().signalChanged(true);
+            getThis().signalChanged(true);
         
     }
     public void neuerArtikel(final ArtikelManager4Public artikelManager, final String artikelnummer, final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
