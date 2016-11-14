@@ -1,10 +1,11 @@
 
 package model;
 
+import model.visitor.AnythingExceptionVisitor;
+import model.visitor.AnythingReturnExceptionVisitor;
+import model.visitor.AnythingReturnVisitor;
+import model.visitor.AnythingVisitor;
 import persistence.*;
-import model.visitor.*;
-import serverConstants.ErrorMessages;
-import serverConstants.ToStringConstants;
 
 
 /* Additional import section end */
@@ -282,6 +283,22 @@ public class Artikel extends PersistentObject implements PersistentArtikel{
 			this.setArtikelstatus((PersistentArtikelstatus)final$$Fields.get("artikelstatus"));
 		}
     }
+    public void statusAuslauf(final Invoker invoker) 
+				throws PersistenceException{
+        java.sql.Date now = new java.sql.Date(new java.util.Date().getTime());
+		StatusAuslaufCommand4Public command = model.meta.StatusAuslaufCommand.createStatusAuslaufCommand(now, now);
+		command.setInvoker(invoker);
+		command.setCommandReceiver(getThis());
+		model.meta.CommandCoordinator.getTheCommandCoordinator().coordinate(command);
+    }
+    public void statusVerkauf(final Invoker invoker) 
+				throws PersistenceException{
+        java.sql.Date now = new java.sql.Date(new java.util.Date().getTime());
+		StatusVerkaufCommand4Public command = model.meta.StatusVerkaufCommand.createStatusVerkaufCommand(now, now);
+		command.setInvoker(invoker);
+		command.setCommandReceiver(getThis());
+		model.meta.CommandCoordinator.getTheCommandCoordinator().coordinate(command);
+    }
     
     
     // Start of section that contains operations that must be implemented.
@@ -294,15 +311,6 @@ public class Artikel extends PersistentObject implements PersistentArtikel{
         getThis().setMinLagerbestand(minLagerbestand);
         getThis().setMaxLagerbestand(maxLagerbestand);
         getThis().setHstLieferzeit(hstLieferzeit);
-        
-    }
-    public void aendereStatus(final Artikelstatus4Public artikelstatus) 
-				throws model.ExcStatusDidNotChange, PersistenceException{
-        //exceptions wenn artikelstatus gleich ist
-        if(getThis().getArtikelstatus().equals(artikelstatus)){
-            throw new ExcStatusDidNotChange(ErrorMessages.statusDidNotChange);
-        }
-        this.setArtikelstatus(artikelstatus);
         
     }
     public void copyingPrivateUserAttributes(final Anything copy) 
@@ -318,6 +326,24 @@ public class Artikel extends PersistentObject implements PersistentArtikel{
     public void initializeOnInstantiation() 
 				throws PersistenceException{
         //TODO: implement method: initializeOnInstantiation
+        
+    }
+    public void statusAuslauf() 
+				throws PersistenceException{
+        Auslauf4Public auslauf = Auslauf.createAuslauf();
+//        if(getThis().getArtikelstatus().equals(auslauf)){
+//            throw new ExcStatusDidNotChange(ErrorMessages.statusDidNotChange);
+//        }
+        this.setArtikelstatus(auslauf);
+        
+    }
+    public void statusVerkauf() 
+				throws PersistenceException{
+        Verkauf4Public verkauf = Verkauf.createVerkauf();
+//        if(getThis().getArtikelstatus().equals(verkauf)){
+//            throw new ExcStatusDidNotChange(ErrorMessages.statusDidNotChange);
+//        }
+        this.setArtikelstatus(verkauf);
         
     }
     

@@ -5,6 +5,9 @@ import persistence.*;
 
 public abstract class UserExceptionStandardVisitor implements UserExceptionVisitor {
     
+    public void handleExcLagerbestandUnderZero(model.ExcLagerbestandUnderZero excLagerbestandUnderZero) throws PersistenceException{
+        this.standardHandling(excLagerbestandUnderZero);
+    }
     public void handleExcLieferartAlreadyExists(model.ExcLieferartAlreadyExists excLieferartAlreadyExists) throws PersistenceException{
         this.standardHandling(excLieferartAlreadyExists);
     }

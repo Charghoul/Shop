@@ -2,10 +2,12 @@
 package model;
 
 import common.Fraction;
+import model.visitor.AnythingExceptionVisitor;
+import model.visitor.AnythingReturnExceptionVisitor;
+import model.visitor.AnythingReturnVisitor;
+import model.visitor.AnythingVisitor;
 import persistence.*;
-import model.visitor.*;
 import serverConstants.ErrorMessages;
-import serverConstants.ToStringConstants;
 
 
 /* Additional import section end */
@@ -160,6 +162,15 @@ public class LieferartManager extends PersistentObject implements PersistentLief
     }
     
     
+    public void aendereLieferart(final Lieferart4Public lieferart, final String name, final long lieferzeit, final common.Fraction preis, final Invoker invoker) 
+				throws PersistenceException{
+        java.sql.Date now = new java.sql.Date(new java.util.Date().getTime());
+		AendereLieferartCommand4Public command = model.meta.AendereLieferartCommand.createAendereLieferartCommand(name, lieferzeit, preis, now, now);
+		command.setLieferart(lieferart);
+		command.setInvoker(invoker);
+		command.setCommandReceiver(getThis());
+		model.meta.CommandCoordinator.getTheCommandCoordinator().coordinate(command);
+    }
     public ServiceAdmin4Public getMyService() 
 				throws PersistenceException{
         ServiceAdminSearchList result = null;
@@ -176,6 +187,14 @@ public class LieferartManager extends PersistentObject implements PersistentLief
         this.setThis((PersistentLieferartManager)This);
 		if(this.isTheSameAs(This)){
 		}
+    }
+    public void neueLieferart(final String name, final long lieferzeit, final common.Fraction preis, final Invoker invoker) 
+				throws PersistenceException{
+        java.sql.Date now = new java.sql.Date(new java.util.Date().getTime());
+		NeueLieferartCommand4Public command = model.meta.NeueLieferartCommand.createNeueLieferartCommand(name, lieferzeit, preis, now, now);
+		command.setInvoker(invoker);
+		command.setCommandReceiver(getThis());
+		model.meta.CommandCoordinator.getTheCommandCoordinator().coordinate(command);
     }
     
     

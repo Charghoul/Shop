@@ -2,8 +2,11 @@
 package model;
 
 import common.Fraction;
+import model.visitor.AnythingExceptionVisitor;
+import model.visitor.AnythingReturnExceptionVisitor;
+import model.visitor.AnythingReturnVisitor;
+import model.visitor.AnythingVisitor;
 import persistence.*;
-import model.visitor.*;
 
 
 /* Additional import section end */
@@ -144,6 +147,24 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
     }
     
     
+    public void artikelEinlagern(final Artikel4Public artikel, final long menge, final Invoker invoker) 
+				throws PersistenceException{
+        java.sql.Date now = new java.sql.Date(new java.util.Date().getTime());
+		ArtikelEinlagernCommand4Public command = model.meta.ArtikelEinlagernCommand.createArtikelEinlagernCommand(menge, now, now);
+		command.setArtikel(artikel);
+		command.setInvoker(invoker);
+		command.setCommandReceiver(getThis());
+		model.meta.CommandCoordinator.getTheCommandCoordinator().coordinate(command);
+    }
+    public void artikelEntnehmen(final Position4Public position, final long menge, final Invoker invoker) 
+				throws PersistenceException{
+        java.sql.Date now = new java.sql.Date(new java.util.Date().getTime());
+		ArtikelEntnehmenCommand4Public command = model.meta.ArtikelEntnehmenCommand.createArtikelEntnehmenCommand(menge, now, now);
+		command.setPosition(position);
+		command.setInvoker(invoker);
+		command.setCommandReceiver(getThis());
+		model.meta.CommandCoordinator.getTheCommandCoordinator().coordinate(command);
+    }
     public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
 				throws PersistenceException{
         this.setThis((PersistentWarenlager)This);
@@ -156,14 +177,12 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
     
     public void artikelEinlagern(final Artikel4Public artikel, final long menge) 
 				throws PersistenceException{
-
         getThis().getWarenListe().add(Position.createPosition(artikel, menge));
         
     }
-    public void artikelEntnehmen(final Artikel4Public artikel, final long menge) 
-				throws PersistenceException{
-        //TODO: implement method: artikelEentnehmen
-        
+    public void artikelEntnehmen(final Position4Public position, final long menge) 
+				throws model.ExcLagerbestandUnderZero, PersistenceException{
+        position.verringereMenge(menge);
     }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{

@@ -11,12 +11,16 @@ public interface Warenlager4Public extends Anything, AbstractPersistentProxi {
     public <E extends model.UserException>  void accept(AnythingExceptionVisitor<E> visitor) throws PersistenceException, E;
     public <R, E extends model.UserException> R accept(AnythingReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E;
     
+    public void artikelEinlagern(final Artikel4Public artikel, final long menge, final Invoker invoker) 
+				throws PersistenceException;
+    public void artikelEntnehmen(final Position4Public position, final long menge, final Invoker invoker) 
+				throws PersistenceException;
     public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
 				throws PersistenceException;
     public void artikelEinlagern(final Artikel4Public artikel, final long menge) 
 				throws PersistenceException;
-    public void artikelEntnehmen(final Artikel4Public artikel, final long menge) 
-				throws PersistenceException;
+    public void artikelEntnehmen(final Position4Public position, final long menge) 
+				throws model.ExcLagerbestandUnderZero, PersistenceException;
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException;
     public void initializeOnCreation() 

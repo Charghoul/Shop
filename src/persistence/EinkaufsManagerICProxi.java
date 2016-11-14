@@ -52,7 +52,7 @@ public class EinkaufsManagerICProxi extends PersistentInCacheProxiOptimistic imp
         return ((PersistentEinkaufsManager)this.getTheObject()).inverseGetEinkaufsManager();
     }
     public void aendereMenge(final Position4Public position, final long menge) 
-				throws PersistenceException{
+				throws model.ExcLagerbestandUnderZero, PersistenceException{
         ((PersistentEinkaufsManager)this.getTheObject()).aendereMenge(position, menge);
     }
     public void bestellen() 
@@ -72,7 +72,7 @@ public class EinkaufsManagerICProxi extends PersistentInCacheProxiOptimistic imp
         ((PersistentEinkaufsManager)this.getTheObject()).initializeOnInstantiation();
     }
     public void neuePosition(final Artikel4Public artikel, final long menge) 
-				throws PersistenceException{
+				throws model.ExcArtikelAlreadyExists, PersistenceException{
         ((PersistentEinkaufsManager)this.getTheObject()).neuePosition(artikel, menge);
     }
 

@@ -1,9 +1,8 @@
 
 package model;
 
-import persistence.*;
 import model.visitor.*;
-import view.objects.*;
+import persistence.*;
 
 
 /* Additional import section end */
@@ -257,9 +256,8 @@ public class ServiceKunde extends model.Service implements PersistentServiceKund
         super.initializeOnInstantiation();
     }
     public void neuePosition(final EinkaufsManager4Public einkaufsManager, final Artikel4Public artikel, final long menge) 
-				throws PersistenceException{
+				throws model.ExcArtikelAlreadyExists, PersistenceException{
         getThis().getEinkaufsManager().neuePosition(artikel, menge);
-        
     }
     
     

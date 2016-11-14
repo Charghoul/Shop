@@ -86,13 +86,17 @@ public class ArtikelICProxi extends PersistentInCacheProxiOptimistic implements 
 				throws PersistenceException{
         ((PersistentArtikel)this.getTheObject()).initialize(This, final$$Fields);
     }
+    public void statusAuslauf(final Invoker invoker) 
+				throws PersistenceException{
+        ((PersistentArtikel)this.getTheObject()).statusAuslauf(invoker);
+    }
+    public void statusVerkauf(final Invoker invoker) 
+				throws PersistenceException{
+        ((PersistentArtikel)this.getTheObject()).statusVerkauf(invoker);
+    }
     public void aendereArtikel(final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
 				throws PersistenceException{
         ((PersistentArtikel)this.getTheObject()).aendereArtikel(bezeichnung, preis, minLagerbestand, maxLagerbestand, hstLieferzeit);
-    }
-    public void aendereStatus(final Artikelstatus4Public artikelstatus) 
-				throws model.ExcStatusDidNotChange, PersistenceException{
-        ((PersistentArtikel)this.getTheObject()).aendereStatus(artikelstatus);
     }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{
@@ -105,6 +109,14 @@ public class ArtikelICProxi extends PersistentInCacheProxiOptimistic implements 
     public void initializeOnInstantiation() 
 				throws PersistenceException{
         ((PersistentArtikel)this.getTheObject()).initializeOnInstantiation();
+    }
+    public void statusAuslauf() 
+				throws PersistenceException{
+        ((PersistentArtikel)this.getTheObject()).statusAuslauf();
+    }
+    public void statusVerkauf() 
+				throws PersistenceException{
+        ((PersistentArtikel)this.getTheObject()).statusVerkauf();
     }
 
     

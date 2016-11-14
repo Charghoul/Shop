@@ -21,11 +21,11 @@ public class BestellungProxi extends PersistentProxi implements PersistentBestel
     public Bestellung_PositionsListeProxi getPositionsListe() throws PersistenceException {
         return ((PersistentBestellung)this.getTheObject()).getPositionsListe();
     }
-    public String getID() throws PersistenceException {
-        return ((PersistentBestellung)this.getTheObject()).getID();
+    public String getBestellID() throws PersistenceException {
+        return ((PersistentBestellung)this.getTheObject()).getBestellID();
     }
-    public void setID(String newValue) throws PersistenceException {
-        ((PersistentBestellung)this.getTheObject()).setID(newValue);
+    public void setBestellID(String newValue) throws PersistenceException {
+        ((PersistentBestellung)this.getTheObject()).setBestellID(newValue);
     }
     public Bestellstatus4Public getBestellstatus() throws PersistenceException {
         return ((PersistentBestellung)this.getTheObject()).getBestellstatus();

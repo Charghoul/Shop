@@ -1,8 +1,9 @@
 package persistence;
 
-import java.util.Iterator;
-
+import model.ExcArtikelAlreadyExists;
 import model.UserException;
+
+import java.util.Iterator;
 
 public interface PersistentListProxiInterface<T extends AbstractPersistentRoot> {
 
@@ -19,7 +20,7 @@ public interface PersistentListProxiInterface<T extends AbstractPersistentRoot> 
 	void filter (Predcate<T> predicate) throws PersistenceException;
 	void removeFirstFailure (Predcate<T> predicate) throws PersistenceException;
 	void removeFirstSuccess (Predcate<T> predicate) throws PersistenceException;
-	void applyToAll (Procdure<T> procedure) throws PersistenceException;
+	void applyToAll (Procdure<T> procedure) throws PersistenceException, ExcArtikelAlreadyExists;
 	<R> R aggregate (Aggregtion<T,R> aggregation) throws PersistenceException;
 	<E extends UserException> T findFirstException (PredcateException<T, E> predicate) throws PersistenceException, E;
 	<E extends UserException> SearchListRoot<T> findAllException (PredcateException<T, E> predicate) throws PersistenceException, E;

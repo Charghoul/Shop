@@ -1,5 +1,10 @@
 package common;
 
+import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -11,12 +16,6 @@ import java.security.spec.AlgorithmParameterSpec;
 import java.security.spec.EncodedKeySpec;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
-
-import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
 
 //import java.io.DataOutputStream;
 //import java.io.FileOutputStream;

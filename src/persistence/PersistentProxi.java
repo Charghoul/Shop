@@ -19,7 +19,7 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
 	
   private static ListProxiFactory [] getTheListProxiFactories(){
 	if (listProxiFactories == null){
-		listProxiFactories = new ListProxiFactory[134];
+		listProxiFactories = new ListProxiFactory[164];
         listProxiFactories[111] = new ListProxiFactory(){
             AbstractPersistentRoot create(long objectId, long entryId){
                 return new VerkaufListEntryProxi(objectId, entryId);
@@ -45,9 +45,19 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
                 return new ErrorDisplayListEntryProxi(objectId, entryId);
             }
         };
+        listProxiFactories[148] = new ListProxiFactory(){
+            AbstractPersistentRoot create(long objectId, long entryId){
+                return new FalseXListEntryProxi(objectId, entryId);
+            }
+        };
         listProxiFactories[35] = new ListProxiFactory(){
             AbstractPersistentRoot create(long objectId, long entryId){
                 return new BestellungListEntryProxi(objectId, entryId);
+            }
+        };
+        listProxiFactories[157] = new ListProxiFactory(){
+            AbstractPersistentRoot create(long objectId, long entryId){
+                return new ArtikelEntnehmenCommandListEntryProxi(objectId, entryId);
             }
         };
         listProxiFactories[37] = new ListProxiFactory(){
@@ -58,6 +68,11 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
         listProxiFactories[99] = new ListProxiFactory(){
             AbstractPersistentRoot create(long objectId, long entryId){
                 return new RegisterCommandListEntryProxi(objectId, entryId);
+            }
+        };
+        listProxiFactories[155] = new ListProxiFactory(){
+            AbstractPersistentRoot create(long objectId, long entryId){
+                return new AendereArtikelCommandListEntryProxi(objectId, entryId);
             }
         };
         listProxiFactories[113] = new ListProxiFactory(){
@@ -73,6 +88,16 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
         listProxiFactories[0] = new ListProxiFactory(){
             AbstractPersistentRoot create(long objectId, long entryId){
                 return new CommandCoordinatorListEntryProxi(objectId, entryId);
+            }
+        };
+        listProxiFactories[162] = new ListProxiFactory(){
+            AbstractPersistentRoot create(long objectId, long entryId){
+                return new AendereLieferartCommandListEntryProxi(objectId, entryId);
+            }
+        };
+        listProxiFactories[158] = new ListProxiFactory(){
+            AbstractPersistentRoot create(long objectId, long entryId){
+                return new ArtikelEinlagernCommandListEntryProxi(objectId, entryId);
             }
         };
         listProxiFactories[114] = new ListProxiFactory(){
@@ -95,6 +120,11 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
                 return new PositionListEntryProxi(objectId, entryId);
             }
         };
+        listProxiFactories[161] = new ListProxiFactory(){
+            AbstractPersistentRoot create(long objectId, long entryId){
+                return new NeueLieferartCommandListEntryProxi(objectId, entryId);
+            }
+        };
         listProxiFactories[81] = new ListProxiFactory(){
             AbstractPersistentRoot create(long objectId, long entryId){
                 return new ServiceAdminListEntryProxi(objectId, entryId);
@@ -103,6 +133,21 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
         listProxiFactories[127] = new ListProxiFactory(){
             AbstractPersistentRoot create(long objectId, long entryId){
                 return new ArtikelManagerListEntryProxi(objectId, entryId);
+            }
+        };
+        listProxiFactories[160] = new ListProxiFactory(){
+            AbstractPersistentRoot create(long objectId, long entryId){
+                return new StatusAuslaufCommandListEntryProxi(objectId, entryId);
+            }
+        };
+        listProxiFactories[163] = new ListProxiFactory(){
+            AbstractPersistentRoot create(long objectId, long entryId){
+                return new NeuerArtikelCommandListEntryProxi(objectId, entryId);
+            }
+        };
+        listProxiFactories[159] = new ListProxiFactory(){
+            AbstractPersistentRoot create(long objectId, long entryId){
+                return new StatusVerkaufCommandListEntryProxi(objectId, entryId);
             }
         };
         listProxiFactories[45] = new ListProxiFactory(){
@@ -160,12 +205,17 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
                 return new CommandExecuterListEntryProxi(objectId, entryId);
             }
         };
+        listProxiFactories[150] = new ListProxiFactory(){
+            AbstractPersistentRoot create(long objectId, long entryId){
+                return new TrueXListEntryProxi(objectId, entryId);
+            }
+        };
 	}
 	return listProxiFactories;
   }
   private static ProxiFactory [] getTheProxiFactories(){
 	if (proxiFactories == null){
-		proxiFactories = new ProxiFactory [134];
+		proxiFactories = new ProxiFactory [164];
         proxiFactories[111] = new ProxiFactory(){
             AbstractPersistentRoot create(long objectId){
                 return new VerkaufProxi(objectId);
@@ -191,9 +241,19 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
                 return new ErrorDisplayProxi(objectId);
             }
         };
+        proxiFactories[148] = new ProxiFactory(){
+            AbstractPersistentRoot create(long objectId){
+                return new FalseXProxi(objectId);
+            }
+        };
         proxiFactories[35] = new ProxiFactory(){
             AbstractPersistentRoot create(long objectId){
                 return new BestellungProxi(objectId);
+            }
+        };
+        proxiFactories[157] = new ProxiFactory(){
+            AbstractPersistentRoot create(long objectId){
+                return new ArtikelEntnehmenCommandProxi(objectId);
             }
         };
         proxiFactories[37] = new ProxiFactory(){
@@ -204,6 +264,11 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
         proxiFactories[99] = new ProxiFactory(){
             AbstractPersistentRoot create(long objectId){
                 return new RegisterCommandProxi(objectId);
+            }
+        };
+        proxiFactories[155] = new ProxiFactory(){
+            AbstractPersistentRoot create(long objectId){
+                return new AendereArtikelCommandProxi(objectId);
             }
         };
         proxiFactories[113] = new ProxiFactory(){
@@ -219,6 +284,16 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
         proxiFactories[0] = new ProxiFactory(){
             AbstractPersistentRoot create(long objectId){
                 return new CommandCoordinatorProxi(objectId);
+            }
+        };
+        proxiFactories[162] = new ProxiFactory(){
+            AbstractPersistentRoot create(long objectId){
+                return new AendereLieferartCommandProxi(objectId);
+            }
+        };
+        proxiFactories[158] = new ProxiFactory(){
+            AbstractPersistentRoot create(long objectId){
+                return new ArtikelEinlagernCommandProxi(objectId);
             }
         };
         proxiFactories[114] = new ProxiFactory(){
@@ -241,6 +316,11 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
                 return new PositionProxi(objectId);
             }
         };
+        proxiFactories[161] = new ProxiFactory(){
+            AbstractPersistentRoot create(long objectId){
+                return new NeueLieferartCommandProxi(objectId);
+            }
+        };
         proxiFactories[81] = new ProxiFactory(){
             AbstractPersistentRoot create(long objectId){
                 return new ServiceAdminProxi(objectId);
@@ -249,6 +329,21 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
         proxiFactories[127] = new ProxiFactory(){
             AbstractPersistentRoot create(long objectId){
                 return new ArtikelManagerProxi(objectId);
+            }
+        };
+        proxiFactories[160] = new ProxiFactory(){
+            AbstractPersistentRoot create(long objectId){
+                return new StatusAuslaufCommandProxi(objectId);
+            }
+        };
+        proxiFactories[163] = new ProxiFactory(){
+            AbstractPersistentRoot create(long objectId){
+                return new NeuerArtikelCommandProxi(objectId);
+            }
+        };
+        proxiFactories[159] = new ProxiFactory(){
+            AbstractPersistentRoot create(long objectId){
+                return new StatusVerkaufCommandProxi(objectId);
             }
         };
         proxiFactories[45] = new ProxiFactory(){
@@ -304,6 +399,11 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
         proxiFactories[9] = new ProxiFactory(){
             AbstractPersistentRoot create(long objectId){
                 return new CommandExecuterProxi(objectId);
+            }
+        };
+        proxiFactories[150] = new ProxiFactory(){
+            AbstractPersistentRoot create(long objectId){
+                return new TrueXProxi(objectId);
             }
         };
 	}

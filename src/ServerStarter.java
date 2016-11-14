@@ -1,53 +1,16 @@
-
-
-import java.sql.SQLException;
-import java.sql.DriverManager;
-
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.EventQueue;
-import java.awt.Toolkit;
-
-import javax.swing.DefaultListModel;
-import javax.swing.JComponent;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JFrame;
-import javax.swing.JRootPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
-import javax.swing.JToolBar;
-import javax.swing.UIManager;
-
-import javax.swing.JLabel;
-import javax.swing.BoxLayout;
-import javax.swing.JPasswordField;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-
-import javax.swing.JButton;
-import javax.swing.border.TitledBorder;
-
 import common.FrameWithIcon;
-
+import model.DBConnectionConstants;
+import modelServer.ConnectionServer;
+import modelServer.RemoteServerMaster;
+import modelServer.ServerReporter;
 import persistence.Cache;
 import persistence.ConnectionHandler;
 import persistence.PersistenceException;
 
-import model.DBConnectionConstants;
-
-import modelServer.ConnectionServer;
-import modelServer.RemoteServerMaster;
-import modelServer.ServerReporter;
-
-import model.meta.CommandCoordinator;
+import javax.swing.*;
+import javax.swing.border.TitledBorder;
+import java.awt.*;
+import java.awt.event.*;
 
 public class ServerStarter extends FrameWithIcon implements ServerReporter {
 

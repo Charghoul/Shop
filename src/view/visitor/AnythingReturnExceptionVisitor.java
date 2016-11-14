@@ -3,7 +3,7 @@ package view.visitor;
 
 import view.*;
 
-public interface AnythingReturnExceptionVisitor<R, E extends view.UserException> extends ArtikelstatusReturnExceptionVisitor<R, E> ,BestellstatusReturnExceptionVisitor<R, E> ,ServiceReturnExceptionVisitor<R, E> {
+public interface AnythingReturnExceptionVisitor<R, E extends view.UserException> extends ArtikelstatusReturnExceptionVisitor<R, E> ,BestellstatusReturnExceptionVisitor<R, E> ,BooleanXReturnExceptionVisitor<R, E> ,ServiceReturnExceptionVisitor<R, E> {
     
     public R handleArtikel(ArtikelView artikel) throws ModelException, E;
     public R handleArtikelManager(ArtikelManagerView artikelManager) throws ModelException, E;

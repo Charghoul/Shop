@@ -11,7 +11,11 @@ public interface LieferartManager4Public extends Anything, AbstractPersistentPro
     public <E extends model.UserException>  void accept(AnythingExceptionVisitor<E> visitor) throws PersistenceException, E;
     public <R, E extends model.UserException> R accept(AnythingReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E;
     
+    public void aendereLieferart(final Lieferart4Public lieferart, final String name, final long lieferzeit, final common.Fraction preis, final Invoker invoker) 
+				throws PersistenceException;
     public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
+				throws PersistenceException;
+    public void neueLieferart(final String name, final long lieferzeit, final common.Fraction preis, final Invoker invoker) 
 				throws PersistenceException;
     public void aendereLieferart(final Lieferart4Public lieferart, final String name, final long lieferzeit, final common.Fraction preis) 
 				throws PersistenceException;

@@ -24,17 +24,17 @@ public  class RemoteServiceAdmin extends RemoteService {
         }
     }
     
-    public synchronized java.util.HashMap<?,?> aendereStatus(String artikelManagerProxiString, String artikelProxiString, String artikelstatusProxiString){
+    public synchronized java.util.HashMap<?,?> aendereArtikel(String artikelProxiString, String bezeichnung, String preisAsString, String minLagerbestandAsString, String maxLagerbestandAsString, String hstLieferzeitAsString){
         try {
-            PersistentArtikelManager artikelManager = (PersistentArtikelManager)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(artikelManagerProxiString));
             PersistentArtikel artikel = (PersistentArtikel)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(artikelProxiString));
-            PersistentArtikelstatus artikelstatus = (PersistentArtikelstatus)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(artikelstatusProxiString));
-            ((PersistentServiceAdmin)this.server).aendereStatus(artikelManager, artikel, artikelstatus);
+            common.Fraction preis = common.Fraction.parse(preisAsString);
+            long minLagerbestand = new Long(minLagerbestandAsString).longValue();
+            long maxLagerbestand = new Long(maxLagerbestandAsString).longValue();
+            long hstLieferzeit = new Long(hstLieferzeitAsString).longValue();
+            ((PersistentServiceAdmin)this.server).aendereArtikel(artikel, bezeichnung, preis, minLagerbestand, maxLagerbestand, hstLieferzeit);
             return createOKResult();
         }catch(PersistenceException pe){
             return createExceptionResult(pe);
-        }catch(model.ExcStatusDidNotChange e0){
-            return createExceptionResult(e0, this);
         }
     }
     
@@ -50,12 +50,21 @@ public  class RemoteServiceAdmin extends RemoteService {
         }
     }
     
-    public synchronized java.util.HashMap<?,?> artikelEntnehmen(String warenlagerProxiString, String artikelProxiString, String mengeAsString){
+    public synchronized java.util.HashMap<?,?> artikelEntnehmen(String warenlagerProxiString, String positionProxiString, String mengeAsString){
         try {
             PersistentWarenlager warenlager = (PersistentWarenlager)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(warenlagerProxiString));
-            PersistentArtikel artikel = (PersistentArtikel)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(artikelProxiString));
+            PersistentPosition position = (PersistentPosition)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(positionProxiString));
             long menge = new Long(mengeAsString).longValue();
-            ((PersistentServiceAdmin)this.server).artikelEntnehmen(warenlager, artikel, menge);
+            ((PersistentServiceAdmin)this.server).artikelEntnehmen(warenlager, position, menge);
+            return createOKResult();
+        }catch(PersistenceException pe){
+            return createExceptionResult(pe);
+        }
+    }
+    
+    public synchronized java.util.HashMap<?,?> bestellen(){
+        try {
+            ((PersistentServiceAdmin)this.server).bestellen();
             return createOKResult();
         }catch(PersistenceException pe){
             return createExceptionResult(pe);
@@ -71,8 +80,6 @@ public  class RemoteServiceAdmin extends RemoteService {
             return createOKResult();
         }catch(PersistenceException pe){
             return createExceptionResult(pe);
-        }catch(model.ExcLieferartAlreadyExists e0){
-            return createExceptionResult(e0, this);
         }
     }
     
@@ -87,8 +94,26 @@ public  class RemoteServiceAdmin extends RemoteService {
             return createOKResult();
         }catch(PersistenceException pe){
             return createExceptionResult(pe);
-        }catch(model.UserException e0){
-            return createExceptionResult(e0, this);
+        }
+    }
+    
+    public synchronized java.util.HashMap<?,?> statusAuslauf(String artikelProxiString){
+        try {
+            PersistentArtikel artikel = (PersistentArtikel)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(artikelProxiString));
+            ((PersistentServiceAdmin)this.server).statusAuslauf(artikel);
+            return createOKResult();
+        }catch(PersistenceException pe){
+            return createExceptionResult(pe);
+        }
+    }
+    
+    public synchronized java.util.HashMap<?,?> statusVerkauf(String artikelProxiString){
+        try {
+            PersistentArtikel artikel = (PersistentArtikel)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(artikelProxiString));
+            ((PersistentServiceAdmin)this.server).statusVerkauf(artikel);
+            return createOKResult();
+        }catch(PersistenceException pe){
+            return createExceptionResult(pe);
         }
     }
     

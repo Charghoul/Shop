@@ -27,11 +27,13 @@ public interface ServiceAdmin4Public extends Service4Public {
 				throws PersistenceException;
     public String serviceAdmin_Menu_Filter(final Anything anything) 
 				throws PersistenceException;
-    public void aendereStatus(final ArtikelManager4Public artikelManager, final Artikel4Public artikel, final Artikelstatus4Public artikelstatus) 
-				throws model.ExcStatusDidNotChange, PersistenceException;
+    public void aendereArtikel(final Artikel4Public artikel, final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
+				throws PersistenceException;
     public void artikelEinlagern(final Warenlager4Public warenlager, final Artikel4Public artikel, final long menge) 
 				throws PersistenceException;
-    public void artikelEntnehmen(final Warenlager4Public warenlager, final Artikel4Public artikel, final long menge) 
+    public void artikelEntnehmen(final Warenlager4Public warenlager, final Position4Public position, final long menge) 
+				throws PersistenceException;
+    public void bestellen() 
 				throws PersistenceException;
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException;
@@ -40,9 +42,13 @@ public interface ServiceAdmin4Public extends Service4Public {
     public void initializeOnInstantiation() 
 				throws PersistenceException;
     public void neueLieferArt(final LieferartManager4Public lieferartManager, final String name, final long lieferzeit, final common.Fraction preis) 
-				throws model.ExcLieferartAlreadyExists, PersistenceException;
+				throws PersistenceException;
     public void neuerArtikel(final ArtikelManager4Public artikelManager, final String artikelnummer, final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
-				throws model.UserException, PersistenceException;
+				throws PersistenceException;
+    public void statusAuslauf(final Artikel4Public artikel) 
+				throws PersistenceException;
+    public void statusVerkauf(final Artikel4Public artikel) 
+				throws PersistenceException;
 
 }
 

@@ -3,7 +3,7 @@ package view.visitor;
 
 import view.*;
 
-public interface AnythingVisitor extends ArtikelstatusVisitor,BestellstatusVisitor,ServiceVisitor{
+public interface AnythingVisitor extends ArtikelstatusVisitor,BestellstatusVisitor,BooleanXVisitor,ServiceVisitor{
     
     public void handleArtikel(ArtikelView artikel) throws ModelException;
     public void handleArtikelManager(ArtikelManagerView artikelManager) throws ModelException;

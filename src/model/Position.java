@@ -1,8 +1,12 @@
 
 package model;
 
+import model.visitor.AnythingExceptionVisitor;
+import model.visitor.AnythingReturnExceptionVisitor;
+import model.visitor.AnythingReturnVisitor;
+import model.visitor.AnythingVisitor;
 import persistence.*;
-import model.visitor.*;
+import serverConstants.ErrorMessages;
 
 
 /* Additional import section end */
@@ -199,9 +203,13 @@ public class Position extends PersistentObject implements PersistentPosition{
     // Start of section that contains operations that must be implemented.
     
     public void aendereMenge(final long menge) 
-				throws PersistenceException{
+				throws model.ExcLagerbestandUnderZero, PersistenceException{
         getThis().setMenge(menge);
-        
+    }
+    public BooleanX4Public artikelVorhanden(final Artikel4Public artikel) 
+				throws PersistenceException{
+        if(getThis().getArtikel().equals(artikel)) return TrueX.getTheTrueX();
+        return FalseX.getTheFalseX();
     }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{
@@ -216,6 +224,12 @@ public class Position extends PersistentObject implements PersistentPosition{
     public void initializeOnInstantiation() 
 				throws PersistenceException{
         //TODO: implement method: initializeOnInstantiation
+        
+    }
+    public void verringereMenge(final long menge) 
+				throws model.ExcLagerbestandUnderZero, PersistenceException{
+        if(getThis().getMenge() - menge <= 0) throw new ExcLagerbestandUnderZero(ErrorMessages.LagerbestandUnderZero);
+        getThis().setMenge(getThis().getMenge() - menge);
         
     }
     

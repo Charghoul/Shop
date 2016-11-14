@@ -9,6 +9,7 @@ public abstract class ToString$Visitor extends AnythingStandardVisitor{
     public abstract void handleServer(Server4Public server) throws PersistenceException;
     public abstract void handleEinkaufsManager(EinkaufsManager4Public einkaufsManager) throws PersistenceException;
     public abstract void handleAuslauf(Auslauf4Public auslauf) throws PersistenceException;
+    public abstract void handleFalseX(FalseX4Public falseX) throws PersistenceException;
     public abstract void handleBestellung(Bestellung4Public bestellung) throws PersistenceException;
     public abstract void handleLieferart(Lieferart4Public lieferart) throws PersistenceException;
     public abstract void handleNeuanlage(Neuanlage4Public neuanlage) throws PersistenceException;
@@ -28,5 +29,6 @@ public abstract class ToString$Visitor extends AnythingStandardVisitor{
     public abstract void handleAngenommen(Angenommen4Public angenommen) throws PersistenceException;
     public abstract void handleLieferung(Lieferung4Public lieferung) throws PersistenceException;
     public abstract void handleWarenlager(Warenlager4Public warenlager) throws PersistenceException;
+    public abstract void handleTrueX(TrueX4Public trueX) throws PersistenceException;
     
 }

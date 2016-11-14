@@ -57,8 +57,12 @@ public class PositionICProxi extends PersistentInCacheProxiOptimistic implements
         ((PersistentPosition)this.getTheObject()).initialize(This, final$$Fields);
     }
     public void aendereMenge(final long menge) 
-				throws PersistenceException{
+				throws model.ExcLagerbestandUnderZero, PersistenceException{
         ((PersistentPosition)this.getTheObject()).aendereMenge(menge);
+    }
+    public BooleanX4Public artikelVorhanden(final Artikel4Public artikel) 
+				throws PersistenceException{
+        return ((PersistentPosition)this.getTheObject()).artikelVorhanden(artikel);
     }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{
@@ -71,6 +75,10 @@ public class PositionICProxi extends PersistentInCacheProxiOptimistic implements
     public void initializeOnInstantiation() 
 				throws PersistenceException{
         ((PersistentPosition)this.getTheObject()).initializeOnInstantiation();
+    }
+    public void verringereMenge(final long menge) 
+				throws model.ExcLagerbestandUnderZero, PersistenceException{
+        ((PersistentPosition)this.getTheObject()).verringereMenge(menge);
     }
 
     

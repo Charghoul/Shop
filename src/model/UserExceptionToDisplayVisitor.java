@@ -1,8 +1,8 @@
 package model;
 
-import persistence.PersistenceException;
-import persistence.ErrorDisplay4Public;
 import model.visitor.UserExceptionStandardVisitor;
+import persistence.ErrorDisplay4Public;
+import persistence.PersistenceException;
 
 public class UserExceptionToDisplayVisitor extends UserExceptionStandardVisitor {
 

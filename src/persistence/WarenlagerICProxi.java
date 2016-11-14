@@ -43,6 +43,14 @@ public class WarenlagerICProxi extends PersistentInCacheProxiOptimistic implemen
     }
     
     
+    public void artikelEinlagern(final Artikel4Public artikel, final long menge, final Invoker invoker) 
+				throws PersistenceException{
+        ((PersistentWarenlager)this.getTheObject()).artikelEinlagern(artikel, menge, invoker);
+    }
+    public void artikelEntnehmen(final Position4Public position, final long menge, final Invoker invoker) 
+				throws PersistenceException{
+        ((PersistentWarenlager)this.getTheObject()).artikelEntnehmen(position, menge, invoker);
+    }
     public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
 				throws PersistenceException{
         ((PersistentWarenlager)this.getTheObject()).initialize(This, final$$Fields);
@@ -51,9 +59,9 @@ public class WarenlagerICProxi extends PersistentInCacheProxiOptimistic implemen
 				throws PersistenceException{
         ((PersistentWarenlager)this.getTheObject()).artikelEinlagern(artikel, menge);
     }
-    public void artikelEntnehmen(final Artikel4Public artikel, final long menge) 
-				throws PersistenceException{
-        ((PersistentWarenlager)this.getTheObject()).artikelEntnehmen(artikel, menge);
+    public void artikelEntnehmen(final Position4Public position, final long menge) 
+				throws model.ExcLagerbestandUnderZero, PersistenceException{
+        ((PersistentWarenlager)this.getTheObject()).artikelEntnehmen(position, menge);
     }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{

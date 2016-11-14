@@ -2,8 +2,8 @@
 package model;
 
 import common.RPCConstantsAndServices;
-import persistence.*;
 import model.visitor.*;
+import persistence.*;
 
 
 

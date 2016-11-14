@@ -1,14 +1,13 @@
 package viewClient;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-
+import com.sun.org.apache.xerces.internal.parsers.DOMParser;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-import com.sun.org.apache.xerces.internal.parsers.*;
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ClientNames {
 	
@@ -32,23 +31,23 @@ public class ClientNames {
 	private static final CharSequence XMLSZ = "&#223;";
 
 	public static String toXMLValue(String value){
-		String result = value.replace("ä", XMLae);
-		result = result.replace("ü", XMLue);
-		result = result.replace("ö", XMLoe);
-		result = result.replace("Ä", XMLAE);
-		result = result.replace("Ü", XMLUE);
-		result = result.replace("Ö", XMLOE);
-		result = result.replace("ß", XMLSZ);
+		String result = value.replace("ï¿½", XMLae);
+		result = result.replace("ï¿½", XMLue);
+		result = result.replace("ï¿½", XMLoe);
+		result = result.replace("ï¿½", XMLAE);
+		result = result.replace("ï¿½", XMLUE);
+		result = result.replace("ï¿½", XMLOE);
+		result = result.replace("ï¿½", XMLSZ);
 		return result;
 	}
 	public static String fromXMLValue(String value) {
-		String result = value.replace(XMLae, "ä");
-		result = result.replace(XMLue, "ü");
-		result = result.replace(XMLoe, "ö");
-		result = result.replace(XMLAE, "Ä");
-		result = result.replace(XMLUE, "Ü");
-		result = result.replace(XMLOE, "Ö");
-		result = result.replace(XMLSZ, "ß");
+		String result = value.replace(XMLae, "ï¿½");
+		result = result.replace(XMLue, "ï¿½");
+		result = result.replace(XMLoe, "ï¿½");
+		result = result.replace(XMLAE, "ï¿½");
+		result = result.replace(XMLUE, "ï¿½");
+		result = result.replace(XMLOE, "ï¿½");
+		result = result.replace(XMLSZ, "ï¿½");
 		return result;
 	}
 	

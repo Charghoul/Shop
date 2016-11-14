@@ -11,8 +11,9 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-
-import view.*;
+import view.ModelException;
+import view.ServerView;
+import view.UserException;
 
 public class MainView extends Stage implements ExceptionAndEventHandler{
 

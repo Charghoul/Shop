@@ -39,6 +39,10 @@ public class ArtikelManagerProxi extends PersistentProxi implements PersistentAr
     }
     
     
+    public void aendereArtikel(final Artikel4Public artikel, final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit, final Invoker invoker) 
+				throws PersistenceException{
+        ((PersistentArtikelManager)this.getTheObject()).aendereArtikel(artikel, bezeichnung, preis, minLagerbestand, maxLagerbestand, hstLieferzeit, invoker);
+    }
     public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
 				throws PersistenceException{
         ((PersistentArtikelManager)this.getTheObject()).initialize(This, final$$Fields);
@@ -47,13 +51,13 @@ public class ArtikelManagerProxi extends PersistentProxi implements PersistentAr
 				throws PersistenceException{
         return ((PersistentArtikelManager)this.getTheObject()).inverseGetArtikelManager();
     }
+    public void neuerArtikel(final String artikelnummer, final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit, final Invoker invoker) 
+				throws PersistenceException{
+        ((PersistentArtikelManager)this.getTheObject()).neuerArtikel(artikelnummer, bezeichnung, preis, minLagerbestand, maxLagerbestand, hstLieferzeit, invoker);
+    }
     public void aendereArtikel(final Artikel4Public artikel, final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
 				throws PersistenceException{
         ((PersistentArtikelManager)this.getTheObject()).aendereArtikel(artikel, bezeichnung, preis, minLagerbestand, maxLagerbestand, hstLieferzeit);
-    }
-    public void aendereStatus(final Artikel4Public artikel, final Artikelstatus4Public artikelstatus) 
-				throws model.ExcStatusDidNotChange, PersistenceException{
-        ((PersistentArtikelManager)this.getTheObject()).aendereStatus(artikel, artikelstatus);
     }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{

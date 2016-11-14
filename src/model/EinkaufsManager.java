@@ -1,8 +1,12 @@
 
 package model;
 
+import model.visitor.AnythingExceptionVisitor;
+import model.visitor.AnythingReturnExceptionVisitor;
+import model.visitor.AnythingReturnVisitor;
+import model.visitor.AnythingVisitor;
 import persistence.*;
-import model.visitor.*;
+import serverConstants.ErrorMessages;
 
 
 /* Additional import section end */
@@ -170,7 +174,7 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
     // Start of section that contains operations that must be implemented.
     
     public void aendereMenge(final Position4Public position, final long menge) 
-				throws PersistenceException{
+				throws model.ExcLagerbestandUnderZero, PersistenceException{
         position.aendereMenge(menge);
         
     }
@@ -191,11 +195,17 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
         
     }
     public void neuePosition(final Artikel4Public artikel, final long menge) 
-				throws PersistenceException{
-        //TODO: überprüfen ob Artikel schon in Positionsliste vorhanden ist
-        
-        getThis().getEinkaufsListe().add(Position.createPosition(artikel, menge));
-        
+				throws model.ExcArtikelAlreadyExists, PersistenceException{
+
+        EinkaufsManager_EinkaufsListeProxi temp = getThis().getEinkaufsListe();
+
+        temp.filter(argument -> {
+            return  argument.artikelVorhanden(artikel).equals(TrueX.getTheTrueX());}
+        );
+
+        if(temp.iterator().hasNext()) throw new ExcArtikelAlreadyExists(ErrorMessages.ArtikelAlreadyInBasket);
+        else getThis().getEinkaufsListe().add(Position.createPosition(artikel, menge));
+
     }
     
     

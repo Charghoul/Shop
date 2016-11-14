@@ -57,14 +57,46 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     public void handleAngenommen(Angenommen4Public angenommen) throws PersistenceException{
         this.handleBestellstatus(angenommen);
     }
+    public abstract void handleBooleanX(BooleanX4Public booleanX) throws PersistenceException;
+    
+    public void handleFalseX(FalseX4Public falseX) throws PersistenceException{
+        this.handleBooleanX(falseX);
+    }
+    public void handleTrueX(TrueX4Public trueX) throws PersistenceException{
+        this.handleBooleanX(trueX);
+    }
     public abstract void handleArtikel(Artikel4Public artikel) throws PersistenceException;
     
     public abstract void handleWarenlager(Warenlager4Public warenlager) throws PersistenceException;
     
     public abstract void handleCommonDate(CommonDate4Public commonDate) throws PersistenceException;
     
+    public void handleAendereLieferartCommand(AendereLieferartCommand4Public aendereLieferartCommand) throws PersistenceException{
+        this.handleCommonDate(aendereLieferartCommand);
+    }
+    public void handleArtikelEinlagernCommand(ArtikelEinlagernCommand4Public artikelEinlagernCommand) throws PersistenceException{
+        this.handleCommonDate(artikelEinlagernCommand);
+    }
+    public void handleNeueLieferartCommand(NeueLieferartCommand4Public neueLieferartCommand) throws PersistenceException{
+        this.handleCommonDate(neueLieferartCommand);
+    }
+    public void handleArtikelEntnehmenCommand(ArtikelEntnehmenCommand4Public artikelEntnehmenCommand) throws PersistenceException{
+        this.handleCommonDate(artikelEntnehmenCommand);
+    }
+    public void handleStatusAuslaufCommand(StatusAuslaufCommand4Public statusAuslaufCommand) throws PersistenceException{
+        this.handleCommonDate(statusAuslaufCommand);
+    }
+    public void handleNeuerArtikelCommand(NeuerArtikelCommand4Public neuerArtikelCommand) throws PersistenceException{
+        this.handleCommonDate(neuerArtikelCommand);
+    }
     public void handleRegisterCommand(RegisterCommand4Public registerCommand) throws PersistenceException{
         this.handleCommonDate(registerCommand);
+    }
+    public void handleAendereArtikelCommand(AendereArtikelCommand4Public aendereArtikelCommand) throws PersistenceException{
+        this.handleCommonDate(aendereArtikelCommand);
+    }
+    public void handleStatusVerkaufCommand(StatusVerkaufCommand4Public statusVerkaufCommand) throws PersistenceException{
+        this.handleCommonDate(statusVerkaufCommand);
     }
     public abstract void handleCommandExecuter(CommandExecuter4Public commandExecuter) throws PersistenceException;
     

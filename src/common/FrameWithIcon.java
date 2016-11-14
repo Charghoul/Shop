@@ -1,8 +1,7 @@
 package common;
 
+import javax.swing.*;
 import java.net.URL;
-
-import javax.swing.JFrame;
 
 @SuppressWarnings("serial")
 public class FrameWithIcon extends JFrame {

@@ -1,5 +1,4 @@
 package serverConstants;
-
 /**
  * Created by Jan on 08.11.2016.
  */
@@ -13,6 +12,10 @@ public class ToStringConstants {
     public static final String Einkaufswagen = "Einkaufswagen";
     public static final String ArtikelManager = "Artikelverzeichnis";
     public static final String Neuanlage = "Neuanlage";
+    public static final String Verkauf = "Verkauf";
+    public static final String Artikelstatus = "Artikelstatus: ";
+    public static final String Auslauf = "Auslauf";
+
 
     private ToStringConstants(){}
 }

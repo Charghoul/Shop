@@ -274,8 +274,12 @@ public class Cache {
 	
 	private void initializeNumber2NameMap() {
 		this.number2NameMap = new Hashtable<Integer,String>();
+		this.number2NameMap.put(256, "AendereArtikelCommand");
+		this.number2NameMap.put(263, "AendereLieferartCommand");
 		this.number2NameMap.put(219, "Angenommen");
 		this.number2NameMap.put(108, "Artikel");
+		this.number2NameMap.put(259, "ArtikelEinlagernCommand");
+		this.number2NameMap.put(258, "ArtikelEntnehmenCommand");
 		this.number2NameMap.put(228, "ArtikelManager");
 		this.number2NameMap.put(213, "Auslauf");
 		this.number2NameMap.put(136, "Bestellung");
@@ -284,6 +288,7 @@ public class Cache {
 		this.number2NameMap.put(109, "CommonDate");
 		this.number2NameMap.put(191, "EinkaufsManager");
 		this.number2NameMap.put(-104, "ErrorDisplay");
+		this.number2NameMap.put(249, "FalseX");
 		this.number2NameMap.put(215, "Geliefert");
 		this.number2NameMap.put(218, "Hinversand");
 		this.number2NameMap.put(146, "Konto");
@@ -292,6 +297,8 @@ public class Cache {
 		this.number2NameMap.put(198, "LieferartManager");
 		this.number2NameMap.put(150, "Lieferung");
 		this.number2NameMap.put(214, "Neuanlage");
+		this.number2NameMap.put(262, "NeueLieferartCommand");
+		this.number2NameMap.put(264, "NeuerArtikelCommand");
 		this.number2NameMap.put(144, "Position");
 		this.number2NameMap.put(200, "RegisterCommand");
 		this.number2NameMap.put(217, "Rueckversand");
@@ -299,6 +306,9 @@ public class Cache {
 		this.number2NameMap.put(-182, "ServiceAdmin");
 		this.number2NameMap.put(-181, "ServiceKunde");
 		this.number2NameMap.put(-189, "ServiceRegister");
+		this.number2NameMap.put(261, "StatusAuslaufCommand");
+		this.number2NameMap.put(260, "StatusVerkaufCommand");
+		this.number2NameMap.put(251, "TrueX");
 		this.number2NameMap.put(212, "Verkauf");
 		this.number2NameMap.put(216, "Vorbestellung");
 		this.number2NameMap.put(193, "Warenlager");	

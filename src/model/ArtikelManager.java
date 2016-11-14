@@ -2,8 +2,11 @@
 package model;
 
 import common.Fraction;
+import model.visitor.AnythingExceptionVisitor;
+import model.visitor.AnythingReturnExceptionVisitor;
+import model.visitor.AnythingReturnVisitor;
+import model.visitor.AnythingVisitor;
 import persistence.*;
-import model.visitor.*;
 
 
 /* Additional import section end */
@@ -149,6 +152,15 @@ public class ArtikelManager extends PersistentObject implements PersistentArtike
     }
     
     
+    public void aendereArtikel(final Artikel4Public artikel, final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit, final Invoker invoker) 
+				throws PersistenceException{
+        java.sql.Date now = new java.sql.Date(new java.util.Date().getTime());
+		AendereArtikelCommand4Public command = model.meta.AendereArtikelCommand.createAendereArtikelCommand(bezeichnung, preis, minLagerbestand, maxLagerbestand, hstLieferzeit, now, now);
+		command.setArtikel(artikel);
+		command.setInvoker(invoker);
+		command.setCommandReceiver(getThis());
+		model.meta.CommandCoordinator.getTheCommandCoordinator().coordinate(command);
+    }
     public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
 				throws PersistenceException{
         this.setThis((PersistentArtikelManager)This);
@@ -166,6 +178,14 @@ public class ArtikelManager extends PersistentObject implements PersistentArtike
 			return null;
 		}
     }
+    public void neuerArtikel(final String artikelnummer, final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit, final Invoker invoker) 
+				throws PersistenceException{
+        java.sql.Date now = new java.sql.Date(new java.util.Date().getTime());
+		NeuerArtikelCommand4Public command = model.meta.NeuerArtikelCommand.createNeuerArtikelCommand(artikelnummer, bezeichnung, preis, minLagerbestand, maxLagerbestand, hstLieferzeit, now, now);
+		command.setInvoker(invoker);
+		command.setCommandReceiver(getThis());
+		model.meta.CommandCoordinator.getTheCommandCoordinator().coordinate(command);
+    }
     
     
     // Start of section that contains operations that must be implemented.
@@ -174,11 +194,6 @@ public class ArtikelManager extends PersistentObject implements PersistentArtike
 				throws PersistenceException{
         artikel.aendereArtikel(bezeichnung, preis, minLagerbestand, maxLagerbestand, hstLieferzeit);
         
-        
-    }
-    public void aendereStatus(final Artikel4Public artikel, final Artikelstatus4Public artikelstatus) 
-				throws model.ExcStatusDidNotChange, PersistenceException{
-        artikel.aendereStatus(artikelstatus);
         
     }
     public void copyingPrivateUserAttributes(final Anything copy) 

@@ -14,6 +14,8 @@ public interface Position4Public extends Anything, AbstractPersistentProxi {
     public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
 				throws PersistenceException;
     public void aendereMenge(final long menge) 
+				throws model.ExcLagerbestandUnderZero, PersistenceException;
+    public BooleanX4Public artikelVorhanden(final Artikel4Public artikel) 
 				throws PersistenceException;
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException;
@@ -21,6 +23,8 @@ public interface Position4Public extends Anything, AbstractPersistentProxi {
 				throws PersistenceException;
     public void initializeOnInstantiation() 
 				throws PersistenceException;
+    public void verringereMenge(final long menge) 
+				throws model.ExcLagerbestandUnderZero, PersistenceException;
 
 }
 

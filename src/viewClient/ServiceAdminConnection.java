@@ -41,31 +41,23 @@ public class ServiceAdminConnection extends ServiceConnection {
         
     }
     
-    @SuppressWarnings("unchecked")
-    public synchronized void aendereStatus(ArtikelManagerView artikelManager, ArtikelView artikel, ArtikelstatusView artikelstatus) throws ModelException, ExcStatusDidNotChange{
+    public synchronized void aendereArtikel(ArtikelView artikel, String bezeichnung, common.Fraction preis, long minLagerbestand, long maxLagerbestand, long hstLieferzeit) throws ModelException{
         try {
             Vector<Object> parameters = new Vector<Object>();
-            if (artikelManager == null){
-                parameters.add(common.RPCConstantsAndServices.createFromClientNullProxiRepresentation());
-            } else {
-                parameters.add(((view.objects.ViewProxi)artikelManager).createProxiInformation());
-            }
             if (artikel == null){
                 parameters.add(common.RPCConstantsAndServices.createFromClientNullProxiRepresentation());
             } else {
                 parameters.add(((view.objects.ViewProxi)artikel).createProxiInformation());
             }
-            if (artikelstatus == null){
-                parameters.add(common.RPCConstantsAndServices.createFromClientNullProxiRepresentation());
-            } else {
-                parameters.add(((view.objects.ViewProxi)artikelstatus).createProxiInformation());
-            }
-            java.util.HashMap<?,?> success = (java.util.HashMap<?,?>)this.execute(this.connectionName, "aendereStatus", parameters);
+            parameters.add(bezeichnung);
+            parameters.add(preis.toString());
+            parameters.add(new Long(minLagerbestand).toString());
+            parameters.add(new Long(maxLagerbestand).toString());
+            parameters.add(new Long(hstLieferzeit).toString());
+            java.util.HashMap<?,?> success = (java.util.HashMap<?,?>)this.execute(this.connectionName, "aendereArtikel", parameters);
             if(!((Boolean)success.get(common.RPCConstantsAndServices.OKOrNotOKResultFieldName)).booleanValue()){
                 if (((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == 0)
                     throw new ModelException((String)success.get(common.RPCConstantsAndServices.ExceptionMessageFieldName), ((Integer)success.get(common.RPCConstantsAndServices.ExceptionNumberFieldName)).intValue());
-                if(((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == -234)
-                    throw ExcStatusDidNotChange.fromHashtableToExcStatusDidNotChange((java.util.HashMap<String,Object>)success.get(common.RPCConstantsAndServices.ResultFieldName), this.getHandler());
                 throw new ModelException ("Fatal error (unknown exception code:" + (Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName) + ")",0);
             }
         }catch(IOException ioe){
@@ -104,7 +96,7 @@ public class ServiceAdminConnection extends ServiceConnection {
         
     }
     
-    public synchronized void artikelEntnehmen(WarenlagerView warenlager, ArtikelView artikel, long menge) throws ModelException{
+    public synchronized void artikelEntnehmen(WarenlagerView warenlager, PositionView position, long menge) throws ModelException{
         try {
             Vector<Object> parameters = new Vector<Object>();
             if (warenlager == null){
@@ -112,10 +104,10 @@ public class ServiceAdminConnection extends ServiceConnection {
             } else {
                 parameters.add(((view.objects.ViewProxi)warenlager).createProxiInformation());
             }
-            if (artikel == null){
+            if (position == null){
                 parameters.add(common.RPCConstantsAndServices.createFromClientNullProxiRepresentation());
             } else {
-                parameters.add(((view.objects.ViewProxi)artikel).createProxiInformation());
+                parameters.add(((view.objects.ViewProxi)position).createProxiInformation());
             }
             parameters.add(new Long(menge).toString());
             java.util.HashMap<?,?> success = (java.util.HashMap<?,?>)this.execute(this.connectionName, "artikelEntnehmen", parameters);
@@ -132,8 +124,24 @@ public class ServiceAdminConnection extends ServiceConnection {
         
     }
     
-    @SuppressWarnings("unchecked")
-    public synchronized void neueLieferArt(LieferartManagerView lieferartManager, String name, long lieferzeit, common.Fraction preis) throws ModelException, ExcLieferartAlreadyExists{
+    public synchronized void bestellen() throws ModelException{
+        try {
+            Vector<Object> parameters = new Vector<Object>();
+            java.util.HashMap<?,?> success = (java.util.HashMap<?,?>)this.execute(this.connectionName, "bestellen", parameters);
+            if(!((Boolean)success.get(common.RPCConstantsAndServices.OKOrNotOKResultFieldName)).booleanValue()){
+                if (((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == 0)
+                    throw new ModelException((String)success.get(common.RPCConstantsAndServices.ExceptionMessageFieldName), ((Integer)success.get(common.RPCConstantsAndServices.ExceptionNumberFieldName)).intValue());
+                throw new ModelException ("Fatal error (unknown exception code:" + (Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName) + ")",0);
+            }
+        }catch(IOException ioe){
+            throw new ModelException(ioe.getMessage(),0);
+        }catch(XmlRpcException xre){
+            throw new ModelException(xre.getMessage(),0);
+        }
+        
+    }
+    
+    public synchronized void neueLieferArt(LieferartManagerView lieferartManager, String name, long lieferzeit, common.Fraction preis) throws ModelException{
         try {
             Vector<Object> parameters = new Vector<Object>();
             if (lieferartManager == null){
@@ -148,8 +156,6 @@ public class ServiceAdminConnection extends ServiceConnection {
             if(!((Boolean)success.get(common.RPCConstantsAndServices.OKOrNotOKResultFieldName)).booleanValue()){
                 if (((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == 0)
                     throw new ModelException((String)success.get(common.RPCConstantsAndServices.ExceptionMessageFieldName), ((Integer)success.get(common.RPCConstantsAndServices.ExceptionNumberFieldName)).intValue());
-                if(((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == -233)
-                    throw ExcLieferartAlreadyExists.fromHashtableToExcLieferartAlreadyExists((java.util.HashMap<String,Object>)success.get(common.RPCConstantsAndServices.ResultFieldName), this.getHandler());
                 throw new ModelException ("Fatal error (unknown exception code:" + (Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName) + ")",0);
             }
         }catch(IOException ioe){
@@ -160,8 +166,7 @@ public class ServiceAdminConnection extends ServiceConnection {
         
     }
     
-    @SuppressWarnings("unchecked")
-    public synchronized void neuerArtikel(ArtikelManagerView artikelManager, String artikelnummer, String bezeichnung, common.Fraction preis, long minLagerbestand, long maxLagerbestand, long hstLieferzeit) throws ModelException, UserException{
+    public synchronized void neuerArtikel(ArtikelManagerView artikelManager, String artikelnummer, String bezeichnung, common.Fraction preis, long minLagerbestand, long maxLagerbestand, long hstLieferzeit) throws ModelException{
         try {
             Vector<Object> parameters = new Vector<Object>();
             if (artikelManager == null){
@@ -179,18 +184,50 @@ public class ServiceAdminConnection extends ServiceConnection {
             if(!((Boolean)success.get(common.RPCConstantsAndServices.OKOrNotOKResultFieldName)).booleanValue()){
                 if (((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == 0)
                     throw new ModelException((String)success.get(common.RPCConstantsAndServices.ExceptionMessageFieldName), ((Integer)success.get(common.RPCConstantsAndServices.ExceptionNumberFieldName)).intValue());
-                if(((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == -233)
-                    throw ExcLieferartAlreadyExists.fromHashtableToExcLieferartAlreadyExists((java.util.HashMap<String,Object>)success.get(common.RPCConstantsAndServices.ResultFieldName), this.getHandler());
-                if(((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == -234)
-                    throw ExcStatusDidNotChange.fromHashtableToExcStatusDidNotChange((java.util.HashMap<String,Object>)success.get(common.RPCConstantsAndServices.ResultFieldName), this.getHandler());
-                if(((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == -195)
-                    throw ExcUserAlreadyExists.fromHashtableToExcUserAlreadyExists((java.util.HashMap<String,Object>)success.get(common.RPCConstantsAndServices.ResultFieldName), this.getHandler());
-                if(((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == -128)
-                    throw CycleException.fromHashtableToCycleException((java.util.HashMap<String,Object>)success.get(common.RPCConstantsAndServices.ResultFieldName), this.getHandler());
-                if(((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == -230)
-                    throw ExcArtikelAlreadyExists.fromHashtableToExcArtikelAlreadyExists((java.util.HashMap<String,Object>)success.get(common.RPCConstantsAndServices.ResultFieldName), this.getHandler());
-                if(((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == -130)
-                    throw RestrictionException.fromHashtableToRestrictionException((java.util.HashMap<String,Object>)success.get(common.RPCConstantsAndServices.ResultFieldName), this.getHandler());
+                throw new ModelException ("Fatal error (unknown exception code:" + (Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName) + ")",0);
+            }
+        }catch(IOException ioe){
+            throw new ModelException(ioe.getMessage(),0);
+        }catch(XmlRpcException xre){
+            throw new ModelException(xre.getMessage(),0);
+        }
+        
+    }
+    
+    public synchronized void statusAuslauf(ArtikelView artikel) throws ModelException{
+        try {
+            Vector<Object> parameters = new Vector<Object>();
+            if (artikel == null){
+                parameters.add(common.RPCConstantsAndServices.createFromClientNullProxiRepresentation());
+            } else {
+                parameters.add(((view.objects.ViewProxi)artikel).createProxiInformation());
+            }
+            java.util.HashMap<?,?> success = (java.util.HashMap<?,?>)this.execute(this.connectionName, "statusAuslauf", parameters);
+            if(!((Boolean)success.get(common.RPCConstantsAndServices.OKOrNotOKResultFieldName)).booleanValue()){
+                if (((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == 0)
+                    throw new ModelException((String)success.get(common.RPCConstantsAndServices.ExceptionMessageFieldName), ((Integer)success.get(common.RPCConstantsAndServices.ExceptionNumberFieldName)).intValue());
+                throw new ModelException ("Fatal error (unknown exception code:" + (Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName) + ")",0);
+            }
+        }catch(IOException ioe){
+            throw new ModelException(ioe.getMessage(),0);
+        }catch(XmlRpcException xre){
+            throw new ModelException(xre.getMessage(),0);
+        }
+        
+    }
+    
+    public synchronized void statusVerkauf(ArtikelView artikel) throws ModelException{
+        try {
+            Vector<Object> parameters = new Vector<Object>();
+            if (artikel == null){
+                parameters.add(common.RPCConstantsAndServices.createFromClientNullProxiRepresentation());
+            } else {
+                parameters.add(((view.objects.ViewProxi)artikel).createProxiInformation());
+            }
+            java.util.HashMap<?,?> success = (java.util.HashMap<?,?>)this.execute(this.connectionName, "statusVerkauf", parameters);
+            if(!((Boolean)success.get(common.RPCConstantsAndServices.OKOrNotOKResultFieldName)).booleanValue()){
+                if (((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == 0)
+                    throw new ModelException((String)success.get(common.RPCConstantsAndServices.ExceptionMessageFieldName), ((Integer)success.get(common.RPCConstantsAndServices.ExceptionNumberFieldName)).intValue());
                 throw new ModelException ("Fatal error (unknown exception code:" + (Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName) + ")",0);
             }
         }catch(IOException ioe){

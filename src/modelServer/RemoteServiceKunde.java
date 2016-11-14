@@ -43,6 +43,8 @@ public  class RemoteServiceKunde extends RemoteService {
             return createOKResult();
         }catch(PersistenceException pe){
             return createExceptionResult(pe);
+        }catch(model.ExcArtikelAlreadyExists e0){
+            return createExceptionResult(e0, this);
         }
     }
     

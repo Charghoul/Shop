@@ -15,7 +15,7 @@ public class BestellungProxi extends ViewProxi implements BestellungView{
     public BestellungView getRemoteObject(java.util.HashMap<String,Object> resultTable, ExceptionAndEventHandler connectionKey) throws ModelException{
         java.util.Vector<String> positionsListe_string = (java.util.Vector<String>)resultTable.get("positionsListe");
         java.util.Vector<PositionView> positionsListe = ViewProxi.getProxiVector(positionsListe_string, connectionKey);
-        String ID = (String)resultTable.get("ID");
+        String bestellID = (String)resultTable.get("bestellID");
         ViewProxi bestellstatus = null;
         String bestellstatus$String = (String)resultTable.get("bestellstatus");
         if (bestellstatus$String != null) {
@@ -23,7 +23,7 @@ public class BestellungProxi extends ViewProxi implements BestellungView{
             bestellstatus = view.objects.ViewProxi.createProxi(bestellstatus$Info,connectionKey);
             bestellstatus.setToString(bestellstatus$Info.getToString());
         }
-        BestellungView result$$ = new Bestellung(positionsListe,(String)ID,(BestellstatusView)bestellstatus, this.getId(), this.getClassId());
+        BestellungView result$$ = new Bestellung(positionsListe,(String)bestellID,(BestellstatusView)bestellstatus, this.getId(), this.getClassId());
         ((ViewRoot)result$$).setToString((String) resultTable.get(common.RPCConstantsAndServices.RPCToStringFieldName));
         return result$$;
     }
@@ -68,11 +68,11 @@ public class BestellungProxi extends ViewProxi implements BestellungView{
     public void setPositionsListe(java.util.Vector<PositionView> newValue) throws ModelException {
         ((Bestellung)this.getTheObject()).setPositionsListe(newValue);
     }
-    public String getID()throws ModelException{
-        return ((Bestellung)this.getTheObject()).getID();
+    public String getBestellID()throws ModelException{
+        return ((Bestellung)this.getTheObject()).getBestellID();
     }
-    public void setID(String newValue) throws ModelException {
-        ((Bestellung)this.getTheObject()).setID(newValue);
+    public void setBestellID(String newValue) throws ModelException {
+        ((Bestellung)this.getTheObject()).setBestellID(newValue);
     }
     public BestellstatusView getBestellstatus()throws ModelException{
         return ((Bestellung)this.getTheObject()).getBestellstatus();

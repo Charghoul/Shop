@@ -1,8 +1,8 @@
 
 package model;
 
-import persistence.*;
 import model.visitor.*;
+import persistence.*;
 import serverConstants.ErrorMessages;
 
 import java.sql.Timestamp;

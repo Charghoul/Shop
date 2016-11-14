@@ -1203,6 +1203,9 @@ class DetailPanelFactory implements AnythingVisitor {
     public void handleErrorDisplay(view.ErrorDisplayView object){
         result = new ErrorDisplayDefaultDetailPanel(handler, object);
     }
+    public void handleFalseX(view.FalseXView object){
+        result = new FalseXDefaultDetailPanel(handler, object);
+    }
     public void handleBestellung(view.BestellungView object){
         result = new BestellungDefaultDetailPanel(handler, object);
     }
@@ -1259,6 +1262,9 @@ class DetailPanelFactory implements AnythingVisitor {
     }
     public void handleWarenlager(view.WarenlagerView object){
         result = new WarenlagerDefaultDetailPanel(handler, object);
+    }
+    public void handleTrueX(view.TrueXView object){
+        result = new TrueXDefaultDetailPanel(handler, object);
     }
 
 }
@@ -1351,10 +1357,23 @@ class ErrorDisplayDefaultDetailPanel extends DefaultDetailPanel{
     }
 }
 
+class FalseXDefaultDetailPanel extends DefaultDetailPanel{
+    
+    protected FalseXDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
+        super(exceptionHandler, anything);
+    }
+    protected void addFields(){
+        
+    }
+    protected view.FalseXView getAnything(){
+        return (view.FalseXView)this.anything;
+    }
+}
+
 class BestellungDefaultDetailPanel extends DefaultDetailPanel{
     
     protected static final String Bestellung$$positionsListe = "Bestellung$$positionsListe";
-    protected static final String Bestellung$$ID = "Bestellung$$ID";
+    protected static final String Bestellung$$bestellID = "Bestellung$$bestellID";
     protected static final String Bestellung$$bestellstatus = "Bestellung$$bestellstatus";
     
     protected BestellungDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
@@ -1362,9 +1381,9 @@ class BestellungDefaultDetailPanel extends DefaultDetailPanel{
     }
     protected void addFields(){
         try{
-            BaseTypePanel panel = new StringPanel(this, "ID", this.getAnything().getID());
+            BaseTypePanel panel = new StringPanel(this, "bestellID", this.getAnything().getBestellID());
             this.getScrollablePane().getChildren().add(panel);
-            this.panels.put(Bestellung$$ID, panel);
+            this.panels.put(Bestellung$$bestellID, panel);
         }catch(ModelException e){
             this.getExceptionAndEventhandler().handleException(e);
         }
@@ -1750,5 +1769,18 @@ class WarenlagerDefaultDetailPanel extends DefaultDetailPanel{
     }
     protected view.WarenlagerView getAnything(){
         return (view.WarenlagerView)this.anything;
+    }
+}
+
+class TrueXDefaultDetailPanel extends DefaultDetailPanel{
+    
+    protected TrueXDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
+        super(exceptionHandler, anything);
+    }
+    protected void addFields(){
+        
+    }
+    protected view.TrueXView getAnything(){
+        return (view.TrueXView)this.anything;
     }
 }

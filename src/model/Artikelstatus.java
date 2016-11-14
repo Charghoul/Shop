@@ -1,8 +1,6 @@
 
 package model;
 
-import model.visitor.AnythingVisitor;
-import model.visitor.ArtikelstatusReturnExceptionVisitor;
 import model.visitor.ArtikelstatusVisitor;
 import persistence.*;
 

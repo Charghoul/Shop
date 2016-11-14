@@ -13,15 +13,21 @@ public interface Artikel4Public extends Anything, AbstractPersistentProxi {
     
     public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
 				throws PersistenceException;
+    public void statusAuslauf(final Invoker invoker) 
+				throws PersistenceException;
+    public void statusVerkauf(final Invoker invoker) 
+				throws PersistenceException;
     public void aendereArtikel(final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
 				throws PersistenceException;
-    public void aendereStatus(final Artikelstatus4Public artikelstatus) 
-				throws model.ExcStatusDidNotChange, PersistenceException;
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException;
     public void initializeOnCreation() 
 				throws PersistenceException;
     public void initializeOnInstantiation() 
+				throws PersistenceException;
+    public void statusAuslauf() 
+				throws PersistenceException;
+    public void statusVerkauf() 
 				throws PersistenceException;
 
 }

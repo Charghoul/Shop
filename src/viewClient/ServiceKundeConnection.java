@@ -63,7 +63,8 @@ public class ServiceKundeConnection extends ServiceConnection {
         
     }
     
-    public synchronized void neuePosition(EinkaufsManagerView einkaufsManager, ArtikelView artikel, long menge) throws ModelException{
+    @SuppressWarnings("unchecked")
+    public synchronized void neuePosition(EinkaufsManagerView einkaufsManager, ArtikelView artikel, long menge) throws ModelException, ExcArtikelAlreadyExists{
         try {
             Vector<Object> parameters = new Vector<Object>();
             if (einkaufsManager == null){
@@ -81,6 +82,8 @@ public class ServiceKundeConnection extends ServiceConnection {
             if(!((Boolean)success.get(common.RPCConstantsAndServices.OKOrNotOKResultFieldName)).booleanValue()){
                 if (((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == 0)
                     throw new ModelException((String)success.get(common.RPCConstantsAndServices.ExceptionMessageFieldName), ((Integer)success.get(common.RPCConstantsAndServices.ExceptionNumberFieldName)).intValue());
+                if(((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == -230)
+                    throw ExcArtikelAlreadyExists.fromHashtableToExcArtikelAlreadyExists((java.util.HashMap<String,Object>)success.get(common.RPCConstantsAndServices.ResultFieldName), this.getHandler());
                 throw new ModelException ("Fatal error (unknown exception code:" + (Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName) + ")",0);
             }
         }catch(IOException ioe){

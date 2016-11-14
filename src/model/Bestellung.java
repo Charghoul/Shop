@@ -1,8 +1,11 @@
 
 package model;
 
+import model.visitor.AnythingExceptionVisitor;
+import model.visitor.AnythingReturnExceptionVisitor;
+import model.visitor.AnythingReturnVisitor;
+import model.visitor.AnythingVisitor;
 import persistence.*;
-import model.visitor.*;
 
 
 /* Additional import section end */
@@ -15,37 +18,41 @@ public class Bestellung extends PersistentObject implements PersistentBestellung
         return (Bestellung4Public)PersistentProxi.createProxi(objectId, classId);
     }
     
-    public static Bestellung4Public createBestellung() throws PersistenceException{
-        return createBestellung(false);
+    public static Bestellung4Public createBestellung(String bestellID) throws PersistenceException{
+        return createBestellung(bestellID,false);
     }
     
-    public static Bestellung4Public createBestellung(boolean delayed$Persistence) throws PersistenceException {
+    public static Bestellung4Public createBestellung(String bestellID,boolean delayed$Persistence) throws PersistenceException {
+        if (bestellID == null) throw new PersistenceException("Null not allowed for persistent strings, since null = \"\" in Oracle!", 0);
         PersistentBestellung result = null;
         if(delayed$Persistence){
             result = ConnectionHandler.getTheConnectionHandler().theBestellungFacade
-                .newDelayedBestellung("");
+                .newDelayedBestellung(bestellID);
             result.setDelayed$Persistence(true);
         }else{
             result = ConnectionHandler.getTheConnectionHandler().theBestellungFacade
-                .newBestellung("",-1);
+                .newBestellung(bestellID,-1);
         }
         java.util.HashMap<String,Object> final$$Fields = new java.util.HashMap<String,Object>();
+        final$$Fields.put("bestellID", bestellID);
         result.initialize(result, final$$Fields);
         result.initializeOnCreation();
         return result;
     }
     
-    public static Bestellung4Public createBestellung(boolean delayed$Persistence,Bestellung4Public This) throws PersistenceException {
+    public static Bestellung4Public createBestellung(String bestellID,boolean delayed$Persistence,Bestellung4Public This) throws PersistenceException {
+        if (bestellID == null) throw new PersistenceException("Null not allowed for persistent strings, since null = \"\" in Oracle!", 0);
         PersistentBestellung result = null;
         if(delayed$Persistence){
             result = ConnectionHandler.getTheConnectionHandler().theBestellungFacade
-                .newDelayedBestellung("");
+                .newDelayedBestellung(bestellID);
             result.setDelayed$Persistence(true);
         }else{
             result = ConnectionHandler.getTheConnectionHandler().theBestellungFacade
-                .newBestellung("",-1);
+                .newBestellung(bestellID,-1);
         }
         java.util.HashMap<String,Object> final$$Fields = new java.util.HashMap<String,Object>();
+        final$$Fields.put("bestellID", bestellID);
         result.initialize(This, final$$Fields);
         result.initializeOnCreation();
         return result;
@@ -56,7 +63,7 @@ public class Bestellung extends PersistentObject implements PersistentBestellung
         if (depth > 0 && essentialLevel <= common.RPCConstantsAndServices.EssentialDepth){
             result = super.toHashtable(allResults, depth, essentialLevel, forGUI, false, tdObserver);
             result.put("positionsListe", this.getPositionsListe().getVector(allResults, depth, essentialLevel, forGUI, tdObserver, false, true));
-            result.put("ID", this.getID());
+            result.put("bestellID", this.getBestellID());
             AbstractPersistentRoot bestellstatus = (AbstractPersistentRoot)this.getBestellstatus();
             if (bestellstatus != null) {
                 result.put("bestellstatus", bestellstatus.createProxiInformation(false, essentialLevel <= 1));
@@ -72,9 +79,14 @@ public class Bestellung extends PersistentObject implements PersistentBestellung
         return result;
     }
     
+    public static BestellungSearchList getBestellungByBestellID(String bestellID) throws PersistenceException{
+        return ConnectionHandler.getTheConnectionHandler().theBestellungFacade
+            .getBestellungByBestellID(bestellID);
+    }
+    
     public Bestellung provideCopy() throws PersistenceException{
         Bestellung result = this;
-        result = new Bestellung(this.ID, 
+        result = new Bestellung(this.bestellID, 
                                 this.bestellstatus, 
                                 this.This, 
                                 this.getId());
@@ -86,15 +98,15 @@ public class Bestellung extends PersistentObject implements PersistentBestellung
         return false;
     }
     protected Bestellung_PositionsListeProxi positionsListe;
-    protected String ID;
+    protected String bestellID;
     protected PersistentBestellstatus bestellstatus;
     protected PersistentBestellung This;
     
-    public Bestellung(String ID,PersistentBestellstatus bestellstatus,PersistentBestellung This,long id) throws PersistenceException {
+    public Bestellung(String bestellID,PersistentBestellstatus bestellstatus,PersistentBestellung This,long id) throws PersistenceException {
         /* Shall not be used by clients for object construction! Use static create operation instead! */
         super(id);
         this.positionsListe = new Bestellung_PositionsListeProxi(this);
-        this.ID = ID;
+        this.bestellID = bestellID;
         this.bestellstatus = bestellstatus;
         if (This != null && !(this.isTheSameAs(This))) this.This = This;        
     }
@@ -110,7 +122,7 @@ public class Bestellung extends PersistentObject implements PersistentBestellung
     public void store() throws PersistenceException {
         if(!this.isDelayed$Persistence()) return;
         if (this.getClassId() == 136) ConnectionHandler.getTheConnectionHandler().theBestellungFacade
-            .newBestellung(ID,this.getId());
+            .newBestellung(bestellID,this.getId());
         super.store();
         this.getPositionsListe().store();
         if(this.getBestellstatus() != null){
@@ -127,13 +139,13 @@ public class Bestellung extends PersistentObject implements PersistentBestellung
     public Bestellung_PositionsListeProxi getPositionsListe() throws PersistenceException {
         return this.positionsListe;
     }
-    public String getID() throws PersistenceException {
-        return this.ID;
+    public String getBestellID() throws PersistenceException {
+        return this.bestellID;
     }
-    public void setID(String newValue) throws PersistenceException {
+    public void setBestellID(String newValue) throws PersistenceException {
         if (newValue == null) throw new PersistenceException("Null not allowed for persistent strings, since null = \"\" in Oracle!", 0);
-        if(!this.isDelayed$Persistence()) ConnectionHandler.getTheConnectionHandler().theBestellungFacade.IDSet(this.getId(), newValue);
-        this.ID = newValue;
+        if(!this.isDelayed$Persistence()) ConnectionHandler.getTheConnectionHandler().theBestellungFacade.bestellIDSet(this.getId(), newValue);
+        this.bestellID = newValue;
     }
     public Bestellstatus4Public getBestellstatus() throws PersistenceException {
         return this.bestellstatus;
@@ -195,6 +207,7 @@ public class Bestellung extends PersistentObject implements PersistentBestellung
 				throws PersistenceException{
         this.setThis((PersistentBestellung)This);
 		if(this.isTheSameAs(This)){
+			this.setBestellID((String)final$$Fields.get("bestellID"));
 		}
     }
     

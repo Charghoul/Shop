@@ -1,10 +1,11 @@
 package persistence;
 
+import model.ExcArtikelAlreadyExists;
+import model.UserException;
+
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Vector;
-import java.util.HashMap;
-
-import model.UserException;
 
 public abstract class SearchListRoot<T extends AbstractPersistentRoot> {
 
@@ -118,7 +119,7 @@ public abstract class SearchListRoot<T extends AbstractPersistentRoot> {
 		}
 	}
 	
-	public void applyToAll (Procdure<T> procedure) throws PersistenceException{
+	public void applyToAll (Procdure<T> procedure) throws PersistenceException, ExcArtikelAlreadyExists {
 		Iterator<T> i = this.iterator();
 		while (i.hasNext()){
 			T current = i.next();

@@ -43,6 +43,10 @@ public class LieferartManagerICProxi extends PersistentInCacheProxiOptimistic im
     }
     
     
+    public void aendereLieferart(final Lieferart4Public lieferart, final String name, final long lieferzeit, final common.Fraction preis, final Invoker invoker) 
+				throws PersistenceException{
+        ((PersistentLieferartManager)this.getTheObject()).aendereLieferart(lieferart, name, lieferzeit, preis, invoker);
+    }
     public ServiceAdmin4Public getMyService() 
 				throws PersistenceException{
         return ((PersistentLieferartManager)this.getTheObject()).getMyService();
@@ -50,6 +54,10 @@ public class LieferartManagerICProxi extends PersistentInCacheProxiOptimistic im
     public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
 				throws PersistenceException{
         ((PersistentLieferartManager)this.getTheObject()).initialize(This, final$$Fields);
+    }
+    public void neueLieferart(final String name, final long lieferzeit, final common.Fraction preis, final Invoker invoker) 
+				throws PersistenceException{
+        ((PersistentLieferartManager)this.getTheObject()).neueLieferart(name, lieferzeit, preis, invoker);
     }
     public void aendereLieferart(final Lieferart4Public lieferart, final String name, final long lieferzeit, final common.Fraction preis) 
 				throws PersistenceException{

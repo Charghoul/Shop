@@ -14,7 +14,7 @@ public interface EinkaufsManager4Public extends Anything, AbstractPersistentProx
     public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
 				throws PersistenceException;
     public void aendereMenge(final Position4Public position, final long menge) 
-				throws PersistenceException;
+				throws model.ExcLagerbestandUnderZero, PersistenceException;
     public void bestellen() 
 				throws PersistenceException;
     public void copyingPrivateUserAttributes(final Anything copy) 
@@ -24,7 +24,7 @@ public interface EinkaufsManager4Public extends Anything, AbstractPersistentProx
     public void initializeOnInstantiation() 
 				throws PersistenceException;
     public void neuePosition(final Artikel4Public artikel, final long menge) 
-				throws PersistenceException;
+				throws model.ExcArtikelAlreadyExists, PersistenceException;
 
 }
 

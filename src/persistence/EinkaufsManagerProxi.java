@@ -48,7 +48,7 @@ public class EinkaufsManagerProxi extends PersistentProxi implements PersistentE
         return ((PersistentEinkaufsManager)this.getTheObject()).inverseGetEinkaufsManager();
     }
     public void aendereMenge(final Position4Public position, final long menge) 
-				throws PersistenceException{
+				throws model.ExcLagerbestandUnderZero, PersistenceException{
         ((PersistentEinkaufsManager)this.getTheObject()).aendereMenge(position, menge);
     }
     public void bestellen() 
@@ -68,7 +68,7 @@ public class EinkaufsManagerProxi extends PersistentProxi implements PersistentE
         ((PersistentEinkaufsManager)this.getTheObject()).initializeOnInstantiation();
     }
     public void neuePosition(final Artikel4Public artikel, final long menge) 
-				throws PersistenceException{
+				throws model.ExcArtikelAlreadyExists, PersistenceException{
         ((PersistentEinkaufsManager)this.getTheObject()).neuePosition(artikel, menge);
     }
 

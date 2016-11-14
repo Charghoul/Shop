@@ -55,6 +55,14 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     public void handleAngenommen(AngenommenView angenommen) throws ModelException{
         this.handleBestellstatus(angenommen);
     }
+    public abstract void handleBooleanX(BooleanXView booleanX) throws ModelException;
+    
+    public void handleFalseX(FalseXView falseX) throws ModelException{
+        this.handleBooleanX(falseX);
+    }
+    public void handleTrueX(TrueXView trueX) throws ModelException{
+        this.handleBooleanX(trueX);
+    }
     public abstract void handleArtikel(ArtikelView artikel) throws ModelException;
     
     public abstract void handleWarenlager(WarenlagerView warenlager) throws ModelException;

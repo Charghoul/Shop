@@ -1,11 +1,8 @@
 
 package model;
 
-import persistence.*;
 import model.visitor.*;
-import view.objects.*;
-import view.objects.Artikel;
-import view.objects.Warenlager;
+import persistence.*;
 
 
 /* Additional import section end */
@@ -262,20 +259,26 @@ public class ServiceAdmin extends model.Service implements PersistentServiceAdmi
     
     // Start of section that contains operations that must be implemented.
     
-    public void aendereStatus(final ArtikelManager4Public artikelManager, final Artikel4Public artikel, final Artikelstatus4Public artikelstatus) 
-				throws model.ExcStatusDidNotChange, PersistenceException{
-        //TODO: implement method: aendereStatus
+    public void aendereArtikel(final Artikel4Public artikel, final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
+				throws PersistenceException{
+        //TODO: implement method: aendereArtikel
         
     }
     public void artikelEinlagern(final Warenlager4Public warenlager, final Artikel4Public artikel, final long menge) 
 				throws PersistenceException{
-        warenlager.artikelEinlagern(artikel, menge);
+        warenlager.artikelEinlagern(artikel, menge, getThis());
         getThis().signalChanged(true);
     }
-    public void artikelEntnehmen(final Warenlager4Public warenlager, final Artikel4Public artikel, final long menge) 
+    public void artikelEntnehmen(final Warenlager4Public warenlager, final Position4Public position, final long menge) 
 				throws PersistenceException{
-        warenlager.artikelEntnehmen(artikel, menge);
+        warenlager.artikelEntnehmen(position, menge, getThis());
         getThis().signalChanged(true);
+
+    }
+    public void bestellen() 
+				throws PersistenceException{
+        //TODO: implement method: bestellen
+        
     }
     public void connected(final String user) 
 				throws PersistenceException{
@@ -306,15 +309,27 @@ public class ServiceAdmin extends model.Service implements PersistentServiceAdmi
 		//TODO: implement method: initializeOnInstantiation
     }
     public void neueLieferArt(final LieferartManager4Public lieferartManager, final String name, final long lieferzeit, final common.Fraction preis) 
-				throws model.ExcLieferartAlreadyExists, PersistenceException{
-        lieferartManager.neueLieferart(name, lieferzeit, preis);
+				throws PersistenceException{
+        lieferartManager.neueLieferart(name, lieferzeit, preis, getThis());
             getThis().signalChanged(true);
         
     }
     public void neuerArtikel(final ArtikelManager4Public artikelManager, final String artikelnummer, final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
-				throws model.UserException, PersistenceException{
-        artikelManager.neuerArtikel(artikelnummer, bezeichnung, preis, minLagerbestand, maxLagerbestand, hstLieferzeit);
+				throws PersistenceException{
+        artikelManager.neuerArtikel(artikelnummer, bezeichnung, preis, minLagerbestand, maxLagerbestand, hstLieferzeit, getThis());
         getThis().signalChanged(true);
+    }
+    public void statusAuslauf(final Artikel4Public artikel) 
+				throws PersistenceException{
+        artikel.statusAuslauf();
+        getThis().signalChanged(true);
+        
+    }
+    public void statusVerkauf(final Artikel4Public artikel) 
+				throws PersistenceException{
+       artikel.statusVerkauf();
+        getThis().signalChanged(true);
+        
     }
     
     

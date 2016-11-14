@@ -5,6 +5,9 @@ import view.*;
 
 public abstract class UserExceptionStandardVisitor implements UserExceptionVisitor {
     
+    public void handleExcLagerbestandUnderZero(ExcLagerbestandUnderZero excLagerbestandUnderZero) throws ModelException{
+        this.standardHandling(excLagerbestandUnderZero);
+    }
     public void handleExcLieferartAlreadyExists(ExcLieferartAlreadyExists excLieferartAlreadyExists) throws ModelException{
         this.standardHandling(excLieferartAlreadyExists);
     }

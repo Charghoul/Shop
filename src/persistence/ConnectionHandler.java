@@ -113,20 +113,29 @@ public class ConnectionHandler {
     public EinkaufsManagerFacade theEinkaufsManagerFacade;
     public AuslaufFacade theAuslaufFacade;
     public ErrorDisplayFacade theErrorDisplayFacade;
+    public FalseXFacade theFalseXFacade;
     public BestellungFacade theBestellungFacade;
+    public ArtikelEntnehmenCommandFacade theArtikelEntnehmenCommandFacade;
     public LieferartFacade theLieferartFacade;
     public RegisterCommandFacade theRegisterCommandFacade;
+    public AendereArtikelCommandFacade theAendereArtikelCommandFacade;
     public NeuanlageFacade theNeuanlageFacade;
     public ServiceRegisterFacade theServiceRegisterFacade;
     public CommandCoordinatorFacade theCommandCoordinatorFacade;
+    public AendereLieferartCommandFacade theAendereLieferartCommandFacade;
+    public ArtikelEinlagernCommandFacade theArtikelEinlagernCommandFacade;
     public GeliefertFacade theGeliefertFacade;
     public ServiceKundeFacade theServiceKundeFacade;
     public BestellstatusFacade theBestellstatusFacade;
     public ArtikelFacade theArtikelFacade;
     public PositionFacade thePositionFacade;
+    public NeueLieferartCommandFacade theNeueLieferartCommandFacade;
     public ServiceFacade theServiceFacade;
     public ServiceAdminFacade theServiceAdminFacade;
     public ArtikelManagerFacade theArtikelManagerFacade;
+    public StatusAuslaufCommandFacade theStatusAuslaufCommandFacade;
+    public NeuerArtikelCommandFacade theNeuerArtikelCommandFacade;
+    public StatusVerkaufCommandFacade theStatusVerkaufCommandFacade;
     public KontoFacade theKontoFacade;
     public VorbestellungFacade theVorbestellungFacade;
     public KundeFacade theKundeFacade;
@@ -135,10 +144,12 @@ public class ConnectionHandler {
     public HinversandFacade theHinversandFacade;
     public AngenommenFacade theAngenommenFacade;
     public LieferungFacade theLieferungFacade;
+    public BooleanXFacade theBooleanXFacade;
     public WarenlagerFacade theWarenlagerFacade;
     public CommonDateFacade theCommonDateFacade;
     public ArtikelstatusFacade theArtikelstatusFacade;
     public CommandExecuterFacade theCommandExecuterFacade;
+    public TrueXFacade theTrueXFacade;
 
 	protected ConnectionHandler(String name) throws PersistenceException {
 		this.name = name;
@@ -168,20 +179,29 @@ public class ConnectionHandler {
             this.theEinkaufsManagerFacade= new EinkaufsManagerFacade(this.schemaName, this.con);
             this.theAuslaufFacade= new AuslaufFacade(this.schemaName, this.con);
             this.theErrorDisplayFacade= new ErrorDisplayFacade();
+            this.theFalseXFacade= new FalseXFacade(this.schemaName, this.con);
             this.theBestellungFacade= new BestellungFacade(this.schemaName, this.con);
+            this.theArtikelEntnehmenCommandFacade= new ArtikelEntnehmenCommandFacade(this.schemaName, this.con);
             this.theLieferartFacade= new LieferartFacade(this.schemaName, this.con);
             this.theRegisterCommandFacade= new RegisterCommandFacade(this.schemaName, this.con);
+            this.theAendereArtikelCommandFacade= new AendereArtikelCommandFacade(this.schemaName, this.con);
             this.theNeuanlageFacade= new NeuanlageFacade(this.schemaName, this.con);
             this.theServiceRegisterFacade= new ServiceRegisterFacade(this.schemaName, this.con);
             this.theCommandCoordinatorFacade= new CommandCoordinatorFacade(this.schemaName, this.con);
+            this.theAendereLieferartCommandFacade= new AendereLieferartCommandFacade(this.schemaName, this.con);
+            this.theArtikelEinlagernCommandFacade= new ArtikelEinlagernCommandFacade(this.schemaName, this.con);
             this.theGeliefertFacade= new GeliefertFacade(this.schemaName, this.con);
             this.theServiceKundeFacade= new ServiceKundeFacade(this.schemaName, this.con);
             this.theBestellstatusFacade= new BestellstatusFacade(this.schemaName, this.con);
             this.theArtikelFacade= new ArtikelFacade(this.schemaName, this.con);
             this.thePositionFacade= new PositionFacade(this.schemaName, this.con);
+            this.theNeueLieferartCommandFacade= new NeueLieferartCommandFacade(this.schemaName, this.con);
             this.theServiceFacade= new ServiceFacade(this.schemaName, this.con);
             this.theServiceAdminFacade= new ServiceAdminFacade(this.schemaName, this.con);
             this.theArtikelManagerFacade= new ArtikelManagerFacade(this.schemaName, this.con);
+            this.theStatusAuslaufCommandFacade= new StatusAuslaufCommandFacade(this.schemaName, this.con);
+            this.theNeuerArtikelCommandFacade= new NeuerArtikelCommandFacade(this.schemaName, this.con);
+            this.theStatusVerkaufCommandFacade= new StatusVerkaufCommandFacade(this.schemaName, this.con);
             this.theKontoFacade= new KontoFacade(this.schemaName, this.con);
             this.theVorbestellungFacade= new VorbestellungFacade(this.schemaName, this.con);
             this.theKundeFacade= new KundeFacade(this.schemaName, this.con);
@@ -190,10 +210,12 @@ public class ConnectionHandler {
             this.theHinversandFacade= new HinversandFacade(this.schemaName, this.con);
             this.theAngenommenFacade= new AngenommenFacade(this.schemaName, this.con);
             this.theLieferungFacade= new LieferungFacade(this.schemaName, this.con);
+            this.theBooleanXFacade= new BooleanXFacade(this.schemaName, this.con);
             this.theWarenlagerFacade= new WarenlagerFacade(this.schemaName, this.con);
             this.theCommonDateFacade= new CommonDateFacade(this.schemaName, this.con);
             this.theArtikelstatusFacade= new ArtikelstatusFacade(this.schemaName, this.con);
             this.theCommandExecuterFacade= new CommandExecuterFacade(this.schemaName, this.con);
+            this.theTrueXFacade= new TrueXFacade(this.schemaName, this.con);
 		} catch (SQLException sqlExc) {
 			throw new PersistenceException(sqlExc.getMessage(), sqlExc.getErrorCode());
 		}

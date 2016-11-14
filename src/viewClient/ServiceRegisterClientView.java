@@ -1,39 +1,22 @@
 package viewClient;
 
-import view.*;
-import view.objects.ViewRoot;
-import view.objects.ViewObjectInTree;
-
-import view.visitor.AnythingStandardVisitor;
-
-import java.util.Optional;
-
+import com.sun.javafx.geom.Point2D;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.SelectionModel;
-import javafx.scene.control.SplitPane;
-import javafx.scene.control.TitledPane;
-import javafx.scene.control.ToolBar;
-import javafx.scene.control.TreeItem;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
-
-
-import com.sun.javafx.geom.Point2D;
+import view.*;
+import view.objects.ViewObjectInTree;
+import view.objects.ViewRoot;
+import view.visitor.AnythingStandardVisitor;
 
 import javax.swing.tree.TreeModel;
 

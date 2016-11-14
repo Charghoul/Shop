@@ -1,7 +1,3 @@
-
-
-import java.util.List;
-
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -22,11 +18,11 @@ import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-
 import view.ModelException;
-
 import viewClient.MainViewApplication;
 import viewClient.ServerConnection;
+
+import java.util.List;
 
 
 public class ClientConnect extends Application {	

@@ -36,7 +36,7 @@ public interface ServiceKunde4Public extends Service4Public {
     public void initializeOnInstantiation() 
 				throws PersistenceException;
     public void neuePosition(final EinkaufsManager4Public einkaufsManager, final Artikel4Public artikel, final long menge) 
-				throws PersistenceException;
+				throws model.ExcArtikelAlreadyExists, PersistenceException;
 
 }
 

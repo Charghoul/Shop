@@ -62,8 +62,13 @@ public class ToString$Visitor extends model.visitor.ToString$Visitor {
 	}
 
 	@Override
-	public void handleVerkauf(Verkauf4Public verkauf) throws PersistenceException {
+	public void handleTrueX(TrueX4Public trueX) throws PersistenceException {
+		result = "True";
+	}
 
+	@Override
+	public void handleVerkauf(Verkauf4Public verkauf) throws PersistenceException {
+		result = ToStringConstants.Artikelstatus +ToStringConstants.Verkauf;
 	}
 
 	@Override
@@ -78,9 +83,13 @@ public class ToString$Visitor extends model.visitor.ToString$Visitor {
 
 	@Override
 	public void handleAuslauf(Auslauf4Public auslauf) throws PersistenceException {
-
+		result = ToStringConstants.Artikelstatus + ToStringConstants.Auslauf;
 	}
 
+	@Override
+	public void handleFalseX(FalseX4Public falseX) throws PersistenceException {
+		result = "False";
+	}
 
 	@Override
 	public void handleBestellung(Bestellung4Public bestellung) throws PersistenceException {
@@ -95,7 +104,7 @@ public class ToString$Visitor extends model.visitor.ToString$Visitor {
 
 	@Override
 	public void handleNeuanlage(Neuanlage4Public neuanlage) throws PersistenceException {
-		result = ToStringConstants.Neuanlage;
+		result = ToStringConstants.Artikelstatus + ToStringConstants.Neuanlage;
 	}
 
 

@@ -20,6 +20,9 @@ public abstract class AnythingStandardVisitor implements AnythingVisitor {
     public void handleErrorDisplay(ErrorDisplayView errorDisplay) throws ModelException{
         this.standardHandling(errorDisplay);
     }
+    public void handleFalseX(FalseXView falseX) throws ModelException{
+        this.standardHandling(falseX);
+    }
     public void handleBestellung(BestellungView bestellung) throws ModelException{
         this.standardHandling(bestellung);
     }
@@ -76,6 +79,9 @@ public abstract class AnythingStandardVisitor implements AnythingVisitor {
     }
     public void handleWarenlager(WarenlagerView warenlager) throws ModelException{
         this.standardHandling(warenlager);
+    }
+    public void handleTrueX(TrueXView trueX) throws ModelException{
+        this.standardHandling(trueX);
     }
     protected abstract void standardHandling(Anything anything) throws ModelException;
 }
