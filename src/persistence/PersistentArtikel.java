@@ -15,6 +15,8 @@ public interface PersistentArtikel extends Anything, AbstractPersistentProxi, Ar
     public void setMaxLagerbestand(long newValue) throws PersistenceException ;
     public long getHstLieferzeit() throws PersistenceException ;
     public void setHstLieferzeit(long newValue) throws PersistenceException ;
+    public Artikelstatus4Public getArtikelstatus() throws PersistenceException ;
+    public void setArtikelstatus(Artikelstatus4Public newValue) throws PersistenceException ;
     public PersistentArtikel getThis() throws PersistenceException ;
     
     

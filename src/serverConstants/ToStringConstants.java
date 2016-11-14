@@ -12,6 +12,7 @@ public class ToStringConstants {
     public static final String Bestellstatus = "Bestellstatus: ";
     public static final String Einkaufswagen = "Einkaufswagen";
     public static final String ArtikelManager = "Artikelverzeichnis";
+    public static final String Neuanlage = "Neuanlage";
 
     private ToStringConstants(){}
 }

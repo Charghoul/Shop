@@ -24,6 +24,16 @@ public  class RemoteServiceKunde extends RemoteService {
         }
     }
     
+    public synchronized java.util.HashMap<?,?> bestellen(String einkaufsManagerProxiString){
+        try {
+            PersistentEinkaufsManager einkaufsManager = (PersistentEinkaufsManager)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(einkaufsManagerProxiString));
+            ((PersistentServiceKunde)this.server).bestellen(einkaufsManager);
+            return createOKResult();
+        }catch(PersistenceException pe){
+            return createExceptionResult(pe);
+        }
+    }
+    
     public synchronized java.util.HashMap<?,?> neuePosition(String einkaufsManagerProxiString, String artikelProxiString, String mengeAsString){
         try {
             PersistentEinkaufsManager einkaufsManager = (PersistentEinkaufsManager)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(einkaufsManagerProxiString));

@@ -51,9 +51,13 @@ public class EinkaufsManagerICProxi extends PersistentInCacheProxiOptimistic imp
 				throws PersistenceException{
         return ((PersistentEinkaufsManager)this.getTheObject()).inverseGetEinkaufsManager();
     }
-    public void aenderePosition(final Artikel4Public artikel, final long menge) 
+    public void aendereMenge(final Position4Public position, final long menge) 
 				throws PersistenceException{
-        ((PersistentEinkaufsManager)this.getTheObject()).aenderePosition(artikel, menge);
+        ((PersistentEinkaufsManager)this.getTheObject()).aendereMenge(position, menge);
+    }
+    public void bestellen() 
+				throws PersistenceException{
+        ((PersistentEinkaufsManager)this.getTheObject()).bestellen();
     }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{

@@ -3,6 +3,8 @@ package model;
 
 import persistence.*;
 import model.visitor.*;
+import serverConstants.ErrorMessages;
+import serverConstants.ToStringConstants;
 
 
 /* Additional import section end */
@@ -15,11 +17,11 @@ public class Artikel extends PersistentObject implements PersistentArtikel{
         return (Artikel4Public)PersistentProxi.createProxi(objectId, classId);
     }
     
-    public static Artikel4Public createArtikel(String artikelnummer,String bezeichnung,common.Fraction preis,long minLagerbestand,long maxLagerbestand,long hstLieferzeit) throws PersistenceException{
-        return createArtikel(artikelnummer,bezeichnung,preis,minLagerbestand,maxLagerbestand,hstLieferzeit,false);
+    public static Artikel4Public createArtikel(String artikelnummer,String bezeichnung,common.Fraction preis,long minLagerbestand,long maxLagerbestand,long hstLieferzeit,Artikelstatus4Public artikelstatus) throws PersistenceException{
+        return createArtikel(artikelnummer,bezeichnung,preis,minLagerbestand,maxLagerbestand,hstLieferzeit,artikelstatus,false);
     }
     
-    public static Artikel4Public createArtikel(String artikelnummer,String bezeichnung,common.Fraction preis,long minLagerbestand,long maxLagerbestand,long hstLieferzeit,boolean delayed$Persistence) throws PersistenceException {
+    public static Artikel4Public createArtikel(String artikelnummer,String bezeichnung,common.Fraction preis,long minLagerbestand,long maxLagerbestand,long hstLieferzeit,Artikelstatus4Public artikelstatus,boolean delayed$Persistence) throws PersistenceException {
         if (artikelnummer == null) throw new PersistenceException("Null not allowed for persistent strings, since null = \"\" in Oracle!", 0);
         if (bezeichnung == null) throw new PersistenceException("Null not allowed for persistent strings, since null = \"\" in Oracle!", 0);
         PersistentArtikel result = null;
@@ -38,12 +40,13 @@ public class Artikel extends PersistentObject implements PersistentArtikel{
         final$$Fields.put("minLagerbestand", minLagerbestand);
         final$$Fields.put("maxLagerbestand", maxLagerbestand);
         final$$Fields.put("hstLieferzeit", hstLieferzeit);
+        final$$Fields.put("artikelstatus", artikelstatus);
         result.initialize(result, final$$Fields);
         result.initializeOnCreation();
         return result;
     }
     
-    public static Artikel4Public createArtikel(String artikelnummer,String bezeichnung,common.Fraction preis,long minLagerbestand,long maxLagerbestand,long hstLieferzeit,boolean delayed$Persistence,Artikel4Public This) throws PersistenceException {
+    public static Artikel4Public createArtikel(String artikelnummer,String bezeichnung,common.Fraction preis,long minLagerbestand,long maxLagerbestand,long hstLieferzeit,Artikelstatus4Public artikelstatus,boolean delayed$Persistence,Artikel4Public This) throws PersistenceException {
         if (artikelnummer == null) throw new PersistenceException("Null not allowed for persistent strings, since null = \"\" in Oracle!", 0);
         if (bezeichnung == null) throw new PersistenceException("Null not allowed for persistent strings, since null = \"\" in Oracle!", 0);
         PersistentArtikel result = null;
@@ -62,6 +65,7 @@ public class Artikel extends PersistentObject implements PersistentArtikel{
         final$$Fields.put("minLagerbestand", minLagerbestand);
         final$$Fields.put("maxLagerbestand", maxLagerbestand);
         final$$Fields.put("hstLieferzeit", hstLieferzeit);
+        final$$Fields.put("artikelstatus", artikelstatus);
         result.initialize(This, final$$Fields);
         result.initializeOnCreation();
         return result;
@@ -77,6 +81,15 @@ public class Artikel extends PersistentObject implements PersistentArtikel{
             result.put("minLagerbestand", new Long(this.getMinLagerbestand()).toString());
             result.put("maxLagerbestand", new Long(this.getMaxLagerbestand()).toString());
             result.put("hstLieferzeit", new Long(this.getHstLieferzeit()).toString());
+            AbstractPersistentRoot artikelstatus = (AbstractPersistentRoot)this.getArtikelstatus();
+            if (artikelstatus != null) {
+                result.put("artikelstatus", artikelstatus.createProxiInformation(false, essentialLevel <= 1));
+                if(depth > 1) {
+                    artikelstatus.toHashtable(allResults, depth - 1, essentialLevel, forGUI, true , tdObserver);
+                }else{
+                    if(forGUI && artikelstatus.hasEssentialFields())artikelstatus.toHashtable(allResults, depth, essentialLevel + 1, false, true, tdObserver);
+                }
+            }
             String uniqueKey = common.RPCConstantsAndServices.createHashtableKey(this.getClassId(), this.getId());
             if (leaf && !allResults.containsKey(uniqueKey)) allResults.put(uniqueKey, result);
         }
@@ -101,6 +114,7 @@ public class Artikel extends PersistentObject implements PersistentArtikel{
                              this.minLagerbestand, 
                              this.maxLagerbestand, 
                              this.hstLieferzeit, 
+                             this.artikelstatus, 
                              this.This, 
                              this.getId());
         this.copyingPrivateUserAttributes(result);
@@ -116,9 +130,10 @@ public class Artikel extends PersistentObject implements PersistentArtikel{
     protected long minLagerbestand;
     protected long maxLagerbestand;
     protected long hstLieferzeit;
+    protected PersistentArtikelstatus artikelstatus;
     protected PersistentArtikel This;
     
-    public Artikel(String artikelnummer,String bezeichnung,common.Fraction preis,long minLagerbestand,long maxLagerbestand,long hstLieferzeit,PersistentArtikel This,long id) throws PersistenceException {
+    public Artikel(String artikelnummer,String bezeichnung,common.Fraction preis,long minLagerbestand,long maxLagerbestand,long hstLieferzeit,PersistentArtikelstatus artikelstatus,PersistentArtikel This,long id) throws PersistenceException {
         /* Shall not be used by clients for object construction! Use static create operation instead! */
         super(id);
         this.artikelnummer = artikelnummer;
@@ -127,6 +142,7 @@ public class Artikel extends PersistentObject implements PersistentArtikel{
         this.minLagerbestand = minLagerbestand;
         this.maxLagerbestand = maxLagerbestand;
         this.hstLieferzeit = hstLieferzeit;
+        this.artikelstatus = artikelstatus;
         if (This != null && !(this.isTheSameAs(This))) this.This = This;        
     }
     
@@ -143,6 +159,10 @@ public class Artikel extends PersistentObject implements PersistentArtikel{
         if (this.getClassId() == 108) ConnectionHandler.getTheConnectionHandler().theArtikelFacade
             .newArtikel(artikelnummer,bezeichnung,preis,minLagerbestand,maxLagerbestand,hstLieferzeit,this.getId());
         super.store();
+        if(this.getArtikelstatus() != null){
+            this.getArtikelstatus().store();
+            ConnectionHandler.getTheConnectionHandler().theArtikelFacade.artikelstatusSet(this.getId(), getArtikelstatus());
+        }
         if(!this.isTheSameAs(this.getThis())){
             this.getThis().store();
             ConnectionHandler.getTheConnectionHandler().theArtikelFacade.ThisSet(this.getId(), getThis());
@@ -194,6 +214,20 @@ public class Artikel extends PersistentObject implements PersistentArtikel{
         if(!this.isDelayed$Persistence()) ConnectionHandler.getTheConnectionHandler().theArtikelFacade.hstLieferzeitSet(this.getId(), newValue);
         this.hstLieferzeit = newValue;
     }
+    public Artikelstatus4Public getArtikelstatus() throws PersistenceException {
+        return this.artikelstatus;
+    }
+    public void setArtikelstatus(Artikelstatus4Public newValue) throws PersistenceException {
+        if (newValue == null) throw new PersistenceException("Null values not allowed!", 0);
+        if(newValue.isTheSameAs(this.artikelstatus)) return;
+        long objectId = newValue.getId();
+        long classId = newValue.getClassId();
+        this.artikelstatus = (PersistentArtikelstatus)PersistentProxi.createProxi(objectId, classId);
+        if(!this.isDelayed$Persistence()){
+            newValue.store();
+            ConnectionHandler.getTheConnectionHandler().theArtikelFacade.artikelstatusSet(this.getId(), newValue);
+        }
+    }
     protected void setThis(PersistentArtikel newValue) throws PersistenceException {
         if (newValue == null) throw new PersistenceException("Null values not allowed!", 0);
         if (newValue.isTheSameAs(this)){
@@ -230,6 +264,7 @@ public class Artikel extends PersistentObject implements PersistentArtikel{
          return visitor.handleArtikel(this);
     }
     public int getLeafInfo() throws PersistenceException{
+        if (this.getArtikelstatus() != null) return 1;
         return 0;
     }
     
@@ -244,6 +279,7 @@ public class Artikel extends PersistentObject implements PersistentArtikel{
 			this.setMinLagerbestand((Long)final$$Fields.get("minLagerbestand"));
 			this.setMaxLagerbestand((Long)final$$Fields.get("maxLagerbestand"));
 			this.setHstLieferzeit((Long)final$$Fields.get("hstLieferzeit"));
+			this.setArtikelstatus((PersistentArtikelstatus)final$$Fields.get("artikelstatus"));
 		}
     }
     
@@ -252,11 +288,21 @@ public class Artikel extends PersistentObject implements PersistentArtikel{
     
     public void aendereArtikel(final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
 				throws PersistenceException{
-        setBezeichnung(bezeichnung);
-        setPreis(preis);
-        setMinLagerbestand(minLagerbestand);
-        setMaxLagerbestand(maxLagerbestand);
-        setHstLieferzeit(hstLieferzeit);
+        //exceptions wenn alles gleich ist
+        getThis().setBezeichnung(bezeichnung);
+        getThis().setPreis(preis);
+        getThis().setMinLagerbestand(minLagerbestand);
+        getThis().setMaxLagerbestand(maxLagerbestand);
+        getThis().setHstLieferzeit(hstLieferzeit);
+        
+    }
+    public void aendereStatus(final Artikelstatus4Public artikelstatus) 
+				throws model.ExcStatusDidNotChange, PersistenceException{
+        //exceptions wenn artikelstatus gleich ist
+        if(getThis().getArtikelstatus().equals(artikelstatus)){
+            throw new ExcStatusDidNotChange(ErrorMessages.statusDidNotChange);
+        }
+        this.setArtikelstatus(artikelstatus);
         
     }
     public void copyingPrivateUserAttributes(final Anything copy) 

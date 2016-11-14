@@ -18,6 +18,8 @@ public interface ArtikelView extends Anything, AbstractViewRoot {
     public void setMaxLagerbestand(long newValue) throws ModelException ;
     public long getHstLieferzeit()throws ModelException;
     public void setHstLieferzeit(long newValue) throws ModelException ;
+    public ArtikelstatusView getArtikelstatus()throws ModelException;
+    public void setArtikelstatus(ArtikelstatusView newValue) throws ModelException ;
     
     public void accept(AnythingVisitor visitor) throws ModelException;
     public <R> R accept(AnythingReturnVisitor<R>  visitor) throws ModelException;

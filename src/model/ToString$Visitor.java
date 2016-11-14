@@ -95,7 +95,7 @@ public class ToString$Visitor extends model.visitor.ToString$Visitor {
 
 	@Override
 	public void handleNeuanlage(Neuanlage4Public neuanlage) throws PersistenceException {
-
+		result = ToStringConstants.Neuanlage;
 	}
 
 

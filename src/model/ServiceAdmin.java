@@ -262,6 +262,11 @@ public class ServiceAdmin extends model.Service implements PersistentServiceAdmi
     
     // Start of section that contains operations that must be implemented.
     
+    public void aendereStatus(final ArtikelManager4Public artikelManager, final Artikel4Public artikel, final Artikelstatus4Public artikelstatus) 
+				throws model.ExcStatusDidNotChange, PersistenceException{
+        //TODO: implement method: aendereStatus
+        
+    }
     public void artikelEinlagern(final Warenlager4Public warenlager, final Artikel4Public artikel, final long menge) 
 				throws PersistenceException{
         warenlager.artikelEinlagern(artikel, menge);

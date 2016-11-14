@@ -3,6 +3,7 @@ package persistence;
 
 public interface PersistentBestellung extends Anything, AbstractPersistentProxi, Bestellung4Public {
     
+    public Bestellung_PositionsListeProxi getPositionsListe() throws PersistenceException ;
     public String getID() throws PersistenceException ;
     public void setID(String newValue) throws PersistenceException ;
     public Bestellstatus4Public getBestellstatus() throws PersistenceException ;

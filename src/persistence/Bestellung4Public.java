@@ -5,7 +5,6 @@ import model.visitor.*;
 
 public interface Bestellung4Public extends Anything, AbstractPersistentProxi {
     
-    public Bestellung_PositionsListeProxi getPositionsListe() throws PersistenceException ;
     
     public void accept(AnythingVisitor visitor) throws PersistenceException;
     public <R> R accept(AnythingReturnVisitor<R>  visitor) throws PersistenceException;

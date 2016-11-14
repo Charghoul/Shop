@@ -27,6 +27,8 @@ public interface ServiceAdmin4Public extends Service4Public {
 				throws PersistenceException;
     public String serviceAdmin_Menu_Filter(final Anything anything) 
 				throws PersistenceException;
+    public void aendereStatus(final ArtikelManager4Public artikelManager, final Artikel4Public artikel, final Artikelstatus4Public artikelstatus) 
+				throws model.ExcStatusDidNotChange, PersistenceException;
     public void artikelEinlagern(final Warenlager4Public warenlager, final Artikel4Public artikel, final long menge) 
 				throws PersistenceException;
     public void artikelEntnehmen(final Warenlager4Public warenlager, final Artikel4Public artikel, final long menge) 

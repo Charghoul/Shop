@@ -106,6 +106,10 @@ public class ServiceAdminICProxi extends ServiceICProxi implements PersistentSer
 				throws PersistenceException{
         ((PersistentServiceAdmin)this.getTheObject()).signalChanged(signal);
     }
+    public void aendereStatus(final ArtikelManager4Public artikelManager, final Artikel4Public artikel, final Artikelstatus4Public artikelstatus) 
+				throws model.ExcStatusDidNotChange, PersistenceException{
+        ((PersistentServiceAdmin)this.getTheObject()).aendereStatus(artikelManager, artikel, artikelstatus);
+    }
     public void artikelEinlagern(final Warenlager4Public warenlager, final Artikel4Public artikel, final long menge) 
 				throws PersistenceException{
         ((PersistentServiceAdmin)this.getTheObject()).artikelEinlagern(warenlager, artikel, menge);

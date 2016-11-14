@@ -229,6 +229,11 @@ public class ServiceKunde extends model.Service implements PersistentServiceKund
     
     // Start of section that contains operations that must be implemented.
     
+    public void bestellen(final EinkaufsManager4Public einkaufsManager) 
+				throws PersistenceException{
+        //TODO: implement method: bestellen
+        
+    }
     public void connected(final String user) 
 				throws PersistenceException{
 

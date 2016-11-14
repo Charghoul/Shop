@@ -169,10 +169,14 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
     
     // Start of section that contains operations that must be implemented.
     
-    public void aenderePosition(final Artikel4Public artikel, final long menge) 
+    public void aendereMenge(final Position4Public position, final long menge) 
 				throws PersistenceException{
-        //TODO: implement method: aenderePosition
+        position.aendereMenge(menge);
         
+    }
+    public void bestellen() 
+				throws PersistenceException{
+        //TODO: implement method: bestellen
     }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{

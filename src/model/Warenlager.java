@@ -156,6 +156,7 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
     
     public void artikelEinlagern(final Artikel4Public artikel, final long menge) 
 				throws PersistenceException{
+
         getThis().getWarenListe().add(Position.createPosition(artikel, menge));
         
     }
@@ -171,7 +172,7 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
     }
     public void initializeOnCreation() 
 				throws PersistenceException{
-        getThis().artikelEinlagern(Artikel.createArtikel("1234","test", Fraction.parse("5"),10,100,3),20);
+        getThis().artikelEinlagern(Artikel.createArtikel("1234","test", Fraction.parse("5"),10,100,3,Neuanlage.createNeuanlage()),20);
 
     }
     public void initializeOnInstantiation() 

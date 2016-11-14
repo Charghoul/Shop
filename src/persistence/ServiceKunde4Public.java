@@ -27,6 +27,8 @@ public interface ServiceKunde4Public extends Service4Public {
 				throws PersistenceException;
     public String serviceKunde_Menu_Filter(final Anything anything) 
 				throws PersistenceException;
+    public void bestellen(final EinkaufsManager4Public einkaufsManager) 
+				throws PersistenceException;
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException;
     public void initializeOnCreation() 

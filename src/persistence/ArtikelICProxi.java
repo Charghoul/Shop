@@ -58,6 +58,12 @@ public class ArtikelICProxi extends PersistentInCacheProxiOptimistic implements 
     public void setHstLieferzeit(long newValue) throws PersistenceException {
         ((PersistentArtikel)this.getTheObject()).setHstLieferzeit(newValue);
     }
+    public Artikelstatus4Public getArtikelstatus() throws PersistenceException {
+        return ((PersistentArtikel)this.getTheObject()).getArtikelstatus();
+    }
+    public void setArtikelstatus(Artikelstatus4Public newValue) throws PersistenceException {
+        ((PersistentArtikel)this.getTheObject()).setArtikelstatus(newValue);
+    }
     public PersistentArtikel getThis() throws PersistenceException {
         return ((PersistentArtikel)this.getTheObject()).getThis();
     }
@@ -83,6 +89,10 @@ public class ArtikelICProxi extends PersistentInCacheProxiOptimistic implements 
     public void aendereArtikel(final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
 				throws PersistenceException{
         ((PersistentArtikel)this.getTheObject()).aendereArtikel(bezeichnung, preis, minLagerbestand, maxLagerbestand, hstLieferzeit);
+    }
+    public void aendereStatus(final Artikelstatus4Public artikelstatus) 
+				throws model.ExcStatusDidNotChange, PersistenceException{
+        ((PersistentArtikel)this.getTheObject()).aendereStatus(artikelstatus);
     }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{

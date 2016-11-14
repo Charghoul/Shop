@@ -311,6 +311,7 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
 
 
     interface MenuItemVisitor{
+        ImageView handle(AendereStatusPRMTRArtikelManagerPRMTRArtikelPRMTRArtikelstatusPRMTRMenuItem menuItem);
         ImageView handle(ArtikelEinlagernPRMTRWarenlagerPRMTRArtikelPRMTRIntegerPRMTRMenuItem menuItem);
         ImageView handle(ArtikelEntnehmenPRMTRWarenlagerPRMTRArtikelPRMTRIntegerPRMTRMenuItem menuItem);
         ImageView handle(NeueLieferArtPRMTRLieferartManagerPRMTRStringPRMTRIntegerPRMTRFractionPRMTRMenuItem menuItem);
@@ -321,6 +322,11 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
             this.setGraphic(getIconForMenuItem(this));
         }
         abstract protected ImageView accept(MenuItemVisitor visitor);
+    }
+    private class AendereStatusPRMTRArtikelManagerPRMTRArtikelPRMTRArtikelstatusPRMTRMenuItem extends ServiceAdminMenuItem{
+        protected ImageView accept(MenuItemVisitor visitor){
+            return visitor.handle(this);
+        }
     }
     private class ArtikelEinlagernPRMTRWarenlagerPRMTRArtikelPRMTRIntegerPRMTRMenuItem extends ServiceAdminMenuItem{
         protected ImageView accept(MenuItemVisitor visitor){
@@ -370,6 +376,17 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
                 result.getItems().add(item);
             }
             if (selected instanceof ArtikelManagerView){
+                item = new AendereStatusPRMTRArtikelManagerPRMTRArtikelPRMTRArtikelstatusPRMTRMenuItem();
+                item.setText("aendereStatus ... ");
+                item.setOnAction(new EventHandler<ActionEvent>(){
+                    public void handle(javafx.event.ActionEvent e) {
+                        final ServiceAdminAendereStatusArtikelManagerArtikelArtikelstatusMssgWizard wizard = new ServiceAdminAendereStatusArtikelManagerArtikelArtikelstatusMssgWizard("aendereStatus");
+                        wizard.setFirstArgument((ArtikelManagerView)selected);
+                        wizard.setWidth(getNavigationPanel().getWidth());
+                        wizard.showAndWait();
+                    }
+                });
+                result.getItems().add(item);
                 item = new NeuerArtikelPRMTRArtikelManagerPRMTRStringPRMTRStringPRMTRFractionPRMTRIntegerPRMTRIntegerPRMTRIntegerPRMTRMenuItem();
                 item.setText("neuerArtikel ... ");
                 item.setOnAction(new EventHandler<ActionEvent>(){
@@ -419,6 +436,62 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
         this.preCalculatedFilters = switchOff;
     }
     
+	class ServiceAdminAendereStatusArtikelManagerArtikelArtikelstatusMssgWizard extends Wizard {
+
+		protected ServiceAdminAendereStatusArtikelManagerArtikelArtikelstatusMssgWizard(String operationName){
+			super(ServiceAdminClientView.this);
+			getOkButton().setText(operationName);
+			getOkButton().setGraphic(new AendereStatusPRMTRArtikelManagerPRMTRArtikelPRMTRArtikelstatusPRMTRMenuItem ().getGraphic());
+		}
+		protected void initialize(){
+			this.helpFileName = "ServiceAdminAendereStatusArtikelManagerArtikelArtikelstatusMssgWizard.help";
+			super.initialize();		
+		}
+				
+		protected void perform() {
+			try {
+				getConnection().aendereStatus(firstArgument, (ArtikelView)((ObjectSelectionPanel)getParametersPanel().getChildren().get(0)).getResult(),
+									(ArtikelstatusView)((ObjectSelectionPanel)getParametersPanel().getChildren().get(1)).getResult());
+				getConnection().setEagerRefresh();
+				this.close();	
+			} catch(ModelException me){
+				handleException(me);
+				this.close();
+			}
+			catch(ExcStatusDidNotChange e) {
+				getStatusBar().setText(e.getMessage());
+			}
+			
+		}
+		protected String checkCompleteParameterSet(){
+			return null;
+		}
+		protected boolean isModifying () {
+			return false;
+		}
+		protected void addParameters(){
+			final ObjectSelectionPanel panel1 = new ObjectSelectionPanel("artikel", "view.ArtikelView", null, this);
+			getParametersPanel().getChildren().add(panel1);
+			panel1.setBrowserRoot((ViewRoot) getConnection().getServiceAdminView());
+			final ObjectSelectionPanel panel2 = new ObjectSelectionPanel("artikelstatus", "view.ArtikelstatusView", null, this);
+			getParametersPanel().getChildren().add(panel2);
+			panel2.setBrowserRoot((ViewRoot) getConnection().getServiceAdminView());		
+		}	
+		protected void handleDependencies(int i) {
+		}
+		
+		
+		private ArtikelManagerView firstArgument; 
+	
+		public void setFirstArgument(ArtikelManagerView firstArgument){
+			this.firstArgument = firstArgument;
+			this.setTitle(this.firstArgument.toString());
+			this.check();
+		}
+		
+		
+	}
+
 	class ServiceAdminArtikelEinlagernWarenlagerArtikelIntegerMssgWizard extends Wizard {
 
 		protected ServiceAdminArtikelEinlagernWarenlagerArtikelIntegerMssgWizard(String operationName){
@@ -450,9 +523,9 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
 			return false;
 		}
 		protected void addParameters(){
-			final ObjectSelectionPanel panel1 = new ObjectSelectionPanel("artikel", "view.ArtikelView", null, this);
-			getParametersPanel().getChildren().add(panel1);
-			panel1.setBrowserRoot((ViewRoot) getConnection().getServiceAdminView());
+			final ObjectSelectionPanel panel3 = new ObjectSelectionPanel("artikel", "view.ArtikelView", null, this);
+			getParametersPanel().getChildren().add(panel3);
+			panel3.setBrowserRoot((ViewRoot) getConnection().getServiceAdminView());
 			getParametersPanel().getChildren().add(new IntegerSelectionPanel("menge", this));		
 		}	
 		protected void handleDependencies(int i) {
@@ -501,9 +574,9 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
 			return false;
 		}
 		protected void addParameters(){
-			final ObjectSelectionPanel panel2 = new ObjectSelectionPanel("artikel", "view.ArtikelView", null, this);
-			getParametersPanel().getChildren().add(panel2);
-			panel2.setBrowserRoot((ViewRoot) getConnection().getServiceAdminView());
+			final ObjectSelectionPanel panel4 = new ObjectSelectionPanel("artikel", "view.ArtikelView", null, this);
+			getParametersPanel().getChildren().add(panel4);
+			panel4.setBrowserRoot((ViewRoot) getConnection().getServiceAdminView());
 			getParametersPanel().getChildren().add(new IntegerSelectionPanel("menge", this));		
 		}	
 		protected void handleDependencies(int i) {

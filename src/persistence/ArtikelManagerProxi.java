@@ -51,6 +51,10 @@ public class ArtikelManagerProxi extends PersistentProxi implements PersistentAr
 				throws PersistenceException{
         ((PersistentArtikelManager)this.getTheObject()).aendereArtikel(artikel, bezeichnung, preis, minLagerbestand, maxLagerbestand, hstLieferzeit);
     }
+    public void aendereStatus(final Artikel4Public artikel, final Artikelstatus4Public artikelstatus) 
+				throws model.ExcStatusDidNotChange, PersistenceException{
+        ((PersistentArtikelManager)this.getTheObject()).aendereStatus(artikel, artikelstatus);
+    }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{
         ((PersistentArtikelManager)this.getTheObject()).copyingPrivateUserAttributes(copy);

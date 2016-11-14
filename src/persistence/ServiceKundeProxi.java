@@ -96,6 +96,10 @@ public class ServiceKundeProxi extends ServiceProxi implements PersistentService
 				throws PersistenceException{
         ((PersistentServiceKunde)this.getTheObject()).signalChanged(signal);
     }
+    public void bestellen(final EinkaufsManager4Public einkaufsManager) 
+				throws PersistenceException{
+        ((PersistentServiceKunde)this.getTheObject()).bestellen(einkaufsManager);
+    }
     public void connected(final String user) 
 				throws PersistenceException{
         ((PersistentServiceKunde)this.getTheObject()).connected(user);

@@ -47,6 +47,10 @@ public class LieferartManagerProxi extends PersistentProxi implements Persistent
 				throws PersistenceException{
         ((PersistentLieferartManager)this.getTheObject()).initialize(This, final$$Fields);
     }
+    public void aendereLieferart(final Lieferart4Public lieferart, final String name, final long lieferzeit, final common.Fraction preis) 
+				throws PersistenceException{
+        ((PersistentLieferartManager)this.getTheObject()).aendereLieferart(lieferart, name, lieferzeit, preis);
+    }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{
         ((PersistentLieferartManager)this.getTheObject()).copyingPrivateUserAttributes(copy);

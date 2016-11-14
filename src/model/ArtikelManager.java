@@ -176,6 +176,11 @@ public class ArtikelManager extends PersistentObject implements PersistentArtike
         
         
     }
+    public void aendereStatus(final Artikel4Public artikel, final Artikelstatus4Public artikelstatus) 
+				throws model.ExcStatusDidNotChange, PersistenceException{
+        artikel.aendereStatus(artikelstatus);
+        
+    }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{
         //TODO: implement method: copyingPrivateUserAttributes
@@ -183,7 +188,7 @@ public class ArtikelManager extends PersistentObject implements PersistentArtike
     }
     public void initializeOnCreation() 
 				throws PersistenceException{
-        getThis().getArtikelListe().add(Artikel.createArtikel("1234","test", Fraction.parse("5"),10,100,3));
+        getThis().getArtikelListe().add(Artikel.createArtikel("1234","test", Fraction.parse("5"),10,100,3, Neuanlage.createNeuanlage()));
         
     }
     public void initializeOnInstantiation() 
@@ -197,9 +202,9 @@ public class ArtikelManager extends PersistentObject implements PersistentArtike
         if( artikelSearchList.iterator().hasNext()){
             throw new ExcArtikelAlreadyExists(serverConstants.ErrorMessages.ArtikelAlreadyExists);
         }
-        ;
-        getThis().getArtikelListe().add(Artikel.createArtikel(artikelnummer,
-                bezeichnung, preis, minLagerbestand, maxLagerbestand, hstLieferzeit));
+        Artikel4Public artikel = Artikel.createArtikel(artikelnummer,bezeichnung, preis, minLagerbestand, maxLagerbestand, hstLieferzeit, Neuanlage.createNeuanlage());
+        getThis().getArtikelListe().add(artikel);
+        Warenlager.getTheWarenlager().artikelEinlagern(artikel,0);
     }
     
     

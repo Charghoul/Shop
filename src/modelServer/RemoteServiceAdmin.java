@@ -24,6 +24,20 @@ public  class RemoteServiceAdmin extends RemoteService {
         }
     }
     
+    public synchronized java.util.HashMap<?,?> aendereStatus(String artikelManagerProxiString, String artikelProxiString, String artikelstatusProxiString){
+        try {
+            PersistentArtikelManager artikelManager = (PersistentArtikelManager)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(artikelManagerProxiString));
+            PersistentArtikel artikel = (PersistentArtikel)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(artikelProxiString));
+            PersistentArtikelstatus artikelstatus = (PersistentArtikelstatus)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(artikelstatusProxiString));
+            ((PersistentServiceAdmin)this.server).aendereStatus(artikelManager, artikel, artikelstatus);
+            return createOKResult();
+        }catch(PersistenceException pe){
+            return createExceptionResult(pe);
+        }catch(model.ExcStatusDidNotChange e0){
+            return createExceptionResult(e0, this);
+        }
+    }
+    
     public synchronized java.util.HashMap<?,?> artikelEinlagern(String warenlagerProxiString, String artikelProxiString, String mengeAsString){
         try {
             PersistentWarenlager warenlager = (PersistentWarenlager)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(warenlagerProxiString));

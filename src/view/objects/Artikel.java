@@ -15,8 +15,9 @@ public class Artikel extends ViewObject implements ArtikelView{
     protected long minLagerbestand;
     protected long maxLagerbestand;
     protected long hstLieferzeit;
+    protected ArtikelstatusView artikelstatus;
     
-    public Artikel(String artikelnummer,String bezeichnung,common.Fraction preis,long minLagerbestand,long maxLagerbestand,long hstLieferzeit,long id, long classId) {
+    public Artikel(String artikelnummer,String bezeichnung,common.Fraction preis,long minLagerbestand,long maxLagerbestand,long hstLieferzeit,ArtikelstatusView artikelstatus,long id, long classId) {
         /* Shall not be used. Objects are created on the server only */
         super(id, classId);
         this.artikelnummer = artikelnummer;
@@ -24,7 +25,8 @@ public class Artikel extends ViewObject implements ArtikelView{
         this.preis = preis;
         this.minLagerbestand = minLagerbestand;
         this.maxLagerbestand = maxLagerbestand;
-        this.hstLieferzeit = hstLieferzeit;        
+        this.hstLieferzeit = hstLieferzeit;
+        this.artikelstatus = artikelstatus;        
     }
     
     static public long getTypeId() {
@@ -71,6 +73,12 @@ public class Artikel extends ViewObject implements ArtikelView{
     public void setHstLieferzeit(long newValue) throws ModelException {
         this.hstLieferzeit = newValue;
     }
+    public ArtikelstatusView getArtikelstatus()throws ModelException{
+        return this.artikelstatus;
+    }
+    public void setArtikelstatus(ArtikelstatusView newValue) throws ModelException {
+        this.artikelstatus = newValue;
+    }
     
     public void accept(AnythingVisitor visitor) throws ModelException {
         visitor.handleArtikel(this);
@@ -86,23 +94,33 @@ public class Artikel extends ViewObject implements ArtikelView{
     }
     
     public void resolveProxies(java.util.HashMap<String,Object> resultTable) throws ModelException {
+        ArtikelstatusView artikelstatus = this.getArtikelstatus();
+        if (artikelstatus != null) {
+            ((ViewProxi)artikelstatus).setObject((ViewObject)resultTable.get(common.RPCConstantsAndServices.createHashtableKey(artikelstatus.getClassId(), artikelstatus.getId())));
+        }
         
     }
     public void sortSetValuedFields() throws ModelException {
         
     }
     public ViewObjectInTree getChild(int originalIndex) throws ModelException{
-        
+        int index = originalIndex;
+        if(index == 0 && this.getArtikelstatus() != null) return new ArtikelstatusArtikelWrapper(this, originalIndex, (ViewRoot)this.getArtikelstatus());
+        if(this.getArtikelstatus() != null) index = index - 1;
         return null;
     }
     public int getChildCount() throws ModelException {
-        return 0 ;
+        return 0 
+            + (this.getArtikelstatus() == null ? 0 : 1);
     }
     public boolean isLeaf() throws ModelException {
-        return true;
+        return true 
+            && (this.getArtikelstatus() == null ? true : false);
     }
     public int getIndexOfChild(Object child) throws ModelException {
-        
+        int result = 0;
+        if(this.getArtikelstatus() != null && this.getArtikelstatus().equals(child)) return result;
+        if(this.getArtikelstatus() != null) result = result + 1;
         return -1;
     }
     public int getArtikelnummerIndex() throws ModelException {

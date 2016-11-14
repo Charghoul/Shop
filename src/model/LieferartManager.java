@@ -181,6 +181,11 @@ public class LieferartManager extends PersistentObject implements PersistentLief
     
     // Start of section that contains operations that must be implemented.
     
+    public void aendereLieferart(final Lieferart4Public lieferart, final String name, final long lieferzeit, final common.Fraction preis) 
+				throws PersistenceException{
+        //TODO: implement method: aendereLieferart
+        
+    }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{
         //TODO: implement method: copyingPrivateUserAttributes

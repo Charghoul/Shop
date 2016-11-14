@@ -1476,6 +1476,7 @@ class ArtikelDefaultDetailPanel extends DefaultDetailPanel{
     protected static final String Artikel$$minLagerbestand = "Artikel$$minLagerbestand";
     protected static final String Artikel$$maxLagerbestand = "Artikel$$maxLagerbestand";
     protected static final String Artikel$$hstLieferzeit = "Artikel$$hstLieferzeit";
+    protected static final String Artikel$$artikelstatus = "Artikel$$artikelstatus";
     
     protected ArtikelDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
         super(exceptionHandler, anything);

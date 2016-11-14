@@ -18,7 +18,14 @@ public class ArtikelProxi extends ViewProxi implements ArtikelView{
         long minLagerbestand = new Long((String)resultTable.get("minLagerbestand")).longValue();
         long maxLagerbestand = new Long((String)resultTable.get("maxLagerbestand")).longValue();
         long hstLieferzeit = new Long((String)resultTable.get("hstLieferzeit")).longValue();
-        ArtikelView result$$ = new Artikel((String)artikelnummer,(String)bezeichnung,(common.Fraction)preis,(long)minLagerbestand,(long)maxLagerbestand,(long)hstLieferzeit, this.getId(), this.getClassId());
+        ViewProxi artikelstatus = null;
+        String artikelstatus$String = (String)resultTable.get("artikelstatus");
+        if (artikelstatus$String != null) {
+            common.ProxiInformation artikelstatus$Info = common.RPCConstantsAndServices.createProxiInformation(artikelstatus$String);
+            artikelstatus = view.objects.ViewProxi.createProxi(artikelstatus$Info,connectionKey);
+            artikelstatus.setToString(artikelstatus$Info.getToString());
+        }
+        ArtikelView result$$ = new Artikel((String)artikelnummer,(String)bezeichnung,(common.Fraction)preis,(long)minLagerbestand,(long)maxLagerbestand,(long)hstLieferzeit,(ArtikelstatusView)artikelstatus, this.getId(), this.getClassId());
         ((ViewRoot)result$$).setToString((String) resultTable.get(common.RPCConstantsAndServices.RPCToStringFieldName));
         return result$$;
     }
@@ -27,17 +34,24 @@ public class ArtikelProxi extends ViewProxi implements ArtikelView{
         return RemoteDepth;
     }
     public ViewObjectInTree getChild(int originalIndex) throws ModelException{
-        
+        int index = originalIndex;
+        if(index == 0 && this.getArtikelstatus() != null) return new ArtikelstatusArtikelWrapper(this, originalIndex, (ViewRoot)this.getArtikelstatus());
+        if(this.getArtikelstatus() != null) index = index - 1;
         return null;
     }
     public int getChildCount() throws ModelException {
-        return 0 ;
+        return 0 
+            + (this.getArtikelstatus() == null ? 0 : 1);
     }
     public boolean isLeaf() throws ModelException {
-        return true;
+        if (this.object == null) return this.getLeafInfo() == 0;
+        return true 
+            && (this.getArtikelstatus() == null ? true : false);
     }
     public int getIndexOfChild(Object child) throws ModelException {
-        
+        int result = 0;
+        if(this.getArtikelstatus() != null && this.getArtikelstatus().equals(child)) return result;
+        if(this.getArtikelstatus() != null) result = result + 1;
         return -1;
     }
     
@@ -76,6 +90,12 @@ public class ArtikelProxi extends ViewProxi implements ArtikelView{
     }
     public void setHstLieferzeit(long newValue) throws ModelException {
         ((Artikel)this.getTheObject()).setHstLieferzeit(newValue);
+    }
+    public ArtikelstatusView getArtikelstatus()throws ModelException{
+        return ((Artikel)this.getTheObject()).getArtikelstatus();
+    }
+    public void setArtikelstatus(ArtikelstatusView newValue) throws ModelException {
+        ((Artikel)this.getTheObject()).setArtikelstatus(newValue);
     }
     
     public void accept(AnythingVisitor visitor) throws ModelException {

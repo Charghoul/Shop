@@ -311,6 +311,7 @@ public class ServiceKundeClientView extends BorderPane implements ExceptionAndEv
 
 
     interface MenuItemVisitor{
+        ImageView handle(BestellenPRMTREinkaufsManagerPRMTRMenuItem menuItem);
         ImageView handle(NeuePositionPRMTREinkaufsManagerPRMTRArtikelPRMTRIntegerPRMTRMenuItem menuItem);
     }
     private abstract class ServiceKundeMenuItem extends MenuItem{
@@ -318,6 +319,11 @@ public class ServiceKundeClientView extends BorderPane implements ExceptionAndEv
             this.setGraphic(getIconForMenuItem(this));
         }
         abstract protected ImageView accept(MenuItemVisitor visitor);
+    }
+    private class BestellenPRMTREinkaufsManagerPRMTRMenuItem extends ServiceKundeMenuItem{
+        protected ImageView accept(MenuItemVisitor visitor){
+            return visitor.handle(this);
+        }
     }
     private class NeuePositionPRMTREinkaufsManagerPRMTRArtikelPRMTRIntegerPRMTRMenuItem extends ServiceKundeMenuItem{
         protected ImageView accept(MenuItemVisitor visitor){
@@ -339,6 +345,27 @@ public class ServiceKundeClientView extends BorderPane implements ExceptionAndEv
                 return result;
             }
             if (selected instanceof EinkaufsManagerView){
+                item = new BestellenPRMTREinkaufsManagerPRMTRMenuItem();
+                item.setText("bestellen");
+                item.setOnAction(new EventHandler<ActionEvent>(){
+                    public void handle(javafx.event.ActionEvent e) {
+                        Alert confirm = new Alert(AlertType.CONFIRMATION);
+                        confirm.setTitle(GUIConstants.ConfirmButtonText);
+                        confirm.setHeaderText(null);
+                        confirm.setContentText("bestellen" + GUIConstants.ConfirmQuestionMark);
+                        Optional<ButtonType> buttonResult = confirm.showAndWait();
+                        if (buttonResult.get() == ButtonType.OK) {
+                            try {
+                                getConnection().bestellen((EinkaufsManagerView)selected);
+                                getConnection().setEagerRefresh();
+                                
+                            }catch(ModelException me){
+                                handleException(me);
+                            }
+                        }
+                    }
+                });
+                result.getItems().add(item);
                 item = new NeuePositionPRMTREinkaufsManagerPRMTRArtikelPRMTRIntegerPRMTRMenuItem();
                 item.setText("neuePosition ... ");
                 item.setOnAction(new EventHandler<ActionEvent>(){

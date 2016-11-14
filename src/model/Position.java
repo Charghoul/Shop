@@ -198,6 +198,11 @@ public class Position extends PersistentObject implements PersistentPosition{
     
     // Start of section that contains operations that must be implemented.
     
+    public void aendereMenge(final long menge) 
+				throws PersistenceException{
+        getThis().setMenge(menge);
+        
+    }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{
         //TODO: implement method: copyingPrivateUserAttributes
