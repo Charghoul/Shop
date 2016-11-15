@@ -204,12 +204,18 @@ public class Position extends PersistentObject implements PersistentPosition{
     
     public void aendereMenge(final long menge) 
 				throws model.ExcLagerbestandUnderZero, PersistenceException{
-        getThis().setMenge(menge);
+        //TODO: implement method: aendereMenge
+        
     }
     public Position4Public artikelVorhanden(final Artikel4Public artikel) 
 				throws PersistenceException{
-        if(getThis().getArtikel().equals(artikel)) return getThis();
-        return null;
+        //TODO: implement method: artikelVorhanden
+        try{
+            throw new java.lang.UnsupportedOperationException("Method \"artikelVorhanden\" not implemented yet.");
+        } catch (java.lang.UnsupportedOperationException uoe){
+            uoe.printStackTrace();
+            throw uoe;
+        }
     }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{
@@ -218,13 +224,8 @@ public class Position extends PersistentObject implements PersistentPosition{
     }
     public void erhoeheMenge(final long menge) 
 				throws model.ExcLagerbestandOverMax, PersistenceException{
-        long temp = getThis().getMenge() + menge;
-        if(getArtikel().groesserMax(temp).equals(TrueX.getTheTrueX())){
-            throw new ExcLagerbestandOverMax(ErrorMessages.LagerbestandOverMax);
-        }
-        else {
-            getThis().setMenge(temp);
-        }
+        //TODO: implement method: erhoeheMenge
+        
     }
     public void initializeOnCreation() 
 				throws PersistenceException{
@@ -238,8 +239,7 @@ public class Position extends PersistentObject implements PersistentPosition{
     }
     public void verringereMenge(final long menge) 
 				throws model.ExcLagerbestandUnderZero, PersistenceException{
-        if(getThis().getMenge() - menge <= 0) throw new ExcLagerbestandUnderZero(ErrorMessages.LagerbestandUnderZero);
-        getThis().setMenge(getThis().getMenge() - menge);
+        //TODO: implement method: verringereMenge
         
     }
     

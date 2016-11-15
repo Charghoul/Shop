@@ -4,7 +4,7 @@ package persistence;
 
 import model.visitor.*;
 
-public class ArtikelICProxi extends PersistentInCacheProxiOptimistic implements PersistentArtikel{
+public class ArtikelICProxi extends KomponenteICProxi implements PersistentArtikel{
     
     public ArtikelICProxi(long objectId) {
         super(objectId);
@@ -68,6 +68,18 @@ public class ArtikelICProxi extends PersistentInCacheProxiOptimistic implements 
         return ((PersistentArtikel)this.getTheObject()).getThis();
     }
     
+    public void accept(KomponenteVisitor visitor) throws PersistenceException {
+        visitor.handleArtikel(this);
+    }
+    public <R> R accept(KomponenteReturnVisitor<R>  visitor) throws PersistenceException {
+         return visitor.handleArtikel(this);
+    }
+    public <E extends model.UserException>  void accept(KomponenteExceptionVisitor<E> visitor) throws PersistenceException, E {
+         visitor.handleArtikel(this);
+    }
+    public <R, E extends model.UserException> R accept(KomponenteReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E {
+         return visitor.handleArtikel(this);
+    }
     public void accept(AnythingVisitor visitor) throws PersistenceException {
         visitor.handleArtikel(this);
     }

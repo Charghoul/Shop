@@ -1,7 +1,7 @@
 package persistence;
 
 
-public interface PersistentArtikel extends Anything, AbstractPersistentProxi, Artikel4Public {
+public interface PersistentArtikel extends PersistentKomponente, Artikel4Public {
     
     public String getArtikelnummer() throws PersistenceException ;
     public void setArtikelnummer(String newValue) throws PersistenceException ;

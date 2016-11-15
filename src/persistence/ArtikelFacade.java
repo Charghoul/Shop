@@ -31,7 +31,7 @@ public class ArtikelFacade{
             callable.execute();
             long id = callable.getLong(1);
             callable.close();
-            Artikel result = new Artikel(artikelnummer,bezeichnung,preis,minLagerbestand,maxLagerbestand,hstLieferzeit,null,null,id);
+            Artikel result = new Artikel(null,artikelnummer,bezeichnung,preis,minLagerbestand,maxLagerbestand,hstLieferzeit,null,id);
             if (idCreateIfLessZero < 0)Cache.getTheCache().put(result);
             return (PersistentArtikel)PersistentProxi.createProxi(id, 108);
         }catch(SQLException se) {
@@ -47,7 +47,7 @@ public class ArtikelFacade{
             callable.execute();
             long id = callable.getLong(1);
             callable.close();
-            Artikel result = new Artikel(artikelnummer,bezeichnung,preis,minLagerbestand,maxLagerbestand,hstLieferzeit,null,null,id);
+            Artikel result = new Artikel(null,artikelnummer,bezeichnung,preis,minLagerbestand,maxLagerbestand,hstLieferzeit,null,id);
             Cache.getTheCache().put(result);
             return (PersistentArtikel)PersistentProxi.createProxi(id, 108);
         }catch(SQLException se) {
@@ -68,20 +68,20 @@ public class ArtikelFacade{
                 callable.close();
                 return null;
             }
+            PersistentKomponente This = null;
+            if (obj.getLong(2) != 0)
+                This = (PersistentKomponente)PersistentProxi.createProxi(obj.getLong(2), obj.getLong(3));
             PersistentArtikelstatus artikelstatus = null;
-            if (obj.getLong(8) != 0)
-                artikelstatus = (PersistentArtikelstatus)PersistentProxi.createProxi(obj.getLong(8), obj.getLong(9));
-            PersistentArtikel This = null;
             if (obj.getLong(10) != 0)
-                This = (PersistentArtikel)PersistentProxi.createProxi(obj.getLong(10), obj.getLong(11));
-            Artikel result = new Artikel(obj.getString(2) == null ? "" : obj.getString(2) /* In Oracle "" = null !!! */,
-                                         obj.getString(3) == null ? "" : obj.getString(3) /* In Oracle "" = null !!! */,
-                                         (obj.getString(4) == null ? common.Fraction.Null : common.Fraction.parse(obj.getString(4))),
-                                         obj.getLong(5),
-                                         obj.getLong(6),
+                artikelstatus = (PersistentArtikelstatus)PersistentProxi.createProxi(obj.getLong(10), obj.getLong(11));
+            Artikel result = new Artikel(This,
+                                         obj.getString(4) == null ? "" : obj.getString(4) /* In Oracle "" = null !!! */,
+                                         obj.getString(5) == null ? "" : obj.getString(5) /* In Oracle "" = null !!! */,
+                                         (obj.getString(6) == null ? common.Fraction.Null : common.Fraction.parse(obj.getString(6))),
                                          obj.getLong(7),
+                                         obj.getLong(8),
+                                         obj.getLong(9),
                                          artikelstatus,
-                                         This,
                                          ArtikelId);
             obj.close();
             callable.close();
@@ -89,20 +89,6 @@ public class ArtikelFacade{
             Artikel objectInCache = (Artikel)inCache.getTheObject();
             if (objectInCache == result)result.initializeOnInstantiation();
             return objectInCache;
-        }catch(SQLException se) {
-            throw new PersistenceException(se.getMessage(), se.getErrorCode());
-        }
-    }
-    public long getClass(long objectId) throws PersistenceException{
-        try{
-            CallableStatement callable;
-            callable = this.con.prepareCall("Begin ? := " + this.schemaName + ".ArtklFacade.getClass(?); end;");
-            callable.registerOutParameter(1, oracle.jdbc.OracleTypes.NUMBER);
-            callable.setLong(2, objectId);
-            callable.execute();
-            long result = callable.getLong(1);
-            callable.close();
-            return result;
         }catch(SQLException se) {
             throw new PersistenceException(se.getMessage(), se.getErrorCode());
         }
@@ -230,19 +216,6 @@ public class ArtikelFacade{
             callable.setLong(1, ArtikelId);
             callable.setLong(2, artikelstatusVal.getId());
             callable.setLong(3, artikelstatusVal.getClassId());
-            callable.execute();
-            callable.close();
-        }catch(SQLException se) {
-            throw new PersistenceException(se.getMessage(), se.getErrorCode());
-        }
-    }
-    public void ThisSet(long ArtikelId, Artikel4Public ThisVal) throws PersistenceException {
-        try{
-            CallableStatement callable;
-            callable = this.con.prepareCall("Begin " + this.schemaName + ".ArtklFacade.ThisSet(?, ?, ?); end;");
-            callable.setLong(1, ArtikelId);
-            callable.setLong(2, ThisVal.getId());
-            callable.setLong(3, ThisVal.getClassId());
             callable.execute();
             callable.close();
         }catch(SQLException se) {

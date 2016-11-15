@@ -3,11 +3,10 @@ package model.visitor;
 
 import persistence.*;
 
-public interface AnythingExceptionVisitor<E extends model.UserException> extends ArtikelstatusExceptionVisitor<E>,BestellstatusExceptionVisitor<E>,BooleanXExceptionVisitor<E>,CommonDateExceptionVisitor<E>,ServiceExceptionVisitor<E>{
+public interface AnythingExceptionVisitor<E extends model.UserException> extends ArtikelstatusExceptionVisitor<E>,BestellstatusExceptionVisitor<E>,BooleanXExceptionVisitor<E>,CommonDateExceptionVisitor<E>,KomponenteExceptionVisitor<E>,ServiceExceptionVisitor<E>{
     
     public void handleAendereArtikelCommand(AendereArtikelCommand4Public aendereArtikelCommand) throws PersistenceException, E;
     public void handleAendereLieferartCommand(AendereLieferartCommand4Public aendereLieferartCommand) throws PersistenceException, E;
-    public void handleArtikel(Artikel4Public artikel) throws PersistenceException, E;
     public void handleArtikelEntnehmenCommand(ArtikelEntnehmenCommand4Public artikelEntnehmenCommand) throws PersistenceException, E;
     public void handleArtikelManager(ArtikelManager4Public artikelManager) throws PersistenceException, E;
     public void handleBestellung(Bestellung4Public bestellung) throws PersistenceException, E;
@@ -16,6 +15,8 @@ public interface AnythingExceptionVisitor<E extends model.UserException> extends
     public void handleCommonDate(CommonDate4Public commonDate) throws PersistenceException, E;
     public void handleEinkaufsManager(EinkaufsManager4Public einkaufsManager) throws PersistenceException, E;
     public void handleErrorDisplay(ErrorDisplay4Public errorDisplay) throws PersistenceException, E;
+    public void handleHersteller(Hersteller4Public hersteller) throws PersistenceException, E;
+    public void handleHerstellerManager(HerstellerManager4Public herstellerManager) throws PersistenceException, E;
     public void handleKonto(Konto4Public konto) throws PersistenceException, E;
     public void handleKunde(Kunde4Public kunde) throws PersistenceException, E;
     public void handleLieferart(Lieferart4Public lieferart) throws PersistenceException, E;

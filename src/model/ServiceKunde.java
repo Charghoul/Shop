@@ -230,7 +230,7 @@ public class ServiceKunde extends model.Service implements PersistentServiceKund
     
     public void aendereMenge(final Position4Public position, final long menge) 
 				throws model.ExcLagerbestandUnderZero, PersistenceException{
-        getThis().getEinkaufsManager().aendereMenge(position,menge);
+        //TODO: implement method: aendereMenge
         
     }
     public void bestellen(final EinkaufsManager4Public einkaufsManager) 

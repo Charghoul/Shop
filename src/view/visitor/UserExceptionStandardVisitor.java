@@ -11,6 +11,9 @@ public abstract class UserExceptionStandardVisitor implements UserExceptionVisit
     public void handleExcLagerbestandUnderZero(ExcLagerbestandUnderZero excLagerbestandUnderZero) throws ModelException{
         this.standardHandling(excLagerbestandUnderZero);
     }
+    public void handleExcAlreadyExists(ExcAlreadyExists excAlreadyExists) throws ModelException{
+        this.standardHandling(excAlreadyExists);
+    }
     public void handleExcLieferartAlreadyExists(ExcLieferartAlreadyExists excLieferartAlreadyExists) throws ModelException{
         this.standardHandling(excLieferartAlreadyExists);
     }

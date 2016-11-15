@@ -1,22 +1,14 @@
 
 package model;
 
-import model.visitor.AnythingExceptionVisitor;
-import model.visitor.AnythingReturnExceptionVisitor;
-import model.visitor.AnythingReturnVisitor;
-import model.visitor.AnythingVisitor;
+import model.visitor.*;
 import persistence.*;
 
 
 /* Additional import section end */
 
-public class Artikel extends PersistentObject implements PersistentArtikel{
+public class Artikel extends model.Komponente implements PersistentArtikel{
     
-    /** Throws persistence exception if the object with the given id does not exist. */
-    public static Artikel4Public getById(long objectId) throws PersistenceException{
-        long classId = ConnectionHandler.getTheConnectionHandler().theArtikelFacade.getClass(objectId);
-        return (Artikel4Public)PersistentProxi.createProxi(objectId, classId);
-    }
     
     public static Artikel4Public createArtikel(String artikelnummer,String bezeichnung,common.Fraction preis,long minLagerbestand,long maxLagerbestand,long hstLieferzeit,Artikelstatus4Public artikelstatus) throws PersistenceException{
         return createArtikel(artikelnummer,bezeichnung,preis,minLagerbestand,maxLagerbestand,hstLieferzeit,artikelstatus,false);
@@ -109,14 +101,14 @@ public class Artikel extends PersistentObject implements PersistentArtikel{
     
     public Artikel provideCopy() throws PersistenceException{
         Artikel result = this;
-        result = new Artikel(this.artikelnummer, 
+        result = new Artikel(this.This, 
+                             this.artikelnummer, 
                              this.bezeichnung, 
                              this.preis, 
                              this.minLagerbestand, 
                              this.maxLagerbestand, 
                              this.hstLieferzeit, 
                              this.artikelstatus, 
-                             this.This, 
                              this.getId());
         this.copyingPrivateUserAttributes(result);
         return result;
@@ -132,19 +124,17 @@ public class Artikel extends PersistentObject implements PersistentArtikel{
     protected long maxLagerbestand;
     protected long hstLieferzeit;
     protected PersistentArtikelstatus artikelstatus;
-    protected PersistentArtikel This;
     
-    public Artikel(String artikelnummer,String bezeichnung,common.Fraction preis,long minLagerbestand,long maxLagerbestand,long hstLieferzeit,PersistentArtikelstatus artikelstatus,PersistentArtikel This,long id) throws PersistenceException {
+    public Artikel(PersistentKomponente This,String artikelnummer,String bezeichnung,common.Fraction preis,long minLagerbestand,long maxLagerbestand,long hstLieferzeit,PersistentArtikelstatus artikelstatus,long id) throws PersistenceException {
         /* Shall not be used by clients for object construction! Use static create operation instead! */
-        super(id);
+        super((PersistentKomponente)This,id);
         this.artikelnummer = artikelnummer;
         this.bezeichnung = bezeichnung;
         this.preis = preis;
         this.minLagerbestand = minLagerbestand;
         this.maxLagerbestand = maxLagerbestand;
         this.hstLieferzeit = hstLieferzeit;
-        this.artikelstatus = artikelstatus;
-        if (This != null && !(this.isTheSameAs(This))) this.This = This;        
+        this.artikelstatus = artikelstatus;        
     }
     
     static public long getTypeId() {
@@ -163,10 +153,6 @@ public class Artikel extends PersistentObject implements PersistentArtikel{
         if(this.getArtikelstatus() != null){
             this.getArtikelstatus().store();
             ConnectionHandler.getTheConnectionHandler().theArtikelFacade.artikelstatusSet(this.getId(), getArtikelstatus());
-        }
-        if(!this.isTheSameAs(this.getThis())){
-            this.getThis().store();
-            ConnectionHandler.getTheConnectionHandler().theArtikelFacade.ThisSet(this.getId(), getThis());
         }
         
     }
@@ -229,21 +215,6 @@ public class Artikel extends PersistentObject implements PersistentArtikel{
             ConnectionHandler.getTheConnectionHandler().theArtikelFacade.artikelstatusSet(this.getId(), newValue);
         }
     }
-    protected void setThis(PersistentArtikel newValue) throws PersistenceException {
-        if (newValue == null) throw new PersistenceException("Null values not allowed!", 0);
-        if (newValue.isTheSameAs(this)){
-            this.This = null;
-            return;
-        }
-        if(newValue.isTheSameAs(this.This)) return;
-        long objectId = newValue.getId();
-        long classId = newValue.getClassId();
-        this.This = (PersistentArtikel)PersistentProxi.createProxi(objectId, classId);
-        if(!this.isDelayed$Persistence()){
-            newValue.store();
-            ConnectionHandler.getTheConnectionHandler().theArtikelFacade.ThisSet(this.getId(), newValue);
-        }
-    }
     public PersistentArtikel getThis() throws PersistenceException {
         if(this.This == null){
             PersistentArtikel result = (PersistentArtikel)PersistentProxi.createProxi(this.getId(),this.getClassId());
@@ -252,6 +223,18 @@ public class Artikel extends PersistentObject implements PersistentArtikel{
         }return (PersistentArtikel)this.This;
     }
     
+    public void accept(KomponenteVisitor visitor) throws PersistenceException {
+        visitor.handleArtikel(this);
+    }
+    public <R> R accept(KomponenteReturnVisitor<R>  visitor) throws PersistenceException {
+         return visitor.handleArtikel(this);
+    }
+    public <E extends model.UserException>  void accept(KomponenteExceptionVisitor<E> visitor) throws PersistenceException, E {
+         visitor.handleArtikel(this);
+    }
+    public <R, E extends model.UserException> R accept(KomponenteReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E {
+         return visitor.handleArtikel(this);
+    }
     public void accept(AnythingVisitor visitor) throws PersistenceException {
         visitor.handleArtikel(this);
     }
@@ -320,10 +303,13 @@ public class Artikel extends PersistentObject implements PersistentArtikel{
     }
     public BooleanX4Public groesserMax(final long menge) 
 				throws PersistenceException{
-        if(getThis().getMaxLagerbestand() < menge) {
-            return TrueX.getTheTrueX();
+        //TODO: implement method: groesserMax
+        try{
+            throw new java.lang.UnsupportedOperationException("Method \"groesserMax\" not implemented yet.");
+        } catch (java.lang.UnsupportedOperationException uoe){
+            uoe.printStackTrace();
+            throw uoe;
         }
-        else return FalseX.getTheFalseX();
     }
     public void initializeOnCreation() 
 				throws PersistenceException{
@@ -337,20 +323,12 @@ public class Artikel extends PersistentObject implements PersistentArtikel{
     }
     public void statusAuslauf() 
 				throws PersistenceException{
-        Auslauf4Public auslauf = Auslauf.createAuslauf();
-//        if(getThis().getArtikelstatus().equals(auslauf)){
-//            throw new ExcStatusDidNotChange(ErrorMessages.statusDidNotChange);
-//        }
-        this.setArtikelstatus(auslauf);
+        //TODO: implement method: statusAuslauf
         
     }
     public void statusVerkauf() 
 				throws PersistenceException{
-        Verkauf4Public verkauf = Verkauf.createVerkauf();
-//        if(getThis().getArtikelstatus().equals(verkauf)){
-//            throw new ExcStatusDidNotChange(ErrorMessages.statusDidNotChange);
-//        }
-        this.setArtikelstatus(verkauf);
+        //TODO: implement method: statusVerkauf
         
     }
     

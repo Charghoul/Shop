@@ -9,7 +9,7 @@ interface ArtikelDOWNMssgsVisitor  {
 }
 
 
-interface ArtikelUPMssgsVisitor  {
+interface ArtikelUPMssgsVisitor extends KomponenteUPMssgsVisitor {
 
     
 }

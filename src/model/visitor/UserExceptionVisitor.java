@@ -6,6 +6,7 @@ import persistence.*;
 public interface UserExceptionVisitor {
     
     public void handleCycleException(model.CycleException cycleException) throws PersistenceException;
+    public void handleExcAlreadyExists(model.ExcAlreadyExists excAlreadyExists) throws PersistenceException;
     public void handleExcArtikelAlreadyExists(model.ExcArtikelAlreadyExists excArtikelAlreadyExists) throws PersistenceException;
     public void handleExcLagerbestandOverMax(model.ExcLagerbestandOverMax excLagerbestandOverMax) throws PersistenceException;
     public void handleExcLagerbestandUnderZero(model.ExcLagerbestandUnderZero excLagerbestandUnderZero) throws PersistenceException;

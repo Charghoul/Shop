@@ -177,12 +177,13 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
     
     public void aendereMenge(final Position4Public position, final long menge) 
 				throws model.ExcLagerbestandUnderZero, PersistenceException{
-        position.aendereMenge(menge);
+        //TODO: implement method: aendereMenge
         
     }
     public void bestellen() 
 				throws PersistenceException{
         //TODO: implement method: bestellen
+        
     }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{

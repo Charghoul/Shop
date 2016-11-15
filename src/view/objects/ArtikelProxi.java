@@ -5,7 +5,7 @@ import viewClient.*;
 
 import view.visitor.*;
 
-public class ArtikelProxi extends ViewProxi implements ArtikelView{
+public class ArtikelProxi extends KomponenteProxi implements ArtikelView{
     
     public ArtikelProxi(long objectId, long classId, ExceptionAndEventHandler connectionKey) {
         super(objectId, classId, connectionKey);
@@ -98,6 +98,18 @@ public class ArtikelProxi extends ViewProxi implements ArtikelView{
         ((Artikel)this.getTheObject()).setArtikelstatus(newValue);
     }
     
+    public void accept(KomponenteVisitor visitor) throws ModelException {
+        visitor.handleArtikel(this);
+    }
+    public <R> R accept(KomponenteReturnVisitor<R>  visitor) throws ModelException {
+         return visitor.handleArtikel(this);
+    }
+    public <E extends view.UserException>  void accept(KomponenteExceptionVisitor<E> visitor) throws ModelException, E {
+         visitor.handleArtikel(this);
+    }
+    public <R, E extends view.UserException> R accept(KomponenteReturnExceptionVisitor<R, E>  visitor) throws ModelException, E {
+         return visitor.handleArtikel(this);
+    }
     public void accept(AnythingVisitor visitor) throws ModelException {
         visitor.handleArtikel(this);
     }

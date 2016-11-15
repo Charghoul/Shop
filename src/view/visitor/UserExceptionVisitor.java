@@ -6,6 +6,7 @@ import view.*;
 public interface UserExceptionVisitor {
     
     public void handleCycleException(CycleException cycleException) throws ModelException;
+    public void handleExcAlreadyExists(ExcAlreadyExists excAlreadyExists) throws ModelException;
     public void handleExcArtikelAlreadyExists(ExcArtikelAlreadyExists excArtikelAlreadyExists) throws ModelException;
     public void handleExcLagerbestandOverMax(ExcLagerbestandOverMax excLagerbestandOverMax) throws ModelException;
     public void handleExcLagerbestandUnderZero(ExcLagerbestandUnderZero excLagerbestandUnderZero) throws ModelException;

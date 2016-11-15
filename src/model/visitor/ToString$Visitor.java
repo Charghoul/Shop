@@ -11,12 +11,14 @@ public abstract class ToString$Visitor extends AnythingStandardVisitor{
     public abstract void handleAuslauf(Auslauf4Public auslauf) throws PersistenceException;
     public abstract void handleFalseX(FalseX4Public falseX) throws PersistenceException;
     public abstract void handleBestellung(Bestellung4Public bestellung) throws PersistenceException;
+    public abstract void handleHerstellerManager(HerstellerManager4Public herstellerManager) throws PersistenceException;
     public abstract void handleLieferart(Lieferart4Public lieferart) throws PersistenceException;
     public abstract void handleNeuanlage(Neuanlage4Public neuanlage) throws PersistenceException;
     public abstract void handleServiceRegister(ServiceRegister4Public serviceRegister) throws PersistenceException;
     public abstract void handleGeliefert(Geliefert4Public geliefert) throws PersistenceException;
     public abstract void handleServiceKunde(ServiceKunde4Public serviceKunde) throws PersistenceException;
     public abstract void handleArtikel(Artikel4Public artikel) throws PersistenceException;
+    public abstract void handleProduktgruppe(Produktgruppe4Public produktgruppe) throws PersistenceException;
     public abstract void handlePosition(Position4Public position) throws PersistenceException;
     public abstract void handleServiceAdmin(ServiceAdmin4Public serviceAdmin) throws PersistenceException;
     public abstract void handleArtikelManager(ArtikelManager4Public artikelManager) throws PersistenceException;
@@ -24,6 +26,7 @@ public abstract class ToString$Visitor extends AnythingStandardVisitor{
     public abstract void handleVorbestellung(Vorbestellung4Public vorbestellung) throws PersistenceException;
     public abstract void handleRueckversand(Rueckversand4Public rueckversand) throws PersistenceException;
     public abstract void handleKunde(Kunde4Public kunde) throws PersistenceException;
+    public abstract void handleHersteller(Hersteller4Public hersteller) throws PersistenceException;
     public abstract void handleLieferartManager(LieferartManager4Public lieferartManager) throws PersistenceException;
     public abstract void handleHinversand(Hinversand4Public hinversand) throws PersistenceException;
     public abstract void handleAngenommen(Angenommen4Public angenommen) throws PersistenceException;

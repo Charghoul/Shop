@@ -3,11 +3,10 @@ package model.visitor;
 
 import persistence.*;
 
-public interface AnythingVisitor extends ArtikelstatusVisitor,BestellstatusVisitor,BooleanXVisitor,CommonDateVisitor,ServiceVisitor{
+public interface AnythingVisitor extends ArtikelstatusVisitor,BestellstatusVisitor,BooleanXVisitor,CommonDateVisitor,KomponenteVisitor,ServiceVisitor{
     
     public void handleAendereArtikelCommand(AendereArtikelCommand4Public aendereArtikelCommand) throws PersistenceException;
     public void handleAendereLieferartCommand(AendereLieferartCommand4Public aendereLieferartCommand) throws PersistenceException;
-    public void handleArtikel(Artikel4Public artikel) throws PersistenceException;
     public void handleArtikelEntnehmenCommand(ArtikelEntnehmenCommand4Public artikelEntnehmenCommand) throws PersistenceException;
     public void handleArtikelManager(ArtikelManager4Public artikelManager) throws PersistenceException;
     public void handleBestellung(Bestellung4Public bestellung) throws PersistenceException;
@@ -16,6 +15,8 @@ public interface AnythingVisitor extends ArtikelstatusVisitor,BestellstatusVisit
     public void handleCommonDate(CommonDate4Public commonDate) throws PersistenceException;
     public void handleEinkaufsManager(EinkaufsManager4Public einkaufsManager) throws PersistenceException;
     public void handleErrorDisplay(ErrorDisplay4Public errorDisplay) throws PersistenceException;
+    public void handleHersteller(Hersteller4Public hersteller) throws PersistenceException;
+    public void handleHerstellerManager(HerstellerManager4Public herstellerManager) throws PersistenceException;
     public void handleKonto(Konto4Public konto) throws PersistenceException;
     public void handleKunde(Kunde4Public kunde) throws PersistenceException;
     public void handleLieferart(Lieferart4Public lieferart) throws PersistenceException;

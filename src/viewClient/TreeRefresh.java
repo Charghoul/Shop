@@ -1,17 +1,24 @@
 package viewClient;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.Vector;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.ImageView;
+
+import javax.swing.tree.TreeModel;
+
 import view.ModelException;
+
 import view.objects.ViewObjectInTree;
 import view.objects.ViewProxi;
 import view.objects.ViewRoot;
-
-import javax.swing.tree.TreeModel;
-import java.util.*;
 
 
 public class TreeRefresh extends TreeView<ViewObjectInTree>{
@@ -168,11 +175,11 @@ public class TreeRefresh extends TreeView<ViewObjectInTree>{
 		List<TreeItem<ViewObjectInTree>> result = new ArrayList<TreeItem<ViewObjectInTree>>();
 		if ( this.isShowRoot() ){
 			result = this.getMatchingItems( this.rootFX, searchString);
-//			System.out.println("root: " + result.size() + "fï¿½r:  " +rootFX.getValue().getWrappedObject().toString());
+//			System.out.println("root: " + result.size() + "für:  " +rootFX.getValue().getWrappedObject().toString());
 		} else {
 			for (TreeItem<ViewObjectInTree> child : rootFX.getChildren()) {
 				result.addAll( this.getMatchingItems( child, searchString) );				
-//				System.out.println( result.size() +  "  fï¿½r:  " +child.getValue().getWrappedObject().toString());
+//				System.out.println( result.size() +  "  für:  " +child.getValue().getWrappedObject().toString());
 			}
 		}
 		return result;		

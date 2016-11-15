@@ -55,7 +55,7 @@ public abstract class ViewProxi extends ViewRoot {
 	
   private static ProxiFactory [] getTheProxiFactories(){
 	if (proxiFactories == null){
-		proxiFactories = new ProxiFactory [165];
+		proxiFactories = new ProxiFactory [174];
         proxiFactories[111] = new ProxiFactory(){
             ViewProxi create(long objectId, long classId, ExceptionAndEventHandler connectionKey){
                 return new VerkaufProxi(objectId, classId, connectionKey);
@@ -91,6 +91,11 @@ public abstract class ViewProxi extends ViewRoot {
                 return new BestellungProxi(objectId, classId, connectionKey);
             }
         };
+        proxiFactories[171] = new ProxiFactory(){
+            ViewProxi create(long objectId, long classId, ExceptionAndEventHandler connectionKey){
+                return new HerstellerManagerProxi(objectId, classId, connectionKey);
+            }
+        };
         proxiFactories[37] = new ProxiFactory(){
             ViewProxi create(long objectId, long classId, ExceptionAndEventHandler connectionKey){
                 return new LieferartProxi(objectId, classId, connectionKey);
@@ -121,6 +126,11 @@ public abstract class ViewProxi extends ViewRoot {
                 return new ArtikelProxi(objectId, classId, connectionKey);
             }
         };
+        proxiFactories[166] = new ProxiFactory(){
+            ViewProxi create(long objectId, long classId, ExceptionAndEventHandler connectionKey){
+                return new ProduktgruppeProxi(objectId, classId, connectionKey);
+            }
+        };
         proxiFactories[43] = new ProxiFactory(){
             ViewProxi create(long objectId, long classId, ExceptionAndEventHandler connectionKey){
                 return new PositionProxi(objectId, classId, connectionKey);
@@ -149,6 +159,11 @@ public abstract class ViewProxi extends ViewRoot {
         proxiFactories[1] = new ProxiFactory(){
             ViewProxi create(long objectId, long classId, ExceptionAndEventHandler connectionKey){
                 return new KundeProxi(objectId, classId, connectionKey);
+            }
+        };
+        proxiFactories[169] = new ProxiFactory(){
+            ViewProxi create(long objectId, long classId, ExceptionAndEventHandler connectionKey){
+                return new HerstellerProxi(objectId, classId, connectionKey);
             }
         };
         proxiFactories[116] = new ProxiFactory(){

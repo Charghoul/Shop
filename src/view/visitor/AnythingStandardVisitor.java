@@ -26,6 +26,9 @@ public abstract class AnythingStandardVisitor implements AnythingVisitor {
     public void handleBestellung(BestellungView bestellung) throws ModelException{
         this.standardHandling(bestellung);
     }
+    public void handleHerstellerManager(HerstellerManagerView herstellerManager) throws ModelException{
+        this.standardHandling(herstellerManager);
+    }
     public void handleLieferart(LieferartView lieferart) throws ModelException{
         this.standardHandling(lieferart);
     }
@@ -43,6 +46,9 @@ public abstract class AnythingStandardVisitor implements AnythingVisitor {
     }
     public void handleArtikel(ArtikelView artikel) throws ModelException{
         this.standardHandling(artikel);
+    }
+    public void handleProduktgruppe(ProduktgruppeView produktgruppe) throws ModelException{
+        this.standardHandling(produktgruppe);
     }
     public void handlePosition(PositionView position) throws ModelException{
         this.standardHandling(position);
@@ -64,6 +70,9 @@ public abstract class AnythingStandardVisitor implements AnythingVisitor {
     }
     public void handleKunde(KundeView kunde) throws ModelException{
         this.standardHandling(kunde);
+    }
+    public void handleHersteller(HerstellerView hersteller) throws ModelException{
+        this.standardHandling(hersteller);
     }
     public void handleLieferartManager(LieferartManagerView lieferartManager) throws ModelException{
         this.standardHandling(lieferartManager);

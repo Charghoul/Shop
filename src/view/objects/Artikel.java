@@ -1,18 +1,13 @@
 
 package view.objects;
 
-import view.ArtikelView;
-import view.ArtikelstatusView;
-import view.ModelException;
-import view.visitor.AnythingExceptionVisitor;
-import view.visitor.AnythingReturnExceptionVisitor;
-import view.visitor.AnythingReturnVisitor;
-import view.visitor.AnythingVisitor;
+import view.*;
+import view.visitor.*;
 
 
 /* Additional import section end */
 
-public class Artikel extends ViewObject implements ArtikelView{
+public class Artikel extends view.objects.Komponente implements ArtikelView{
     
     protected String artikelnummer;
     protected String bezeichnung;
@@ -85,6 +80,18 @@ public class Artikel extends ViewObject implements ArtikelView{
         this.artikelstatus = newValue;
     }
     
+    public void accept(KomponenteVisitor visitor) throws ModelException {
+        visitor.handleArtikel(this);
+    }
+    public <R> R accept(KomponenteReturnVisitor<R>  visitor) throws ModelException {
+         return visitor.handleArtikel(this);
+    }
+    public <E extends view.UserException>  void accept(KomponenteExceptionVisitor<E> visitor) throws ModelException, E {
+         visitor.handleArtikel(this);
+    }
+    public <R, E extends view.UserException> R accept(KomponenteReturnExceptionVisitor<R, E>  visitor) throws ModelException, E {
+         return visitor.handleArtikel(this);
+    }
     public void accept(AnythingVisitor visitor) throws ModelException {
         visitor.handleArtikel(this);
     }

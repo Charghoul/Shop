@@ -182,7 +182,8 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
     }
     public void artikelEntnehmen(final Position4Public position, final long menge) 
 				throws model.ExcLagerbestandUnderZero, PersistenceException{
-        position.verringereMenge(menge);
+        //TODO: implement method: artikelEntnehmen
+        
     }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{

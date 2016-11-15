@@ -8,38 +8,56 @@ abstract server Service {
 }
 server ServiceKunde extends Service {
 	one-to-one EinkaufsManager einkaufsManager;
-	void neuePosition(EinkaufsManager einkaufsManager, Artikel artikel, Integer menge);	
+	Warenlager warenlager;
+	void neuePosition(EinkaufsManager einkaufsManager, Artikel artikel, Integer menge) throws UserException;
+	void bestellen(EinkaufsManager einkaufsManager);
+	void aendereMenge(Position position, Integer menge) throws ExcLagerbestandUnderZero;
+	
 }
 server ServiceAdmin extends Service {
-	one-to-one Warenlager warenlager;
+	Warenlager warenlager;
 	one-to-one ArtikelManager artikelManager;
 	one-to-one (no-view myService) LieferartManager lieferartManager;
-	void neuerArtikel(ArtikelManager artikelManager, String artikelnummer, String bezeichnung, Fraction preis, Integer minLagerbestand, 		Integer maxLagerbestand, Integer hstLieferzeit) throws UserException;
-	void neueLieferArt(LieferartManager lieferartManager, String name, Integer lieferzeit, Fraction preis) throws ExcLieferartAlreadyExists;
+	void neuerArtikel(ArtikelManager artikelManager, String artikelnummer, String bezeichnung, Fraction preis, Integer minLagerbestand, 		Integer maxLagerbestand, Integer hstLieferzeit);
+	void statusVerkauf(Artikel artikel);
+	void statusAuslauf(Artikel artikel);
+	void neueLieferArt(LieferartManager lieferartManager, String name, Integer lieferzeit, Fraction preis);
+	void artikelEinlagern(Warenlager warenlager, Artikel artikel, Integer menge) throws ExcLagerbestandOverMax;
+	void artikelEntnehmen(Warenlager warenlager, Position position, Integer menge);
+	void aendereArtikel(Artikel artikel, String bezeichnung, Fraction preis, Integer minLagerbestand, Integer maxLagerbestand, Integer hstLieferzeit);
+	
 }
 server ServiceRegister extends Service {
 	active void register(String username, String passwort) throws ExcUserAlreadyExists;
 }
+
+class HerstellerManager{
+	Hersteller ** herstellerListe;
+	void neuerHersteller(String name) throws ExcAlreadyExists;
+	void aendereHersteller(Hersteller hersteller, String name)throws ExcAlreadyExists;
+}
 class ArtikelManager{
 	Artikel ** artikelListe;
-	void neuerArtikel(String artikelnummer, String bezeichnung, Fraction preis, Integer minLagerbestand, 		Integer maxLagerbestand, Integer hstLieferzeit) throws UserException;
-	void aendereArtikel(Artikel artikel, String bezeichnung, Fraction preis, Integer minLagerbestand, Integer maxLagerbestand, Integer hstLieferzeit);
+	active void neuerArtikel(String artikelnummer, String bezeichnung, Fraction preis, Integer minLagerbestand, 		Integer maxLagerbestand, Integer hstLieferzeit) throws UserException;
+	active void aendereArtikel(Artikel artikel, String bezeichnung, Fraction preis, Integer minLagerbestand, Integer maxLagerbestand, Integer hstLieferzeit);
 }
 class EinkaufsManager{
 	Position ** einkaufsListe;
-	void neuePosition(Artikel artikel, Integer menge);
-	void aenderePosition(Artikel artikel, Integer menge);
+	void bestellen();
+	void neuePosition(Artikel artikel, Integer menge) throws ExcArtikelAlreadyExists, UserException;
+	void aendereMenge(Position position, Integer menge) throws ExcLagerbestandUnderZero;
 }
 
 class LieferartManager{
 	Lieferart ** lieferartenListe;
-	void neueLieferart(String name, Integer lieferzeit, Fraction preis) throws ExcLieferartAlreadyExists;
+	active void neueLieferart(String name, Integer lieferzeit, Fraction preis) throws ExcLieferartAlreadyExists;
+	active void aendereLieferart(Lieferart lieferart, String name, Integer lieferzeit, Fraction preis);
 }
 
 singleton Warenlager{
 	Position ** warenListe;
-	void artikelEentnehmen(Artikel artikel, Integer menge);
-	void artikelEinlagern(Artikel artikel, Integer menge);
+	active void artikelEntnehmen##artEnt(Position position, Integer menge) throws ExcLagerbestandUnderZero;
+	void artikelEinlagern(Artikel artikel, Integer menge) throws ExcLagerbestandOverMax;
 }
 class Kunde{
 	indexed prior String benutzername;
@@ -51,18 +69,33 @@ class Konto{
 	Fraction kontostand;
 	Fraction limit;
 }
-class Artikel {
+abstract class Komponente {
+}
+
+class Artikel extends Komponente{
 	prior indexed String artikelnummer;
 	prior indexed String bezeichnung;
 	prior Fraction preis;
 	prior Integer minLagerbestand;
 	prior Integer maxLagerbestand;
 	prior Integer hstLieferzeit;
+	prior Artikelstatus artikelstatus;
 	void aendereArtikel(String bezeichnung, Fraction preis, Integer minLagerbestand, Integer maxLagerbestand, Integer hstLieferzeit);
+	active void statusVerkauf();
+	active void statusAuslauf();
+	BooleanX groesserMax(Integer menge);
+}
+class Produktgruppe extends Komponente{
+	prior String name;
+}
+class Hersteller{
+	prior indexed String name;
+	void aendereHersteller(String name) throws ExcAlreadyExists;
+	BooleanX alreadyExists(String name);
 }
 class Bestellung{
-	public Position ** positionsListe;
-	String ID;
+	Position ** positionsListe;
+	prior indexed String bestellID;
 	Bestellstatus bestellstatus;
 }
 class Lieferung{
@@ -73,13 +106,17 @@ class Lieferung{
 class Position{
 	prior Artikel artikel;
 	prior Integer menge;
+	void verringereMenge(Integer menge) throws ExcLagerbestandUnderZero;
+	void aendereMenge(Integer menge) throws ExcLagerbestandUnderZero;
+	void erhoeheMenge(Integer menge) throws ExcLagerbestandOverMax;
+	Position artikelVorhanden(Artikel artikel);
 }
 
 class Lieferart{
 	indexed prior String name;
 	prior Integer lieferzeit;
 	prior Fraction preis;
-	void aendereLieferart(Lieferart lieferart);
+	void aendereLieferart(String name, Integer lieferzeit, Fraction preis);
 }
 
 abstract class Artikelstatus{}
@@ -94,9 +131,18 @@ class Geliefert extends Bestellstatus{}
 class Angenommen extends Bestellstatus{}
 class Rueckversand extends Bestellstatus{}
 
+
+abstract class BooleanX{}
+singleton TrueX extends BooleanX{}
+singleton FalseX extends BooleanX{}
+
+exception ExcAlreadyExists{}
+exception ExcLagerbestandOverMax{}
+exception ExcLagerbestandUnderZero{}
 exception ExcLieferartAlreadyExists{}
 exception ExcArtikelAlreadyExists{}
 exception ExcUserAlreadyExists{}
+exception ExcStatusDidNotChange{}
 
 }
 
