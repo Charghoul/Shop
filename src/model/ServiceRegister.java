@@ -215,18 +215,6 @@ public class ServiceRegister extends model.Service implements PersistentServiceR
     
     // Start of section that contains overridden operations only.
     
-    public void handleException(final Command command, final PersistenceException exception) 
-				throws PersistenceException{
-
-    }
-    public void handleResult(final Command command) 
-				throws PersistenceException{
-
-    }
-    public boolean hasChanged() 
-				throws PersistenceException{
-        return false;
-    }
 
     /* Start of protected part that is not overridden by persistence generator */
     

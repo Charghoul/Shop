@@ -15,9 +15,9 @@ public interface Position4Public extends Anything, AbstractPersistentProxi {
 				throws PersistenceException;
     public void aendereMenge(final long menge) 
 				throws model.ExcLagerbestandUnderZero, PersistenceException;
-    public Position4Public artikelVorhanden(final Artikel4Public artikel) 
-				throws PersistenceException;
     public void copyingPrivateUserAttributes(final Anything copy) 
+				throws PersistenceException;
+    public Position4Public enthaeltArtikel(final Artikel4Public artikel) 
 				throws PersistenceException;
     public void erhoeheMenge(final long menge) 
 				throws model.ExcLagerbestandOverMax, PersistenceException;

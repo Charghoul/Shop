@@ -231,12 +231,12 @@ public class ServiceKunde extends model.Service implements PersistentServiceKund
     public void aendereMenge(final Position4Public position, final long menge) 
 				throws model.ExcLagerbestandUnderZero, PersistenceException{
         //TODO: implement method: aendereMenge
-        
+        getThis().signalChanged(true);
     }
     public void bestellen(final EinkaufsManager4Public einkaufsManager) 
 				throws PersistenceException{
         //TODO: implement method: bestellen
-        
+        getThis().signalChanged(true);
     }
     public void connected(final String user) 
 				throws PersistenceException{
@@ -269,18 +269,6 @@ public class ServiceKunde extends model.Service implements PersistentServiceKund
     
     // Start of section that contains overridden operations only.
     
-    public void handleException(final Command command, final PersistenceException exception) 
-				throws PersistenceException{
-
-    }
-    public void handleResult(final Command command) 
-				throws PersistenceException{
-
-    }
-    public boolean hasChanged() 
-				throws PersistenceException{
-        return false;
-    }
 
     /* Start of protected part that is not overridden by persistence generator */
     

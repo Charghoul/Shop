@@ -207,20 +207,19 @@ public class Position extends PersistentObject implements PersistentPosition{
         //TODO: implement method: aendereMenge
         
     }
-    public Position4Public artikelVorhanden(final Artikel4Public artikel) 
-				throws PersistenceException{
-        //TODO: implement method: artikelVorhanden
-        try{
-            throw new java.lang.UnsupportedOperationException("Method \"artikelVorhanden\" not implemented yet.");
-        } catch (java.lang.UnsupportedOperationException uoe){
-            uoe.printStackTrace();
-            throw uoe;
-        }
-    }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{
         //TODO: implement method: copyingPrivateUserAttributes
         
+    }
+    public Position4Public enthaeltArtikel(final Artikel4Public artikel) 
+				throws PersistenceException{
+        if(getThis().getArtikel().equals(artikel)){
+            return null;
+        }
+        else {
+            return getThis();
+        }
     }
     public void erhoeheMenge(final long menge) 
 				throws model.ExcLagerbestandOverMax, PersistenceException{
