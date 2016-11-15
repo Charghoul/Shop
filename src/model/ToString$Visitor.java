@@ -37,7 +37,7 @@ public class ToString$Visitor extends model.visitor.ToString$Visitor {
 
 	@Override
 	public void handleHersteller(Hersteller4Public hersteller) throws PersistenceException {
-
+		result = ToStringConstants.Hersteller + ((PersistentHersteller) hersteller).getName();
 	}
 
 	@Override
@@ -103,13 +103,12 @@ public class ToString$Visitor extends model.visitor.ToString$Visitor {
 
 	@Override
 	public void handleHerstellerManager(HerstellerManager4Public herstellerManager) throws PersistenceException {
-
+		result = ToStringConstants.HerstellerManager;
 	}
 
 	@Override
 	public void handleLieferart(Lieferart4Public lieferart) throws PersistenceException {
-		PersistentLieferart pLieferArt = (PersistentLieferart) lieferart;
-		result = ToStringConstants.Lieferart +  pLieferArt.getName();
+		result = ToStringConstants.Lieferart +  ((PersistentLieferart) lieferart).getName();
 	}
 
 	@Override
@@ -157,7 +156,8 @@ public class ToString$Visitor extends model.visitor.ToString$Visitor {
 
 	@Override
 	public void handleProduktgruppe(Produktgruppe4Public produktgruppe) throws PersistenceException {
-
+		PersistentProduktgruppe persistentProduktgruppe = (PersistentProduktgruppe) produktgruppe;
+		result = ToStringConstants.Produktgruppe + persistentProduktgruppe.getName();
 	}
 
 

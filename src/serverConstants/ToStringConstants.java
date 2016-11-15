@@ -15,6 +15,9 @@ public class ToStringConstants {
     public static final String Verkauf = "Verkauf";
     public static final String Artikelstatus = "Artikelstatus: ";
     public static final String Auslauf = "Auslauf";
+    public static final String HerstellerManager = "Herstellerverzeichnis";
+    public static final String Hersteller = "Hersteller: ";
+    public static final String Produktgruppe = "Produktgruppe: ";
 
 
     private ToStringConstants(){}
