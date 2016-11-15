@@ -367,7 +367,7 @@ public class ServiceAdmin extends model.Service implements PersistentServiceAdmi
     public void neuerHersteller(final HerstellerManager4Public herstellerManager, final String name) 
 				throws model.ExcAlreadyExists, PersistenceException{
         herstellerManager.neuerHersteller(name);
-        
+        getThis().signalChanged(true);
     }
     public void produktgruppeHinzufuegen(final Produktgruppe4Public produktgruppe, final String name) 
 				throws model.ExcAlreadyExists, model.CycleException, PersistenceException{
@@ -377,28 +377,18 @@ public class ServiceAdmin extends model.Service implements PersistentServiceAdmi
     public void statusAuslauf(final Artikel4Public artikel) 
 				throws PersistenceException{
         artikel.statusAuslauf(getThis());
+        getThis().signalChanged(true);
         
     }
     public void statusVerkauf(final Artikel4Public artikel) 
 				throws PersistenceException{
         artikel.statusVerkauf(getThis());
+        getThis().signalChanged(true);
     }
     
     
     // Start of section that contains overridden operations only.
     
-    public void handleException(final Command command, final PersistenceException exception) 
-				throws PersistenceException{
-
-    }
-    public void handleResult(final Command command) 
-				throws PersistenceException{
-
-    }
-    public boolean hasChanged() 
-				throws PersistenceException{
-        return false;
-    }
 
     /* Start of protected part that is not overridden by persistence generator */
     

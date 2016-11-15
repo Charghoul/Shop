@@ -172,7 +172,7 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
         Position4Public temp = getThis().getWarenListe().findFirstException(new PredcateException<Position4Public, model.ExcLagerbestandOverMax>() {
             @Override
             public boolean test(Position4Public argument) throws PersistenceException, model.ExcLagerbestandOverMax {
-                return argument.artikelVorhanden(artikel) != null;
+                return argument.enthaeltArtikel(artikel) != null;
                  }
         });
         if( temp != null) temp.erhoeheMenge(menge);

@@ -118,6 +118,41 @@ public abstract class Service extends PersistentObject implements PersistentServ
     
     // Start of section that contains overridden operations only.
     
+    public void handleException(final Command command, final PersistenceException exception) 
+				throws PersistenceException{
+        new Thread(new Runnable(){
+            public /*INTERNAL*/ void run() {
+                //Handle exception!
+            }
+        }).start();
+    }
+    public void handleResult(final Command command) 
+				throws PersistenceException{
+        new Thread(new Runnable(){
+            public void  /*INTERNAL*/  run() {
+                try {
+                    try {
+                        command.checkException();
+                        //Handle result!
+                        signalChanged(true);
+                    } catch (model.UserException e) {
+                        model.UserExceptionToDisplayVisitor visitor = new model.UserExceptionToDisplayVisitor();
+                        e.accept(visitor);
+                        getErrors().add(visitor.getResult());
+                        signalChanged(true);
+                    }
+                } catch (PersistenceException e) {
+                    //Handle fatal exception!
+                }
+            }
+        }).start();
+    }
+    public boolean hasChanged() 
+				throws PersistenceException{
+        boolean result = this.changed;
+        this.changed = false;
+        return result;
+    }
 
     /* Start of protected part that is not overridden by persistence generator */
     

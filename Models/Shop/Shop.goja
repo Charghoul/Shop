@@ -121,7 +121,7 @@ class Position{
 	void verringereMenge(Integer menge) throws ExcLagerbestandUnderZero;
 	void aendereMenge(Integer menge) throws ExcLagerbestandUnderZero;
 	void erhoeheMenge(Integer menge) throws ExcLagerbestandOverMax;
-	Position artikelVorhanden(Artikel artikel);
+	Position enthaeltArtikel(Artikel artikel);
 }
 
 class Lieferart{

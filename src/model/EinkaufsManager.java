@@ -204,7 +204,7 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
         Position4Public temp = getThis().getEinkaufsListe().findFirst(new Predcate<Position4Public>() {
             @Override
             public boolean test(Position4Public argument) throws PersistenceException{
-                return argument.artikelVorhanden(artikel) != null;
+                return argument.enthaeltArtikel(artikel) != null;
             }
         });
         if( temp != null) throw new ExcArtikelAlreadyExists(ErrorMessages.ArtikelAlreadyInBasket);
