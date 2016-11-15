@@ -6,7 +6,6 @@ import persistence.*;
 public interface AnythingReturnExceptionVisitor<R, E extends model.UserException> extends ArtikelstatusReturnExceptionVisitor<R, E> ,BestellstatusReturnExceptionVisitor<R, E> ,BooleanXReturnExceptionVisitor<R, E> ,CommonDateReturnExceptionVisitor<R, E> ,KomponenteReturnExceptionVisitor<R, E> ,ServiceReturnExceptionVisitor<R, E> {
     
     public R handleAendereArtikelCommand(AendereArtikelCommand4Public aendereArtikelCommand) throws PersistenceException, E;
-    public R handleAendereLieferartCommand(AendereLieferartCommand4Public aendereLieferartCommand) throws PersistenceException, E;
     public R handleArtikelEntnehmenCommand(ArtikelEntnehmenCommand4Public artikelEntnehmenCommand) throws PersistenceException, E;
     public R handleArtikelManager(ArtikelManager4Public artikelManager) throws PersistenceException, E;
     public R handleBestellung(Bestellung4Public bestellung) throws PersistenceException, E;
@@ -22,7 +21,6 @@ public interface AnythingReturnExceptionVisitor<R, E extends model.UserException
     public R handleLieferart(Lieferart4Public lieferart) throws PersistenceException, E;
     public R handleLieferartManager(LieferartManager4Public lieferartManager) throws PersistenceException, E;
     public R handleLieferung(Lieferung4Public lieferung) throws PersistenceException, E;
-    public R handleNeueLieferartCommand(NeueLieferartCommand4Public neueLieferartCommand) throws PersistenceException, E;
     public R handleNeuerArtikelCommand(NeuerArtikelCommand4Public neuerArtikelCommand) throws PersistenceException, E;
     public R handlePosition(Position4Public position) throws PersistenceException, E;
     public R handleRegisterCommand(RegisterCommand4Public registerCommand) throws PersistenceException, E;

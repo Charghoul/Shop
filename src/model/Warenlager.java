@@ -193,7 +193,7 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
     public void initializeOnCreation() 
 				throws PersistenceException{
         try {
-            getThis().artikelEinlagern(Artikel.createArtikel("1234","test", Fraction.parse("5"),10,100,3,Neuanlage.createNeuanlage()),20);
+            getThis().artikelEinlagern(Artikel.createArtikel("1234","test", Fraction.parse("5"),10,100,3,Neuanlage.getTheNeuanlage()),20);
         } catch (ExcLagerbestandOverMax excLagerbestandOverMax) {
             excLagerbestandOverMax.printStackTrace();
         }

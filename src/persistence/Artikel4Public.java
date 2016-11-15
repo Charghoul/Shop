@@ -22,6 +22,8 @@ public interface Artikel4Public extends Komponente4Public {
     public void statusVerkauf(final Invoker invoker) 
 				throws PersistenceException;
     public void aendereArtikel(final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
+				throws model.ExcAlreadyExists, PersistenceException;
+    public BooleanX4Public alreadyExists(final String bezeichung) 
 				throws PersistenceException;
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException;
@@ -32,9 +34,9 @@ public interface Artikel4Public extends Komponente4Public {
     public void initializeOnInstantiation() 
 				throws PersistenceException;
     public void statusAuslauf() 
-				throws PersistenceException;
+				throws model.ExcInconsistentStatusChange, PersistenceException;
     public void statusVerkauf() 
-				throws PersistenceException;
+				throws model.ExcInconsistentStatusChange, PersistenceException;
 
 }
 

@@ -98,25 +98,6 @@ public abstract class Artikelstatus extends PersistentObject implements Persiste
     public void initializeOnInstantiation() 
 				throws PersistenceException{
         //TODO: implement method: initializeOnInstantiation
-        Artikelstatus4Public neuanlage = Neuanlage.createNeuanlage();
-        //falls ich nicht weiß welcher typ neuanlage ist ->
-        neuanlage.accept(new ArtikelstatusVisitor() {
-                             @Override
-                             public void handleAuslauf(Auslauf4Public auslauf) throws PersistenceException {
-
-                             }
-
-                             @Override
-                             public void handleNeuanlage(Neuanlage4Public neuanlage) throws PersistenceException {
-
-                             }
-
-                             @Override
-                             public void handleVerkauf(Verkauf4Public verkauf) throws PersistenceException {
-
-                             }
-                         }
-        );
     }
     
     

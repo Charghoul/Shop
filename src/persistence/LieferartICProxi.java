@@ -63,8 +63,12 @@ public class LieferartICProxi extends PersistentInCacheProxiOptimistic implement
         ((PersistentLieferart)this.getTheObject()).initialize(This, final$$Fields);
     }
     public void aendereLieferart(final String name, final long lieferzeit, final common.Fraction preis) 
-				throws PersistenceException{
+				throws model.ExcAlreadyExists, PersistenceException{
         ((PersistentLieferart)this.getTheObject()).aendereLieferart(name, lieferzeit, preis);
+    }
+    public BooleanX4Public alreadyExists(final String name) 
+				throws PersistenceException{
+        return ((PersistentLieferart)this.getTheObject()).alreadyExists(name);
     }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{

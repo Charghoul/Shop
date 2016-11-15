@@ -3,6 +3,7 @@ package model;
 
 import model.visitor.*;
 import persistence.*;
+import serverConstants.ErrorMessages;
 
 
 /* Additional import section end */
@@ -287,14 +288,23 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
     // Start of section that contains operations that must be implemented.
     
     public void aendereArtikel(final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
+				throws model.ExcAlreadyExists, PersistenceException{
+        if(getThis().alreadyExists(bezeichnung).equals(TrueX.getTheTrueX())) throw new ExcAlreadyExists(ErrorMessages.ArtikelAlreadyExists);
+        else {
+            getThis().setBezeichnung(bezeichnung);
+            getThis().setPreis(preis);
+            getThis().setMinLagerbestand(minLagerbestand);
+            getThis().setMaxLagerbestand(maxLagerbestand);
+            getThis().setHstLieferzeit(hstLieferzeit);
+        }
+
+    }
+    public BooleanX4Public alreadyExists(final String bezeichung) 
 				throws PersistenceException{
-        //exceptions wenn alles gleich ist
-        getThis().setBezeichnung(bezeichnung);
-        getThis().setPreis(preis);
-        getThis().setMinLagerbestand(minLagerbestand);
-        getThis().setMaxLagerbestand(maxLagerbestand);
-        getThis().setHstLieferzeit(hstLieferzeit);
-        
+        if(Artikel.getArtikelByBezeichnung(bezeichung).iterator().hasNext()){
+            return TrueX.getTheTrueX();
+        }
+        else return FalseX.getTheFalseX();
     }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{
@@ -303,13 +313,8 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
     }
     public BooleanX4Public groesserMax(final long menge) 
 				throws PersistenceException{
-        //TODO: implement method: groesserMax
-        try{
-            throw new java.lang.UnsupportedOperationException("Method \"groesserMax\" not implemented yet.");
-        } catch (java.lang.UnsupportedOperationException uoe){
-            uoe.printStackTrace();
-            throw uoe;
-        }
+        if(getThis().getMaxLagerbestand() < menge) return TrueX.getTheTrueX();
+        else return FalseX.getTheFalseX();
     }
     public void initializeOnCreation() 
 				throws PersistenceException{
@@ -322,14 +327,43 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
         
     }
     public void statusAuslauf() 
-				throws PersistenceException{
-        //TODO: implement method: statusAuslauf
-        
+				throws model.ExcInconsistentStatusChange, PersistenceException{
+        getThis().getArtikelstatus().accept(new ArtikelstatusExceptionVisitor<ExcInconsistentStatusChange>() {
+            @Override
+            public void handleAuslauf(Auslauf4Public auslauf) throws PersistenceException, ExcInconsistentStatusChange {
+                throw new ExcInconsistentStatusChange(ErrorMessages.StatusDidNotChange);
+            }
+
+            @Override
+            public void handleNeuanlage(Neuanlage4Public neuanlage) throws PersistenceException, ExcInconsistentStatusChange {
+                throw new ExcInconsistentStatusChange(ErrorMessages.StatusUbersprungen);
+            }
+
+            @Override
+            public void handleVerkauf(Verkauf4Public verkauf) throws PersistenceException, ExcInconsistentStatusChange {
+                getThis().setArtikelstatus(Auslauf.getTheAuslauf());
+            }
+        });
     }
     public void statusVerkauf() 
-				throws PersistenceException{
-        //TODO: implement method: statusVerkauf
-        
+				throws model.ExcInconsistentStatusChange, PersistenceException{
+        getThis().getArtikelstatus().accept(new ArtikelstatusExceptionVisitor<ExcInconsistentStatusChange>() {
+            @Override
+            public void handleAuslauf(Auslauf4Public auslauf) throws PersistenceException, ExcInconsistentStatusChange {
+                getThis().setArtikelstatus(Verkauf.getTheVerkauf());
+            }
+
+            @Override
+            public void handleNeuanlage(Neuanlage4Public neuanlage) throws PersistenceException, ExcInconsistentStatusChange {
+                getThis().setArtikelstatus(Verkauf.getTheVerkauf());
+            }
+
+            @Override
+            public void handleVerkauf(Verkauf4Public verkauf) throws PersistenceException, ExcInconsistentStatusChange {
+                throw new ExcInconsistentStatusChange(ErrorMessages.StatusDidNotChange);
+
+            }
+        });
     }
     
     

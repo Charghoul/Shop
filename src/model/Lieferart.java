@@ -6,6 +6,7 @@ import model.visitor.AnythingReturnExceptionVisitor;
 import model.visitor.AnythingReturnVisitor;
 import model.visitor.AnythingVisitor;
 import persistence.*;
+import serverConstants.ErrorMessages;
 
 
 /* Additional import section end */
@@ -204,9 +205,23 @@ public class Lieferart extends PersistentObject implements PersistentLieferart{
     // Start of section that contains operations that must be implemented.
     
     public void aendereLieferart(final String name, final long lieferzeit, final common.Fraction preis) 
-				throws PersistenceException{
-        //TODO: implement method: aendereLieferart
+				throws model.ExcAlreadyExists, PersistenceException{
+        if(getThis().alreadyExists(name).equals(TrueX.getTheTrueX())){
+            throw new ExcAlreadyExists(ErrorMessages.LieferArtAlreadyExists);
+        }
+        else {
+            getThis().setName(name);
+            getThis().setPreis(preis);
+            getThis().setLieferzeit(lieferzeit);
+        }
         
+    }
+    public BooleanX4Public alreadyExists(final String name) 
+				throws PersistenceException{
+        if(Lieferart.getLieferartByName(name).iterator().hasNext()){
+            return TrueX.getTheTrueX();
+        }
+        else return FalseX.getTheFalseX();
     }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{

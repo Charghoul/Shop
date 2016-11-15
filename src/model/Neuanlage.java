@@ -9,43 +9,52 @@ import persistence.*;
 
 public class Neuanlage extends model.Artikelstatus implements PersistentNeuanlage{
     
-    
-    public static Neuanlage4Public createNeuanlage() throws PersistenceException{
-        return createNeuanlage(false);
-    }
-    
-    public static Neuanlage4Public createNeuanlage(boolean delayed$Persistence) throws PersistenceException {
-        PersistentNeuanlage result = null;
-        if(delayed$Persistence){
-            result = ConnectionHandler.getTheConnectionHandler().theNeuanlageFacade
-                .newDelayedNeuanlage();
-            result.setDelayed$Persistence(true);
-        }else{
-            result = ConnectionHandler.getTheConnectionHandler().theNeuanlageFacade
-                .newNeuanlage(-1);
+    private static Neuanlage4Public theNeuanlage = null;
+    public static boolean reset$For$Test = false;
+    private static final Object $$lock = new Object();
+    public static Neuanlage4Public getTheNeuanlage() throws PersistenceException{
+        if (theNeuanlage == null || reset$For$Test){
+            if (reset$For$Test) theNeuanlage = null;
+            class Initializer implements Runnable {
+                PersistenceException exception = null;
+                public void /* internal */ run(){
+                    this.produceSingleton();
+                }
+                void produceSingleton() {
+                    synchronized ($$lock){
+                        try {
+                            Neuanlage4Public proxi = null;
+                            proxi = ConnectionHandler.getTheConnectionHandler().theNeuanlageFacade.getTheNeuanlage();
+                            theNeuanlage = proxi;
+                            if(proxi.getId() < 0) {
+                                ((AbstractPersistentRoot)proxi).setId(proxi.getId() * -1);
+                                proxi.initialize(proxi, new java.util.HashMap<String,Object>());
+                                proxi.initializeOnCreation();
+                            }
+                        } catch (PersistenceException e){
+                            exception = e;
+                        } finally {
+                            $$lock.notify();
+                        }
+                        
+                    }
+                }
+                Neuanlage4Public getResult() throws PersistenceException{
+                    synchronized ($$lock) {
+                        if (exception == null && theNeuanlage== null) try {$$lock.wait();} catch (InterruptedException e) {}
+                        if(exception != null) throw exception;
+                        return theNeuanlage;
+                    }
+                }
+                
+            }
+            reset$For$Test = false;
+            Initializer initializer = new Initializer();
+            new Thread(initializer).start();
+            return initializer.getResult();
         }
-        java.util.HashMap<String,Object> final$$Fields = new java.util.HashMap<String,Object>();
-        result.initialize(result, final$$Fields);
-        result.initializeOnCreation();
-        return result;
+        return theNeuanlage;
     }
-    
-    public static Neuanlage4Public createNeuanlage(boolean delayed$Persistence,Neuanlage4Public This) throws PersistenceException {
-        PersistentNeuanlage result = null;
-        if(delayed$Persistence){
-            result = ConnectionHandler.getTheConnectionHandler().theNeuanlageFacade
-                .newDelayedNeuanlage();
-            result.setDelayed$Persistence(true);
-        }else{
-            result = ConnectionHandler.getTheConnectionHandler().theNeuanlageFacade
-                .newNeuanlage(-1);
-        }
-        java.util.HashMap<String,Object> final$$Fields = new java.util.HashMap<String,Object>();
-        result.initialize(This, final$$Fields);
-        result.initializeOnCreation();
-        return result;
-    }
-    
     public java.util.HashMap<String,Object> toHashtable(java.util.HashMap<String,Object> allResults, int depth, int essentialLevel, boolean forGUI, boolean leaf, TDObserver tdObserver) throws PersistenceException {
     java.util.HashMap<String,Object> result = null;
         if (depth > 0 && essentialLevel <= common.RPCConstantsAndServices.EssentialDepth){
@@ -82,11 +91,7 @@ public class Neuanlage extends model.Artikelstatus implements PersistentNeuanlag
     }
     
     public void store() throws PersistenceException {
-        if(!this.isDelayed$Persistence()) return;
-        if (this.getClassId() == 214) ConnectionHandler.getTheConnectionHandler().theNeuanlageFacade
-            .newNeuanlage(this.getId());
-        super.store();
-        
+        // Singletons cannot be delayed!
     }
     
     public PersistentNeuanlage getThis() throws PersistenceException {

@@ -15,34 +15,14 @@ public class VerkaufFacade{
 		this.con = con;
 	}
 
-    /* If idCreateIfLessZero is negative, a new id is generated. */
-    public PersistentVerkauf newVerkauf(long idCreateIfLessZero) throws PersistenceException {
-        oracle.jdbc.OracleCallableStatement callable;
+    public PersistentVerkauf getTheVerkauf() throws PersistenceException {
+        CallableStatement callable;
         try{
-            callable = (oracle.jdbc.OracleCallableStatement)this.con.prepareCall("Begin ? := " + this.schemaName + ".VrkfFacade.newVrkf(?); end;");
-            callable.registerOutParameter(1, oracle.jdbc.OracleTypes.NUMBER);
-            callable.setLong(2, idCreateIfLessZero);
-            callable.execute();
-            long id = callable.getLong(1);
-            callable.close();
-            Verkauf result = new Verkauf(null,id);
-            if (idCreateIfLessZero < 0)Cache.getTheCache().put(result);
-            return (PersistentVerkauf)PersistentProxi.createProxi(id, 212);
-        }catch(SQLException se) {
-            throw new PersistenceException(se.getMessage(), se.getErrorCode());
-        }
-    }
-    
-    public PersistentVerkauf newDelayedVerkauf() throws PersistenceException {
-        oracle.jdbc.OracleCallableStatement callable;
-        try{
-            callable = (oracle.jdbc.OracleCallableStatement)this.con.prepareCall("Begin ? := " + this.schemaName + ".VrkfFacade.newDelayedVrkf(); end;");
+            callable = this.con.prepareCall("Begin ? := " + this.schemaName + ".VrkfFacade.getTheVrkf; end;");
             callable.registerOutParameter(1, oracle.jdbc.OracleTypes.NUMBER);
             callable.execute();
             long id = callable.getLong(1);
             callable.close();
-            Verkauf result = new Verkauf(null,id);
-            Cache.getTheCache().put(result);
             return (PersistentVerkauf)PersistentProxi.createProxi(id, 212);
         }catch(SQLException se) {
             throw new PersistenceException(se.getMessage(), se.getErrorCode());

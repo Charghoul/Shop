@@ -5,12 +5,6 @@ import persistence.*;
 
 public abstract class CommandStandardVisitor implements CommandVisitor {
     
-    public void handleAendereLieferartCommand(AendereLieferartCommand4Public aendereLieferartCommand) throws PersistenceException{
-        this.standardHandling(aendereLieferartCommand);
-    }
-    public void handleNeueLieferartCommand(NeueLieferartCommand4Public neueLieferartCommand) throws PersistenceException{
-        this.standardHandling(neueLieferartCommand);
-    }
     public void handleStatusAuslaufCommand(StatusAuslaufCommand4Public statusAuslaufCommand) throws PersistenceException{
         this.standardHandling(statusAuslaufCommand);
     }

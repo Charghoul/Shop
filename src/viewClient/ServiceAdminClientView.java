@@ -297,6 +297,7 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
 
     interface MenuItemVisitor{
         ImageView handle(AendereArtikelPRMTRArtikelPRMTRStringPRMTRFractionPRMTRIntegerPRMTRIntegerPRMTRIntegerPRMTRMenuItem menuItem);
+        ImageView handle(AendereLieferartPRMTRLieferartPRMTRStringPRMTRIntegerPRMTRFractionPRMTRMenuItem menuItem);
         ImageView handle(ArtikelEinlagernPRMTRWarenlagerPRMTRArtikelPRMTRIntegerPRMTRMenuItem menuItem);
         ImageView handle(ArtikelEntnehmenPRMTRWarenlagerPRMTRPositionPRMTRIntegerPRMTRMenuItem menuItem);
         ImageView handle(NeueLieferArtPRMTRLieferartManagerPRMTRStringPRMTRIntegerPRMTRFractionPRMTRMenuItem menuItem);
@@ -311,6 +312,11 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
         abstract protected ImageView accept(MenuItemVisitor visitor);
     }
     private class AendereArtikelPRMTRArtikelPRMTRStringPRMTRFractionPRMTRIntegerPRMTRIntegerPRMTRIntegerPRMTRMenuItem extends ServiceAdminMenuItem{
+        protected ImageView accept(MenuItemVisitor visitor){
+            return visitor.handle(this);
+        }
+    }
+    private class AendereLieferartPRMTRLieferartPRMTRStringPRMTRIntegerPRMTRFractionPRMTRMenuItem extends ServiceAdminMenuItem{
         protected ImageView accept(MenuItemVisitor visitor){
             return visitor.handle(this);
         }
@@ -379,6 +385,19 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
                     public void handle(javafx.event.ActionEvent e) {
                         final ServiceAdminNeuerArtikelArtikelManagerStringStringFractionIntegerIntegerIntegerMssgWizard wizard = new ServiceAdminNeuerArtikelArtikelManagerStringStringFractionIntegerIntegerIntegerMssgWizard("neuerArtikel");
                         wizard.setFirstArgument((ArtikelManagerView)selected);
+                        wizard.setWidth(getNavigationPanel().getWidth());
+                        wizard.showAndWait();
+                    }
+                });
+                result.getItems().add(item);
+            }
+            if (selected instanceof LieferartView){
+                item = new AendereLieferartPRMTRLieferartPRMTRStringPRMTRIntegerPRMTRFractionPRMTRMenuItem();
+                item.setText("aendereLieferart ... ");
+                item.setOnAction(new EventHandler<ActionEvent>(){
+                    public void handle(javafx.event.ActionEvent e) {
+                        final ServiceAdminAendereLieferartLieferartStringIntegerFractionMssgWizard wizard = new ServiceAdminAendereLieferartLieferartStringIntegerFractionMssgWizard("aendereLieferart");
+                        wizard.setFirstArgument((LieferartView)selected);
                         wizard.setWidth(getNavigationPanel().getWidth());
                         wizard.showAndWait();
                     }
@@ -567,6 +586,81 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
 		
 	}
 
+	class ServiceAdminAendereLieferartLieferartStringIntegerFractionMssgWizard extends Wizard {
+
+		protected ServiceAdminAendereLieferartLieferartStringIntegerFractionMssgWizard(String operationName){
+			super(ServiceAdminClientView.this);
+			getOkButton().setText(operationName);
+			getOkButton().setGraphic(new AendereLieferartPRMTRLieferartPRMTRStringPRMTRIntegerPRMTRFractionPRMTRMenuItem ().getGraphic());
+		}
+		protected void initialize(){
+			this.helpFileName = "ServiceAdminAendereLieferartLieferartStringIntegerFractionMssgWizard.help";
+			super.initialize();		
+		}
+				
+		protected void perform() {
+			try {
+				getConnection().aendereLieferart(firstArgument, ((StringSelectionPanel)getParametersPanel().getChildren().get(0)).getResult(),
+									((IntegerSelectionPanel)getParametersPanel().getChildren().get(1)).getResult().longValue(),
+									((FractionSelectionPanel)getParametersPanel().getChildren().get(2)).getResult());
+				getConnection().setEagerRefresh();
+				this.close();	
+			} catch(ModelException me){
+				handleException(me);
+				this.close();
+			}
+			catch(ExcAlreadyExists e) {
+				getStatusBar().setText(e.getMessage());
+			}
+			
+		}
+		protected String checkCompleteParameterSet(){
+			return null;
+		}
+		protected boolean isModifying () {
+			return false;
+		}
+		protected void addParameters(){
+			getParametersPanel().getChildren().add(new StringSelectionPanel("name", this));
+			getParametersPanel().getChildren().add(new IntegerSelectionPanel("lieferzeit", this));
+			getParametersPanel().getChildren().add(new FractionSelectionPanel("preis", this));		
+		}	
+		protected void handleDependencies(int i) {
+		}
+		
+		
+		private LieferartView firstArgument; 
+	
+		public void setFirstArgument(LieferartView firstArgument){
+			this.firstArgument = firstArgument;
+			this.setTitle(this.firstArgument.toString());
+			try{
+				final SelectionPanel selectionPanel0 = (SelectionPanel)getParametersPanel().getChildren().get(0);
+				selectionPanel0.preset(firstArgument.getName());
+				if (!selectionPanel0.check()) selectionPanel0.preset("");
+			}catch(ModelException me){
+				 handleException(me);
+			}
+			try{
+				final SelectionPanel selectionPanel1 = (SelectionPanel)getParametersPanel().getChildren().get(1);
+				selectionPanel1.preset(firstArgument.getLieferzeit());
+				if (!selectionPanel1.check()) selectionPanel1.preset("");
+			}catch(ModelException me){
+				 handleException(me);
+			}
+			try{
+				final SelectionPanel selectionPanel2 = (SelectionPanel)getParametersPanel().getChildren().get(2);
+				selectionPanel2.preset(firstArgument.getPreis());
+				if (!selectionPanel2.check()) selectionPanel2.preset("");
+			}catch(ModelException me){
+				 handleException(me);
+			}
+			this.check();
+		}
+		
+		
+	}
+
 	class ServiceAdminArtikelEinlagernWarenlagerArtikelIntegerMssgWizard extends Wizard {
 
 		protected ServiceAdminArtikelEinlagernWarenlagerArtikelIntegerMssgWizard(String operationName){
@@ -694,6 +788,9 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
 			} catch(ModelException me){
 				handleException(me);
 				this.close();
+			}
+			catch(ExcAlreadyExists e) {
+				getStatusBar().setText(e.getMessage());
 			}
 			
 		}

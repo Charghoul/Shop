@@ -8,6 +8,7 @@ public interface UserExceptionReturnExceptionVisitor<R, E extends view.UserExcep
     public R handleCycleException(CycleException cycleException) throws ModelException, E;
     public R handleExcAlreadyExists(ExcAlreadyExists excAlreadyExists) throws ModelException, E;
     public R handleExcArtikelAlreadyExists(ExcArtikelAlreadyExists excArtikelAlreadyExists) throws ModelException, E;
+    public R handleExcInconsistentStatusChange(ExcInconsistentStatusChange excInconsistentStatusChange) throws ModelException, E;
     public R handleExcLagerbestandOverMax(ExcLagerbestandOverMax excLagerbestandOverMax) throws ModelException, E;
     public R handleExcLagerbestandUnderZero(ExcLagerbestandUnderZero excLagerbestandUnderZero) throws ModelException, E;
     public R handleExcLieferartAlreadyExists(ExcLieferartAlreadyExists excLieferartAlreadyExists) throws ModelException, E;
