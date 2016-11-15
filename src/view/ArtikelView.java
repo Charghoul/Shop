@@ -1,10 +1,8 @@
 package view;
 
-import view.objects.*;
-
 import view.visitor.*;
 
-public interface ArtikelView extends Anything, AbstractViewRoot {
+public interface ArtikelView extends KomponenteView {
     
     public String getArtikelnummer()throws ModelException;
     public void setArtikelnummer(String newValue) throws ModelException ;
@@ -21,6 +19,10 @@ public interface ArtikelView extends Anything, AbstractViewRoot {
     public ArtikelstatusView getArtikelstatus()throws ModelException;
     public void setArtikelstatus(ArtikelstatusView newValue) throws ModelException ;
     
+    public void accept(KomponenteVisitor visitor) throws ModelException;
+    public <R> R accept(KomponenteReturnVisitor<R>  visitor) throws ModelException;
+    public <E extends view.UserException>  void accept(KomponenteExceptionVisitor<E> visitor) throws ModelException, E;
+    public <R, E extends view.UserException> R accept(KomponenteReturnExceptionVisitor<R, E>  visitor) throws ModelException, E;
     public void accept(AnythingVisitor visitor) throws ModelException;
     public <R> R accept(AnythingReturnVisitor<R>  visitor) throws ModelException;
     public <E extends view.UserException>  void accept(AnythingExceptionVisitor<E> visitor) throws ModelException, E;

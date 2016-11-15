@@ -14,7 +14,7 @@ import persistence.PersistenceException;
 
 public class TestSupport {
 	
-	private static final File ModelDirectory = new File("C:\\Users\\Jan\\OneDrive\\FHDW\\IIS\\GOJA_Shop\\Models\\Shop"); 
+	private static final File ModelDirectory = new File("C:\\Users\\Jan\\OneDrive\\FHDW\\IIS\\GOJA_Shop\\workspace\\Shop\\Models\\Shop"); 
 
 	//Manual path start
 	private static final File GojaDirectory = ModelDirectory;//TODO adjust path to goja directory

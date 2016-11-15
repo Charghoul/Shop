@@ -1209,6 +1209,9 @@ class DetailPanelFactory implements AnythingVisitor {
     public void handleBestellung(view.BestellungView object){
         result = new BestellungDefaultDetailPanel(handler, object);
     }
+    public void handleHerstellerManager(view.HerstellerManagerView object){
+        result = new HerstellerManagerDefaultDetailPanel(handler, object);
+    }
     public void handleLieferart(view.LieferartView object){
         result = new LieferartDefaultDetailPanel(handler, object);
     }
@@ -1227,6 +1230,9 @@ class DetailPanelFactory implements AnythingVisitor {
     public void handleArtikel(view.ArtikelView object){
         result = new ArtikelDefaultDetailPanel(handler, object);
     }
+    public void handleProduktgruppe(view.ProduktgruppeView object){
+        result = new ProduktgruppeDefaultDetailPanel(handler, object);
+    }
     public void handlePosition(view.PositionView object){
         result = new PositionDefaultDetailPanel(handler, object);
     }
@@ -1244,6 +1250,9 @@ class DetailPanelFactory implements AnythingVisitor {
     }
     public void handleKunde(view.KundeView object){
         result = new KundeDefaultDetailPanel(handler, object);
+    }
+    public void handleHersteller(view.HerstellerView object){
+        result = new HerstellerDefaultDetailPanel(handler, object);
     }
     public void handleRueckversand(view.RueckversandView object){
         result = new RueckversandDefaultDetailPanel(handler, object);
@@ -1391,6 +1400,21 @@ class BestellungDefaultDetailPanel extends DefaultDetailPanel{
     }
     protected view.BestellungView getAnything(){
         return (view.BestellungView)this.anything;
+    }
+}
+
+class HerstellerManagerDefaultDetailPanel extends DefaultDetailPanel{
+    
+    protected static final String HerstellerManager$$herstellerListe = "HerstellerManager$$herstellerListe";
+    
+    protected HerstellerManagerDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
+        super(exceptionHandler, anything);
+    }
+    protected void addFields(){
+        
+    }
+    protected view.HerstellerManagerView getAnything(){
+        return (view.HerstellerManagerView)this.anything;
     }
 }
 
@@ -1550,6 +1574,28 @@ class ArtikelDefaultDetailPanel extends DefaultDetailPanel{
     }
 }
 
+class ProduktgruppeDefaultDetailPanel extends DefaultDetailPanel{
+    
+    protected static final String Produktgruppe$$name = "Produktgruppe$$name";
+    
+    protected ProduktgruppeDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
+        super(exceptionHandler, anything);
+    }
+    protected void addFields(){
+        try{
+            BaseTypePanel panel = new StringPanel(this, "name", this.getAnything().getName());
+            this.getScrollablePane().getChildren().add(panel);
+            this.panels.put(Produktgruppe$$name, panel);
+        }catch(ModelException e){
+            this.getExceptionAndEventhandler().handleException(e);
+        }
+        
+    }
+    protected view.ProduktgruppeView getAnything(){
+        return (view.ProduktgruppeView)this.anything;
+    }
+}
+
 class PositionDefaultDetailPanel extends DefaultDetailPanel{
     
     protected static final String Position$$artikel = "Position$$artikel";
@@ -1676,6 +1722,28 @@ class KundeDefaultDetailPanel extends DefaultDetailPanel{
     }
     protected view.KundeView getAnything(){
         return (view.KundeView)this.anything;
+    }
+}
+
+class HerstellerDefaultDetailPanel extends DefaultDetailPanel{
+    
+    protected static final String Hersteller$$name = "Hersteller$$name";
+    
+    protected HerstellerDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
+        super(exceptionHandler, anything);
+    }
+    protected void addFields(){
+        try{
+            BaseTypePanel panel = new StringPanel(this, "name", this.getAnything().getName());
+            this.getScrollablePane().getChildren().add(panel);
+            this.panels.put(Hersteller$$name, panel);
+        }catch(ModelException e){
+            this.getExceptionAndEventhandler().handleException(e);
+        }
+        
+    }
+    protected view.HerstellerView getAnything(){
+        return (view.HerstellerView)this.anything;
     }
 }
 

@@ -28,11 +28,23 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     
     public abstract void handleBestellung(BestellungView bestellung) throws ModelException;
     
+    public abstract void handleHerstellerManager(HerstellerManagerView herstellerManager) throws ModelException;
+    
     public abstract void handleLieferart(LieferartView lieferart) throws ModelException;
     
     public abstract void handleKonto(KontoView konto) throws ModelException;
     
+    public abstract void handleKomponente(KomponenteView komponente) throws ModelException;
+    
+    public void handleArtikel(ArtikelView artikel) throws ModelException{
+        this.handleKomponente(artikel);
+    }
+    public void handleProduktgruppe(ProduktgruppeView produktgruppe) throws ModelException{
+        this.handleKomponente(produktgruppe);
+    }
     public abstract void handleKunde(KundeView kunde) throws ModelException;
+    
+    public abstract void handleHersteller(HerstellerView hersteller) throws ModelException;
     
     public abstract void handleLieferartManager(LieferartManagerView lieferartManager) throws ModelException;
     
@@ -63,8 +75,6 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     public void handleTrueX(TrueXView trueX) throws ModelException{
         this.handleBooleanX(trueX);
     }
-    public abstract void handleArtikel(ArtikelView artikel) throws ModelException;
-    
     public abstract void handleWarenlager(WarenlagerView warenlager) throws ModelException;
     
     public abstract void handleArtikelstatus(ArtikelstatusView artikelstatus) throws ModelException;

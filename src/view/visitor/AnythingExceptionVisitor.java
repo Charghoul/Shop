@@ -3,13 +3,14 @@ package view.visitor;
 
 import view.*;
 
-public interface AnythingExceptionVisitor<E extends view.UserException> extends ArtikelstatusExceptionVisitor<E>,BestellstatusExceptionVisitor<E>,BooleanXExceptionVisitor<E>,ServiceExceptionVisitor<E>{
+public interface AnythingExceptionVisitor<E extends view.UserException> extends ArtikelstatusExceptionVisitor<E>,BestellstatusExceptionVisitor<E>,BooleanXExceptionVisitor<E>,KomponenteExceptionVisitor<E>,ServiceExceptionVisitor<E>{
     
-    public void handleArtikel(ArtikelView artikel) throws ModelException, E;
     public void handleArtikelManager(ArtikelManagerView artikelManager) throws ModelException, E;
     public void handleBestellung(BestellungView bestellung) throws ModelException, E;
     public void handleEinkaufsManager(EinkaufsManagerView einkaufsManager) throws ModelException, E;
     public void handleErrorDisplay(ErrorDisplayView errorDisplay) throws ModelException, E;
+    public void handleHersteller(HerstellerView hersteller) throws ModelException, E;
+    public void handleHerstellerManager(HerstellerManagerView herstellerManager) throws ModelException, E;
     public void handleKonto(KontoView konto) throws ModelException, E;
     public void handleKunde(KundeView kunde) throws ModelException, E;
     public void handleLieferart(LieferartView lieferart) throws ModelException, E;

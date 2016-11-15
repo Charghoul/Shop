@@ -205,9 +205,8 @@ public class Lieferart extends PersistentObject implements PersistentLieferart{
     
     public void aendereLieferart(final String name, final long lieferzeit, final common.Fraction preis) 
 				throws PersistenceException{
-        getThis().setName(name);
-        getThis().setLieferzeit(lieferzeit);
-        getThis().setPreis(preis);
+        //TODO: implement method: aendereLieferart
+        
     }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{

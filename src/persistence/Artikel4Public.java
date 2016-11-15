@@ -3,9 +3,13 @@ package persistence;
 
 import model.visitor.*;
 
-public interface Artikel4Public extends Anything, AbstractPersistentProxi {
+public interface Artikel4Public extends Komponente4Public {
     
     
+    public void accept(KomponenteVisitor visitor) throws PersistenceException;
+    public <R> R accept(KomponenteReturnVisitor<R>  visitor) throws PersistenceException;
+    public <E extends model.UserException>  void accept(KomponenteExceptionVisitor<E> visitor) throws PersistenceException, E;
+    public <R, E extends model.UserException> R accept(KomponenteReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E;
     public void accept(AnythingVisitor visitor) throws PersistenceException;
     public <R> R accept(AnythingReturnVisitor<R>  visitor) throws PersistenceException;
     public <E extends model.UserException>  void accept(AnythingExceptionVisitor<E> visitor) throws PersistenceException, E;

@@ -1,8 +1,7 @@
 
 package view.objects;
 
-import view.ArtikelstatusView;
-import view.ModelException;
+import view.*;
 
 
 /* Additional import section end */

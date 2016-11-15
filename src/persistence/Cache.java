@@ -289,6 +289,8 @@ public class Cache {
 		this.number2NameMap.put(-104, "ErrorDisplay");
 		this.number2NameMap.put(249, "FalseX");
 		this.number2NameMap.put(215, "Geliefert");
+		this.number2NameMap.put(270, "Hersteller");
+		this.number2NameMap.put(272, "HerstellerManager");
 		this.number2NameMap.put(218, "Hinversand");
 		this.number2NameMap.put(146, "Konto");
 		this.number2NameMap.put(102, "Kunde");
@@ -299,6 +301,7 @@ public class Cache {
 		this.number2NameMap.put(262, "NeueLieferartCommand");
 		this.number2NameMap.put(264, "NeuerArtikelCommand");
 		this.number2NameMap.put(144, "Position");
+		this.number2NameMap.put(267, "Produktgruppe");
 		this.number2NameMap.put(200, "RegisterCommand");
 		this.number2NameMap.put(217, "Rueckversand");
 		this.number2NameMap.put(-103, "Server");

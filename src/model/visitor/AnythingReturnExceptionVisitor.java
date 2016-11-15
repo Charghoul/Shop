@@ -3,11 +3,10 @@ package model.visitor;
 
 import persistence.*;
 
-public interface AnythingReturnExceptionVisitor<R, E extends model.UserException> extends ArtikelstatusReturnExceptionVisitor<R, E> ,BestellstatusReturnExceptionVisitor<R, E> ,BooleanXReturnExceptionVisitor<R, E> ,CommonDateReturnExceptionVisitor<R, E> ,ServiceReturnExceptionVisitor<R, E> {
+public interface AnythingReturnExceptionVisitor<R, E extends model.UserException> extends ArtikelstatusReturnExceptionVisitor<R, E> ,BestellstatusReturnExceptionVisitor<R, E> ,BooleanXReturnExceptionVisitor<R, E> ,CommonDateReturnExceptionVisitor<R, E> ,KomponenteReturnExceptionVisitor<R, E> ,ServiceReturnExceptionVisitor<R, E> {
     
     public R handleAendereArtikelCommand(AendereArtikelCommand4Public aendereArtikelCommand) throws PersistenceException, E;
     public R handleAendereLieferartCommand(AendereLieferartCommand4Public aendereLieferartCommand) throws PersistenceException, E;
-    public R handleArtikel(Artikel4Public artikel) throws PersistenceException, E;
     public R handleArtikelEntnehmenCommand(ArtikelEntnehmenCommand4Public artikelEntnehmenCommand) throws PersistenceException, E;
     public R handleArtikelManager(ArtikelManager4Public artikelManager) throws PersistenceException, E;
     public R handleBestellung(Bestellung4Public bestellung) throws PersistenceException, E;
@@ -16,6 +15,8 @@ public interface AnythingReturnExceptionVisitor<R, E extends model.UserException
     public R handleCommonDate(CommonDate4Public commonDate) throws PersistenceException, E;
     public R handleEinkaufsManager(EinkaufsManager4Public einkaufsManager) throws PersistenceException, E;
     public R handleErrorDisplay(ErrorDisplay4Public errorDisplay) throws PersistenceException, E;
+    public R handleHersteller(Hersteller4Public hersteller) throws PersistenceException, E;
+    public R handleHerstellerManager(HerstellerManager4Public herstellerManager) throws PersistenceException, E;
     public R handleKonto(Konto4Public konto) throws PersistenceException, E;
     public R handleKunde(Kunde4Public kunde) throws PersistenceException, E;
     public R handleLieferart(Lieferart4Public lieferart) throws PersistenceException, E;

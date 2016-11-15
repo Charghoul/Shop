@@ -28,13 +28,25 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     
     public abstract void handleBestellung(Bestellung4Public bestellung) throws PersistenceException;
     
+    public abstract void handleHerstellerManager(HerstellerManager4Public herstellerManager) throws PersistenceException;
+    
     public abstract void handleLieferart(Lieferart4Public lieferart) throws PersistenceException;
     
     public abstract void handleKonto(Konto4Public konto) throws PersistenceException;
     
     public abstract void handleCommandCoordinator(CommandCoordinator4Public commandCoordinator) throws PersistenceException;
     
+    public abstract void handleKomponente(Komponente4Public komponente) throws PersistenceException;
+    
+    public void handleArtikel(Artikel4Public artikel) throws PersistenceException{
+        this.handleKomponente(artikel);
+    }
+    public void handleProduktgruppe(Produktgruppe4Public produktgruppe) throws PersistenceException{
+        this.handleKomponente(produktgruppe);
+    }
     public abstract void handleKunde(Kunde4Public kunde) throws PersistenceException;
+    
+    public abstract void handleHersteller(Hersteller4Public hersteller) throws PersistenceException;
     
     public abstract void handleLieferartManager(LieferartManager4Public lieferartManager) throws PersistenceException;
     
@@ -65,8 +77,6 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     public void handleTrueX(TrueX4Public trueX) throws PersistenceException{
         this.handleBooleanX(trueX);
     }
-    public abstract void handleArtikel(Artikel4Public artikel) throws PersistenceException;
-    
     public abstract void handleWarenlager(Warenlager4Public warenlager) throws PersistenceException;
     
     public abstract void handleCommonDate(CommonDate4Public commonDate) throws PersistenceException;

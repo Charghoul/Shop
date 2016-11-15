@@ -266,14 +266,13 @@ public class ServiceAdmin extends model.Service implements PersistentServiceAdmi
     }
     public void artikelEinlagern(final Warenlager4Public warenlager, final Artikel4Public artikel, final long menge) 
 				throws model.ExcLagerbestandOverMax, PersistenceException{
-        warenlager.artikelEinlagern(artikel, menge);
-        getThis().signalChanged(true);
+        //TODO: implement method: artikelEinlagern
+        
     }
     public void artikelEntnehmen(final Warenlager4Public warenlager, final Position4Public position, final long menge) 
 				throws PersistenceException{
-        warenlager.artikelEntnehmen(position, menge, getThis());
-        getThis().signalChanged(true);
-
+        //TODO: implement method: artikelEntnehmen
+        
     }
     public void connected(final String user) 
 				throws PersistenceException{
@@ -316,14 +315,12 @@ public class ServiceAdmin extends model.Service implements PersistentServiceAdmi
     }
     public void statusAuslauf(final Artikel4Public artikel) 
 				throws PersistenceException{
-        artikel.statusAuslauf();
-        getThis().signalChanged(true);
+        //TODO: implement method: statusAuslauf
         
     }
     public void statusVerkauf(final Artikel4Public artikel) 
 				throws PersistenceException{
-       artikel.statusVerkauf();
-        getThis().signalChanged(true);
+        //TODO: implement method: statusVerkauf
         
     }
     

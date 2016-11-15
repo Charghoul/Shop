@@ -6,6 +6,7 @@ import view.*;
 public interface UserExceptionReturnExceptionVisitor<R, E extends view.UserException> {
     
     public R handleCycleException(CycleException cycleException) throws ModelException, E;
+    public R handleExcAlreadyExists(ExcAlreadyExists excAlreadyExists) throws ModelException, E;
     public R handleExcArtikelAlreadyExists(ExcArtikelAlreadyExists excArtikelAlreadyExists) throws ModelException, E;
     public R handleExcLagerbestandOverMax(ExcLagerbestandOverMax excLagerbestandOverMax) throws ModelException, E;
     public R handleExcLagerbestandUnderZero(ExcLagerbestandUnderZero excLagerbestandUnderZero) throws ModelException, E;

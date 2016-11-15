@@ -29,6 +29,9 @@ public abstract class AnythingStandardVisitor implements AnythingVisitor {
     public void handleArtikelEntnehmenCommand(ArtikelEntnehmenCommand4Public artikelEntnehmenCommand) throws PersistenceException{
         this.standardHandling(artikelEntnehmenCommand);
     }
+    public void handleHerstellerManager(HerstellerManager4Public herstellerManager) throws PersistenceException{
+        this.standardHandling(herstellerManager);
+    }
     public void handleLieferart(Lieferart4Public lieferart) throws PersistenceException{
         this.standardHandling(lieferart);
     }
@@ -58,6 +61,9 @@ public abstract class AnythingStandardVisitor implements AnythingVisitor {
     }
     public void handleArtikel(Artikel4Public artikel) throws PersistenceException{
         this.standardHandling(artikel);
+    }
+    public void handleProduktgruppe(Produktgruppe4Public produktgruppe) throws PersistenceException{
+        this.standardHandling(produktgruppe);
     }
     public void handlePosition(Position4Public position) throws PersistenceException{
         this.standardHandling(position);
@@ -91,6 +97,9 @@ public abstract class AnythingStandardVisitor implements AnythingVisitor {
     }
     public void handleKunde(Kunde4Public kunde) throws PersistenceException{
         this.standardHandling(kunde);
+    }
+    public void handleHersteller(Hersteller4Public hersteller) throws PersistenceException{
+        this.standardHandling(hersteller);
     }
     public void handleLieferartManager(LieferartManager4Public lieferartManager) throws PersistenceException{
         this.standardHandling(lieferartManager);

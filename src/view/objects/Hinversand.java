@@ -1,8 +1,7 @@
 
 package view.objects;
 
-import view.HinversandView;
-import view.ModelException;
+import view.*;
 import view.visitor.*;
 
 

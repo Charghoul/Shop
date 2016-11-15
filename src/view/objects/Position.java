@@ -1,13 +1,8 @@
 
 package view.objects;
 
-import view.ArtikelView;
-import view.ModelException;
-import view.PositionView;
-import view.visitor.AnythingExceptionVisitor;
-import view.visitor.AnythingReturnExceptionVisitor;
-import view.visitor.AnythingReturnVisitor;
-import view.visitor.AnythingVisitor;
+import view.*;
+import view.visitor.*;
 
 
 /* Additional import section end */

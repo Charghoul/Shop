@@ -12,7 +12,7 @@ public abstract class PersistentInCacheProxi extends PersistentRoot {
 		
 	  private static ICProxiFactory [] getTheICProxiFactories(){
 		if (iCProxiFactories == null){
-			iCProxiFactories = new ICProxiFactory[165];
+			iCProxiFactories = new ICProxiFactory[174];
         iCProxiFactories[111] = new ICProxiFactory(){
             PersistentInCacheProxi create(long objectId){
                 return new VerkaufICProxi(objectId);
@@ -51,6 +51,11 @@ public abstract class PersistentInCacheProxi extends PersistentRoot {
         iCProxiFactories[157] = new ICProxiFactory(){
             PersistentInCacheProxi create(long objectId){
                 return new ArtikelEntnehmenCommandICProxi(objectId);
+            }
+        };
+        iCProxiFactories[171] = new ICProxiFactory(){
+            PersistentInCacheProxi create(long objectId){
+                return new HerstellerManagerICProxi(objectId);
             }
         };
         iCProxiFactories[37] = new ICProxiFactory(){
@@ -103,6 +108,11 @@ public abstract class PersistentInCacheProxi extends PersistentRoot {
                 return new ArtikelICProxi(objectId);
             }
         };
+        iCProxiFactories[166] = new ICProxiFactory(){
+            PersistentInCacheProxi create(long objectId){
+                return new ProduktgruppeICProxi(objectId);
+            }
+        };
         iCProxiFactories[43] = new ICProxiFactory(){
             PersistentInCacheProxi create(long objectId){
                 return new PositionICProxi(objectId);
@@ -151,6 +161,11 @@ public abstract class PersistentInCacheProxi extends PersistentRoot {
         iCProxiFactories[1] = new ICProxiFactory(){
             PersistentInCacheProxi create(long objectId){
                 return new KundeICProxi(objectId);
+            }
+        };
+        iCProxiFactories[169] = new ICProxiFactory(){
+            PersistentInCacheProxi create(long objectId){
+                return new HerstellerICProxi(objectId);
             }
         };
         iCProxiFactories[116] = new ICProxiFactory(){
