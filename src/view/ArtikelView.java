@@ -18,6 +18,8 @@ public interface ArtikelView extends KomponenteView {
     public void setHstLieferzeit(long newValue) throws ModelException ;
     public ArtikelstatusView getArtikelstatus()throws ModelException;
     public void setArtikelstatus(ArtikelstatusView newValue) throws ModelException ;
+    public HerstellerView getHersteller()throws ModelException;
+    public void setHersteller(HerstellerView newValue) throws ModelException ;
     
     public void accept(KomponenteVisitor visitor) throws ModelException;
     public <R> R accept(KomponenteReturnVisitor<R>  visitor) throws ModelException;

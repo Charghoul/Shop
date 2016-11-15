@@ -25,7 +25,14 @@ public class ArtikelProxi extends KomponenteProxi implements ArtikelView{
             artikelstatus = view.objects.ViewProxi.createProxi(artikelstatus$Info,connectionKey);
             artikelstatus.setToString(artikelstatus$Info.getToString());
         }
-        ArtikelView result$$ = new Artikel((String)artikelnummer,(String)bezeichnung,(common.Fraction)preis,(long)minLagerbestand,(long)maxLagerbestand,(long)hstLieferzeit,(ArtikelstatusView)artikelstatus, this.getId(), this.getClassId());
+        ViewProxi hersteller = null;
+        String hersteller$String = (String)resultTable.get("hersteller");
+        if (hersteller$String != null) {
+            common.ProxiInformation hersteller$Info = common.RPCConstantsAndServices.createProxiInformation(hersteller$String);
+            hersteller = view.objects.ViewProxi.createProxi(hersteller$Info,connectionKey);
+            hersteller.setToString(hersteller$Info.getToString());
+        }
+        ArtikelView result$$ = new Artikel((String)artikelnummer,(String)bezeichnung,(common.Fraction)preis,(long)minLagerbestand,(long)maxLagerbestand,(long)hstLieferzeit,(ArtikelstatusView)artikelstatus,(HerstellerView)hersteller, this.getId(), this.getClassId());
         ((ViewRoot)result$$).setToString((String) resultTable.get(common.RPCConstantsAndServices.RPCToStringFieldName));
         return result$$;
     }
@@ -35,18 +42,19 @@ public class ArtikelProxi extends KomponenteProxi implements ArtikelView{
     }
     public ViewObjectInTree getChild(int originalIndex) throws ModelException{
         int index = originalIndex;
-        if(index == 0 && this.getArtikelstatus() != null) return new ArtikelstatusArtikelWrapper(this, originalIndex, (ViewRoot)this.getArtikelstatus());
-        if(this.getArtikelstatus() != null) index = index - 1;
+        if(this.getArtikelstatus() != null && index < this.getArtikelstatus().getTheObject().getChildCount())
+            return this.getArtikelstatus().getTheObject().getChild(index);
+        if(this.getArtikelstatus() != null) index = index - this.getArtikelstatus().getTheObject().getChildCount();
         return null;
     }
     public int getChildCount() throws ModelException {
         return 0 
-            + (this.getArtikelstatus() == null ? 0 : 1);
+            + (this.getArtikelstatus() == null ? 0 : this.getArtikelstatus().getTheObject().getChildCount());
     }
     public boolean isLeaf() throws ModelException {
         if (this.object == null) return this.getLeafInfo() == 0;
         return true 
-            && (this.getArtikelstatus() == null ? true : false);
+            && (this.getArtikelstatus() == null ? true : this.getArtikelstatus().getTheObject().isLeaf());
     }
     public int getIndexOfChild(Object child) throws ModelException {
         int result = 0;
@@ -96,6 +104,12 @@ public class ArtikelProxi extends KomponenteProxi implements ArtikelView{
     }
     public void setArtikelstatus(ArtikelstatusView newValue) throws ModelException {
         ((Artikel)this.getTheObject()).setArtikelstatus(newValue);
+    }
+    public HerstellerView getHersteller()throws ModelException{
+        return ((Artikel)this.getTheObject()).getHersteller();
+    }
+    public void setHersteller(HerstellerView newValue) throws ModelException {
+        ((Artikel)this.getTheObject()).setHersteller(newValue);
     }
     
     public void accept(KomponenteVisitor visitor) throws ModelException {

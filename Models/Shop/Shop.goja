@@ -28,6 +28,9 @@ server ServiceAdmin extends Service {
 	void artikelEinlagern(Warenlager warenlager, Artikel artikel, Integer menge) throws ExcLagerbestandOverMax;
 	void artikelEntnehmen(Warenlager warenlager, Position position, Integer menge);
 	void aendereArtikel(Artikel artikel, String bezeichnung, Fraction preis, Integer minLagerbestand, Integer maxLagerbestand, Integer hstLieferzeit) throws ExcAlreadyExists;
+	void neuerHersteller(HerstellerManager herstellerManager, String name) throws ExcAlreadyExists;
+	void aendereHersteller(Hersteller hersteller, String name) throws ExcAlreadyExists;
+	void herstellerHinzufuegen(Artikel artikel, Hersteller hersteller);
 }
 server ServiceRegister extends Service {
 	active void register(String username, String passwort) throws ExcUserAlreadyExists;
@@ -35,10 +38,10 @@ server ServiceRegister extends Service {
 singleton ArtikelManager{
 	Artikel ** artikelListe;
 	Produktgruppe ** produktgruppen;
-	void produktgruppeHinzufuegen(Produktgruppe produktgruppe, String name) throws ExcAlreadyExists;
-	void artikelHinzufuegen(Artikel artikel);
+	void produktgruppeHinzufuegen(Produktgruppe produktgruppe, String name) throws ExcAlreadyExists, CycleException;
 	active void neuerArtikel(String artikelnummer, String bezeichnung, Fraction preis, Integer minLagerbestand, 		Integer maxLagerbestand, Integer hstLieferzeit) throws UserException;
 	active void aendereArtikel(Artikel artikel, String bezeichnung, Fraction preis, Integer minLagerbestand, Integer maxLagerbestand, Integer hstLieferzeit) throws ExcAlreadyExists;
+	void herstellerHinzufuegen(Artikel artikel, Hersteller hersteller);
 }
 singleton Warenlager{
 	Position ** warenListe;
@@ -49,7 +52,6 @@ singleton Warenlager{
 class HerstellerManager{
 	Hersteller ** herstellerListe;
 	void neuerHersteller(String name) throws ExcAlreadyExists;
-	void aendereHersteller(Hersteller hersteller, String name)throws ExcAlreadyExists;
 }
 class EinkaufsManager{
 	Position ** einkaufsListe;
@@ -83,17 +85,18 @@ class Artikel extends Komponente{
 	prior Integer minLagerbestand;
 	prior Integer maxLagerbestand;
 	prior Integer hstLieferzeit;
-	prior Artikelstatus artikelstatus;
+	prior skip-view Artikelstatus artikelstatus;
+	no-view Hersteller hersteller;
 	void aendereArtikel(String bezeichnung, Fraction preis, Integer minLagerbestand, Integer maxLagerbestand, Integer hstLieferzeit) throws ExcAlreadyExists;
 	active void statusVerkauf() throws ExcInconsistentStatusChange;
 	active void statusAuslauf() throws ExcInconsistentStatusChange;
 	BooleanX groesserMax(Integer menge);
 	BooleanX alreadyExists(String bezeichung);
+	void herstellerHinzufuegen(Hersteller hersteller);
 }
 class Produktgruppe extends Komponente{
 	Komponente**komponentenListe hierarchy Hierarchie;
 	prior indexed String name;
-	BooleanX alreadyExists(String name);
 	void produktgruppeHinzufuegen(String name) throws ExcAlreadyExists, CycleException;
 	void artikelHinzufuegen(Artikel artikel) throws ExcAlreadyExists, CycleException;
 }

@@ -297,12 +297,15 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
 
     interface MenuItemVisitor{
         ImageView handle(AendereArtikelPRMTRArtikelPRMTRStringPRMTRFractionPRMTRIntegerPRMTRIntegerPRMTRIntegerPRMTRMenuItem menuItem);
+        ImageView handle(AendereHerstellerPRMTRHerstellerPRMTRStringPRMTRMenuItem menuItem);
         ImageView handle(AendereLieferartPRMTRLieferartPRMTRStringPRMTRIntegerPRMTRFractionPRMTRMenuItem menuItem);
         ImageView handle(ArtikelEinlagernPRMTRWarenlagerPRMTRArtikelPRMTRIntegerPRMTRMenuItem menuItem);
         ImageView handle(ArtikelEntnehmenPRMTRWarenlagerPRMTRPositionPRMTRIntegerPRMTRMenuItem menuItem);
         ImageView handle(ArtikelHinzufuegenPRMTRProduktgruppePRMTRArtikelPRMTRMenuItem menuItem);
+        ImageView handle(HerstellerHinzufuegenPRMTRArtikelPRMTRHerstellerPRMTRMenuItem menuItem);
         ImageView handle(NeueLieferArtPRMTRLieferartManagerPRMTRStringPRMTRIntegerPRMTRFractionPRMTRMenuItem menuItem);
         ImageView handle(NeuerArtikelPRMTRArtikelManagerPRMTRStringPRMTRStringPRMTRFractionPRMTRIntegerPRMTRIntegerPRMTRIntegerPRMTRMenuItem menuItem);
+        ImageView handle(NeuerHerstellerPRMTRHerstellerManagerPRMTRStringPRMTRMenuItem menuItem);
         ImageView handle(ProduktgruppeHinzufuegenPRMTRProduktgruppePRMTRStringPRMTRMenuItem menuItem);
         ImageView handle(StatusAuslaufPRMTRArtikelPRMTRMenuItem menuItem);
         ImageView handle(StatusVerkaufPRMTRArtikelPRMTRMenuItem menuItem);
@@ -314,6 +317,11 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
         abstract protected ImageView accept(MenuItemVisitor visitor);
     }
     private class AendereArtikelPRMTRArtikelPRMTRStringPRMTRFractionPRMTRIntegerPRMTRIntegerPRMTRIntegerPRMTRMenuItem extends ServiceAdminMenuItem{
+        protected ImageView accept(MenuItemVisitor visitor){
+            return visitor.handle(this);
+        }
+    }
+    private class AendereHerstellerPRMTRHerstellerPRMTRStringPRMTRMenuItem extends ServiceAdminMenuItem{
         protected ImageView accept(MenuItemVisitor visitor){
             return visitor.handle(this);
         }
@@ -338,12 +346,22 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
             return visitor.handle(this);
         }
     }
+    private class HerstellerHinzufuegenPRMTRArtikelPRMTRHerstellerPRMTRMenuItem extends ServiceAdminMenuItem{
+        protected ImageView accept(MenuItemVisitor visitor){
+            return visitor.handle(this);
+        }
+    }
     private class NeueLieferArtPRMTRLieferartManagerPRMTRStringPRMTRIntegerPRMTRFractionPRMTRMenuItem extends ServiceAdminMenuItem{
         protected ImageView accept(MenuItemVisitor visitor){
             return visitor.handle(this);
         }
     }
     private class NeuerArtikelPRMTRArtikelManagerPRMTRStringPRMTRStringPRMTRFractionPRMTRIntegerPRMTRIntegerPRMTRIntegerPRMTRMenuItem extends ServiceAdminMenuItem{
+        protected ImageView accept(MenuItemVisitor visitor){
+            return visitor.handle(this);
+        }
+    }
+    private class NeuerHerstellerPRMTRHerstellerManagerPRMTRStringPRMTRMenuItem extends ServiceAdminMenuItem{
         protected ImageView accept(MenuItemVisitor visitor){
             return visitor.handle(this);
         }
@@ -376,6 +394,19 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
             } catch (ModelException me){
                 this.handleException(me);
                 return result;
+            }
+            if (selected instanceof HerstellerView){
+                item = new AendereHerstellerPRMTRHerstellerPRMTRStringPRMTRMenuItem();
+                item.setText("aendereHersteller ... ");
+                item.setOnAction(new EventHandler<ActionEvent>(){
+                    public void handle(javafx.event.ActionEvent e) {
+                        final ServiceAdminAendereHerstellerHerstellerStringMssgWizard wizard = new ServiceAdminAendereHerstellerHerstellerStringMssgWizard("aendereHersteller");
+                        wizard.setFirstArgument((HerstellerView)selected);
+                        wizard.setWidth(getNavigationPanel().getWidth());
+                        wizard.showAndWait();
+                    }
+                });
+                result.getItems().add(item);
             }
             if (selected instanceof LieferartManagerView){
                 item = new NeueLieferArtPRMTRLieferartManagerPRMTRStringPRMTRIntegerPRMTRFractionPRMTRMenuItem();
@@ -416,12 +447,36 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
                 });
                 result.getItems().add(item);
             }
+            if (selected instanceof HerstellerManagerView){
+                item = new NeuerHerstellerPRMTRHerstellerManagerPRMTRStringPRMTRMenuItem();
+                item.setText("neuerHersteller ... ");
+                item.setOnAction(new EventHandler<ActionEvent>(){
+                    public void handle(javafx.event.ActionEvent e) {
+                        final ServiceAdminNeuerHerstellerHerstellerManagerStringMssgWizard wizard = new ServiceAdminNeuerHerstellerHerstellerManagerStringMssgWizard("neuerHersteller");
+                        wizard.setFirstArgument((HerstellerManagerView)selected);
+                        wizard.setWidth(getNavigationPanel().getWidth());
+                        wizard.showAndWait();
+                    }
+                });
+                result.getItems().add(item);
+            }
             if (selected instanceof ArtikelView){
                 item = new AendereArtikelPRMTRArtikelPRMTRStringPRMTRFractionPRMTRIntegerPRMTRIntegerPRMTRIntegerPRMTRMenuItem();
                 item.setText("aendereArtikel ... ");
                 item.setOnAction(new EventHandler<ActionEvent>(){
                     public void handle(javafx.event.ActionEvent e) {
                         final ServiceAdminAendereArtikelArtikelStringFractionIntegerIntegerIntegerMssgWizard wizard = new ServiceAdminAendereArtikelArtikelStringFractionIntegerIntegerIntegerMssgWizard("aendereArtikel");
+                        wizard.setFirstArgument((ArtikelView)selected);
+                        wizard.setWidth(getNavigationPanel().getWidth());
+                        wizard.showAndWait();
+                    }
+                });
+                result.getItems().add(item);
+                item = new HerstellerHinzufuegenPRMTRArtikelPRMTRHerstellerPRMTRMenuItem();
+                item.setText("herstellerHinzufuegen ... ");
+                item.setOnAction(new EventHandler<ActionEvent>(){
+                    public void handle(javafx.event.ActionEvent e) {
+                        final ServiceAdminHerstellerHinzufuegenArtikelHerstellerMssgWizard wizard = new ServiceAdminHerstellerHinzufuegenArtikelHerstellerMssgWizard("herstellerHinzufuegen");
                         wizard.setFirstArgument((ArtikelView)selected);
                         wizard.setWidth(getNavigationPanel().getWidth());
                         wizard.showAndWait();
@@ -616,6 +671,63 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
 				final SelectionPanel selectionPanel4 = (SelectionPanel)getParametersPanel().getChildren().get(4);
 				selectionPanel4.preset(firstArgument.getHstLieferzeit());
 				if (!selectionPanel4.check()) selectionPanel4.preset("");
+			}catch(ModelException me){
+				 handleException(me);
+			}
+			this.check();
+		}
+		
+		
+	}
+
+	class ServiceAdminAendereHerstellerHerstellerStringMssgWizard extends Wizard {
+
+		protected ServiceAdminAendereHerstellerHerstellerStringMssgWizard(String operationName){
+			super(ServiceAdminClientView.this);
+			getOkButton().setText(operationName);
+			getOkButton().setGraphic(new AendereHerstellerPRMTRHerstellerPRMTRStringPRMTRMenuItem ().getGraphic());
+		}
+		protected void initialize(){
+			this.helpFileName = "ServiceAdminAendereHerstellerHerstellerStringMssgWizard.help";
+			super.initialize();		
+		}
+				
+		protected void perform() {
+			try {
+				getConnection().aendereHersteller(firstArgument, ((StringSelectionPanel)getParametersPanel().getChildren().get(0)).getResult());
+				getConnection().setEagerRefresh();
+				this.close();	
+			} catch(ModelException me){
+				handleException(me);
+				this.close();
+			}
+			catch(ExcAlreadyExists e) {
+				getStatusBar().setText(e.getMessage());
+			}
+			
+		}
+		protected String checkCompleteParameterSet(){
+			return null;
+		}
+		protected boolean isModifying () {
+			return false;
+		}
+		protected void addParameters(){
+			getParametersPanel().getChildren().add(new StringSelectionPanel("name", this));		
+		}	
+		protected void handleDependencies(int i) {
+		}
+		
+		
+		private HerstellerView firstArgument; 
+	
+		public void setFirstArgument(HerstellerView firstArgument){
+			this.firstArgument = firstArgument;
+			this.setTitle(this.firstArgument.toString());
+			try{
+				final SelectionPanel selectionPanel0 = (SelectionPanel)getParametersPanel().getChildren().get(0);
+				selectionPanel0.preset(firstArgument.getName());
+				if (!selectionPanel0.check()) selectionPanel0.preset("");
 			}catch(ModelException me){
 				 handleException(me);
 			}
@@ -860,6 +972,62 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
 		
 	}
 
+	class ServiceAdminHerstellerHinzufuegenArtikelHerstellerMssgWizard extends Wizard {
+
+		protected ServiceAdminHerstellerHinzufuegenArtikelHerstellerMssgWizard(String operationName){
+			super(ServiceAdminClientView.this);
+			getOkButton().setText(operationName);
+			getOkButton().setGraphic(new HerstellerHinzufuegenPRMTRArtikelPRMTRHerstellerPRMTRMenuItem ().getGraphic());
+		}
+		protected void initialize(){
+			this.helpFileName = "ServiceAdminHerstellerHinzufuegenArtikelHerstellerMssgWizard.help";
+			super.initialize();		
+		}
+				
+		protected void perform() {
+			try {
+				getConnection().herstellerHinzufuegen(firstArgument, (HerstellerView)((ObjectSelectionPanel)getParametersPanel().getChildren().get(0)).getResult());
+				getConnection().setEagerRefresh();
+				this.close();	
+			} catch(ModelException me){
+				handleException(me);
+				this.close();
+			}
+			
+		}
+		protected String checkCompleteParameterSet(){
+			return null;
+		}
+		protected boolean isModifying () {
+			return false;
+		}
+		protected void addParameters(){
+			final ObjectSelectionPanel panel4 = new ObjectSelectionPanel("hersteller", "view.HerstellerView", null, this);
+			getParametersPanel().getChildren().add(panel4);
+			panel4.setBrowserRoot((ViewRoot) getConnection().getServiceAdminView());		
+		}	
+		protected void handleDependencies(int i) {
+		}
+		
+		
+		private ArtikelView firstArgument; 
+	
+		public void setFirstArgument(ArtikelView firstArgument){
+			this.firstArgument = firstArgument;
+			this.setTitle(this.firstArgument.toString());
+			try{
+				final SelectionPanel selectionPanel0 = (SelectionPanel)getParametersPanel().getChildren().get(0);
+				selectionPanel0.preset((Anything)firstArgument.getHersteller());
+				if (!selectionPanel0.check()) selectionPanel0.preset((Anything)null);
+			}catch(ModelException me){
+				 handleException(me);
+			}
+			this.check();
+		}
+		
+		
+	}
+
 	class ServiceAdminNeueLieferArtLieferartManagerStringIntegerFractionMssgWizard extends Wizard {
 
 		protected ServiceAdminNeueLieferArtLieferartManagerStringIntegerFractionMssgWizard(String operationName){
@@ -963,6 +1131,56 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
 		private ArtikelManagerView firstArgument; 
 	
 		public void setFirstArgument(ArtikelManagerView firstArgument){
+			this.firstArgument = firstArgument;
+			this.setTitle(this.firstArgument.toString());
+			this.check();
+		}
+		
+		
+	}
+
+	class ServiceAdminNeuerHerstellerHerstellerManagerStringMssgWizard extends Wizard {
+
+		protected ServiceAdminNeuerHerstellerHerstellerManagerStringMssgWizard(String operationName){
+			super(ServiceAdminClientView.this);
+			getOkButton().setText(operationName);
+			getOkButton().setGraphic(new NeuerHerstellerPRMTRHerstellerManagerPRMTRStringPRMTRMenuItem ().getGraphic());
+		}
+		protected void initialize(){
+			this.helpFileName = "ServiceAdminNeuerHerstellerHerstellerManagerStringMssgWizard.help";
+			super.initialize();		
+		}
+				
+		protected void perform() {
+			try {
+				getConnection().neuerHersteller(firstArgument, ((StringSelectionPanel)getParametersPanel().getChildren().get(0)).getResult());
+				getConnection().setEagerRefresh();
+				this.close();	
+			} catch(ModelException me){
+				handleException(me);
+				this.close();
+			}
+			catch(ExcAlreadyExists e) {
+				getStatusBar().setText(e.getMessage());
+			}
+			
+		}
+		protected String checkCompleteParameterSet(){
+			return null;
+		}
+		protected boolean isModifying () {
+			return false;
+		}
+		protected void addParameters(){
+			getParametersPanel().getChildren().add(new StringSelectionPanel("name", this));		
+		}	
+		protected void handleDependencies(int i) {
+		}
+		
+		
+		private HerstellerManagerView firstArgument; 
+	
+		public void setFirstArgument(HerstellerManagerView firstArgument){
 			this.firstArgument = firstArgument;
 			this.setTitle(this.firstArgument.toString());
 			this.check();

@@ -151,7 +151,12 @@ public class ToString$Visitor extends model.visitor.ToString$Visitor {
 	@Override
 	public void handleArtikel(Artikel4Public artikel) throws PersistenceException {
 		PersistentArtikel persistentArtikel = (PersistentArtikel) artikel;
-		result = ToStringConstants.Artikel + persistentArtikel.getArtikelnummer() + " | " + persistentArtikel.getBezeichnung();
+		String temp = ToStringConstants.Artikel + persistentArtikel.getArtikelnummer() + " | " + persistentArtikel.getBezeichnung()
+				+" | " + persistentArtikel.getArtikelstatus();
+		if(persistentArtikel.getHersteller()!=null){
+			temp = temp +" | " + persistentArtikel.getHersteller();
+		}
+		result = temp;
 	}
 
 	@Override

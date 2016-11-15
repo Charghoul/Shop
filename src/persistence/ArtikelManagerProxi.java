@@ -58,13 +58,13 @@ public class ArtikelManagerProxi extends PersistentProxi implements PersistentAr
 				throws model.ExcAlreadyExists, PersistenceException{
         ((PersistentArtikelManager)this.getTheObject()).aendereArtikel(artikel, bezeichnung, preis, minLagerbestand, maxLagerbestand, hstLieferzeit);
     }
-    public void artikelHinzufuegen(final Artikel4Public artikel) 
-				throws PersistenceException{
-        ((PersistentArtikelManager)this.getTheObject()).artikelHinzufuegen(artikel);
-    }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{
         ((PersistentArtikelManager)this.getTheObject()).copyingPrivateUserAttributes(copy);
+    }
+    public void herstellerHinzufuegen(final Artikel4Public artikel, final Hersteller4Public hersteller) 
+				throws PersistenceException{
+        ((PersistentArtikelManager)this.getTheObject()).herstellerHinzufuegen(artikel, hersteller);
     }
     public void initializeOnCreation() 
 				throws PersistenceException{
@@ -79,7 +79,7 @@ public class ArtikelManagerProxi extends PersistentProxi implements PersistentAr
         ((PersistentArtikelManager)this.getTheObject()).neuerArtikel(artikelnummer, bezeichnung, preis, minLagerbestand, maxLagerbestand, hstLieferzeit);
     }
     public void produktgruppeHinzufuegen(final Produktgruppe4Public produktgruppe, final String name) 
-				throws model.ExcAlreadyExists, PersistenceException{
+				throws model.ExcAlreadyExists, model.CycleException, PersistenceException{
         ((PersistentArtikelManager)this.getTheObject()).produktgruppeHinzufuegen(produktgruppe, name);
     }
 

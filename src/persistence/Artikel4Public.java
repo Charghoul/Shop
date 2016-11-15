@@ -37,6 +37,8 @@ public interface Artikel4Public extends Komponente4Public {
 				throws PersistenceException;
     public BooleanX4Public groesserMax(final long menge) 
 				throws PersistenceException;
+    public void herstellerHinzufuegen(final Hersteller4Public hersteller) 
+				throws PersistenceException;
     public void initializeOnCreation() 
 				throws PersistenceException;
     public void initializeOnInstantiation() 

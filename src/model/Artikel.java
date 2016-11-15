@@ -84,6 +84,15 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
                     if(forGUI && artikelstatus.hasEssentialFields())artikelstatus.toHashtable(allResults, depth, essentialLevel + 1, false, true, tdObserver);
                 }
             }
+            AbstractPersistentRoot hersteller = (AbstractPersistentRoot)this.getHersteller();
+            if (hersteller != null) {
+                result.put("hersteller", hersteller.createProxiInformation(false, essentialLevel <= 1));
+                if(depth > 1) {
+                    hersteller.toHashtable(allResults, depth - 1, essentialLevel, forGUI, true , tdObserver);
+                }else{
+                    if(forGUI && hersteller.hasEssentialFields())hersteller.toHashtable(allResults, depth, essentialLevel + 1, false, true, tdObserver);
+                }
+            }
             String uniqueKey = common.RPCConstantsAndServices.createHashtableKey(this.getClassId(), this.getId());
             if (leaf && !allResults.containsKey(uniqueKey)) allResults.put(uniqueKey, result);
         }
@@ -110,6 +119,7 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
                              this.maxLagerbestand, 
                              this.hstLieferzeit, 
                              this.artikelstatus, 
+                             this.hersteller, 
                              this.getId());
         this.copyingPrivateUserAttributes(result);
         return result;
@@ -125,8 +135,9 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
     protected long maxLagerbestand;
     protected long hstLieferzeit;
     protected PersistentArtikelstatus artikelstatus;
+    protected PersistentHersteller hersteller;
     
-    public Artikel(PersistentKomponente This,String artikelnummer,String bezeichnung,common.Fraction preis,long minLagerbestand,long maxLagerbestand,long hstLieferzeit,PersistentArtikelstatus artikelstatus,long id) throws PersistenceException {
+    public Artikel(PersistentKomponente This,String artikelnummer,String bezeichnung,common.Fraction preis,long minLagerbestand,long maxLagerbestand,long hstLieferzeit,PersistentArtikelstatus artikelstatus,PersistentHersteller hersteller,long id) throws PersistenceException {
         /* Shall not be used by clients for object construction! Use static create operation instead! */
         super((PersistentKomponente)This,id);
         this.artikelnummer = artikelnummer;
@@ -135,7 +146,8 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
         this.minLagerbestand = minLagerbestand;
         this.maxLagerbestand = maxLagerbestand;
         this.hstLieferzeit = hstLieferzeit;
-        this.artikelstatus = artikelstatus;        
+        this.artikelstatus = artikelstatus;
+        this.hersteller = hersteller;        
     }
     
     static public long getTypeId() {
@@ -154,6 +166,10 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
         if(this.getArtikelstatus() != null){
             this.getArtikelstatus().store();
             ConnectionHandler.getTheConnectionHandler().theArtikelFacade.artikelstatusSet(this.getId(), getArtikelstatus());
+        }
+        if(this.getHersteller() != null){
+            this.getHersteller().store();
+            ConnectionHandler.getTheConnectionHandler().theArtikelFacade.herstellerSet(this.getId(), getHersteller());
         }
         
     }
@@ -216,6 +232,20 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
             ConnectionHandler.getTheConnectionHandler().theArtikelFacade.artikelstatusSet(this.getId(), newValue);
         }
     }
+    public Hersteller4Public getHersteller() throws PersistenceException {
+        return this.hersteller;
+    }
+    public void setHersteller(Hersteller4Public newValue) throws PersistenceException {
+        if (newValue == null) throw new PersistenceException("Null values not allowed!", 0);
+        if(newValue.isTheSameAs(this.hersteller)) return;
+        long objectId = newValue.getId();
+        long classId = newValue.getClassId();
+        this.hersteller = (PersistentHersteller)PersistentProxi.createProxi(objectId, classId);
+        if(!this.isDelayed$Persistence()){
+            newValue.store();
+            ConnectionHandler.getTheConnectionHandler().theArtikelFacade.herstellerSet(this.getId(), newValue);
+        }
+    }
     public PersistentArtikel getThis() throws PersistenceException {
         if(this.This == null){
             PersistentArtikel result = (PersistentArtikel)PersistentProxi.createProxi(this.getId(),this.getClassId());
@@ -261,7 +291,7 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
          return visitor.handleArtikel(this);
     }
     public int getLeafInfo() throws PersistenceException{
-        if (this.getArtikelstatus() != null) return 1;
+        if (this.getArtikelstatus() != null && this.getArtikelstatus().getTheObject().getLeafInfo() != 0) return 1;
         return 0;
     }
     
@@ -337,6 +367,10 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
 				throws PersistenceException{
         if(getThis().getMaxLagerbestand() < menge) return TrueX.getTheTrueX();
         else return FalseX.getTheFalseX();
+    }
+    public void herstellerHinzufuegen(final Hersteller4Public hersteller) 
+				throws PersistenceException{
+        getThis().setHersteller(hersteller);
     }
     public void initializeOnCreation() 
 				throws PersistenceException{

@@ -295,6 +295,11 @@ public class ServiceAdmin extends model.Service implements PersistentServiceAdmi
         artikel.aendereArtikel(bezeichnung, preis, minLagerbestand, maxLagerbestand, hstLieferzeit);
         
     }
+    public void aendereHersteller(final Hersteller4Public hersteller, final String name) 
+				throws model.ExcAlreadyExists, PersistenceException{
+        hersteller.aendereHersteller(name);
+        
+    }
     public void aendereLieferart(final Lieferart4Public lieferart, final String name, final long lieferzeit, final common.Fraction preis) 
 				throws model.ExcAlreadyExists, PersistenceException{
         lieferart.aendereLieferart(name, lieferzeit, preis);
@@ -330,6 +335,11 @@ public class ServiceAdmin extends model.Service implements PersistentServiceAdmi
         //TODO: implement method: disconnected
         
     }
+    public void herstellerHinzufuegen(final Artikel4Public artikel, final Hersteller4Public hersteller) 
+				throws PersistenceException{
+        artikel.herstellerHinzufuegen(hersteller);
+        
+    }
     public void initializeOnCreation() 
 				throws PersistenceException{
         super.initializeOnCreation();
@@ -353,6 +363,11 @@ public class ServiceAdmin extends model.Service implements PersistentServiceAdmi
 				throws PersistenceException{
         artikelManager.neuerArtikel(artikelnummer, bezeichnung, preis, minLagerbestand, maxLagerbestand, hstLieferzeit, getThis());
         getThis().signalChanged(true);
+    }
+    public void neuerHersteller(final HerstellerManager4Public herstellerManager, final String name) 
+				throws model.ExcAlreadyExists, PersistenceException{
+        herstellerManager.neuerHersteller(name);
+        
     }
     public void produktgruppeHinzufuegen(final Produktgruppe4Public produktgruppe, final String name) 
 				throws model.ExcAlreadyExists, model.CycleException, PersistenceException{

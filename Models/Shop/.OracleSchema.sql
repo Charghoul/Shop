@@ -184,6 +184,9 @@ create table Kmpnnt(
     ArtklArtklstts number,
     ArtklArtklsttsCls number,
     constraint FArtklArtklstts foreign key (ArtklArtklsttsCls) references Cls (id),
+    ArtklHrstllr number,
+    ArtklHrstllrCls number,
+    constraint FArtklHrstllr foreign key (ArtklHrstllrCls) references Cls (id),
     PrdktgrppNm varchar2(2000)    
 );
 create index IArtklnmmrArtkl on Kmpnnt (ArtklArtklnmmr);
