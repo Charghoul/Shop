@@ -68,12 +68,12 @@ public class ServiceKundeFacade{
             PersistentEinkaufsManager einkaufsManager = null;
             if (obj.getLong(4) != 0)
                 einkaufsManager = (PersistentEinkaufsManager)PersistentProxi.createProxi(obj.getLong(4), obj.getLong(5));
-            PersistentWarenlager warenlager = null;
+            PersistentArtikelManager artikelManager = null;
             if (obj.getLong(6) != 0)
-                warenlager = (PersistentWarenlager)PersistentProxi.createProxi(obj.getLong(6), obj.getLong(7));
+                artikelManager = (PersistentArtikelManager)PersistentProxi.createProxi(obj.getLong(6), obj.getLong(7));
             ServiceKunde result = new ServiceKunde(This,
                                                    einkaufsManager,
-                                                   warenlager,
+                                                   artikelManager,
                                                    ServiceKundeId);
             obj.close();
             callable.close();
@@ -98,13 +98,13 @@ public class ServiceKundeFacade{
             throw new PersistenceException(se.getMessage(), se.getErrorCode());
         }
     }
-    public void warenlagerSet(long ServiceKundeId, Warenlager4Public warenlagerVal) throws PersistenceException {
+    public void artikelManagerSet(long ServiceKundeId, ArtikelManager4Public artikelManagerVal) throws PersistenceException {
         try{
             CallableStatement callable;
-            callable = this.con.prepareCall("Begin " + this.schemaName + ".SrvcKndFacade.wrnlgrSet(?, ?, ?); end;");
+            callable = this.con.prepareCall("Begin " + this.schemaName + ".SrvcKndFacade.artklMngrSet(?, ?, ?); end;");
             callable.setLong(1, ServiceKundeId);
-            callable.setLong(2, warenlagerVal.getId());
-            callable.setLong(3, warenlagerVal.getClassId());
+            callable.setLong(2, artikelManagerVal.getId());
+            callable.setLong(3, artikelManagerVal.getClassId());
             callable.execute();
             callable.close();
         }catch(SQLException se) {

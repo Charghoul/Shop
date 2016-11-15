@@ -88,8 +88,24 @@ public class ArtikelProxi extends KomponenteProxi implements PersistentArtikel{
     public <R, E extends model.UserException> R accept(AnythingReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E {
          return visitor.handleArtikel(this);
     }
+    public void accept(HierarchieHIERARCHYVisitor visitor) throws PersistenceException {
+        visitor.handleArtikel(this);
+    }
+    public <R> R accept(HierarchieHIERARCHYReturnVisitor<R>  visitor) throws PersistenceException {
+         return visitor.handleArtikel(this);
+    }
+    public <E extends model.UserException>  void accept(HierarchieHIERARCHYExceptionVisitor<E> visitor) throws PersistenceException, E {
+         visitor.handleArtikel(this);
+    }
+    public <R, E extends model.UserException> R accept(HierarchieHIERARCHYReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E {
+         return visitor.handleArtikel(this);
+    }
     
     
+    public boolean containsHierarchie(final HierarchieHIERARCHY part) 
+				throws PersistenceException{
+        return ((PersistentArtikel)this.getTheObject()).containsHierarchie(part);
+    }
     public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
 				throws PersistenceException{
         ((PersistentArtikel)this.getTheObject()).initialize(This, final$$Fields);
@@ -101,6 +117,10 @@ public class ArtikelProxi extends KomponenteProxi implements PersistentArtikel{
     public void statusVerkauf(final Invoker invoker) 
 				throws PersistenceException{
         ((PersistentArtikel)this.getTheObject()).statusVerkauf(invoker);
+    }
+    public <T> T strategyHierarchie(final HierarchieHIERARCHYStrategy<T> strategy) 
+				throws PersistenceException{
+        return ((PersistentArtikel)this.getTheObject()).strategyHierarchie(strategy);
     }
     public void aendereArtikel(final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
 				throws model.ExcAlreadyExists, PersistenceException{

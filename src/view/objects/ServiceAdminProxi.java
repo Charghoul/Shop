@@ -36,7 +36,14 @@ public class ServiceAdminProxi extends ServiceProxi implements ServiceAdminView{
             lieferartManager = view.objects.ViewProxi.createProxi(lieferartManager$Info,connectionKey);
             lieferartManager.setToString(lieferartManager$Info.getToString());
         }
-        ServiceAdminView result$$ = new ServiceAdmin(errors,(WarenlagerView)warenlager,(ArtikelManagerView)artikelManager,(LieferartManagerView)lieferartManager, this.getId(), this.getClassId());
+        ViewProxi herstellerManager = null;
+        String herstellerManager$String = (String)resultTable.get("herstellerManager");
+        if (herstellerManager$String != null) {
+            common.ProxiInformation herstellerManager$Info = common.RPCConstantsAndServices.createProxiInformation(herstellerManager$String);
+            herstellerManager = view.objects.ViewProxi.createProxi(herstellerManager$Info,connectionKey);
+            herstellerManager.setToString(herstellerManager$Info.getToString());
+        }
+        ServiceAdminView result$$ = new ServiceAdmin(errors,(WarenlagerView)warenlager,(ArtikelManagerView)artikelManager,(LieferartManagerView)lieferartManager,(HerstellerManagerView)herstellerManager, this.getId(), this.getClassId());
         ((ViewRoot)result$$).setToString((String) resultTable.get(common.RPCConstantsAndServices.RPCToStringFieldName));
         return result$$;
     }
@@ -52,20 +59,24 @@ public class ServiceAdminProxi extends ServiceProxi implements ServiceAdminView{
         if(this.getArtikelManager() != null) index = index - 1;
         if(index == 0 && this.getLieferartManager() != null) return new LieferartManagerServiceAdminWrapper(this, originalIndex, (ViewRoot)this.getLieferartManager());
         if(this.getLieferartManager() != null) index = index - 1;
+        if(index == 0 && this.getHerstellerManager() != null) return new HerstellerManagerServiceAdminWrapper(this, originalIndex, (ViewRoot)this.getHerstellerManager());
+        if(this.getHerstellerManager() != null) index = index - 1;
         return null;
     }
     public int getChildCount() throws ModelException {
         return 0 
             + (this.getWarenlager() == null ? 0 : 1)
             + (this.getArtikelManager() == null ? 0 : 1)
-            + (this.getLieferartManager() == null ? 0 : 1);
+            + (this.getLieferartManager() == null ? 0 : 1)
+            + (this.getHerstellerManager() == null ? 0 : 1);
     }
     public boolean isLeaf() throws ModelException {
         if (this.object == null) return this.getLeafInfo() == 0;
         return true 
             && (this.getWarenlager() == null ? true : false)
             && (this.getArtikelManager() == null ? true : false)
-            && (this.getLieferartManager() == null ? true : false);
+            && (this.getLieferartManager() == null ? true : false)
+            && (this.getHerstellerManager() == null ? true : false);
     }
     public int getIndexOfChild(Object child) throws ModelException {
         int result = 0;
@@ -75,6 +86,8 @@ public class ServiceAdminProxi extends ServiceProxi implements ServiceAdminView{
         if(this.getArtikelManager() != null) result = result + 1;
         if(this.getLieferartManager() != null && this.getLieferartManager().equals(child)) return result;
         if(this.getLieferartManager() != null) result = result + 1;
+        if(this.getHerstellerManager() != null && this.getHerstellerManager().equals(child)) return result;
+        if(this.getHerstellerManager() != null) result = result + 1;
         return -1;
     }
     
@@ -95,6 +108,12 @@ public class ServiceAdminProxi extends ServiceProxi implements ServiceAdminView{
     }
     public void setLieferartManager(LieferartManagerView newValue) throws ModelException {
         ((ServiceAdmin)this.getTheObject()).setLieferartManager(newValue);
+    }
+    public HerstellerManagerView getHerstellerManager()throws ModelException{
+        return ((ServiceAdmin)this.getTheObject()).getHerstellerManager();
+    }
+    public void setHerstellerManager(HerstellerManagerView newValue) throws ModelException {
+        ((ServiceAdmin)this.getTheObject()).setHerstellerManager(newValue);
     }
     
     public void accept(ServiceVisitor visitor) throws ModelException {

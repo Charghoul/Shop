@@ -21,7 +21,6 @@ public interface AnythingReturnExceptionVisitor<R, E extends model.UserException
     public R handleLieferart(Lieferart4Public lieferart) throws PersistenceException, E;
     public R handleLieferartManager(LieferartManager4Public lieferartManager) throws PersistenceException, E;
     public R handleLieferung(Lieferung4Public lieferung) throws PersistenceException, E;
-    public R handleNeueProduktgruppeCommand(NeueProduktgruppeCommand4Public neueProduktgruppeCommand) throws PersistenceException, E;
     public R handleNeuerArtikelCommand(NeuerArtikelCommand4Public neuerArtikelCommand) throws PersistenceException, E;
     public R handlePosition(Position4Public position) throws PersistenceException, E;
     public R handleRegisterCommand(RegisterCommand4Public registerCommand) throws PersistenceException, E;

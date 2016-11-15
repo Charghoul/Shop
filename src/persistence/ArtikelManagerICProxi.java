@@ -22,8 +22,11 @@ public class ArtikelManagerICProxi extends PersistentInCacheProxiOptimistic impl
         return 228;
     }
     
-    public ArtikelManager_KomponentenListeProxi getKomponentenListe() throws PersistenceException {
-        return ((PersistentArtikelManager)this.getTheObject()).getKomponentenListe();
+    public ArtikelManager_ArtikelListeProxi getArtikelListe() throws PersistenceException {
+        return ((PersistentArtikelManager)this.getTheObject()).getArtikelListe();
+    }
+    public ArtikelManager_ProduktgruppenProxi getProduktgruppen() throws PersistenceException {
+        return ((PersistentArtikelManager)this.getTheObject()).getProduktgruppen();
     }
     public PersistentArtikelManager getThis() throws PersistenceException {
         return ((PersistentArtikelManager)this.getTheObject()).getThis();
@@ -51,14 +54,6 @@ public class ArtikelManagerICProxi extends PersistentInCacheProxiOptimistic impl
 				throws PersistenceException{
         ((PersistentArtikelManager)this.getTheObject()).initialize(This, final$$Fields);
     }
-    public ServiceAdmin4Public inverseGetArtikelManager() 
-				throws PersistenceException{
-        return ((PersistentArtikelManager)this.getTheObject()).inverseGetArtikelManager();
-    }
-    public void neueProduktgruppe(final String name, final Invoker invoker) 
-				throws PersistenceException{
-        ((PersistentArtikelManager)this.getTheObject()).neueProduktgruppe(name, invoker);
-    }
     public void neuerArtikel(final String artikelnummer, final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit, final Invoker invoker) 
 				throws PersistenceException{
         ((PersistentArtikelManager)this.getTheObject()).neuerArtikel(artikelnummer, bezeichnung, preis, minLagerbestand, maxLagerbestand, hstLieferzeit, invoker);
@@ -66,6 +61,10 @@ public class ArtikelManagerICProxi extends PersistentInCacheProxiOptimistic impl
     public void aendereArtikel(final Artikel4Public artikel, final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
 				throws model.ExcAlreadyExists, PersistenceException{
         ((PersistentArtikelManager)this.getTheObject()).aendereArtikel(artikel, bezeichnung, preis, minLagerbestand, maxLagerbestand, hstLieferzeit);
+    }
+    public void artikelHinzufuegen(final Artikel4Public artikel) 
+				throws PersistenceException{
+        ((PersistentArtikelManager)this.getTheObject()).artikelHinzufuegen(artikel);
     }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{
@@ -79,13 +78,13 @@ public class ArtikelManagerICProxi extends PersistentInCacheProxiOptimistic impl
 				throws PersistenceException{
         ((PersistentArtikelManager)this.getTheObject()).initializeOnInstantiation();
     }
-    public void neueProduktgruppe(final String name) 
-				throws model.ExcAlreadyExists, PersistenceException{
-        ((PersistentArtikelManager)this.getTheObject()).neueProduktgruppe(name);
-    }
     public void neuerArtikel(final String artikelnummer, final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
 				throws model.UserException, PersistenceException{
         ((PersistentArtikelManager)this.getTheObject()).neuerArtikel(artikelnummer, bezeichnung, preis, minLagerbestand, maxLagerbestand, hstLieferzeit);
+    }
+    public void produktgruppeHinzufuegen(final Produktgruppe4Public produktgruppe, final String name) 
+				throws model.ExcAlreadyExists, PersistenceException{
+        ((PersistentArtikelManager)this.getTheObject()).produktgruppeHinzufuegen(produktgruppe, name);
     }
 
     

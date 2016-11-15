@@ -25,7 +25,7 @@ public class ServiceAdminFacade{
             callable.execute();
             long id = callable.getLong(1);
             callable.close();
-            ServiceAdmin result = new ServiceAdmin(null,null,null,null,id);
+            ServiceAdmin result = new ServiceAdmin(null,null,null,null,null,id);
             if (idCreateIfLessZero < 0)Cache.getTheCache().put(result);
             return (PersistentServiceAdmin)PersistentProxi.createProxi(id, -182);
         }catch(SQLException se) {
@@ -41,7 +41,7 @@ public class ServiceAdminFacade{
             callable.execute();
             long id = callable.getLong(1);
             callable.close();
-            ServiceAdmin result = new ServiceAdmin(null,null,null,null,id);
+            ServiceAdmin result = new ServiceAdmin(null,null,null,null,null,id);
             Cache.getTheCache().put(result);
             return (PersistentServiceAdmin)PersistentProxi.createProxi(id, -182);
         }catch(SQLException se) {
@@ -74,10 +74,14 @@ public class ServiceAdminFacade{
             PersistentLieferartManager lieferartManager = null;
             if (obj.getLong(8) != 0)
                 lieferartManager = (PersistentLieferartManager)PersistentProxi.createProxi(obj.getLong(8), obj.getLong(9));
+            PersistentHerstellerManager herstellerManager = null;
+            if (obj.getLong(10) != 0)
+                herstellerManager = (PersistentHerstellerManager)PersistentProxi.createProxi(obj.getLong(10), obj.getLong(11));
             ServiceAdmin result = new ServiceAdmin(This,
                                                    warenlager,
                                                    artikelManager,
                                                    lieferartManager,
+                                                   herstellerManager,
                                                    ServiceAdminId);
             obj.close();
             callable.close();
@@ -128,10 +132,23 @@ public class ServiceAdminFacade{
             throw new PersistenceException(se.getMessage(), se.getErrorCode());
         }
     }
-    public ServiceAdminSearchList inverseGetArtikelManager(long objectId, long classId)throws PersistenceException{
+    public void herstellerManagerSet(long ServiceAdminId, HerstellerManager4Public herstellerManagerVal) throws PersistenceException {
         try{
             CallableStatement callable;
-            callable = this.con.prepareCall("Begin ? := " + this.schemaName + ".SrvcAdmnFacade.iGetArtklMngr(?, ?); end;");
+            callable = this.con.prepareCall("Begin " + this.schemaName + ".SrvcAdmnFacade.hrstllrMngrSet(?, ?, ?); end;");
+            callable.setLong(1, ServiceAdminId);
+            callable.setLong(2, herstellerManagerVal.getId());
+            callable.setLong(3, herstellerManagerVal.getClassId());
+            callable.execute();
+            callable.close();
+        }catch(SQLException se) {
+            throw new PersistenceException(se.getMessage(), se.getErrorCode());
+        }
+    }
+    public ServiceAdminSearchList inverseGetLieferartManager(long objectId, long classId)throws PersistenceException{
+        try{
+            CallableStatement callable;
+            callable = this.con.prepareCall("Begin ? := " + this.schemaName + ".SrvcAdmnFacade.iGetLfrrtMngr(?, ?); end;");
             callable.registerOutParameter(1, oracle.jdbc.OracleTypes.CURSOR);
             callable.setLong(2, objectId);
             callable.setLong(3, classId);
@@ -149,10 +166,10 @@ public class ServiceAdminFacade{
             throw new PersistenceException(se.getMessage(), se.getErrorCode());
         }
     }
-    public ServiceAdminSearchList inverseGetLieferartManager(long objectId, long classId)throws PersistenceException{
+    public ServiceAdminSearchList inverseGetHerstellerManager(long objectId, long classId)throws PersistenceException{
         try{
             CallableStatement callable;
-            callable = this.con.prepareCall("Begin ? := " + this.schemaName + ".SrvcAdmnFacade.iGetLfrrtMngr(?, ?); end;");
+            callable = this.con.prepareCall("Begin ? := " + this.schemaName + ".SrvcAdmnFacade.iGetHrstllrMngr(?, ?); end;");
             callable.registerOutParameter(1, oracle.jdbc.OracleTypes.CURSOR);
             callable.setLong(2, objectId);
             callable.setLong(3, classId);

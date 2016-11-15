@@ -248,12 +248,29 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
     public <R, E extends model.UserException> R accept(AnythingReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E {
          return visitor.handleArtikel(this);
     }
+    public void accept(HierarchieHIERARCHYVisitor visitor) throws PersistenceException {
+        visitor.handleArtikel(this);
+    }
+    public <R> R accept(HierarchieHIERARCHYReturnVisitor<R>  visitor) throws PersistenceException {
+         return visitor.handleArtikel(this);
+    }
+    public <E extends model.UserException>  void accept(HierarchieHIERARCHYExceptionVisitor<E> visitor) throws PersistenceException, E {
+         visitor.handleArtikel(this);
+    }
+    public <R, E extends model.UserException> R accept(HierarchieHIERARCHYReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E {
+         return visitor.handleArtikel(this);
+    }
     public int getLeafInfo() throws PersistenceException{
         if (this.getArtikelstatus() != null) return 1;
         return 0;
     }
     
     
+    public boolean containsHierarchie(final HierarchieHIERARCHY part) 
+				throws PersistenceException{
+        if(getThis().equals(part)) return true;
+		return false;
+    }
     public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
 				throws PersistenceException{
         this.setThis((PersistentArtikel)This);
@@ -282,6 +299,11 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
 		command.setInvoker(invoker);
 		command.setCommandReceiver(getThis());
 		model.meta.CommandCoordinator.getTheCommandCoordinator().coordinate(command);
+    }
+    public <T> T strategyHierarchie(final HierarchieHIERARCHYStrategy<T> strategy) 
+				throws PersistenceException{
+        T result = strategy.Artikel$$finalize(getThis() );
+		return result;
     }
     
     
