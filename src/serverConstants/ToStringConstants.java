@@ -18,6 +18,7 @@ public class ToStringConstants {
     public static final String HerstellerManager = "Herstellerverzeichnis";
     public static final String Hersteller = "Hersteller: ";
     public static final String Produktgruppe = "Produktgruppe: ";
+    public static final String MasterDataManager = "Master Data Manager";
 
 
     private ToStringConstants(){}

@@ -22,14 +22,14 @@ public class ServiceKundeProxi extends ServiceProxi implements ServiceKundeView{
             einkaufsManager = view.objects.ViewProxi.createProxi(einkaufsManager$Info,connectionKey);
             einkaufsManager.setToString(einkaufsManager$Info.getToString());
         }
-        ViewProxi warenlager = null;
-        String warenlager$String = (String)resultTable.get("warenlager");
-        if (warenlager$String != null) {
-            common.ProxiInformation warenlager$Info = common.RPCConstantsAndServices.createProxiInformation(warenlager$String);
-            warenlager = view.objects.ViewProxi.createProxi(warenlager$Info,connectionKey);
-            warenlager.setToString(warenlager$Info.getToString());
+        ViewProxi artikelManager = null;
+        String artikelManager$String = (String)resultTable.get("artikelManager");
+        if (artikelManager$String != null) {
+            common.ProxiInformation artikelManager$Info = common.RPCConstantsAndServices.createProxiInformation(artikelManager$String);
+            artikelManager = view.objects.ViewProxi.createProxi(artikelManager$Info,connectionKey);
+            artikelManager.setToString(artikelManager$Info.getToString());
         }
-        ServiceKundeView result$$ = new ServiceKunde(errors,(EinkaufsManagerView)einkaufsManager,(WarenlagerView)warenlager, this.getId(), this.getClassId());
+        ServiceKundeView result$$ = new ServiceKunde(errors,(EinkaufsManagerView)einkaufsManager,(ArtikelManagerView)artikelManager, this.getId(), this.getClassId());
         ((ViewRoot)result$$).setToString((String) resultTable.get(common.RPCConstantsAndServices.RPCToStringFieldName));
         return result$$;
     }
@@ -41,27 +41,27 @@ public class ServiceKundeProxi extends ServiceProxi implements ServiceKundeView{
         int index = originalIndex;
         if(index == 0 && this.getEinkaufsManager() != null) return new EinkaufsManagerServiceKundeWrapper(this, originalIndex, (ViewRoot)this.getEinkaufsManager());
         if(this.getEinkaufsManager() != null) index = index - 1;
-        if(index == 0 && this.getWarenlager() != null) return new WarenlagerServiceKundeWrapper(this, originalIndex, (ViewRoot)this.getWarenlager());
-        if(this.getWarenlager() != null) index = index - 1;
+        if(index == 0 && this.getArtikelManager() != null) return new ArtikelManagerServiceKundeWrapper(this, originalIndex, (ViewRoot)this.getArtikelManager());
+        if(this.getArtikelManager() != null) index = index - 1;
         return null;
     }
     public int getChildCount() throws ModelException {
         return 0 
             + (this.getEinkaufsManager() == null ? 0 : 1)
-            + (this.getWarenlager() == null ? 0 : 1);
+            + (this.getArtikelManager() == null ? 0 : 1);
     }
     public boolean isLeaf() throws ModelException {
         if (this.object == null) return this.getLeafInfo() == 0;
         return true 
             && (this.getEinkaufsManager() == null ? true : false)
-            && (this.getWarenlager() == null ? true : false);
+            && (this.getArtikelManager() == null ? true : false);
     }
     public int getIndexOfChild(Object child) throws ModelException {
         int result = 0;
         if(this.getEinkaufsManager() != null && this.getEinkaufsManager().equals(child)) return result;
         if(this.getEinkaufsManager() != null) result = result + 1;
-        if(this.getWarenlager() != null && this.getWarenlager().equals(child)) return result;
-        if(this.getWarenlager() != null) result = result + 1;
+        if(this.getArtikelManager() != null && this.getArtikelManager().equals(child)) return result;
+        if(this.getArtikelManager() != null) result = result + 1;
         return -1;
     }
     
@@ -71,11 +71,11 @@ public class ServiceKundeProxi extends ServiceProxi implements ServiceKundeView{
     public void setEinkaufsManager(EinkaufsManagerView newValue) throws ModelException {
         ((ServiceKunde)this.getTheObject()).setEinkaufsManager(newValue);
     }
-    public WarenlagerView getWarenlager()throws ModelException{
-        return ((ServiceKunde)this.getTheObject()).getWarenlager();
+    public ArtikelManagerView getArtikelManager()throws ModelException{
+        return ((ServiceKunde)this.getTheObject()).getArtikelManager();
     }
-    public void setWarenlager(WarenlagerView newValue) throws ModelException {
-        ((ServiceKunde)this.getTheObject()).setWarenlager(newValue);
+    public void setArtikelManager(ArtikelManagerView newValue) throws ModelException {
+        ((ServiceKunde)this.getTheObject()).setArtikelManager(newValue);
     }
     
     public void accept(ServiceVisitor visitor) throws ModelException {

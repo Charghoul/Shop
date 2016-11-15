@@ -15,22 +15,22 @@ public interface ArtikelManager4Public extends Anything, AbstractPersistentProxi
 				throws PersistenceException;
     public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
 				throws PersistenceException;
-    public void neueProduktgruppe(final String name, final Invoker invoker) 
-				throws PersistenceException;
     public void neuerArtikel(final String artikelnummer, final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit, final Invoker invoker) 
 				throws PersistenceException;
     public void aendereArtikel(final Artikel4Public artikel, final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
 				throws model.ExcAlreadyExists, PersistenceException;
+    public void artikelHinzufuegen(final Artikel4Public artikel) 
+				throws PersistenceException;
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException;
     public void initializeOnCreation() 
 				throws PersistenceException;
     public void initializeOnInstantiation() 
 				throws PersistenceException;
-    public void neueProduktgruppe(final String name) 
-				throws model.ExcAlreadyExists, PersistenceException;
     public void neuerArtikel(final String artikelnummer, final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
 				throws model.UserException, PersistenceException;
+    public void produktgruppeHinzufuegen(final Produktgruppe4Public produktgruppe, final String name) 
+				throws model.ExcAlreadyExists, PersistenceException;
 
 }
 

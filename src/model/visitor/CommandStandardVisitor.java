@@ -23,8 +23,5 @@ public abstract class CommandStandardVisitor implements CommandVisitor {
     public void handleStatusVerkaufCommand(StatusVerkaufCommand4Public statusVerkaufCommand) throws PersistenceException{
         this.standardHandling(statusVerkaufCommand);
     }
-    public void handleNeueProduktgruppeCommand(NeueProduktgruppeCommand4Public neueProduktgruppeCommand) throws PersistenceException{
-        this.standardHandling(neueProduktgruppeCommand);
-    }
     protected abstract void standardHandling(Command command) throws PersistenceException;
 }

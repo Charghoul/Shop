@@ -35,6 +35,8 @@ public  class RemoteServiceAdmin extends RemoteService {
             return createOKResult();
         }catch(PersistenceException pe){
             return createExceptionResult(pe);
+        }catch(model.ExcAlreadyExists e0){
+            return createExceptionResult(e0, this);
         }
     }
     
@@ -78,6 +80,21 @@ public  class RemoteServiceAdmin extends RemoteService {
         }
     }
     
+    public synchronized java.util.HashMap<?,?> artikelHinzufuegen(String produktgruppeProxiString, String artikelProxiString){
+        try {
+            PersistentProduktgruppe produktgruppe = (PersistentProduktgruppe)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(produktgruppeProxiString));
+            PersistentArtikel artikel = (PersistentArtikel)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(artikelProxiString));
+            ((PersistentServiceAdmin)this.server).artikelHinzufuegen(produktgruppe, artikel);
+            return createOKResult();
+        }catch(PersistenceException pe){
+            return createExceptionResult(pe);
+        }catch(model.ExcAlreadyExists e0){
+            return createExceptionResult(e0, this);
+        }catch(model.CycleException e1){
+            return createExceptionResult(e1, this);
+        }
+    }
+    
     public synchronized java.util.HashMap<?,?> neueLieferArt(String lieferartManagerProxiString, String name, String lieferzeitAsString, String preisAsString){
         try {
             PersistentLieferartManager lieferartManager = (PersistentLieferartManager)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(lieferartManagerProxiString));
@@ -92,16 +109,6 @@ public  class RemoteServiceAdmin extends RemoteService {
         }
     }
     
-    public synchronized java.util.HashMap<?,?> neueProduktgruppe(String artikelmanagerProxiString, String name){
-        try {
-            PersistentArtikelManager artikelmanager = (PersistentArtikelManager)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(artikelmanagerProxiString));
-            ((PersistentServiceAdmin)this.server).neueProduktgruppe(artikelmanager, name);
-            return createOKResult();
-        }catch(PersistenceException pe){
-            return createExceptionResult(pe);
-        }
-    }
-    
     public synchronized java.util.HashMap<?,?> neuerArtikel(String artikelManagerProxiString, String artikelnummer, String bezeichnung, String preisAsString, String minLagerbestandAsString, String maxLagerbestandAsString, String hstLieferzeitAsString){
         try {
             PersistentArtikelManager artikelManager = (PersistentArtikelManager)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(artikelManagerProxiString));
@@ -113,6 +120,20 @@ public  class RemoteServiceAdmin extends RemoteService {
             return createOKResult();
         }catch(PersistenceException pe){
             return createExceptionResult(pe);
+        }
+    }
+    
+    public synchronized java.util.HashMap<?,?> produktgruppeHinzufuegen(String produktgruppeProxiString, String name){
+        try {
+            PersistentProduktgruppe produktgruppe = (PersistentProduktgruppe)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(produktgruppeProxiString));
+            ((PersistentServiceAdmin)this.server).produktgruppeHinzufuegen(produktgruppe, name);
+            return createOKResult();
+        }catch(PersistenceException pe){
+            return createExceptionResult(pe);
+        }catch(model.ExcAlreadyExists e0){
+            return createExceptionResult(e0, this);
+        }catch(model.CycleException e1){
+            return createExceptionResult(e1, this);
         }
     }
     

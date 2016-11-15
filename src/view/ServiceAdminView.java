@@ -12,6 +12,8 @@ public interface ServiceAdminView extends ServiceView {
     public void setArtikelManager(ArtikelManagerView newValue) throws ModelException ;
     public LieferartManagerView getLieferartManager()throws ModelException;
     public void setLieferartManager(LieferartManagerView newValue) throws ModelException ;
+    public HerstellerManagerView getHerstellerManager()throws ModelException;
+    public void setHerstellerManager(HerstellerManagerView newValue) throws ModelException ;
     
     public void accept(ServiceVisitor visitor) throws ModelException;
     public <R> R accept(ServiceReturnVisitor<R>  visitor) throws ModelException;

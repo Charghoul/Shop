@@ -160,7 +160,6 @@ public class ToString$Visitor extends model.visitor.ToString$Visitor {
 		result = ToStringConstants.Produktgruppe + persistentProduktgruppe.getName();
 	}
 
-
 	@Override
 	public void handlePosition(Position4Public position) throws PersistenceException {
 		PersistentPosition persistentPosition = (PersistentPosition) position;

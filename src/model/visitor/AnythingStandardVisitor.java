@@ -62,9 +62,6 @@ public abstract class AnythingStandardVisitor implements AnythingVisitor {
     public void handleProduktgruppe(Produktgruppe4Public produktgruppe) throws PersistenceException{
         this.standardHandling(produktgruppe);
     }
-    public void handleNeueProduktgruppeCommand(NeueProduktgruppeCommand4Public neueProduktgruppeCommand) throws PersistenceException{
-        this.standardHandling(neueProduktgruppeCommand);
-    }
     public void handlePosition(Position4Public position) throws PersistenceException{
         this.standardHandling(position);
     }

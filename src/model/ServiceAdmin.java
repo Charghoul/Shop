@@ -77,6 +77,15 @@ public class ServiceAdmin extends model.Service implements PersistentServiceAdmi
                     if(forGUI && lieferartManager.hasEssentialFields())lieferartManager.toHashtable(allResults, depth, essentialLevel + 1, false, true, tdObserver);
                 }
             }
+            AbstractPersistentRoot herstellerManager = (AbstractPersistentRoot)this.getHerstellerManager();
+            if (herstellerManager != null) {
+                result.put("herstellerManager", herstellerManager.createProxiInformation(false, essentialLevel <= 1));
+                if(depth > 1) {
+                    herstellerManager.toHashtable(allResults, depth - 1, essentialLevel, forGUI, true , tdObserver);
+                }else{
+                    if(forGUI && herstellerManager.hasEssentialFields())herstellerManager.toHashtable(allResults, depth, essentialLevel + 1, false, true, tdObserver);
+                }
+            }
             String uniqueKey = common.RPCConstantsAndServices.createHashtableKey(this.getClassId(), this.getId());
             if (leaf && !allResults.containsKey(uniqueKey)) allResults.put(uniqueKey, result);
         }
@@ -89,6 +98,7 @@ public class ServiceAdmin extends model.Service implements PersistentServiceAdmi
                                   this.warenlager, 
                                   this.artikelManager, 
                                   this.lieferartManager, 
+                                  this.herstellerManager, 
                                   this.getId());
         result.errors = this.errors.copy(result);
         this.copyingPrivateUserAttributes(result);
@@ -101,13 +111,15 @@ public class ServiceAdmin extends model.Service implements PersistentServiceAdmi
     protected PersistentWarenlager warenlager;
     protected PersistentArtikelManager artikelManager;
     protected PersistentLieferartManager lieferartManager;
+    protected PersistentHerstellerManager herstellerManager;
     
-    public ServiceAdmin(PersistentService This,PersistentWarenlager warenlager,PersistentArtikelManager artikelManager,PersistentLieferartManager lieferartManager,long id) throws PersistenceException {
+    public ServiceAdmin(PersistentService This,PersistentWarenlager warenlager,PersistentArtikelManager artikelManager,PersistentLieferartManager lieferartManager,PersistentHerstellerManager herstellerManager,long id) throws PersistenceException {
         /* Shall not be used by clients for object construction! Use static create operation instead! */
         super((PersistentService)This,id);
         this.warenlager = warenlager;
         this.artikelManager = artikelManager;
-        this.lieferartManager = lieferartManager;        
+        this.lieferartManager = lieferartManager;
+        this.herstellerManager = herstellerManager;        
     }
     
     static public long getTypeId() {
@@ -134,6 +146,10 @@ public class ServiceAdmin extends model.Service implements PersistentServiceAdmi
         if(this.getLieferartManager() != null){
             this.getLieferartManager().store();
             ConnectionHandler.getTheConnectionHandler().theServiceAdminFacade.lieferartManagerSet(this.getId(), getLieferartManager());
+        }
+        if(this.getHerstellerManager() != null){
+            this.getHerstellerManager().store();
+            ConnectionHandler.getTheConnectionHandler().theServiceAdminFacade.herstellerManagerSet(this.getId(), getHerstellerManager());
         }
         
     }
@@ -178,6 +194,20 @@ public class ServiceAdmin extends model.Service implements PersistentServiceAdmi
         if(!this.isDelayed$Persistence()){
             newValue.store();
             ConnectionHandler.getTheConnectionHandler().theServiceAdminFacade.lieferartManagerSet(this.getId(), newValue);
+        }
+    }
+    public HerstellerManager4Public getHerstellerManager() throws PersistenceException {
+        return this.herstellerManager;
+    }
+    public void setHerstellerManager(HerstellerManager4Public newValue) throws PersistenceException {
+        if (newValue == null) throw new PersistenceException("Null values not allowed!", 0);
+        if(newValue.isTheSameAs(this.herstellerManager)) return;
+        long objectId = newValue.getId();
+        long classId = newValue.getClassId();
+        this.herstellerManager = (PersistentHerstellerManager)PersistentProxi.createProxi(objectId, classId);
+        if(!this.isDelayed$Persistence()){
+            newValue.store();
+            ConnectionHandler.getTheConnectionHandler().theServiceAdminFacade.herstellerManagerSet(this.getId(), newValue);
         }
     }
     public PersistentServiceAdmin getThis() throws PersistenceException {
@@ -240,6 +270,7 @@ public class ServiceAdmin extends model.Service implements PersistentServiceAdmi
         if (this.getWarenlager() != null) return 1;
         if (this.getArtikelManager() != null) return 1;
         if (this.getLieferartManager() != null) return 1;
+        if (this.getHerstellerManager() != null) return 1;
         return 0;
     }
     
@@ -260,23 +291,28 @@ public class ServiceAdmin extends model.Service implements PersistentServiceAdmi
     // Start of section that contains operations that must be implemented.
     
     public void aendereArtikel(final Artikel4Public artikel, final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
-				throws PersistenceException{
-        //TODO: implement method: aendereArtikel
+				throws model.ExcAlreadyExists, PersistenceException{
+        artikel.aendereArtikel(bezeichnung, preis, minLagerbestand, maxLagerbestand, hstLieferzeit);
         
     }
     public void aendereLieferart(final Lieferart4Public lieferart, final String name, final long lieferzeit, final common.Fraction preis) 
 				throws model.ExcAlreadyExists, PersistenceException{
-        //TODO: implement method: aendereLieferart
+        lieferart.aendereLieferart(name, lieferzeit, preis);
         
     }
     public void artikelEinlagern(final Warenlager4Public warenlager, final Artikel4Public artikel, final long menge) 
 				throws model.ExcLagerbestandOverMax, PersistenceException{
-        //TODO: implement method: artikelEinlagern
+        warenlager.artikelEinlagern(artikel, menge);
         
     }
     public void artikelEntnehmen(final Warenlager4Public warenlager, final Position4Public position, final long menge) 
 				throws PersistenceException{
-        //TODO: implement method: artikelEntnehmen
+        warenlager.artikelEntnehmen(position, menge, getThis());
+        
+    }
+    public void artikelHinzufuegen(final Produktgruppe4Public produktgruppe, final Artikel4Public artikel) 
+				throws model.ExcAlreadyExists, model.CycleException, PersistenceException{
+        produktgruppe.artikelHinzufuegen(artikel);
         
     }
     public void connected(final String user) 
@@ -297,10 +333,10 @@ public class ServiceAdmin extends model.Service implements PersistentServiceAdmi
     public void initializeOnCreation() 
 				throws PersistenceException{
         super.initializeOnCreation();
-        getThis().setArtikelManager(model.ArtikelManager.createArtikelManager());
+        getThis().setArtikelManager(ArtikelManager.getTheArtikelManager());
         getThis().setWarenlager(model.Warenlager.getTheWarenlager());
         getThis().setLieferartManager(LieferartManager.createLieferartManager());
-
+        getThis().setHerstellerManager(HerstellerManager.createHerstellerManager());
     }
     public void initializeOnInstantiation() 
 				throws PersistenceException{
@@ -313,14 +349,14 @@ public class ServiceAdmin extends model.Service implements PersistentServiceAdmi
             getThis().signalChanged(true);
         
     }
-    public void neueProduktgruppe(final ArtikelManager4Public artikelmanager, final String name) 
-				throws PersistenceException{
-        artikelmanager.neueProduktgruppe(name, getThis());
-        
-    }
     public void neuerArtikel(final ArtikelManager4Public artikelManager, final String artikelnummer, final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
 				throws PersistenceException{
         artikelManager.neuerArtikel(artikelnummer, bezeichnung, preis, minLagerbestand, maxLagerbestand, hstLieferzeit, getThis());
+        getThis().signalChanged(true);
+    }
+    public void produktgruppeHinzufuegen(final Produktgruppe4Public produktgruppe, final String name) 
+				throws model.ExcAlreadyExists, model.CycleException, PersistenceException{
+        produktgruppe.produktgruppeHinzufuegen(name);
         getThis().signalChanged(true);
     }
     public void statusAuslauf(final Artikel4Public artikel) 

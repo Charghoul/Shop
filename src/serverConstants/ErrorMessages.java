@@ -15,6 +15,8 @@ public class ErrorMessages {
     public static final String LagerbestandOverMax = "maximale Lagerkapazitäten erreicht";
     public static final String HerstellerAlreadyExists = "Dieser Hersteller existiert bereits";
     public static final String StatusUbersprungen = "Status wurde uebersprungen";
+    public static final String ProduktgruppeAlreadyExists = "Diese Produktgruppe existiert bereits";
+    public static final String ArtikelAlreadyInProduktListe = "Dieses Produkt ist bereits in dieser Produktliste enthalten";
 
     private ErrorMessages(){}
 }

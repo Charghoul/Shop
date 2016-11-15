@@ -1498,7 +1498,7 @@ class GeliefertDefaultDetailPanel extends DefaultDetailPanel{
 class ServiceKundeDefaultDetailPanel extends DefaultDetailPanel{
     
     protected static final String ServiceKunde$$einkaufsManager = "ServiceKunde$$einkaufsManager";
-    protected static final String ServiceKunde$$warenlager = "ServiceKunde$$warenlager";
+    protected static final String ServiceKunde$$artikelManager = "ServiceKunde$$artikelManager";
     
     protected ServiceKundeDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
         super(exceptionHandler, anything);
@@ -1576,6 +1576,7 @@ class ArtikelDefaultDetailPanel extends DefaultDetailPanel{
 
 class ProduktgruppeDefaultDetailPanel extends DefaultDetailPanel{
     
+    protected static final String Produktgruppe$$komponentenListe = "Produktgruppe$$komponentenListe";
     protected static final String Produktgruppe$$name = "Produktgruppe$$name";
     
     protected ProduktgruppeDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
@@ -1624,6 +1625,7 @@ class ServiceAdminDefaultDetailPanel extends DefaultDetailPanel{
     protected static final String ServiceAdmin$$warenlager = "ServiceAdmin$$warenlager";
     protected static final String ServiceAdmin$$artikelManager = "ServiceAdmin$$artikelManager";
     protected static final String ServiceAdmin$$lieferartManager = "ServiceAdmin$$lieferartManager";
+    protected static final String ServiceAdmin$$herstellerManager = "ServiceAdmin$$herstellerManager";
     
     protected ServiceAdminDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
         super(exceptionHandler, anything);
@@ -1638,7 +1640,8 @@ class ServiceAdminDefaultDetailPanel extends DefaultDetailPanel{
 
 class ArtikelManagerDefaultDetailPanel extends DefaultDetailPanel{
     
-    protected static final String ArtikelManager$$komponentenListe = "ArtikelManager$$komponentenListe";
+    protected static final String ArtikelManager$$artikelListe = "ArtikelManager$$artikelListe";
+    protected static final String ArtikelManager$$produktgruppen = "ArtikelManager$$produktgruppen";
     
     protected ArtikelManagerDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
         super(exceptionHandler, anything);

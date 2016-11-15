@@ -8,30 +8,42 @@ abstract server Service {
 }
 server ServiceKunde extends Service {
 	one-to-one EinkaufsManager einkaufsManager;
-	Warenlager warenlager;
+	ArtikelManager artikelManager;
 	void neuePosition(EinkaufsManager einkaufsManager, Artikel artikel, Integer menge) throws UserException;
 	void bestellen(EinkaufsManager einkaufsManager);
 	void aendereMenge(Position position, Integer menge) throws ExcLagerbestandUnderZero;
-	
 }
 server ServiceAdmin extends Service {
 	Warenlager warenlager;
-	one-to-one ArtikelManager artikelManager;
+	ArtikelManager artikelManager;
 	one-to-one (no-view myService) LieferartManager lieferartManager;
+	one-to-one HerstellerManager herstellerManager;
 	void neuerArtikel(ArtikelManager artikelManager, String artikelnummer, String bezeichnung, Fraction preis, Integer minLagerbestand, 		Integer maxLagerbestand, Integer hstLieferzeit);
-	void neueProduktgruppe(ArtikelManager artikelmanager, String name);
+	void produktgruppeHinzufuegen(Produktgruppe produktgruppe, String name)  throws ExcAlreadyExists, CycleException;
+	void artikelHinzufuegen(Produktgruppe produktgruppe, Artikel artikel)  throws ExcAlreadyExists, CycleException;
 	void statusVerkauf(Artikel artikel);
 	void statusAuslauf(Artikel artikel);
 	void neueLieferArt(LieferartManager lieferartManager, String name, Integer lieferzeit, Fraction preis) throws ExcAlreadyExists;
 	void aendereLieferart(Lieferart lieferart, String name, Integer lieferzeit, Fraction preis) throws ExcAlreadyExists;
 	void artikelEinlagern(Warenlager warenlager, Artikel artikel, Integer menge) throws ExcLagerbestandOverMax;
 	void artikelEntnehmen(Warenlager warenlager, Position position, Integer menge);
-	void aendereArtikel(Artikel artikel, String bezeichnung, Fraction preis, Integer minLagerbestand, Integer maxLagerbestand, Integer hstLieferzeit);
-	
-	
+	void aendereArtikel(Artikel artikel, String bezeichnung, Fraction preis, Integer minLagerbestand, Integer maxLagerbestand, Integer hstLieferzeit) throws ExcAlreadyExists;
 }
 server ServiceRegister extends Service {
 	active void register(String username, String passwort) throws ExcUserAlreadyExists;
+}
+singleton ArtikelManager{
+	Artikel ** artikelListe;
+	Produktgruppe ** produktgruppen;
+	void produktgruppeHinzufuegen(Produktgruppe produktgruppe, String name) throws ExcAlreadyExists;
+	void artikelHinzufuegen(Artikel artikel);
+	active void neuerArtikel(String artikelnummer, String bezeichnung, Fraction preis, Integer minLagerbestand, 		Integer maxLagerbestand, Integer hstLieferzeit) throws UserException;
+	active void aendereArtikel(Artikel artikel, String bezeichnung, Fraction preis, Integer minLagerbestand, Integer maxLagerbestand, Integer hstLieferzeit) throws ExcAlreadyExists;
+}
+singleton Warenlager{
+	Position ** warenListe;
+	active void artikelEntnehmen##artEnt(Position position, Integer menge) throws ExcLagerbestandUnderZero;
+	void artikelEinlagern(Artikel artikel, Integer menge) throws ExcLagerbestandOverMax;
 }
 
 class HerstellerManager{
@@ -39,30 +51,18 @@ class HerstellerManager{
 	void neuerHersteller(String name) throws ExcAlreadyExists;
 	void aendereHersteller(Hersteller hersteller, String name)throws ExcAlreadyExists;
 }
-class ArtikelManager{
-	Komponente ** komponentenListe;
-	active void neueProduktgruppe(String name) throws ExcAlreadyExists;
-	active void neuerArtikel(String artikelnummer, String bezeichnung, Fraction preis, Integer minLagerbestand, 		Integer maxLagerbestand, Integer hstLieferzeit) throws UserException;
-	active void aendereArtikel(Artikel artikel, String bezeichnung, Fraction preis, Integer minLagerbestand, Integer maxLagerbestand, Integer hstLieferzeit) throws ExcAlreadyExists;
-}
 class EinkaufsManager{
 	Position ** einkaufsListe;
 	void bestellen();
 	void neuePosition(Artikel artikel, Integer menge) throws ExcArtikelAlreadyExists, UserException;
 	void aendereMenge(Position position, Integer menge) throws ExcLagerbestandUnderZero;
 }
-
 class LieferartManager{
 	Lieferart ** lieferartenListe;
 	void neueLieferart(String name, Integer lieferzeit, Fraction preis) throws ExcAlreadyExists;
 	void aendereLieferart(Lieferart lieferart, String name, Integer lieferzeit, Fraction preis) throws ExcAlreadyExists;
 }
 
-singleton Warenlager{
-	Position ** warenListe;
-	active void artikelEntnehmen##artEnt(Position position, Integer menge) throws ExcLagerbestandUnderZero;
-	void artikelEinlagern(Artikel artikel, Integer menge) throws ExcLagerbestandOverMax;
-}
 class Kunde{
 	indexed prior String benutzername;
 	prior String passwort;
@@ -73,9 +73,9 @@ class Konto{
 	Fraction kontostand;
 	Fraction limit;
 }
+hierarchy Hierarchie;
 abstract class Komponente {
 }
-
 class Artikel extends Komponente{
 	prior indexed String artikelnummer;
 	prior indexed String bezeichnung;
@@ -91,7 +91,11 @@ class Artikel extends Komponente{
 	BooleanX alreadyExists(String bezeichung);
 }
 class Produktgruppe extends Komponente{
-	prior String name;
+	Komponente**komponentenListe hierarchy Hierarchie;
+	prior indexed String name;
+	BooleanX alreadyExists(String name);
+	void produktgruppeHinzufuegen(String name) throws ExcAlreadyExists, CycleException;
+	void artikelHinzufuegen(Artikel artikel) throws ExcAlreadyExists, CycleException;
 }
 class Hersteller{
 	prior indexed String name;

@@ -13,13 +13,15 @@ public class ServiceAdmin extends view.objects.Service implements ServiceAdminVi
     protected WarenlagerView warenlager;
     protected ArtikelManagerView artikelManager;
     protected LieferartManagerView lieferartManager;
+    protected HerstellerManagerView herstellerManager;
     
-    public ServiceAdmin(java.util.Vector<ErrorDisplayView> errors,WarenlagerView warenlager,ArtikelManagerView artikelManager,LieferartManagerView lieferartManager,long id, long classId) {
+    public ServiceAdmin(java.util.Vector<ErrorDisplayView> errors,WarenlagerView warenlager,ArtikelManagerView artikelManager,LieferartManagerView lieferartManager,HerstellerManagerView herstellerManager,long id, long classId) {
         /* Shall not be used. Objects are created on the server only */
         super(errors,id, classId);
         this.warenlager = warenlager;
         this.artikelManager = artikelManager;
-        this.lieferartManager = lieferartManager;        
+        this.lieferartManager = lieferartManager;
+        this.herstellerManager = herstellerManager;        
     }
     
     static public long getTypeId() {
@@ -47,6 +49,12 @@ public class ServiceAdmin extends view.objects.Service implements ServiceAdminVi
     }
     public void setLieferartManager(LieferartManagerView newValue) throws ModelException {
         this.lieferartManager = newValue;
+    }
+    public HerstellerManagerView getHerstellerManager()throws ModelException{
+        return this.herstellerManager;
+    }
+    public void setHerstellerManager(HerstellerManagerView newValue) throws ModelException {
+        this.herstellerManager = newValue;
     }
     
     public void accept(ServiceVisitor visitor) throws ModelException {
@@ -103,6 +111,10 @@ public class ServiceAdmin extends view.objects.Service implements ServiceAdminVi
         if (lieferartManager != null) {
             ((ViewProxi)lieferartManager).setObject((ViewObject)resultTable.get(common.RPCConstantsAndServices.createHashtableKey(lieferartManager.getClassId(), lieferartManager.getId())));
         }
+        HerstellerManagerView herstellerManager = this.getHerstellerManager();
+        if (herstellerManager != null) {
+            ((ViewProxi)herstellerManager).setObject((ViewObject)resultTable.get(common.RPCConstantsAndServices.createHashtableKey(herstellerManager.getClassId(), herstellerManager.getId())));
+        }
         
     }
     public void sortSetValuedFields() throws ModelException {
@@ -116,19 +128,23 @@ public class ServiceAdmin extends view.objects.Service implements ServiceAdminVi
         if(this.getArtikelManager() != null) index = index - 1;
         if(index == 0 && this.getLieferartManager() != null) return new LieferartManagerServiceAdminWrapper(this, originalIndex, (ViewRoot)this.getLieferartManager());
         if(this.getLieferartManager() != null) index = index - 1;
+        if(index == 0 && this.getHerstellerManager() != null) return new HerstellerManagerServiceAdminWrapper(this, originalIndex, (ViewRoot)this.getHerstellerManager());
+        if(this.getHerstellerManager() != null) index = index - 1;
         return null;
     }
     public int getChildCount() throws ModelException {
         return 0 
             + (this.getWarenlager() == null ? 0 : 1)
             + (this.getArtikelManager() == null ? 0 : 1)
-            + (this.getLieferartManager() == null ? 0 : 1);
+            + (this.getLieferartManager() == null ? 0 : 1)
+            + (this.getHerstellerManager() == null ? 0 : 1);
     }
     public boolean isLeaf() throws ModelException {
         return true 
             && (this.getWarenlager() == null ? true : false)
             && (this.getArtikelManager() == null ? true : false)
-            && (this.getLieferartManager() == null ? true : false);
+            && (this.getLieferartManager() == null ? true : false)
+            && (this.getHerstellerManager() == null ? true : false);
     }
     public int getIndexOfChild(Object child) throws ModelException {
         int result = 0;
@@ -138,6 +154,8 @@ public class ServiceAdmin extends view.objects.Service implements ServiceAdminVi
         if(this.getArtikelManager() != null) result = result + 1;
         if(this.getLieferartManager() != null && this.getLieferartManager().equals(child)) return result;
         if(this.getLieferartManager() != null) result = result + 1;
+        if(this.getHerstellerManager() != null && this.getHerstellerManager().equals(child)) return result;
+        if(this.getHerstellerManager() != null) result = result + 1;
         return -1;
     }
     public int getRowCount(){
