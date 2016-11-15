@@ -275,7 +275,6 @@ public class Cache {
 	private void initializeNumber2NameMap() {
 		this.number2NameMap = new Hashtable<Integer,String>();
 		this.number2NameMap.put(256, "AendereArtikelCommand");
-		this.number2NameMap.put(263, "AendereLieferartCommand");
 		this.number2NameMap.put(219, "Angenommen");
 		this.number2NameMap.put(108, "Artikel");
 		this.number2NameMap.put(258, "ArtikelEntnehmenCommand");
@@ -298,7 +297,6 @@ public class Cache {
 		this.number2NameMap.put(198, "LieferartManager");
 		this.number2NameMap.put(150, "Lieferung");
 		this.number2NameMap.put(214, "Neuanlage");
-		this.number2NameMap.put(262, "NeueLieferartCommand");
 		this.number2NameMap.put(264, "NeuerArtikelCommand");
 		this.number2NameMap.put(144, "Position");
 		this.number2NameMap.put(267, "Produktgruppe");

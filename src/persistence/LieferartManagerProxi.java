@@ -39,10 +39,6 @@ public class LieferartManagerProxi extends PersistentProxi implements Persistent
     }
     
     
-    public void aendereLieferart(final Lieferart4Public lieferart, final String name, final long lieferzeit, final common.Fraction preis, final Invoker invoker) 
-				throws PersistenceException{
-        ((PersistentLieferartManager)this.getTheObject()).aendereLieferart(lieferart, name, lieferzeit, preis, invoker);
-    }
     public ServiceAdmin4Public getMyService() 
 				throws PersistenceException{
         return ((PersistentLieferartManager)this.getTheObject()).getMyService();
@@ -51,12 +47,8 @@ public class LieferartManagerProxi extends PersistentProxi implements Persistent
 				throws PersistenceException{
         ((PersistentLieferartManager)this.getTheObject()).initialize(This, final$$Fields);
     }
-    public void neueLieferart(final String name, final long lieferzeit, final common.Fraction preis, final Invoker invoker) 
-				throws PersistenceException{
-        ((PersistentLieferartManager)this.getTheObject()).neueLieferart(name, lieferzeit, preis, invoker);
-    }
     public void aendereLieferart(final Lieferart4Public lieferart, final String name, final long lieferzeit, final common.Fraction preis) 
-				throws PersistenceException{
+				throws model.ExcAlreadyExists, PersistenceException{
         ((PersistentLieferartManager)this.getTheObject()).aendereLieferart(lieferart, name, lieferzeit, preis);
     }
     public void copyingPrivateUserAttributes(final Anything copy) 
@@ -72,7 +64,7 @@ public class LieferartManagerProxi extends PersistentProxi implements Persistent
         ((PersistentLieferartManager)this.getTheObject()).initializeOnInstantiation();
     }
     public void neueLieferart(final String name, final long lieferzeit, final common.Fraction preis) 
-				throws model.ExcLieferartAlreadyExists, PersistenceException{
+				throws model.ExcAlreadyExists, PersistenceException{
         ((PersistentLieferartManager)this.getTheObject()).neueLieferart(name, lieferzeit, preis);
     }
 

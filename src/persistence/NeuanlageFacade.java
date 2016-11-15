@@ -15,34 +15,14 @@ public class NeuanlageFacade{
 		this.con = con;
 	}
 
-    /* If idCreateIfLessZero is negative, a new id is generated. */
-    public PersistentNeuanlage newNeuanlage(long idCreateIfLessZero) throws PersistenceException {
-        oracle.jdbc.OracleCallableStatement callable;
+    public PersistentNeuanlage getTheNeuanlage() throws PersistenceException {
+        CallableStatement callable;
         try{
-            callable = (oracle.jdbc.OracleCallableStatement)this.con.prepareCall("Begin ? := " + this.schemaName + ".NnlgFacade.newNnlg(?); end;");
-            callable.registerOutParameter(1, oracle.jdbc.OracleTypes.NUMBER);
-            callable.setLong(2, idCreateIfLessZero);
-            callable.execute();
-            long id = callable.getLong(1);
-            callable.close();
-            Neuanlage result = new Neuanlage(null,id);
-            if (idCreateIfLessZero < 0)Cache.getTheCache().put(result);
-            return (PersistentNeuanlage)PersistentProxi.createProxi(id, 214);
-        }catch(SQLException se) {
-            throw new PersistenceException(se.getMessage(), se.getErrorCode());
-        }
-    }
-    
-    public PersistentNeuanlage newDelayedNeuanlage() throws PersistenceException {
-        oracle.jdbc.OracleCallableStatement callable;
-        try{
-            callable = (oracle.jdbc.OracleCallableStatement)this.con.prepareCall("Begin ? := " + this.schemaName + ".NnlgFacade.newDelayedNnlg(); end;");
+            callable = this.con.prepareCall("Begin ? := " + this.schemaName + ".NnlgFacade.getTheNnlg; end;");
             callable.registerOutParameter(1, oracle.jdbc.OracleTypes.NUMBER);
             callable.execute();
             long id = callable.getLong(1);
             callable.close();
-            Neuanlage result = new Neuanlage(null,id);
-            Cache.getTheCache().put(result);
             return (PersistentNeuanlage)PersistentProxi.createProxi(id, 214);
         }catch(SQLException se) {
             throw new PersistenceException(se.getMessage(), se.getErrorCode());

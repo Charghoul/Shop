@@ -9,43 +9,52 @@ import persistence.*;
 
 public class Verkauf extends model.Artikelstatus implements PersistentVerkauf{
     
-    
-    public static Verkauf4Public createVerkauf() throws PersistenceException{
-        return createVerkauf(false);
-    }
-    
-    public static Verkauf4Public createVerkauf(boolean delayed$Persistence) throws PersistenceException {
-        PersistentVerkauf result = null;
-        if(delayed$Persistence){
-            result = ConnectionHandler.getTheConnectionHandler().theVerkaufFacade
-                .newDelayedVerkauf();
-            result.setDelayed$Persistence(true);
-        }else{
-            result = ConnectionHandler.getTheConnectionHandler().theVerkaufFacade
-                .newVerkauf(-1);
+    private static Verkauf4Public theVerkauf = null;
+    public static boolean reset$For$Test = false;
+    private static final Object $$lock = new Object();
+    public static Verkauf4Public getTheVerkauf() throws PersistenceException{
+        if (theVerkauf == null || reset$For$Test){
+            if (reset$For$Test) theVerkauf = null;
+            class Initializer implements Runnable {
+                PersistenceException exception = null;
+                public void /* internal */ run(){
+                    this.produceSingleton();
+                }
+                void produceSingleton() {
+                    synchronized ($$lock){
+                        try {
+                            Verkauf4Public proxi = null;
+                            proxi = ConnectionHandler.getTheConnectionHandler().theVerkaufFacade.getTheVerkauf();
+                            theVerkauf = proxi;
+                            if(proxi.getId() < 0) {
+                                ((AbstractPersistentRoot)proxi).setId(proxi.getId() * -1);
+                                proxi.initialize(proxi, new java.util.HashMap<String,Object>());
+                                proxi.initializeOnCreation();
+                            }
+                        } catch (PersistenceException e){
+                            exception = e;
+                        } finally {
+                            $$lock.notify();
+                        }
+                        
+                    }
+                }
+                Verkauf4Public getResult() throws PersistenceException{
+                    synchronized ($$lock) {
+                        if (exception == null && theVerkauf== null) try {$$lock.wait();} catch (InterruptedException e) {}
+                        if(exception != null) throw exception;
+                        return theVerkauf;
+                    }
+                }
+                
+            }
+            reset$For$Test = false;
+            Initializer initializer = new Initializer();
+            new Thread(initializer).start();
+            return initializer.getResult();
         }
-        java.util.HashMap<String,Object> final$$Fields = new java.util.HashMap<String,Object>();
-        result.initialize(result, final$$Fields);
-        result.initializeOnCreation();
-        return result;
+        return theVerkauf;
     }
-    
-    public static Verkauf4Public createVerkauf(boolean delayed$Persistence,Verkauf4Public This) throws PersistenceException {
-        PersistentVerkauf result = null;
-        if(delayed$Persistence){
-            result = ConnectionHandler.getTheConnectionHandler().theVerkaufFacade
-                .newDelayedVerkauf();
-            result.setDelayed$Persistence(true);
-        }else{
-            result = ConnectionHandler.getTheConnectionHandler().theVerkaufFacade
-                .newVerkauf(-1);
-        }
-        java.util.HashMap<String,Object> final$$Fields = new java.util.HashMap<String,Object>();
-        result.initialize(This, final$$Fields);
-        result.initializeOnCreation();
-        return result;
-    }
-    
     public java.util.HashMap<String,Object> toHashtable(java.util.HashMap<String,Object> allResults, int depth, int essentialLevel, boolean forGUI, boolean leaf, TDObserver tdObserver) throws PersistenceException {
     java.util.HashMap<String,Object> result = null;
         if (depth > 0 && essentialLevel <= common.RPCConstantsAndServices.EssentialDepth){
@@ -82,11 +91,7 @@ public class Verkauf extends model.Artikelstatus implements PersistentVerkauf{
     }
     
     public void store() throws PersistenceException {
-        if(!this.isDelayed$Persistence()) return;
-        if (this.getClassId() == 212) ConnectionHandler.getTheConnectionHandler().theVerkaufFacade
-            .newVerkauf(this.getId());
-        super.store();
-        
+        // Singletons cannot be delayed!
     }
     
     public PersistentVerkauf getThis() throws PersistenceException {

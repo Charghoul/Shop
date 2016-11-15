@@ -14,6 +14,8 @@ public interface Lieferart4Public extends Anything, AbstractPersistentProxi {
     public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
 				throws PersistenceException;
     public void aendereLieferart(final String name, final long lieferzeit, final common.Fraction preis) 
+				throws model.ExcAlreadyExists, PersistenceException;
+    public BooleanX4Public alreadyExists(final String name) 
 				throws PersistenceException;
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException;

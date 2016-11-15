@@ -50,9 +50,6 @@ public abstract class AnythingStandardVisitor implements AnythingVisitor {
     public void handleServiceRegister(ServiceRegister4Public serviceRegister) throws PersistenceException{
         this.standardHandling(serviceRegister);
     }
-    public void handleAendereLieferartCommand(AendereLieferartCommand4Public aendereLieferartCommand) throws PersistenceException{
-        this.standardHandling(aendereLieferartCommand);
-    }
     public void handleGeliefert(Geliefert4Public geliefert) throws PersistenceException{
         this.standardHandling(geliefert);
     }
@@ -67,9 +64,6 @@ public abstract class AnythingStandardVisitor implements AnythingVisitor {
     }
     public void handlePosition(Position4Public position) throws PersistenceException{
         this.standardHandling(position);
-    }
-    public void handleNeueLieferartCommand(NeueLieferartCommand4Public neueLieferartCommand) throws PersistenceException{
-        this.standardHandling(neueLieferartCommand);
     }
     public void handleServiceAdmin(ServiceAdmin4Public serviceAdmin) throws PersistenceException{
         this.standardHandling(serviceAdmin);

@@ -103,8 +103,12 @@ public class ArtikelProxi extends KomponenteProxi implements PersistentArtikel{
         ((PersistentArtikel)this.getTheObject()).statusVerkauf(invoker);
     }
     public void aendereArtikel(final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
-				throws PersistenceException{
+				throws model.ExcAlreadyExists, PersistenceException{
         ((PersistentArtikel)this.getTheObject()).aendereArtikel(bezeichnung, preis, minLagerbestand, maxLagerbestand, hstLieferzeit);
+    }
+    public BooleanX4Public alreadyExists(final String bezeichung) 
+				throws PersistenceException{
+        return ((PersistentArtikel)this.getTheObject()).alreadyExists(bezeichung);
     }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{
@@ -123,11 +127,11 @@ public class ArtikelProxi extends KomponenteProxi implements PersistentArtikel{
         ((PersistentArtikel)this.getTheObject()).initializeOnInstantiation();
     }
     public void statusAuslauf() 
-				throws PersistenceException{
+				throws model.ExcInconsistentStatusChange, PersistenceException{
         ((PersistentArtikel)this.getTheObject()).statusAuslauf();
     }
     public void statusVerkauf() 
-				throws PersistenceException{
+				throws model.ExcInconsistentStatusChange, PersistenceException{
         ((PersistentArtikel)this.getTheObject()).statusVerkauf();
     }
 

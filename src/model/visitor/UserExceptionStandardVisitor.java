@@ -23,6 +23,9 @@ public abstract class UserExceptionStandardVisitor implements UserExceptionVisit
     public void handleExcUserAlreadyExists(model.ExcUserAlreadyExists excUserAlreadyExists) throws PersistenceException{
         this.standardHandling(excUserAlreadyExists);
     }
+    public void handleExcInconsistentStatusChange(model.ExcInconsistentStatusChange excInconsistentStatusChange) throws PersistenceException{
+        this.standardHandling(excInconsistentStatusChange);
+    }
     public void handleCycleException(model.CycleException cycleException) throws PersistenceException{
         this.standardHandling(cycleException);
     }

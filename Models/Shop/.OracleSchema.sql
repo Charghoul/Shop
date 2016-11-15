@@ -196,27 +196,6 @@ create table CmmndCrdntr(
     constraint FCmmndCrdntrCls foreign key (Cls) references Cls (id) on delete cascade    
 );
 
-create table AndrLfrrtCMD(
-    id number primary key,
-    Cls number not null,
-    constraint FAndrLfrrtCMDCls foreign key (Cls) references Cls (id) on delete cascade,
-    AndrLfrrtCMDLfrrt number,
-    AndrLfrrtCMDLfrrtCls number,
-    constraint FAndrLfrrtCMDLfrrt foreign key (AndrLfrrtCMDLfrrtCls) references Cls (id),
-    AndrLfrrtCMDNm varchar2(2000),
-    AndrLfrrtCMDLfrzt number,
-    AndrLfrrtCMDPrs varchar2(2000),
-    AndrLfrrtCMDInvoker number,
-    AndrLfrrtCMDInvokerCls number,
-    constraint FAndrLfrrtCMDInvoker foreign key (AndrLfrrtCMDInvokerCls) references Cls (id),
-    AndrLfrrtCMDCReceiver number,
-    AndrLfrrtCMDCReceiverCls number,
-    constraint FAndrLfrrtCMDCReceiver foreign key (AndrLfrrtCMDCReceiverCls) references Cls (id),
-    AndrLfrrtCMDMyCmmnDt number,
-    AndrLfrrtCMDMyCmmnDtCls number,
-    constraint FAndrLfrrtCMDMyCmmnDt foreign key (AndrLfrrtCMDMyCmmnDtCls) references Cls (id)    
-);
-
 create table Bstllstts(
     id number primary key,
     Cls number not null,
@@ -237,24 +216,6 @@ create table Pstn(
     PstnThis number,
     PstnThisCls number,
     constraint FPstnThis foreign key (PstnThisCls) references Cls (id)    
-);
-
-create table NLfrrtCMD(
-    id number primary key,
-    Cls number not null,
-    constraint FNLfrrtCMDCls foreign key (Cls) references Cls (id) on delete cascade,
-    NLfrrtCMDNm varchar2(2000),
-    NLfrrtCMDLfrzt number,
-    NLfrrtCMDPrs varchar2(2000),
-    NLfrrtCMDInvoker number,
-    NLfrrtCMDInvokerCls number,
-    constraint FNLfrrtCMDInvoker foreign key (NLfrrtCMDInvokerCls) references Cls (id),
-    NLfrrtCMDCReceiver number,
-    NLfrrtCMDCReceiverCls number,
-    constraint FNLfrrtCMDCReceiver foreign key (NLfrrtCMDCReceiverCls) references Cls (id),
-    NLfrrtCMDMyCmmnDt number,
-    NLfrrtCMDMyCmmnDtCls number,
-    constraint FNLfrrtCMDMyCmmnDt foreign key (NLfrrtCMDMyCmmnDtCls) references Cls (id)    
 );
 
 create table Srvc(

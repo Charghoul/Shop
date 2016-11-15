@@ -9,43 +9,52 @@ import persistence.*;
 
 public class Auslauf extends model.Artikelstatus implements PersistentAuslauf{
     
-    
-    public static Auslauf4Public createAuslauf() throws PersistenceException{
-        return createAuslauf(false);
-    }
-    
-    public static Auslauf4Public createAuslauf(boolean delayed$Persistence) throws PersistenceException {
-        PersistentAuslauf result = null;
-        if(delayed$Persistence){
-            result = ConnectionHandler.getTheConnectionHandler().theAuslaufFacade
-                .newDelayedAuslauf();
-            result.setDelayed$Persistence(true);
-        }else{
-            result = ConnectionHandler.getTheConnectionHandler().theAuslaufFacade
-                .newAuslauf(-1);
+    private static Auslauf4Public theAuslauf = null;
+    public static boolean reset$For$Test = false;
+    private static final Object $$lock = new Object();
+    public static Auslauf4Public getTheAuslauf() throws PersistenceException{
+        if (theAuslauf == null || reset$For$Test){
+            if (reset$For$Test) theAuslauf = null;
+            class Initializer implements Runnable {
+                PersistenceException exception = null;
+                public void /* internal */ run(){
+                    this.produceSingleton();
+                }
+                void produceSingleton() {
+                    synchronized ($$lock){
+                        try {
+                            Auslauf4Public proxi = null;
+                            proxi = ConnectionHandler.getTheConnectionHandler().theAuslaufFacade.getTheAuslauf();
+                            theAuslauf = proxi;
+                            if(proxi.getId() < 0) {
+                                ((AbstractPersistentRoot)proxi).setId(proxi.getId() * -1);
+                                proxi.initialize(proxi, new java.util.HashMap<String,Object>());
+                                proxi.initializeOnCreation();
+                            }
+                        } catch (PersistenceException e){
+                            exception = e;
+                        } finally {
+                            $$lock.notify();
+                        }
+                        
+                    }
+                }
+                Auslauf4Public getResult() throws PersistenceException{
+                    synchronized ($$lock) {
+                        if (exception == null && theAuslauf== null) try {$$lock.wait();} catch (InterruptedException e) {}
+                        if(exception != null) throw exception;
+                        return theAuslauf;
+                    }
+                }
+                
+            }
+            reset$For$Test = false;
+            Initializer initializer = new Initializer();
+            new Thread(initializer).start();
+            return initializer.getResult();
         }
-        java.util.HashMap<String,Object> final$$Fields = new java.util.HashMap<String,Object>();
-        result.initialize(result, final$$Fields);
-        result.initializeOnCreation();
-        return result;
+        return theAuslauf;
     }
-    
-    public static Auslauf4Public createAuslauf(boolean delayed$Persistence,Auslauf4Public This) throws PersistenceException {
-        PersistentAuslauf result = null;
-        if(delayed$Persistence){
-            result = ConnectionHandler.getTheConnectionHandler().theAuslaufFacade
-                .newDelayedAuslauf();
-            result.setDelayed$Persistence(true);
-        }else{
-            result = ConnectionHandler.getTheConnectionHandler().theAuslaufFacade
-                .newAuslauf(-1);
-        }
-        java.util.HashMap<String,Object> final$$Fields = new java.util.HashMap<String,Object>();
-        result.initialize(This, final$$Fields);
-        result.initializeOnCreation();
-        return result;
-    }
-    
     public java.util.HashMap<String,Object> toHashtable(java.util.HashMap<String,Object> allResults, int depth, int essentialLevel, boolean forGUI, boolean leaf, TDObserver tdObserver) throws PersistenceException {
     java.util.HashMap<String,Object> result = null;
         if (depth > 0 && essentialLevel <= common.RPCConstantsAndServices.EssentialDepth){
@@ -82,11 +91,7 @@ public class Auslauf extends model.Artikelstatus implements PersistentAuslauf{
     }
     
     public void store() throws PersistenceException {
-        if(!this.isDelayed$Persistence()) return;
-        if (this.getClassId() == 213) ConnectionHandler.getTheConnectionHandler().theAuslaufFacade
-            .newAuslauf(this.getId());
-        super.store();
-        
+        // Singletons cannot be delayed!
     }
     
     public PersistentAuslauf getThis() throws PersistenceException {

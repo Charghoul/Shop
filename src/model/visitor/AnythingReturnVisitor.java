@@ -6,7 +6,6 @@ import persistence.*;
 public interface AnythingReturnVisitor<R> extends ArtikelstatusReturnVisitor<R> ,BestellstatusReturnVisitor<R> ,BooleanXReturnVisitor<R> ,CommonDateReturnVisitor<R> ,KomponenteReturnVisitor<R> ,ServiceReturnVisitor<R> {
     
     public R handleAendereArtikelCommand(AendereArtikelCommand4Public aendereArtikelCommand) throws PersistenceException;
-    public R handleAendereLieferartCommand(AendereLieferartCommand4Public aendereLieferartCommand) throws PersistenceException;
     public R handleArtikelEntnehmenCommand(ArtikelEntnehmenCommand4Public artikelEntnehmenCommand) throws PersistenceException;
     public R handleArtikelManager(ArtikelManager4Public artikelManager) throws PersistenceException;
     public R handleBestellung(Bestellung4Public bestellung) throws PersistenceException;
@@ -22,7 +21,6 @@ public interface AnythingReturnVisitor<R> extends ArtikelstatusReturnVisitor<R> 
     public R handleLieferart(Lieferart4Public lieferart) throws PersistenceException;
     public R handleLieferartManager(LieferartManager4Public lieferartManager) throws PersistenceException;
     public R handleLieferung(Lieferung4Public lieferung) throws PersistenceException;
-    public R handleNeueLieferartCommand(NeueLieferartCommand4Public neueLieferartCommand) throws PersistenceException;
     public R handleNeuerArtikelCommand(NeuerArtikelCommand4Public neuerArtikelCommand) throws PersistenceException;
     public R handlePosition(Position4Public position) throws PersistenceException;
     public R handleRegisterCommand(RegisterCommand4Public registerCommand) throws PersistenceException;

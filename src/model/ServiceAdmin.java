@@ -264,6 +264,11 @@ public class ServiceAdmin extends model.Service implements PersistentServiceAdmi
         //TODO: implement method: aendereArtikel
         
     }
+    public void aendereLieferart(final Lieferart4Public lieferart, final String name, final long lieferzeit, final common.Fraction preis) 
+				throws model.ExcAlreadyExists, PersistenceException{
+        //TODO: implement method: aendereLieferart
+        
+    }
     public void artikelEinlagern(final Warenlager4Public warenlager, final Artikel4Public artikel, final long menge) 
 				throws model.ExcLagerbestandOverMax, PersistenceException{
         //TODO: implement method: artikelEinlagern
@@ -303,8 +308,8 @@ public class ServiceAdmin extends model.Service implements PersistentServiceAdmi
 		//TODO: implement method: initializeOnInstantiation
     }
     public void neueLieferArt(final LieferartManager4Public lieferartManager, final String name, final long lieferzeit, final common.Fraction preis) 
-				throws PersistenceException{
-        lieferartManager.neueLieferart(name, lieferzeit, preis, getThis());
+				throws model.ExcAlreadyExists, PersistenceException{
+        lieferartManager.neueLieferart(name, lieferzeit, preis);
             getThis().signalChanged(true);
         
     }
@@ -315,13 +320,12 @@ public class ServiceAdmin extends model.Service implements PersistentServiceAdmi
     }
     public void statusAuslauf(final Artikel4Public artikel) 
 				throws PersistenceException{
-        //TODO: implement method: statusAuslauf
+        artikel.statusAuslauf(getThis());
         
     }
     public void statusVerkauf(final Artikel4Public artikel) 
 				throws PersistenceException{
-        //TODO: implement method: statusVerkauf
-        
+        artikel.statusVerkauf(getThis());
     }
     
     
