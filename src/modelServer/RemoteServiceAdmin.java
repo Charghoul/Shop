@@ -40,6 +40,18 @@ public  class RemoteServiceAdmin extends RemoteService {
         }
     }
     
+    public synchronized java.util.HashMap<?,?> aendereHersteller(String herstellerProxiString, String name){
+        try {
+            PersistentHersteller hersteller = (PersistentHersteller)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(herstellerProxiString));
+            ((PersistentServiceAdmin)this.server).aendereHersteller(hersteller, name);
+            return createOKResult();
+        }catch(PersistenceException pe){
+            return createExceptionResult(pe);
+        }catch(model.ExcAlreadyExists e0){
+            return createExceptionResult(e0, this);
+        }
+    }
+    
     public synchronized java.util.HashMap<?,?> aendereLieferart(String lieferartProxiString, String name, String lieferzeitAsString, String preisAsString){
         try {
             PersistentLieferart lieferart = (PersistentLieferart)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(lieferartProxiString));
@@ -95,6 +107,17 @@ public  class RemoteServiceAdmin extends RemoteService {
         }
     }
     
+    public synchronized java.util.HashMap<?,?> herstellerHinzufuegen(String artikelProxiString, String herstellerProxiString){
+        try {
+            PersistentArtikel artikel = (PersistentArtikel)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(artikelProxiString));
+            PersistentHersteller hersteller = (PersistentHersteller)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(herstellerProxiString));
+            ((PersistentServiceAdmin)this.server).herstellerHinzufuegen(artikel, hersteller);
+            return createOKResult();
+        }catch(PersistenceException pe){
+            return createExceptionResult(pe);
+        }
+    }
+    
     public synchronized java.util.HashMap<?,?> neueLieferArt(String lieferartManagerProxiString, String name, String lieferzeitAsString, String preisAsString){
         try {
             PersistentLieferartManager lieferartManager = (PersistentLieferartManager)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(lieferartManagerProxiString));
@@ -120,6 +143,18 @@ public  class RemoteServiceAdmin extends RemoteService {
             return createOKResult();
         }catch(PersistenceException pe){
             return createExceptionResult(pe);
+        }
+    }
+    
+    public synchronized java.util.HashMap<?,?> neuerHersteller(String herstellerManagerProxiString, String name){
+        try {
+            PersistentHerstellerManager herstellerManager = (PersistentHerstellerManager)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(herstellerManagerProxiString));
+            ((PersistentServiceAdmin)this.server).neuerHersteller(herstellerManager, name);
+            return createOKResult();
+        }catch(PersistenceException pe){
+            return createExceptionResult(pe);
+        }catch(model.ExcAlreadyExists e0){
+            return createExceptionResult(e0, this);
         }
     }
     

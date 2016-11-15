@@ -16,8 +16,9 @@ public class Artikel extends view.objects.Komponente implements ArtikelView{
     protected long maxLagerbestand;
     protected long hstLieferzeit;
     protected ArtikelstatusView artikelstatus;
+    protected HerstellerView hersteller;
     
-    public Artikel(String artikelnummer,String bezeichnung,common.Fraction preis,long minLagerbestand,long maxLagerbestand,long hstLieferzeit,ArtikelstatusView artikelstatus,long id, long classId) {
+    public Artikel(String artikelnummer,String bezeichnung,common.Fraction preis,long minLagerbestand,long maxLagerbestand,long hstLieferzeit,ArtikelstatusView artikelstatus,HerstellerView hersteller,long id, long classId) {
         /* Shall not be used. Objects are created on the server only */
         super(id, classId);
         this.artikelnummer = artikelnummer;
@@ -26,7 +27,8 @@ public class Artikel extends view.objects.Komponente implements ArtikelView{
         this.minLagerbestand = minLagerbestand;
         this.maxLagerbestand = maxLagerbestand;
         this.hstLieferzeit = hstLieferzeit;
-        this.artikelstatus = artikelstatus;        
+        this.artikelstatus = artikelstatus;
+        this.hersteller = hersteller;        
     }
     
     static public long getTypeId() {
@@ -79,6 +81,12 @@ public class Artikel extends view.objects.Komponente implements ArtikelView{
     public void setArtikelstatus(ArtikelstatusView newValue) throws ModelException {
         this.artikelstatus = newValue;
     }
+    public HerstellerView getHersteller()throws ModelException{
+        return this.hersteller;
+    }
+    public void setHersteller(HerstellerView newValue) throws ModelException {
+        this.hersteller = newValue;
+    }
     
     public void accept(KomponenteVisitor visitor) throws ModelException {
         visitor.handleArtikel(this);
@@ -110,6 +118,10 @@ public class Artikel extends view.objects.Komponente implements ArtikelView{
         if (artikelstatus != null) {
             ((ViewProxi)artikelstatus).setObject((ViewObject)resultTable.get(common.RPCConstantsAndServices.createHashtableKey(artikelstatus.getClassId(), artikelstatus.getId())));
         }
+        HerstellerView hersteller = this.getHersteller();
+        if (hersteller != null) {
+            ((ViewProxi)hersteller).setObject((ViewObject)resultTable.get(common.RPCConstantsAndServices.createHashtableKey(hersteller.getClassId(), hersteller.getId())));
+        }
         
     }
     public void sortSetValuedFields() throws ModelException {
@@ -117,17 +129,18 @@ public class Artikel extends view.objects.Komponente implements ArtikelView{
     }
     public ViewObjectInTree getChild(int originalIndex) throws ModelException{
         int index = originalIndex;
-        if(index == 0 && this.getArtikelstatus() != null) return new ArtikelstatusArtikelWrapper(this, originalIndex, (ViewRoot)this.getArtikelstatus());
-        if(this.getArtikelstatus() != null) index = index - 1;
+        if(this.getArtikelstatus() != null && index < this.getArtikelstatus().getTheObject().getChildCount())
+            return this.getArtikelstatus().getTheObject().getChild(index);
+        if(this.getArtikelstatus() != null) index = index - this.getArtikelstatus().getTheObject().getChildCount();
         return null;
     }
     public int getChildCount() throws ModelException {
         return 0 
-            + (this.getArtikelstatus() == null ? 0 : 1);
+            + (this.getArtikelstatus() == null ? 0 : this.getArtikelstatus().getTheObject().getChildCount());
     }
     public boolean isLeaf() throws ModelException {
         return true 
-            && (this.getArtikelstatus() == null ? true : false);
+            && (this.getArtikelstatus() == null ? true : this.getArtikelstatus().getTheObject().isLeaf());
     }
     public int getIndexOfChild(Object child) throws ModelException {
         int result = 0;

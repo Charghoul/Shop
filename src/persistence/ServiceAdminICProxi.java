@@ -116,6 +116,10 @@ public class ServiceAdminICProxi extends ServiceICProxi implements PersistentSer
 				throws model.ExcAlreadyExists, PersistenceException{
         ((PersistentServiceAdmin)this.getTheObject()).aendereArtikel(artikel, bezeichnung, preis, minLagerbestand, maxLagerbestand, hstLieferzeit);
     }
+    public void aendereHersteller(final Hersteller4Public hersteller, final String name) 
+				throws model.ExcAlreadyExists, PersistenceException{
+        ((PersistentServiceAdmin)this.getTheObject()).aendereHersteller(hersteller, name);
+    }
     public void aendereLieferart(final Lieferart4Public lieferart, final String name, final long lieferzeit, final common.Fraction preis) 
 				throws model.ExcAlreadyExists, PersistenceException{
         ((PersistentServiceAdmin)this.getTheObject()).aendereLieferart(lieferart, name, lieferzeit, preis);
@@ -156,6 +160,10 @@ public class ServiceAdminICProxi extends ServiceICProxi implements PersistentSer
 				throws PersistenceException{
         return ((PersistentServiceAdmin)this.getTheObject()).hasChanged();
     }
+    public void herstellerHinzufuegen(final Artikel4Public artikel, final Hersteller4Public hersteller) 
+				throws PersistenceException{
+        ((PersistentServiceAdmin)this.getTheObject()).herstellerHinzufuegen(artikel, hersteller);
+    }
     public void initializeOnCreation() 
 				throws PersistenceException{
         ((PersistentServiceAdmin)this.getTheObject()).initializeOnCreation();
@@ -171,6 +179,10 @@ public class ServiceAdminICProxi extends ServiceICProxi implements PersistentSer
     public void neuerArtikel(final ArtikelManager4Public artikelManager, final String artikelnummer, final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
 				throws PersistenceException{
         ((PersistentServiceAdmin)this.getTheObject()).neuerArtikel(artikelManager, artikelnummer, bezeichnung, preis, minLagerbestand, maxLagerbestand, hstLieferzeit);
+    }
+    public void neuerHersteller(final HerstellerManager4Public herstellerManager, final String name) 
+				throws model.ExcAlreadyExists, PersistenceException{
+        ((PersistentServiceAdmin)this.getTheObject()).neuerHersteller(herstellerManager, name);
     }
     public void produktgruppeHinzufuegen(final Produktgruppe4Public produktgruppe, final String name) 
 				throws model.ExcAlreadyExists, model.CycleException, PersistenceException{

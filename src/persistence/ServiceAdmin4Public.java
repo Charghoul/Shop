@@ -29,6 +29,8 @@ public interface ServiceAdmin4Public extends Service4Public {
 				throws PersistenceException;
     public void aendereArtikel(final Artikel4Public artikel, final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
 				throws model.ExcAlreadyExists, PersistenceException;
+    public void aendereHersteller(final Hersteller4Public hersteller, final String name) 
+				throws model.ExcAlreadyExists, PersistenceException;
     public void aendereLieferart(final Lieferart4Public lieferart, final String name, final long lieferzeit, final common.Fraction preis) 
 				throws model.ExcAlreadyExists, PersistenceException;
     public void artikelEinlagern(final Warenlager4Public warenlager, final Artikel4Public artikel, final long menge) 
@@ -39,6 +41,8 @@ public interface ServiceAdmin4Public extends Service4Public {
 				throws model.ExcAlreadyExists, model.CycleException, PersistenceException;
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException;
+    public void herstellerHinzufuegen(final Artikel4Public artikel, final Hersteller4Public hersteller) 
+				throws PersistenceException;
     public void initializeOnCreation() 
 				throws PersistenceException;
     public void initializeOnInstantiation() 
@@ -47,6 +51,8 @@ public interface ServiceAdmin4Public extends Service4Public {
 				throws model.ExcAlreadyExists, PersistenceException;
     public void neuerArtikel(final ArtikelManager4Public artikelManager, final String artikelnummer, final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
 				throws PersistenceException;
+    public void neuerHersteller(final HerstellerManager4Public herstellerManager, final String name) 
+				throws model.ExcAlreadyExists, PersistenceException;
     public void produktgruppeHinzufuegen(final Produktgruppe4Public produktgruppe, final String name) 
 				throws model.ExcAlreadyExists, model.CycleException, PersistenceException;
     public void statusAuslauf(final Artikel4Public artikel) 

@@ -187,14 +187,14 @@ public class ArtikelManager extends PersistentObject implements PersistentArtike
         if(artikel.alreadyExists(bezeichnung).equals(TrueX.getTheTrueX())) throw new ExcAlreadyExists(ErrorMessages.ArtikelAlreadyExists);
         else artikel.aendereArtikel(bezeichnung, preis, minLagerbestand, maxLagerbestand, hstLieferzeit);
     }
-    public void artikelHinzufuegen(final Artikel4Public artikel) 
-				throws PersistenceException{
-        
-    }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{
         //TODO: implement method: copyingPrivateUserAttributes
         
+    }
+    public void herstellerHinzufuegen(final Artikel4Public artikel, final Hersteller4Public hersteller) 
+				throws PersistenceException{
+       artikel.herstellerHinzufuegen(hersteller);
     }
     public void initializeOnCreation() 
 				throws PersistenceException{
@@ -219,9 +219,8 @@ public class ArtikelManager extends PersistentObject implements PersistentArtike
         Warenlager.getTheWarenlager().artikelEinlagern(artikel,0);
     }
     public void produktgruppeHinzufuegen(final Produktgruppe4Public produktgruppe, final String name) 
-				throws model.ExcAlreadyExists, PersistenceException{
-        //TODO: implement method: produktgruppeHinzufuegen
-        
+				throws model.ExcAlreadyExists, model.CycleException, PersistenceException{
+        produktgruppe.produktgruppeHinzufuegen(name);
     }
     
     

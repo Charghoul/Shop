@@ -17,6 +17,8 @@ public interface PersistentArtikel extends PersistentKomponente, Artikel4Public 
     public void setHstLieferzeit(long newValue) throws PersistenceException ;
     public Artikelstatus4Public getArtikelstatus() throws PersistenceException ;
     public void setArtikelstatus(Artikelstatus4Public newValue) throws PersistenceException ;
+    public Hersteller4Public getHersteller() throws PersistenceException ;
+    public void setHersteller(Hersteller4Public newValue) throws PersistenceException ;
     public PersistentArtikel getThis() throws PersistenceException ;
     
     

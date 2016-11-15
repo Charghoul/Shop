@@ -60,6 +60,12 @@ public class ArtikelProxi extends KomponenteProxi implements PersistentArtikel{
     public void setArtikelstatus(Artikelstatus4Public newValue) throws PersistenceException {
         ((PersistentArtikel)this.getTheObject()).setArtikelstatus(newValue);
     }
+    public Hersteller4Public getHersteller() throws PersistenceException {
+        return ((PersistentArtikel)this.getTheObject()).getHersteller();
+    }
+    public void setHersteller(Hersteller4Public newValue) throws PersistenceException {
+        ((PersistentArtikel)this.getTheObject()).setHersteller(newValue);
+    }
     public PersistentArtikel getThis() throws PersistenceException {
         return ((PersistentArtikel)this.getTheObject()).getThis();
     }
@@ -137,6 +143,10 @@ public class ArtikelProxi extends KomponenteProxi implements PersistentArtikel{
     public BooleanX4Public groesserMax(final long menge) 
 				throws PersistenceException{
         return ((PersistentArtikel)this.getTheObject()).groesserMax(menge);
+    }
+    public void herstellerHinzufuegen(final Hersteller4Public hersteller) 
+				throws PersistenceException{
+        ((PersistentArtikel)this.getTheObject()).herstellerHinzufuegen(hersteller);
     }
     public void initializeOnCreation() 
 				throws PersistenceException{
