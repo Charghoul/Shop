@@ -20,5 +20,6 @@ public abstract class Server$AuthoriseVisitor extends AnythingStandardVisitor{
     public abstract void handleServiceKunde(PersistentServiceKunde serviceKunde) throws PersistenceException;
     public abstract void handleArtikel(PersistentArtikel artikel) throws PersistenceException;
     public abstract void handleWarenlager(PersistentWarenlager warenlager) throws PersistenceException;
+    public abstract void handleProduktgruppe(PersistentProduktgruppe produktgruppe) throws PersistenceException;
     
 }

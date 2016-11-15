@@ -12,7 +12,7 @@ public abstract class PersistentInCacheProxi extends PersistentRoot {
 		
 	  private static ICProxiFactory [] getTheICProxiFactories(){
 		if (iCProxiFactories == null){
-			iCProxiFactories = new ICProxiFactory[175];
+			iCProxiFactories = new ICProxiFactory[176];
         iCProxiFactories[111] = new ICProxiFactory(){
             PersistentInCacheProxi create(long objectId){
                 return new VerkaufICProxi(objectId);
@@ -106,6 +106,11 @@ public abstract class PersistentInCacheProxi extends PersistentRoot {
         iCProxiFactories[166] = new ICProxiFactory(){
             PersistentInCacheProxi create(long objectId){
                 return new ProduktgruppeICProxi(objectId);
+            }
+        };
+        iCProxiFactories[175] = new ICProxiFactory(){
+            PersistentInCacheProxi create(long objectId){
+                return new NeueProduktgruppeCommandICProxi(objectId);
             }
         };
         iCProxiFactories[43] = new ICProxiFactory(){

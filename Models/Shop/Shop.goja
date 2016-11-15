@@ -19,6 +19,7 @@ server ServiceAdmin extends Service {
 	one-to-one ArtikelManager artikelManager;
 	one-to-one (no-view myService) LieferartManager lieferartManager;
 	void neuerArtikel(ArtikelManager artikelManager, String artikelnummer, String bezeichnung, Fraction preis, Integer minLagerbestand, 		Integer maxLagerbestand, Integer hstLieferzeit);
+	void neueProduktgruppe(ArtikelManager artikelmanager, String name);
 	void statusVerkauf(Artikel artikel);
 	void statusAuslauf(Artikel artikel);
 	void neueLieferArt(LieferartManager lieferartManager, String name, Integer lieferzeit, Fraction preis) throws ExcAlreadyExists;
@@ -39,7 +40,8 @@ class HerstellerManager{
 	void aendereHersteller(Hersteller hersteller, String name)throws ExcAlreadyExists;
 }
 class ArtikelManager{
-	Artikel ** artikelListe;
+	Komponente ** komponentenListe;
+	active void neueProduktgruppe(String name) throws ExcAlreadyExists;
 	active void neuerArtikel(String artikelnummer, String bezeichnung, Fraction preis, Integer minLagerbestand, 		Integer maxLagerbestand, Integer hstLieferzeit) throws UserException;
 	active void aendereArtikel(Artikel artikel, String bezeichnung, Fraction preis, Integer minLagerbestand, Integer maxLagerbestand, Integer hstLieferzeit) throws ExcAlreadyExists;
 }

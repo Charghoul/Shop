@@ -13,9 +13,9 @@ public class ArtikelManagerProxi extends ViewProxi implements ArtikelManagerView
     
     @SuppressWarnings("unchecked")
     public ArtikelManagerView getRemoteObject(java.util.HashMap<String,Object> resultTable, ExceptionAndEventHandler connectionKey) throws ModelException{
-        java.util.Vector<String> artikelListe_string = (java.util.Vector<String>)resultTable.get("artikelListe");
-        java.util.Vector<ArtikelView> artikelListe = ViewProxi.getProxiVector(artikelListe_string, connectionKey);
-        ArtikelManagerView result$$ = new ArtikelManager(artikelListe, this.getId(), this.getClassId());
+        java.util.Vector<String> komponentenListe_string = (java.util.Vector<String>)resultTable.get("komponentenListe");
+        java.util.Vector<KomponenteView> komponentenListe = ViewProxi.getProxiVector(komponentenListe_string, connectionKey);
+        ArtikelManagerView result$$ = new ArtikelManager(komponentenListe, this.getId(), this.getClassId());
         ((ViewRoot)result$$).setToString((String) resultTable.get(common.RPCConstantsAndServices.RPCToStringFieldName));
         return result$$;
     }
@@ -25,34 +25,34 @@ public class ArtikelManagerProxi extends ViewProxi implements ArtikelManagerView
     }
     public ViewObjectInTree getChild(int originalIndex) throws ModelException{
         int index = originalIndex;
-        if(index < this.getArtikelListe().size()) return new ArtikelListeArtikelManagerWrapper(this, originalIndex, (ViewRoot)this.getArtikelListe().get(index));
-        index = index - this.getArtikelListe().size();
+        if(index < this.getKomponentenListe().size()) return new KomponentenListeArtikelManagerWrapper(this, originalIndex, (ViewRoot)this.getKomponentenListe().get(index));
+        index = index - this.getKomponentenListe().size();
         return null;
     }
     public int getChildCount() throws ModelException {
         return 0 
-            + (this.getArtikelListe().size());
+            + (this.getKomponentenListe().size());
     }
     public boolean isLeaf() throws ModelException {
         if (this.object == null) return this.getLeafInfo() == 0;
         return true 
-            && (this.getArtikelListe().size() == 0);
+            && (this.getKomponentenListe().size() == 0);
     }
     public int getIndexOfChild(Object child) throws ModelException {
         int result = 0;
-        java.util.Iterator<?> getArtikelListeIterator = this.getArtikelListe().iterator();
-        while(getArtikelListeIterator.hasNext()){
-            if(getArtikelListeIterator.next().equals(child)) return result;
+        java.util.Iterator<?> getKomponentenListeIterator = this.getKomponentenListe().iterator();
+        while(getKomponentenListeIterator.hasNext()){
+            if(getKomponentenListeIterator.next().equals(child)) return result;
             result = result + 1;
         }
         return -1;
     }
     
-    public java.util.Vector<ArtikelView> getArtikelListe()throws ModelException{
-        return ((ArtikelManager)this.getTheObject()).getArtikelListe();
+    public java.util.Vector<KomponenteView> getKomponentenListe()throws ModelException{
+        return ((ArtikelManager)this.getTheObject()).getKomponentenListe();
     }
-    public void setArtikelListe(java.util.Vector<ArtikelView> newValue) throws ModelException {
-        ((ArtikelManager)this.getTheObject()).setArtikelListe(newValue);
+    public void setKomponentenListe(java.util.Vector<KomponenteView> newValue) throws ModelException {
+        ((ArtikelManager)this.getTheObject()).setKomponentenListe(newValue);
     }
     
     public void accept(AnythingVisitor visitor) throws ModelException {

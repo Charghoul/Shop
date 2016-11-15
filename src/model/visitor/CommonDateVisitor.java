@@ -7,6 +7,7 @@ public interface CommonDateVisitor {
     
     public void handleAendereArtikelCommand(AendereArtikelCommand4Public aendereArtikelCommand) throws PersistenceException;
     public void handleArtikelEntnehmenCommand(ArtikelEntnehmenCommand4Public artikelEntnehmenCommand) throws PersistenceException;
+    public void handleNeueProduktgruppeCommand(NeueProduktgruppeCommand4Public neueProduktgruppeCommand) throws PersistenceException;
     public void handleNeuerArtikelCommand(NeuerArtikelCommand4Public neuerArtikelCommand) throws PersistenceException;
     public void handleRegisterCommand(RegisterCommand4Public registerCommand) throws PersistenceException;
     public void handleStatusAuslaufCommand(StatusAuslaufCommand4Public statusAuslaufCommand) throws PersistenceException;

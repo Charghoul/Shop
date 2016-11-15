@@ -43,6 +43,8 @@ public interface ServiceAdmin4Public extends Service4Public {
 				throws PersistenceException;
     public void neueLieferArt(final LieferartManager4Public lieferartManager, final String name, final long lieferzeit, final common.Fraction preis) 
 				throws model.ExcAlreadyExists, PersistenceException;
+    public void neueProduktgruppe(final ArtikelManager4Public artikelmanager, final String name) 
+				throws PersistenceException;
     public void neuerArtikel(final ArtikelManager4Public artikelManager, final String artikelnummer, final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
 				throws PersistenceException;
     public void statusAuslauf(final Artikel4Public artikel) 

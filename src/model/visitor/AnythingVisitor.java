@@ -21,6 +21,7 @@ public interface AnythingVisitor extends ArtikelstatusVisitor,BestellstatusVisit
     public void handleLieferart(Lieferart4Public lieferart) throws PersistenceException;
     public void handleLieferartManager(LieferartManager4Public lieferartManager) throws PersistenceException;
     public void handleLieferung(Lieferung4Public lieferung) throws PersistenceException;
+    public void handleNeueProduktgruppeCommand(NeueProduktgruppeCommand4Public neueProduktgruppeCommand) throws PersistenceException;
     public void handleNeuerArtikelCommand(NeuerArtikelCommand4Public neuerArtikelCommand) throws PersistenceException;
     public void handlePosition(Position4Public position) throws PersistenceException;
     public void handleRegisterCommand(RegisterCommand4Public registerCommand) throws PersistenceException;

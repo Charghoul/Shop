@@ -91,14 +91,14 @@ public class ArtikelManagerFacade{
             throw new PersistenceException(se.getMessage(), se.getErrorCode());
         }
     }
-    public long artikelListeAdd(long ArtikelManagerId, Artikel4Public artikelListeVal) throws PersistenceException {
+    public long komponentenListeAdd(long ArtikelManagerId, Komponente4Public komponentenListeVal) throws PersistenceException {
         try{
             CallableStatement callable;
-            callable = this.con.prepareCall("Begin ? := " + this.schemaName + ".ArtklMngrFacade.artklLstAdd(?, ?, ?); end;");
+            callable = this.con.prepareCall("Begin ? := " + this.schemaName + ".ArtklMngrFacade.kmpnntnLstAdd(?, ?, ?); end;");
             callable.registerOutParameter(1, oracle.jdbc.OracleTypes.NUMBER);
             callable.setLong(2, ArtikelManagerId);
-            callable.setLong(3, artikelListeVal.getId());
-            callable.setLong(4, artikelListeVal.getClassId());
+            callable.setLong(3, komponentenListeVal.getId());
+            callable.setLong(4, komponentenListeVal.getClassId());
             callable.execute();
             long result = callable.getLong(1);
             callable.close();
@@ -107,28 +107,28 @@ public class ArtikelManagerFacade{
             throw new PersistenceException(se.getMessage(), se.getErrorCode());
         }
     }
-    public void artikelListeRem(long artikelListeId) throws PersistenceException {
+    public void komponentenListeRem(long komponentenListeId) throws PersistenceException {
         try{
             CallableStatement callable;
-            callable = this.con.prepareCall("Begin " + this.schemaName + ".ArtklMngrFacade.artklLstRem(?); end;");
-            callable.setLong(1, artikelListeId);
+            callable = this.con.prepareCall("Begin " + this.schemaName + ".ArtklMngrFacade.kmpnntnLstRem(?); end;");
+            callable.setLong(1, komponentenListeId);
             callable.execute();
             callable.close();
         }catch(SQLException se) {
             throw new PersistenceException(se.getMessage(), se.getErrorCode());
         }
     }
-    public ArtikelList artikelListeGet(long ArtikelManagerId) throws PersistenceException {
+    public KomponenteList komponentenListeGet(long ArtikelManagerId) throws PersistenceException {
         try{
             CallableStatement callable;
-            callable = this.con.prepareCall("Begin ? := " + this.schemaName + ".ArtklMngrFacade.artklLstGet(?); end;");
+            callable = this.con.prepareCall("Begin ? := " + this.schemaName + ".ArtklMngrFacade.kmpnntnLstGet(?); end;");
             callable.registerOutParameter(1, oracle.jdbc.OracleTypes.CURSOR);
             callable.setLong(2, ArtikelManagerId);
             callable.execute();
             ResultSet list = ((oracle.jdbc.OracleCallableStatement)callable).getCursor(1);
-            ArtikelList result = new ArtikelList();
+            KomponenteList result = new KomponenteList();
             while (list.next()) {
-                result.add((PersistentArtikel)PersistentProxi.createListEntryProxi(list.getLong(1), list.getLong(2), list.getLong(3)));
+                result.add((PersistentKomponente)PersistentProxi.createListEntryProxi(list.getLong(1), list.getLong(2), list.getLong(3)));
             }
             list.close();
             callable.close();
