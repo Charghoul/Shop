@@ -293,7 +293,8 @@ public class ServiceAdmin extends model.Service implements PersistentServiceAdmi
     public void aendereArtikel(final Artikel4Public artikel, final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
 				throws model.ExcAlreadyExists, PersistenceException{
         artikel.aendereArtikel(bezeichnung, preis, minLagerbestand, maxLagerbestand, hstLieferzeit);
-        
+        getThis().signalChanged(true);
+
     }
     public void aendereHersteller(final Hersteller4Public hersteller, final String name) 
 				throws model.ExcAlreadyExists, PersistenceException{
@@ -303,22 +304,26 @@ public class ServiceAdmin extends model.Service implements PersistentServiceAdmi
     public void aendereLieferart(final Lieferart4Public lieferart, final String name, final long lieferzeit, final common.Fraction preis) 
 				throws model.ExcAlreadyExists, PersistenceException{
         lieferart.aendereLieferart(name, lieferzeit, preis);
-        
+        getThis().signalChanged(true);
+
     }
     public void artikelEinlagern(final Warenlager4Public warenlager, final Artikel4Public artikel, final long menge) 
 				throws model.ExcLagerbestandOverMax, PersistenceException{
         warenlager.artikelEinlagern(artikel, menge);
-        
+        getThis().signalChanged(true);
+
     }
     public void artikelEntnehmen(final Warenlager4Public warenlager, final Position4Public position, final long menge) 
 				throws PersistenceException{
         warenlager.artikelEntnehmen(position, menge, getThis());
-        
+        getThis().signalChanged(true);
+
     }
     public void artikelHinzufuegen(final Produktgruppe4Public produktgruppe, final Artikel4Public artikel) 
 				throws model.ExcAlreadyExists, model.CycleException, PersistenceException{
         produktgruppe.artikelHinzufuegen(artikel);
-        
+        getThis().signalChanged(true);
+
     }
     public void connected(final String user) 
 				throws PersistenceException{
@@ -338,7 +343,8 @@ public class ServiceAdmin extends model.Service implements PersistentServiceAdmi
     public void herstellerHinzufuegen(final Artikel4Public artikel, final Hersteller4Public hersteller) 
 				throws PersistenceException{
         artikel.herstellerHinzufuegen(hersteller);
-        
+        getThis().signalChanged(true);
+
     }
     public void initializeOnCreation() 
 				throws PersistenceException{
