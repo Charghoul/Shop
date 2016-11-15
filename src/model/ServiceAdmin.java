@@ -313,6 +313,11 @@ public class ServiceAdmin extends model.Service implements PersistentServiceAdmi
             getThis().signalChanged(true);
         
     }
+    public void neueProduktgruppe(final ArtikelManager4Public artikelmanager, final String name) 
+				throws PersistenceException{
+        artikelmanager.neueProduktgruppe(name, getThis());
+        
+    }
     public void neuerArtikel(final ArtikelManager4Public artikelManager, final String artikelnummer, final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
 				throws PersistenceException{
         artikelManager.neuerArtikel(artikelnummer, bezeichnung, preis, minLagerbestand, maxLagerbestand, hstLieferzeit, getThis());

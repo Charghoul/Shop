@@ -21,6 +21,7 @@ public interface AnythingExceptionVisitor<E extends model.UserException> extends
     public void handleLieferart(Lieferart4Public lieferart) throws PersistenceException, E;
     public void handleLieferartManager(LieferartManager4Public lieferartManager) throws PersistenceException, E;
     public void handleLieferung(Lieferung4Public lieferung) throws PersistenceException, E;
+    public void handleNeueProduktgruppeCommand(NeueProduktgruppeCommand4Public neueProduktgruppeCommand) throws PersistenceException, E;
     public void handleNeuerArtikelCommand(NeuerArtikelCommand4Public neuerArtikelCommand) throws PersistenceException, E;
     public void handlePosition(Position4Public position) throws PersistenceException, E;
     public void handleRegisterCommand(RegisterCommand4Public registerCommand) throws PersistenceException, E;

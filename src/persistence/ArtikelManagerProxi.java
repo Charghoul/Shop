@@ -18,8 +18,8 @@ public class ArtikelManagerProxi extends PersistentProxi implements PersistentAr
         return 228;
     }
     
-    public ArtikelManager_ArtikelListeProxi getArtikelListe() throws PersistenceException {
-        return ((PersistentArtikelManager)this.getTheObject()).getArtikelListe();
+    public ArtikelManager_KomponentenListeProxi getKomponentenListe() throws PersistenceException {
+        return ((PersistentArtikelManager)this.getTheObject()).getKomponentenListe();
     }
     public PersistentArtikelManager getThis() throws PersistenceException {
         return ((PersistentArtikelManager)this.getTheObject()).getThis();
@@ -51,6 +51,10 @@ public class ArtikelManagerProxi extends PersistentProxi implements PersistentAr
 				throws PersistenceException{
         return ((PersistentArtikelManager)this.getTheObject()).inverseGetArtikelManager();
     }
+    public void neueProduktgruppe(final String name, final Invoker invoker) 
+				throws PersistenceException{
+        ((PersistentArtikelManager)this.getTheObject()).neueProduktgruppe(name, invoker);
+    }
     public void neuerArtikel(final String artikelnummer, final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit, final Invoker invoker) 
 				throws PersistenceException{
         ((PersistentArtikelManager)this.getTheObject()).neuerArtikel(artikelnummer, bezeichnung, preis, minLagerbestand, maxLagerbestand, hstLieferzeit, invoker);
@@ -70,6 +74,10 @@ public class ArtikelManagerProxi extends PersistentProxi implements PersistentAr
     public void initializeOnInstantiation() 
 				throws PersistenceException{
         ((PersistentArtikelManager)this.getTheObject()).initializeOnInstantiation();
+    }
+    public void neueProduktgruppe(final String name) 
+				throws model.ExcAlreadyExists, PersistenceException{
+        ((PersistentArtikelManager)this.getTheObject()).neueProduktgruppe(name);
     }
     public void neuerArtikel(final String artikelnummer, final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
 				throws model.UserException, PersistenceException{

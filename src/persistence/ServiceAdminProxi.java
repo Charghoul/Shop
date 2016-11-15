@@ -154,6 +154,10 @@ public class ServiceAdminProxi extends ServiceProxi implements PersistentService
 				throws model.ExcAlreadyExists, PersistenceException{
         ((PersistentServiceAdmin)this.getTheObject()).neueLieferArt(lieferartManager, name, lieferzeit, preis);
     }
+    public void neueProduktgruppe(final ArtikelManager4Public artikelmanager, final String name) 
+				throws PersistenceException{
+        ((PersistentServiceAdmin)this.getTheObject()).neueProduktgruppe(artikelmanager, name);
+    }
     public void neuerArtikel(final ArtikelManager4Public artikelManager, final String artikelnummer, final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
 				throws PersistenceException{
         ((PersistentServiceAdmin)this.getTheObject()).neuerArtikel(artikelManager, artikelnummer, bezeichnung, preis, minLagerbestand, maxLagerbestand, hstLieferzeit);

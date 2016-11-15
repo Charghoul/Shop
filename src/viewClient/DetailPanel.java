@@ -1638,7 +1638,7 @@ class ServiceAdminDefaultDetailPanel extends DefaultDetailPanel{
 
 class ArtikelManagerDefaultDetailPanel extends DefaultDetailPanel{
     
-    protected static final String ArtikelManager$$artikelListe = "ArtikelManager$$artikelListe";
+    protected static final String ArtikelManager$$komponentenListe = "ArtikelManager$$komponentenListe";
     
     protected ArtikelManagerDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
         super(exceptionHandler, anything);

@@ -7,6 +7,7 @@ import model.visitor.AnythingReturnExceptionVisitor;
 import model.visitor.AnythingReturnVisitor;
 import model.visitor.AnythingVisitor;
 import persistence.*;
+import serverConstants.ErrorMessages;
 
 
 /* Additional import section end */
@@ -59,7 +60,7 @@ public class ArtikelManager extends PersistentObject implements PersistentArtike
     java.util.HashMap<String,Object> result = null;
         if (depth > 0 && essentialLevel <= common.RPCConstantsAndServices.EssentialDepth){
             result = super.toHashtable(allResults, depth, essentialLevel, forGUI, false, tdObserver);
-            result.put("artikelListe", this.getArtikelListe().getVector(allResults, depth, essentialLevel, forGUI, tdObserver, false, true));
+            result.put("komponentenListe", this.getKomponentenListe().getVector(allResults, depth, essentialLevel, forGUI, tdObserver, false, true));
             String uniqueKey = common.RPCConstantsAndServices.createHashtableKey(this.getClassId(), this.getId());
             if (leaf && !allResults.containsKey(uniqueKey)) allResults.put(uniqueKey, result);
         }
@@ -77,13 +78,13 @@ public class ArtikelManager extends PersistentObject implements PersistentArtike
     public boolean hasEssentialFields() throws PersistenceException{
         return false;
     }
-    protected ArtikelManager_ArtikelListeProxi artikelListe;
+    protected ArtikelManager_KomponentenListeProxi komponentenListe;
     protected PersistentArtikelManager This;
     
     public ArtikelManager(PersistentArtikelManager This,long id) throws PersistenceException {
         /* Shall not be used by clients for object construction! Use static create operation instead! */
         super(id);
-        this.artikelListe = new ArtikelManager_ArtikelListeProxi(this);
+        this.komponentenListe = new ArtikelManager_KomponentenListeProxi(this);
         if (This != null && !(this.isTheSameAs(This))) this.This = This;        
     }
     
@@ -100,7 +101,7 @@ public class ArtikelManager extends PersistentObject implements PersistentArtike
         if (this.getClassId() == 228) ConnectionHandler.getTheConnectionHandler().theArtikelManagerFacade
             .newArtikelManager(this.getId());
         super.store();
-        this.getArtikelListe().store();
+        this.getKomponentenListe().store();
         if(!this.isTheSameAs(this.getThis())){
             this.getThis().store();
             ConnectionHandler.getTheConnectionHandler().theArtikelManagerFacade.ThisSet(this.getId(), getThis());
@@ -108,8 +109,8 @@ public class ArtikelManager extends PersistentObject implements PersistentArtike
         
     }
     
-    public ArtikelManager_ArtikelListeProxi getArtikelListe() throws PersistenceException {
-        return this.artikelListe;
+    public ArtikelManager_KomponentenListeProxi getKomponentenListe() throws PersistenceException {
+        return this.komponentenListe;
     }
     protected void setThis(PersistentArtikelManager newValue) throws PersistenceException {
         if (newValue == null) throw new PersistenceException("Null values not allowed!", 0);
@@ -147,7 +148,7 @@ public class ArtikelManager extends PersistentObject implements PersistentArtike
          return visitor.handleArtikelManager(this);
     }
     public int getLeafInfo() throws PersistenceException{
-        if (this.getArtikelListe().getLength() > 0) return 1;
+        if (this.getKomponentenListe().getLength() > 0) return 1;
         return 0;
     }
     
@@ -178,6 +179,14 @@ public class ArtikelManager extends PersistentObject implements PersistentArtike
 			return null;
 		}
     }
+    public void neueProduktgruppe(final String name, final Invoker invoker) 
+				throws PersistenceException{
+        java.sql.Date now = new java.sql.Date(new java.util.Date().getTime());
+		NeueProduktgruppeCommand4Public command = model.meta.NeueProduktgruppeCommand.createNeueProduktgruppeCommand(name, now, now);
+		command.setInvoker(invoker);
+		command.setCommandReceiver(getThis());
+		model.meta.CommandCoordinator.getTheCommandCoordinator().coordinate(command);
+    }
     public void neuerArtikel(final String artikelnummer, final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit, final Invoker invoker) 
 				throws PersistenceException{
         java.sql.Date now = new java.sql.Date(new java.util.Date().getTime());
@@ -192,7 +201,8 @@ public class ArtikelManager extends PersistentObject implements PersistentArtike
     
     public void aendereArtikel(final Artikel4Public artikel, final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
 				throws model.ExcAlreadyExists, PersistenceException{
-        artikel.aendereArtikel(bezeichnung, preis, minLagerbestand, maxLagerbestand, hstLieferzeit);
+        if(artikel.alreadyExists(bezeichnung).equals(TrueX.getTheTrueX())) throw new ExcAlreadyExists(ErrorMessages.ArtikelAlreadyExists);
+        else artikel.aendereArtikel(bezeichnung, preis, minLagerbestand, maxLagerbestand, hstLieferzeit);
     }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{
@@ -201,12 +211,18 @@ public class ArtikelManager extends PersistentObject implements PersistentArtike
     }
     public void initializeOnCreation() 
 				throws PersistenceException{
-        getThis().getArtikelListe().add(Artikel.createArtikel("1234","test", Fraction.parse("5"),10,100,3, Neuanlage.getTheNeuanlage()));
+        getThis().getKomponentenListe().add(Artikel.createArtikel("1234","test", Fraction.parse("5"),10,100,3, Neuanlage.getTheNeuanlage()));
         
     }
     public void initializeOnInstantiation() 
 				throws PersistenceException{
         //TODO: implement method: initializeOnInstantiation
+        
+    }
+    public void neueProduktgruppe(final String name) 
+				throws model.ExcAlreadyExists, PersistenceException{
+       Produktgruppe4Public produktgruppe4Public = Produktgruppe.createProduktgruppe(name);
+        getThis().getKomponentenListe().add(produktgruppe4Public);
         
     }
     public void neuerArtikel(final String artikelnummer, final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
@@ -216,7 +232,7 @@ public class ArtikelManager extends PersistentObject implements PersistentArtike
             throw new ExcArtikelAlreadyExists(serverConstants.ErrorMessages.ArtikelAlreadyExists);
         }
         Artikel4Public artikel = Artikel.createArtikel(artikelnummer,bezeichnung, preis, minLagerbestand, maxLagerbestand, hstLieferzeit, Neuanlage.getTheNeuanlage());
-        getThis().getArtikelListe().add(artikel);
+        getThis().getKomponentenListe().add(artikel);
         Warenlager.getTheWarenlager().artikelEinlagern(artikel,0);
     }
     

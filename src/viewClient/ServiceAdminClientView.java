@@ -301,6 +301,7 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
         ImageView handle(ArtikelEinlagernPRMTRWarenlagerPRMTRArtikelPRMTRIntegerPRMTRMenuItem menuItem);
         ImageView handle(ArtikelEntnehmenPRMTRWarenlagerPRMTRPositionPRMTRIntegerPRMTRMenuItem menuItem);
         ImageView handle(NeueLieferArtPRMTRLieferartManagerPRMTRStringPRMTRIntegerPRMTRFractionPRMTRMenuItem menuItem);
+        ImageView handle(NeueProduktgruppePRMTRArtikelManagerPRMTRStringPRMTRMenuItem menuItem);
         ImageView handle(NeuerArtikelPRMTRArtikelManagerPRMTRStringPRMTRStringPRMTRFractionPRMTRIntegerPRMTRIntegerPRMTRIntegerPRMTRMenuItem menuItem);
         ImageView handle(StatusAuslaufPRMTRArtikelPRMTRMenuItem menuItem);
         ImageView handle(StatusVerkaufPRMTRArtikelPRMTRMenuItem menuItem);
@@ -332,6 +333,11 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
         }
     }
     private class NeueLieferArtPRMTRLieferartManagerPRMTRStringPRMTRIntegerPRMTRFractionPRMTRMenuItem extends ServiceAdminMenuItem{
+        protected ImageView accept(MenuItemVisitor visitor){
+            return visitor.handle(this);
+        }
+    }
+    private class NeueProduktgruppePRMTRArtikelManagerPRMTRStringPRMTRMenuItem extends ServiceAdminMenuItem{
         protected ImageView accept(MenuItemVisitor visitor){
             return visitor.handle(this);
         }
@@ -379,6 +385,17 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
                 result.getItems().add(item);
             }
             if (selected instanceof ArtikelManagerView){
+                item = new NeueProduktgruppePRMTRArtikelManagerPRMTRStringPRMTRMenuItem();
+                item.setText("neueProduktgruppe ... ");
+                item.setOnAction(new EventHandler<ActionEvent>(){
+                    public void handle(javafx.event.ActionEvent e) {
+                        final ServiceAdminNeueProduktgruppeArtikelManagerStringMssgWizard wizard = new ServiceAdminNeueProduktgruppeArtikelManagerStringMssgWizard("neueProduktgruppe");
+                        wizard.setFirstArgument((ArtikelManagerView)selected);
+                        wizard.setWidth(getNavigationPanel().getWidth());
+                        wizard.showAndWait();
+                    }
+                });
+                result.getItems().add(item);
                 item = new NeuerArtikelPRMTRArtikelManagerPRMTRStringPRMTRStringPRMTRFractionPRMTRIntegerPRMTRIntegerPRMTRIntegerPRMTRMenuItem();
                 item.setText("neuerArtikel ... ");
                 item.setOnAction(new EventHandler<ActionEvent>(){
@@ -812,6 +829,53 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
 		private LieferartManagerView firstArgument; 
 	
 		public void setFirstArgument(LieferartManagerView firstArgument){
+			this.firstArgument = firstArgument;
+			this.setTitle(this.firstArgument.toString());
+			this.check();
+		}
+		
+		
+	}
+
+	class ServiceAdminNeueProduktgruppeArtikelManagerStringMssgWizard extends Wizard {
+
+		protected ServiceAdminNeueProduktgruppeArtikelManagerStringMssgWizard(String operationName){
+			super(ServiceAdminClientView.this);
+			getOkButton().setText(operationName);
+			getOkButton().setGraphic(new NeueProduktgruppePRMTRArtikelManagerPRMTRStringPRMTRMenuItem ().getGraphic());
+		}
+		protected void initialize(){
+			this.helpFileName = "ServiceAdminNeueProduktgruppeArtikelManagerStringMssgWizard.help";
+			super.initialize();		
+		}
+				
+		protected void perform() {
+			try {
+				getConnection().neueProduktgruppe(firstArgument, ((StringSelectionPanel)getParametersPanel().getChildren().get(0)).getResult());
+				getConnection().setEagerRefresh();
+				this.close();	
+			} catch(ModelException me){
+				handleException(me);
+				this.close();
+			}
+			
+		}
+		protected String checkCompleteParameterSet(){
+			return null;
+		}
+		protected boolean isModifying () {
+			return false;
+		}
+		protected void addParameters(){
+			getParametersPanel().getChildren().add(new StringSelectionPanel("name", this));		
+		}	
+		protected void handleDependencies(int i) {
+		}
+		
+		
+		private ArtikelManagerView firstArgument; 
+	
+		public void setFirstArgument(ArtikelManagerView firstArgument){
 			this.firstArgument = firstArgument;
 			this.setTitle(this.firstArgument.toString());
 			this.check();
