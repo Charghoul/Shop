@@ -299,7 +299,7 @@ public class ServiceAdmin extends model.Service implements PersistentServiceAdmi
     public void aendereHersteller(final Hersteller4Public hersteller, final String name) 
 				throws model.ExcAlreadyExists, PersistenceException{
         hersteller.aendereHersteller(name);
-        
+        getThis().signalChanged(true);
     }
     public void aendereLieferart(final Lieferart4Public lieferart, final String name, final long lieferzeit, final common.Fraction preis) 
 				throws model.ExcAlreadyExists, PersistenceException{
