@@ -185,7 +185,6 @@ public class Position extends PersistentObject implements PersistentPosition{
          return visitor.handlePosition(this);
     }
     public int getLeafInfo() throws PersistenceException{
-        if (this.getArtikel() != null) return 1;
         return 0;
     }
     
@@ -203,9 +202,14 @@ public class Position extends PersistentObject implements PersistentPosition{
     // Start of section that contains operations that must be implemented.
     
     public void aendereMenge(final long menge) 
-				throws model.ExcLagerbestandUnderZero, PersistenceException{
-        //TODO: implement method: aendereMenge
-        
+				throws model.ExcLagerbestandUnderZero, model.ExcLagerbestandOverMax, PersistenceException{
+        long aktMenge = getThis().getMenge();
+        if(aktMenge > menge){
+            getThis().verringereMenge(aktMenge - menge);
+        }
+        if(aktMenge < menge){
+            getThis().erhoeheMenge(menge - aktMenge);
+        }
     }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{
@@ -215,15 +219,19 @@ public class Position extends PersistentObject implements PersistentPosition{
     public Position4Public enthaeltArtikel(final Artikel4Public artikel) 
 				throws PersistenceException{
         if(getThis().getArtikel().equals(artikel)){
-            return null;
+            return getThis();
         }
         else {
-            return getThis();
+            return null;
         }
     }
     public void erhoeheMenge(final long menge) 
 				throws model.ExcLagerbestandOverMax, PersistenceException{
-        //TODO: implement method: erhoeheMenge
+        long newMenge = getThis().getMenge() + menge;
+        if( getArtikel().groesserMax(newMenge).equals(TrueX.getTheTrueX())){
+            throw new ExcLagerbestandOverMax(ErrorMessages.LagerbestandOverMax);
+        }
+        getThis().setMenge(newMenge);
         
     }
     public void initializeOnCreation() 
@@ -238,8 +246,11 @@ public class Position extends PersistentObject implements PersistentPosition{
     }
     public void verringereMenge(final long menge) 
 				throws model.ExcLagerbestandUnderZero, PersistenceException{
-        //TODO: implement method: verringereMenge
-        
+        long newMenge = getThis().getMenge()-menge;
+        if(newMenge <0){
+            throw new ExcLagerbestandUnderZero(ErrorMessages.LagerbestandUnderZero);
+        }
+        getThis().setMenge(newMenge);
     }
     
     

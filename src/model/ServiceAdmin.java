@@ -307,6 +307,22 @@ public class ServiceAdmin extends model.Service implements PersistentServiceAdmi
         getThis().signalChanged(true);
 
     }
+    public void aendereMenge(final Position4Public position, final long menge) 
+				throws model.ExcLagerbestandUnderZero, model.ExcLagerbestandOverMax, PersistenceException{
+        position.aendereMenge(menge);
+        getThis().signalChanged(true);
+    }
+    public void artikelAbhaengen(final Produktgruppe4Public produktgruppe, final Artikel4Public artikel) 
+				throws PersistenceException{
+        produktgruppe.artikelAbhaengen(artikel);
+        getThis().signalChanged(true);
+    }
+    public void artikelAnhaengen(final Produktgruppe4Public produktgruppe, final Artikel4Public artikel) 
+				throws model.ExcAlreadyExists, model.CycleException, PersistenceException{
+        produktgruppe.artikelAnhaengen(artikel);
+        getThis().signalChanged(true);
+
+    }
     public void artikelEinlagern(final Warenlager4Public warenlager, final Artikel4Public artikel, final long menge) 
 				throws model.ExcLagerbestandOverMax, PersistenceException{
         warenlager.artikelEinlagern(artikel, menge);
@@ -316,12 +332,6 @@ public class ServiceAdmin extends model.Service implements PersistentServiceAdmi
     public void artikelEntnehmen(final Warenlager4Public warenlager, final Position4Public position, final long menge) 
 				throws PersistenceException{
         warenlager.artikelEntnehmen(position, menge, getThis());
-        getThis().signalChanged(true);
-
-    }
-    public void artikelHinzufuegen(final Produktgruppe4Public produktgruppe, final Artikel4Public artikel) 
-				throws model.ExcAlreadyExists, model.CycleException, PersistenceException{
-        produktgruppe.artikelHinzufuegen(artikel);
         getThis().signalChanged(true);
 
     }
@@ -338,6 +348,12 @@ public class ServiceAdmin extends model.Service implements PersistentServiceAdmi
     public void disconnected() 
 				throws PersistenceException{
         //TODO: implement method: disconnected
+        
+    }
+    public void erhoeheMenge(final Position4Public position, final long menge) 
+				throws model.ExcLagerbestandOverMax, PersistenceException{
+        position.erhoeheMenge(menge);
+        getThis().signalChanged(true);
         
     }
     public void herstellerHinzufuegen(final Artikel4Public artikel, final Hersteller4Public hersteller) 
@@ -375,6 +391,11 @@ public class ServiceAdmin extends model.Service implements PersistentServiceAdmi
         herstellerManager.neuerHersteller(name);
         getThis().signalChanged(true);
     }
+    public void produktgruppeEntfernen(final Produktgruppe4Public produktgruppe) 
+				throws PersistenceException{
+        produktgruppe.prodGEntfernen(getThis());
+        getThis().signalChanged(true);
+    }
     public void produktgruppeHinzufuegen(final Produktgruppe4Public produktgruppe, final String name) 
 				throws model.ExcAlreadyExists, model.CycleException, PersistenceException{
         produktgruppe.produktgruppeHinzufuegen(name);
@@ -390,6 +411,12 @@ public class ServiceAdmin extends model.Service implements PersistentServiceAdmi
 				throws PersistenceException{
         artikel.statusVerkauf(getThis());
         getThis().signalChanged(true);
+    }
+    public void verringereMenge(final Position4Public position, final long menge) 
+				throws model.ExcLagerbestandUnderZero, PersistenceException{
+        position.verringereMenge(menge);
+        getThis().signalChanged(true);
+        
     }
     
     

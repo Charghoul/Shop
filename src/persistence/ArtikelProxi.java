@@ -116,6 +116,10 @@ public class ArtikelProxi extends KomponenteProxi implements PersistentArtikel{
 				throws PersistenceException{
         ((PersistentArtikel)this.getTheObject()).initialize(This, final$$Fields);
     }
+    public ProduktgruppeSearchList inverseGetKomponentenListe() 
+				throws PersistenceException{
+        return ((PersistentArtikel)this.getTheObject()).inverseGetKomponentenListe();
+    }
     public void statusAuslauf(final Invoker invoker) 
 				throws PersistenceException{
         ((PersistentArtikel)this.getTheObject()).statusAuslauf(invoker);

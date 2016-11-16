@@ -361,6 +361,21 @@ create table LfrrtMngr(
     constraint FLfrrtMngrThis foreign key (LfrrtMngrThisCls) references Cls (id)    
 );
 
+create table PrdGEntfrnnCMD(
+    id number primary key,
+    Cls number not null,
+    constraint FPrdGEntfrnnCMDCls foreign key (Cls) references Cls (id) on delete cascade,
+    PrdGEntfrnnCMDInvoker number,
+    PrdGEntfrnnCMDInvokerCls number,
+    constraint FPrdGEntfrnnCMDInvoker foreign key (PrdGEntfrnnCMDInvokerCls) references Cls (id),
+    PrdGEntfrnnCMDCReceiver number,
+    PrdGEntfrnnCMDCReceiverCls number,
+    constraint FPrdGEntfrnnCMDCReceiver foreign key (PrdGEntfrnnCMDCReceiverCls) references Cls (id),
+    PrdGEntfrnnCMDMyCmmnDt number,
+    PrdGEntfrnnCMDMyCmmnDtCls number,
+    constraint FPrdGEntfrnnCMDMyCmmnDt foreign key (PrdGEntfrnnCMDMyCmmnDtCls) references Cls (id)    
+);
+
 create table Lfrng(
     id number primary key,
     Cls number not null,
@@ -468,6 +483,8 @@ create table PrdktgrppKmpnntnLst(
 );
 create index IFrmPrdktgrppKmpnntnLst on PrdktgrppKmpnntnLst(frm);
 
+
+create index IKmpnntnLstPrdktgrppKmpnntnLst on PrdktgrppKmpnntnLst(kmpnntnLst);
 create table ArtklMngrArtklLst(
     id number primary key,
     frm number not null,

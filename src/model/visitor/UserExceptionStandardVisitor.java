@@ -11,14 +11,17 @@ public abstract class UserExceptionStandardVisitor implements UserExceptionVisit
     public void handleExcLagerbestandUnderZero(model.ExcLagerbestandUnderZero excLagerbestandUnderZero) throws PersistenceException{
         this.standardHandling(excLagerbestandUnderZero);
     }
-    public void handleExcAlreadyExists(model.ExcAlreadyExists excAlreadyExists) throws PersistenceException{
-        this.standardHandling(excAlreadyExists);
-    }
     public void handleExcLieferartAlreadyExists(model.ExcLieferartAlreadyExists excLieferartAlreadyExists) throws PersistenceException{
         this.standardHandling(excLieferartAlreadyExists);
     }
+    public void handleExcAlreadyExists(model.ExcAlreadyExists excAlreadyExists) throws PersistenceException{
+        this.standardHandling(excAlreadyExists);
+    }
     public void handleExcStatusDidNotChange(model.ExcStatusDidNotChange excStatusDidNotChange) throws PersistenceException{
         this.standardHandling(excStatusDidNotChange);
+    }
+    public void handleExcHasChildren(model.ExcHasChildren excHasChildren) throws PersistenceException{
+        this.standardHandling(excHasChildren);
     }
     public void handleExcUserAlreadyExists(model.ExcUserAlreadyExists excUserAlreadyExists) throws PersistenceException{
         this.standardHandling(excUserAlreadyExists);
@@ -34,6 +37,9 @@ public abstract class UserExceptionStandardVisitor implements UserExceptionVisit
     }
     public void handleRestrictionException(model.RestrictionException restrictionException) throws PersistenceException{
         this.standardHandling(restrictionException);
+    }
+    public void handleExcHasNoParent(model.ExcHasNoParent excHasNoParent) throws PersistenceException{
+        this.standardHandling(excHasNoParent);
     }
     protected abstract void standardHandling(model.UserException userException) throws PersistenceException;
 }

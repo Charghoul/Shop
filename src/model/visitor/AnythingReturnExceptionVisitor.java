@@ -23,6 +23,7 @@ public interface AnythingReturnExceptionVisitor<R, E extends model.UserException
     public R handleLieferung(Lieferung4Public lieferung) throws PersistenceException, E;
     public R handleNeuerArtikelCommand(NeuerArtikelCommand4Public neuerArtikelCommand) throws PersistenceException, E;
     public R handlePosition(Position4Public position) throws PersistenceException, E;
+    public R handleProdGEntfernenCommand(ProdGEntfernenCommand4Public prodGEntfernenCommand) throws PersistenceException, E;
     public R handleRegisterCommand(RegisterCommand4Public registerCommand) throws PersistenceException, E;
     public R handleServer(Server4Public server) throws PersistenceException, E;
     public R handleStatusAuslaufCommand(StatusAuslaufCommand4Public statusAuslaufCommand) throws PersistenceException, E;

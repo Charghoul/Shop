@@ -53,7 +53,7 @@ public class PositionProxi extends PersistentProxi implements PersistentPosition
         ((PersistentPosition)this.getTheObject()).initialize(This, final$$Fields);
     }
     public void aendereMenge(final long menge) 
-				throws model.ExcLagerbestandUnderZero, PersistenceException{
+				throws model.ExcLagerbestandUnderZero, model.ExcLagerbestandOverMax, PersistenceException{
         ((PersistentPosition)this.getTheObject()).aendereMenge(menge);
     }
     public void copyingPrivateUserAttributes(final Anything copy) 

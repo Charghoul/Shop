@@ -26,6 +26,7 @@ drop table Knt cascade constraints;
 drop table Knd cascade constraints;
 drop table Hrstllr cascade constraints;
 drop table LfrrtMngr cascade constraints;
+drop table PrdGEntfrnnCMD cascade constraints;
 drop table Lfrng cascade constraints;
 drop table BlnX cascade constraints;
 drop table Wrnlgr cascade constraints;

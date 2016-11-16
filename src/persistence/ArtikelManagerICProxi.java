@@ -82,10 +82,6 @@ public class ArtikelManagerICProxi extends PersistentInCacheProxiOptimistic impl
 				throws model.UserException, PersistenceException{
         ((PersistentArtikelManager)this.getTheObject()).neuerArtikel(artikelnummer, bezeichnung, preis, minLagerbestand, maxLagerbestand, hstLieferzeit);
     }
-    public void produktgruppeHinzufuegen(final Produktgruppe4Public produktgruppe, final String name) 
-				throws model.ExcAlreadyExists, model.CycleException, PersistenceException{
-        ((PersistentArtikelManager)this.getTheObject()).produktgruppeHinzufuegen(produktgruppe, name);
-    }
 
     
 }
