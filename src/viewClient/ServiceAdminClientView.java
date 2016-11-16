@@ -318,6 +318,7 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
         ImageView handle(ArtikelAbhaengenPRMTRProduktgruppePRMTRArtikelPRMTRMenuItem menuItem);
         ImageView handle(ArtikelAnhaengenPRMTRProduktgruppePRMTRArtikelPRMTRMenuItem menuItem);
         ImageView handle(ArtikelEinlagernPRMTRWarenlagerPRMTRArtikelPRMTRIntegerPRMTRMenuItem menuItem);
+        ImageView handle(ArtikelEntfernenPRMTRWarenlagerPRMTRPositionPRMTRMenuItem menuItem);
         ImageView handle(ArtikelEntnehmenPRMTRWarenlagerPRMTRPositionPRMTRIntegerPRMTRMenuItem menuItem);
         ImageView handle(ErhoeheMengePRMTRPositionPRMTRIntegerPRMTRMenuItem menuItem);
         ImageView handle(HerstellerHinzufuegenPRMTRArtikelPRMTRHerstellerPRMTRMenuItem menuItem);
@@ -367,6 +368,11 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
         }
     }
     private class ArtikelEinlagernPRMTRWarenlagerPRMTRArtikelPRMTRIntegerPRMTRMenuItem extends ServiceAdminMenuItem{
+        protected ImageView accept(MenuItemVisitor visitor){
+            return visitor.handle(this);
+        }
+    }
+    private class ArtikelEntfernenPRMTRWarenlagerPRMTRPositionPRMTRMenuItem extends ServiceAdminMenuItem{
         protected ImageView accept(MenuItemVisitor visitor){
             return visitor.handle(this);
         }
@@ -668,6 +674,17 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
                 item.setOnAction(new EventHandler<ActionEvent>(){
                     public void handle(javafx.event.ActionEvent e) {
                         final ServiceAdminArtikelEinlagernWarenlagerArtikelIntegerMssgWizard wizard = new ServiceAdminArtikelEinlagernWarenlagerArtikelIntegerMssgWizard("artikelEinlagern");
+                        wizard.setFirstArgument((WarenlagerView)selected);
+                        wizard.setWidth(getNavigationPanel().getWidth());
+                        wizard.showAndWait();
+                    }
+                });
+                result.getItems().add(item);
+                item = new ArtikelEntfernenPRMTRWarenlagerPRMTRPositionPRMTRMenuItem();
+                item.setText("artikelEntfernen ... ");
+                item.setOnAction(new EventHandler<ActionEvent>(){
+                    public void handle(javafx.event.ActionEvent e) {
+                        final ServiceAdminArtikelEntfernenWarenlagerPositionMssgWizard wizard = new ServiceAdminArtikelEntfernenWarenlagerPositionMssgWizard("artikelEntfernen");
                         wizard.setFirstArgument((WarenlagerView)selected);
                         wizard.setWidth(getNavigationPanel().getWidth());
                         wizard.showAndWait();
@@ -1110,9 +1127,6 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
 				handleException(me);
 				this.close();
 			}
-			catch(ExcLagerbestandOverMax e) {
-				getStatusBar().setText(e.getMessage());
-			}
 			
 		}
 		protected String checkCompleteParameterSet(){
@@ -1126,6 +1140,55 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
 			getParametersPanel().getChildren().add(panel3);
 			panel3.setBrowserRoot((ViewRoot) getConnection().getServiceAdminView());
 			getParametersPanel().getChildren().add(new IntegerSelectionPanel("menge", this));		
+		}	
+		protected void handleDependencies(int i) {
+		}
+		
+		
+		private WarenlagerView firstArgument; 
+	
+		public void setFirstArgument(WarenlagerView firstArgument){
+			this.firstArgument = firstArgument;
+			this.setTitle(this.firstArgument.toString());
+			this.check();
+		}
+		
+		
+	}
+
+	class ServiceAdminArtikelEntfernenWarenlagerPositionMssgWizard extends Wizard {
+
+		protected ServiceAdminArtikelEntfernenWarenlagerPositionMssgWizard(String operationName){
+			super(ServiceAdminClientView.this);
+			getOkButton().setText(operationName);
+			getOkButton().setGraphic(new ArtikelEntfernenPRMTRWarenlagerPRMTRPositionPRMTRMenuItem ().getGraphic());
+		}
+		protected void initialize(){
+			this.helpFileName = "ServiceAdminArtikelEntfernenWarenlagerPositionMssgWizard.help";
+			super.initialize();		
+		}
+				
+		protected void perform() {
+			try {
+				getConnection().artikelEntfernen(firstArgument, (PositionView)((ObjectSelectionPanel)getParametersPanel().getChildren().get(0)).getResult());
+				getConnection().setEagerRefresh();
+				this.close();	
+			} catch(ModelException me){
+				handleException(me);
+				this.close();
+			}
+			
+		}
+		protected String checkCompleteParameterSet(){
+			return null;
+		}
+		protected boolean isModifying () {
+			return false;
+		}
+		protected void addParameters(){
+			final ObjectSelectionPanel panel4 = new ObjectSelectionPanel("position", "view.PositionView", null, this);
+			getParametersPanel().getChildren().add(panel4);
+			panel4.setBrowserRoot((ViewRoot) getConnection().getServiceAdminView());		
 		}	
 		protected void handleDependencies(int i) {
 		}
@@ -1173,9 +1236,9 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
 			return false;
 		}
 		protected void addParameters(){
-			final ObjectSelectionPanel panel4 = new ObjectSelectionPanel("position", "view.PositionView", null, this);
-			getParametersPanel().getChildren().add(panel4);
-			panel4.setBrowserRoot((ViewRoot) getConnection().getServiceAdminView());
+			final ObjectSelectionPanel panel5 = new ObjectSelectionPanel("position", "view.PositionView", null, this);
+			getParametersPanel().getChildren().add(panel5);
+			panel5.setBrowserRoot((ViewRoot) getConnection().getServiceAdminView());
 			getParametersPanel().getChildren().add(new IntegerSelectionPanel("menge", this));		
 		}	
 		protected void handleDependencies(int i) {
@@ -1280,9 +1343,9 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
 			return false;
 		}
 		protected void addParameters(){
-			final ObjectSelectionPanel panel5 = new ObjectSelectionPanel("hersteller", "view.HerstellerView", null, this);
-			getParametersPanel().getChildren().add(panel5);
-			panel5.setBrowserRoot((ViewRoot) getConnection().getServiceAdminView());		
+			final ObjectSelectionPanel panel6 = new ObjectSelectionPanel("hersteller", "view.HerstellerView", null, this);
+			getParametersPanel().getChildren().add(panel6);
+			panel6.setBrowserRoot((ViewRoot) getConnection().getServiceAdminView());		
 		}	
 		protected void handleDependencies(int i) {
 		}

@@ -133,8 +133,12 @@ public class ServiceAdminProxi extends ServiceProxi implements PersistentService
         ((PersistentServiceAdmin)this.getTheObject()).artikelAnhaengen(produktgruppe, artikel);
     }
     public void artikelEinlagern(final Warenlager4Public warenlager, final Artikel4Public artikel, final long menge) 
-				throws model.ExcLagerbestandOverMax, PersistenceException{
+				throws PersistenceException{
         ((PersistentServiceAdmin)this.getTheObject()).artikelEinlagern(warenlager, artikel, menge);
+    }
+    public void artikelEntfernen(final Warenlager4Public warenlager, final Position4Public position) 
+				throws PersistenceException{
+        ((PersistentServiceAdmin)this.getTheObject()).artikelEntfernen(warenlager, position);
     }
     public void artikelEntnehmen(final Warenlager4Public warenlager, final Position4Public position, final long menge) 
 				throws PersistenceException{

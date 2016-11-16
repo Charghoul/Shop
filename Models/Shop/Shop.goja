@@ -11,7 +11,7 @@ server ServiceKunde extends Service {
 	ArtikelManager artikelManager;
 	void neuePosition(EinkaufsManager einkaufsManager, Artikel artikel, Integer menge) throws UserException;
 	void bestellen(EinkaufsManager einkaufsManager);
-	void aendereMenge(Position position, Integer menge) throws ExcLagerbestandUnderZero;
+	void aendereMenge(Position position, Integer menge) throws ExcLagerbestandUnderZero, ExcLagerbestandOverMax;
 }
 server ServiceAdmin extends Service {
 	Warenlager warenlager;
@@ -27,8 +27,9 @@ server ServiceAdmin extends Service {
 	void statusAuslauf(Artikel artikel);
 	void neueLieferArt(LieferartManager lieferartManager, String name, Integer lieferzeit, Fraction preis) throws ExcAlreadyExists;
 	void aendereLieferart(Lieferart lieferart, String name, Integer lieferzeit, Fraction preis) throws ExcAlreadyExists;
-	void artikelEinlagern(Warenlager warenlager, Artikel artikel, Integer menge) throws ExcLagerbestandOverMax;
+	void artikelEinlagern(Warenlager warenlager, Artikel artikel, Integer menge);
 	void artikelEntnehmen(Warenlager warenlager, Position position, Integer menge);
+	void artikelEntfernen(Warenlager warenlager, Position position);
 	void verringereMenge(Position position, Integer menge) throws ExcLagerbestandUnderZero;
 	void aendereMenge(Position position, Integer menge) throws ExcLagerbestandUnderZero, ExcLagerbestandOverMax;
 	void erhoeheMenge(Position position, Integer menge) throws ExcLagerbestandOverMax;
@@ -49,8 +50,9 @@ singleton ArtikelManager{
 }
 singleton Warenlager{
 	Position ** warenListe;
-	active void artikelEntnehmen##artEnt(Position position, Integer menge) throws ExcLagerbestandUnderZero;
-	void artikelEinlagern(Artikel artikel, Integer menge) throws ExcLagerbestandOverMax;
+	active void artikelEntnehmen##artEntf(Position position, Integer menge) throws ExcLagerbestandUnderZero;
+	active void artikelEinlagern(Artikel artikel, Integer menge) throws ExcLagerbestandOverMax;
+	active void artikelEntfernen##artEntn(Position position);
 }
 
 class HerstellerManager{
@@ -103,8 +105,10 @@ class Produktgruppe extends Komponente{
 	prior indexed String name;
 	void produktgruppeHinzufuegen(String name) throws ExcAlreadyExists, CycleException;
 	active void prodGEntfernen() throws ExcHasChildren, ExcHasNoParent;
+	void removeChild(Produktgruppe child);
 	void artikelAnhaengen(Artikel artikel) throws ExcAlreadyExists, CycleException;
 	void artikelAbhaengen(Artikel artikel);
+	
 	
 }
 class Hersteller{

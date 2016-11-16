@@ -419,6 +419,9 @@ public class ServiceKundeClientView extends BorderPane implements ExceptionAndEv
 			catch(ExcLagerbestandUnderZero e) {
 				getStatusBar().setText(e.getMessage());
 			}
+			catch(ExcLagerbestandOverMax e) {
+				getStatusBar().setText(e.getMessage());
+			}
 			
 		}
 		protected String checkCompleteParameterSet(){

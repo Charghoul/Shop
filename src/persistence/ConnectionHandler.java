@@ -110,6 +110,7 @@ public class ConnectionHandler {
 
     public VerkaufFacade theVerkaufFacade;
     public ServerFacade theServerFacade;
+    public ArtikelEntfernenCommandFacade theArtikelEntfernenCommandFacade;
     public EinkaufsManagerFacade theEinkaufsManagerFacade;
     public AuslaufFacade theAuslaufFacade;
     public ErrorDisplayFacade theErrorDisplayFacade;
@@ -124,6 +125,7 @@ public class ConnectionHandler {
     public ServiceRegisterFacade theServiceRegisterFacade;
     public KomponenteFacade theKomponenteFacade;
     public CommandCoordinatorFacade theCommandCoordinatorFacade;
+    public ArtikelEinlagernCommandFacade theArtikelEinlagernCommandFacade;
     public GeliefertFacade theGeliefertFacade;
     public ServiceKundeFacade theServiceKundeFacade;
     public BestellstatusFacade theBestellstatusFacade;
@@ -178,6 +180,7 @@ public class ConnectionHandler {
 			callable.close();
             this.theVerkaufFacade= new VerkaufFacade(this.schemaName, this.con);
             this.theServerFacade= new ServerFacade(this.schemaName, this.con);
+            this.theArtikelEntfernenCommandFacade= new ArtikelEntfernenCommandFacade(this.schemaName, this.con);
             this.theEinkaufsManagerFacade= new EinkaufsManagerFacade(this.schemaName, this.con);
             this.theAuslaufFacade= new AuslaufFacade(this.schemaName, this.con);
             this.theErrorDisplayFacade= new ErrorDisplayFacade();
@@ -192,6 +195,7 @@ public class ConnectionHandler {
             this.theServiceRegisterFacade= new ServiceRegisterFacade(this.schemaName, this.con);
             this.theKomponenteFacade= new KomponenteFacade(this.schemaName, this.con);
             this.theCommandCoordinatorFacade= new CommandCoordinatorFacade(this.schemaName, this.con);
+            this.theArtikelEinlagernCommandFacade= new ArtikelEinlagernCommandFacade(this.schemaName, this.con);
             this.theGeliefertFacade= new GeliefertFacade(this.schemaName, this.con);
             this.theServiceKundeFacade= new ServiceKundeFacade(this.schemaName, this.con);
             this.theBestellstatusFacade= new BestellstatusFacade(this.schemaName, this.con);

@@ -34,6 +34,8 @@ public  class RemoteServiceKunde extends RemoteService {
             return createExceptionResult(pe);
         }catch(model.ExcLagerbestandUnderZero e0){
             return createExceptionResult(e0, this);
+        }catch(model.ExcLagerbestandOverMax e1){
+            return createExceptionResult(e1, this);
         }
     }
     

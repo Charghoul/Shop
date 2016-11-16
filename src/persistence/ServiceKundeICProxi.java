@@ -101,7 +101,7 @@ public class ServiceKundeICProxi extends ServiceICProxi implements PersistentSer
         ((PersistentServiceKunde)this.getTheObject()).signalChanged(signal);
     }
     public void aendereMenge(final Position4Public position, final long menge) 
-				throws model.ExcLagerbestandUnderZero, PersistenceException{
+				throws model.ExcLagerbestandUnderZero, model.ExcLagerbestandOverMax, PersistenceException{
         ((PersistentServiceKunde)this.getTheObject()).aendereMenge(position, menge);
     }
     public void bestellen(final EinkaufsManager4Public einkaufsManager) 

@@ -6,6 +6,8 @@ import persistence.*;
 public interface AnythingVisitor extends ArtikelstatusVisitor,BestellstatusVisitor,BooleanXVisitor,CommonDateVisitor,KomponenteVisitor,ServiceVisitor{
     
     public void handleAendereArtikelCommand(AendereArtikelCommand4Public aendereArtikelCommand) throws PersistenceException;
+    public void handleArtikelEinlagernCommand(ArtikelEinlagernCommand4Public artikelEinlagernCommand) throws PersistenceException;
+    public void handleArtikelEntfernenCommand(ArtikelEntfernenCommand4Public artikelEntfernenCommand) throws PersistenceException;
     public void handleArtikelEntnehmenCommand(ArtikelEntnehmenCommand4Public artikelEntnehmenCommand) throws PersistenceException;
     public void handleArtikelManager(ArtikelManager4Public artikelManager) throws PersistenceException;
     public void handleBestellung(Bestellung4Public bestellung) throws PersistenceException;

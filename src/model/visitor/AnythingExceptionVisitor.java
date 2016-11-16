@@ -6,6 +6,8 @@ import persistence.*;
 public interface AnythingExceptionVisitor<E extends model.UserException> extends ArtikelstatusExceptionVisitor<E>,BestellstatusExceptionVisitor<E>,BooleanXExceptionVisitor<E>,CommonDateExceptionVisitor<E>,KomponenteExceptionVisitor<E>,ServiceExceptionVisitor<E>{
     
     public void handleAendereArtikelCommand(AendereArtikelCommand4Public aendereArtikelCommand) throws PersistenceException, E;
+    public void handleArtikelEinlagernCommand(ArtikelEinlagernCommand4Public artikelEinlagernCommand) throws PersistenceException, E;
+    public void handleArtikelEntfernenCommand(ArtikelEntfernenCommand4Public artikelEntfernenCommand) throws PersistenceException, E;
     public void handleArtikelEntnehmenCommand(ArtikelEntnehmenCommand4Public artikelEntnehmenCommand) throws PersistenceException, E;
     public void handleArtikelManager(ArtikelManager4Public artikelManager) throws PersistenceException, E;
     public void handleBestellung(Bestellung4Public bestellung) throws PersistenceException, E;
