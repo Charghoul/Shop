@@ -218,10 +218,6 @@ public class ArtikelManager extends PersistentObject implements PersistentArtike
         getThis().getArtikelListe().add(artikel);
         Warenlager.getTheWarenlager().artikelEinlagern(artikel,0);
     }
-    public void produktgruppeHinzufuegen(final Produktgruppe4Public produktgruppe, final String name) 
-				throws model.ExcAlreadyExists, model.CycleException, PersistenceException{
-        produktgruppe.produktgruppeHinzufuegen(name);
-    }
     
     
     // Start of section that contains overridden operations only.

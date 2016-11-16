@@ -64,27 +64,21 @@ public class Position extends ViewObject implements PositionView{
         
     }
     public ViewObjectInTree getChild(int originalIndex) throws ModelException{
-        int index = originalIndex;
-        if(index == 0 && this.getArtikel() != null) return new ArtikelPositionWrapper(this, originalIndex, (ViewRoot)this.getArtikel());
-        if(this.getArtikel() != null) index = index - 1;
+        
         return null;
     }
     public int getChildCount() throws ModelException {
-        return 0 
-            + (this.getArtikel() == null ? 0 : 1);
+        return 0 ;
     }
     public boolean isLeaf() throws ModelException {
-        return true 
-            && (this.getArtikel() == null ? true : false);
+        return true;
     }
     public int getIndexOfChild(Object child) throws ModelException {
-        int result = 0;
-        if(this.getArtikel() != null && this.getArtikel().equals(child)) return result;
-        if(this.getArtikel() != null) result = result + 1;
+        
         return -1;
     }
     public int getMengeIndex() throws ModelException {
-        return 0 + (this.getArtikel() == null ? 0 : 1);
+        return 0;
     }
     public int getRowCount(){
         return 0 

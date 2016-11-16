@@ -66,6 +66,47 @@ public  class RemoteServiceAdmin extends RemoteService {
         }
     }
     
+    public synchronized java.util.HashMap<?,?> aendereMenge(String positionProxiString, String mengeAsString){
+        try {
+            PersistentPosition position = (PersistentPosition)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(positionProxiString));
+            long menge = new Long(mengeAsString).longValue();
+            ((PersistentServiceAdmin)this.server).aendereMenge(position, menge);
+            return createOKResult();
+        }catch(PersistenceException pe){
+            return createExceptionResult(pe);
+        }catch(model.ExcLagerbestandUnderZero e0){
+            return createExceptionResult(e0, this);
+        }catch(model.ExcLagerbestandOverMax e1){
+            return createExceptionResult(e1, this);
+        }
+    }
+    
+    public synchronized java.util.HashMap<?,?> artikelAbhaengen(String produktgruppeProxiString, String artikelProxiString){
+        try {
+            PersistentProduktgruppe produktgruppe = (PersistentProduktgruppe)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(produktgruppeProxiString));
+            PersistentArtikel artikel = (PersistentArtikel)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(artikelProxiString));
+            ((PersistentServiceAdmin)this.server).artikelAbhaengen(produktgruppe, artikel);
+            return createOKResult();
+        }catch(PersistenceException pe){
+            return createExceptionResult(pe);
+        }
+    }
+    
+    public synchronized java.util.HashMap<?,?> artikelAnhaengen(String produktgruppeProxiString, String artikelProxiString){
+        try {
+            PersistentProduktgruppe produktgruppe = (PersistentProduktgruppe)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(produktgruppeProxiString));
+            PersistentArtikel artikel = (PersistentArtikel)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(artikelProxiString));
+            ((PersistentServiceAdmin)this.server).artikelAnhaengen(produktgruppe, artikel);
+            return createOKResult();
+        }catch(PersistenceException pe){
+            return createExceptionResult(pe);
+        }catch(model.ExcAlreadyExists e0){
+            return createExceptionResult(e0, this);
+        }catch(model.CycleException e1){
+            return createExceptionResult(e1, this);
+        }
+    }
+    
     public synchronized java.util.HashMap<?,?> artikelEinlagern(String warenlagerProxiString, String artikelProxiString, String mengeAsString){
         try {
             PersistentWarenlager warenlager = (PersistentWarenlager)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(warenlagerProxiString));
@@ -92,18 +133,16 @@ public  class RemoteServiceAdmin extends RemoteService {
         }
     }
     
-    public synchronized java.util.HashMap<?,?> artikelHinzufuegen(String produktgruppeProxiString, String artikelProxiString){
+    public synchronized java.util.HashMap<?,?> erhoeheMenge(String positionProxiString, String mengeAsString){
         try {
-            PersistentProduktgruppe produktgruppe = (PersistentProduktgruppe)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(produktgruppeProxiString));
-            PersistentArtikel artikel = (PersistentArtikel)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(artikelProxiString));
-            ((PersistentServiceAdmin)this.server).artikelHinzufuegen(produktgruppe, artikel);
+            PersistentPosition position = (PersistentPosition)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(positionProxiString));
+            long menge = new Long(mengeAsString).longValue();
+            ((PersistentServiceAdmin)this.server).erhoeheMenge(position, menge);
             return createOKResult();
         }catch(PersistenceException pe){
             return createExceptionResult(pe);
-        }catch(model.ExcAlreadyExists e0){
+        }catch(model.ExcLagerbestandOverMax e0){
             return createExceptionResult(e0, this);
-        }catch(model.CycleException e1){
-            return createExceptionResult(e1, this);
         }
     }
     
@@ -158,6 +197,16 @@ public  class RemoteServiceAdmin extends RemoteService {
         }
     }
     
+    public synchronized java.util.HashMap<?,?> produktgruppeEntfernen(String produktgruppeProxiString){
+        try {
+            PersistentProduktgruppe produktgruppe = (PersistentProduktgruppe)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(produktgruppeProxiString));
+            ((PersistentServiceAdmin)this.server).produktgruppeEntfernen(produktgruppe);
+            return createOKResult();
+        }catch(PersistenceException pe){
+            return createExceptionResult(pe);
+        }
+    }
+    
     public synchronized java.util.HashMap<?,?> produktgruppeHinzufuegen(String produktgruppeProxiString, String name){
         try {
             PersistentProduktgruppe produktgruppe = (PersistentProduktgruppe)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(produktgruppeProxiString));
@@ -189,6 +238,19 @@ public  class RemoteServiceAdmin extends RemoteService {
             return createOKResult();
         }catch(PersistenceException pe){
             return createExceptionResult(pe);
+        }
+    }
+    
+    public synchronized java.util.HashMap<?,?> verringereMenge(String positionProxiString, String mengeAsString){
+        try {
+            PersistentPosition position = (PersistentPosition)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(positionProxiString));
+            long menge = new Long(mengeAsString).longValue();
+            ((PersistentServiceAdmin)this.server).verringereMenge(position, menge);
+            return createOKResult();
+        }catch(PersistenceException pe){
+            return createExceptionResult(pe);
+        }catch(model.ExcLagerbestandUnderZero e0){
+            return createExceptionResult(e0, this);
         }
     }
     

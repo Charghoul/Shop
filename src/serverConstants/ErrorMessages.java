@@ -17,6 +17,8 @@ public class ErrorMessages {
     public static final String StatusUbersprungen = "Status wurde uebersprungen";
     public static final String ProduktgruppeAlreadyExists = "Diese Produktgruppe existiert bereits";
     public static final String ArtikelAlreadyInProduktListe = "Dieses Produkt ist bereits in dieser Produktliste enthalten";
+    public static final String ProduktgruppeHasChildren = "Diese Produktgruppe enhält weitere Komponenten";
+    public static final String ProduktgruppeHasNoParent = "Diese Produktgruppe ist der Katalog und daher nicht entfernbar";
 
     private ErrorMessages(){}
 }

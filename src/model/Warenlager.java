@@ -168,10 +168,10 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
     
     public void artikelEinlagern(final Artikel4Public artikel, final long menge) 
 				throws model.ExcLagerbestandOverMax, PersistenceException{
-        //TODO FUNKTIONIERT *_* - gleiches beim Einkaufskorb implementieren
-        Position4Public temp = getThis().getWarenListe().findFirstException(new PredcateException<Position4Public, model.ExcLagerbestandOverMax>() {
+        // TODO: artikeleinlagern keine Doppelten Funktioniert noch nicht!
+        Position4Public temp = getThis().getWarenListe().findFirst(new Predcate<Position4Public>() {
             @Override
-            public boolean test(Position4Public argument) throws PersistenceException, model.ExcLagerbestandOverMax {
+            public boolean test(Position4Public argument) throws PersistenceException {
                 return argument.enthaeltArtikel(artikel) != null;
                  }
         });
@@ -182,7 +182,7 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
     }
     public void artikelEntnehmen(final Position4Public position, final long menge) 
 				throws model.ExcLagerbestandUnderZero, PersistenceException{
-        //TODO: implement method: artikelEntnehmen
+        position.verringereMenge(menge);
         
     }
     public void copyingPrivateUserAttributes(final Anything copy) 

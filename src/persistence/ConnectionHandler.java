@@ -142,6 +142,7 @@ public class ConnectionHandler {
     public HerstellerFacade theHerstellerFacade;
     public RueckversandFacade theRueckversandFacade;
     public LieferartManagerFacade theLieferartManagerFacade;
+    public ProdGEntfernenCommandFacade theProdGEntfernenCommandFacade;
     public HinversandFacade theHinversandFacade;
     public AngenommenFacade theAngenommenFacade;
     public LieferungFacade theLieferungFacade;
@@ -209,6 +210,7 @@ public class ConnectionHandler {
             this.theHerstellerFacade= new HerstellerFacade(this.schemaName, this.con);
             this.theRueckversandFacade= new RueckversandFacade(this.schemaName, this.con);
             this.theLieferartManagerFacade= new LieferartManagerFacade(this.schemaName, this.con);
+            this.theProdGEntfernenCommandFacade= new ProdGEntfernenCommandFacade(this.schemaName, this.con);
             this.theHinversandFacade= new HinversandFacade(this.schemaName, this.con);
             this.theAngenommenFacade= new AngenommenFacade(this.schemaName, this.con);
             this.theLieferungFacade= new LieferungFacade(this.schemaName, this.con);

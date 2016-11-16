@@ -29,8 +29,6 @@ public interface ArtikelManager4Public extends Anything, AbstractPersistentProxi
 				throws PersistenceException;
     public void neuerArtikel(final String artikelnummer, final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
 				throws model.UserException, PersistenceException;
-    public void produktgruppeHinzufuegen(final Produktgruppe4Public produktgruppe, final String name) 
-				throws model.ExcAlreadyExists, model.CycleException, PersistenceException;
 
 }
 

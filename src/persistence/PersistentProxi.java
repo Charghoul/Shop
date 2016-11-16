@@ -19,7 +19,7 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
 	
   private static ListProxiFactory [] getTheListProxiFactories(){
 	if (listProxiFactories == null){
-		listProxiFactories = new ListProxiFactory[182];
+		listProxiFactories = new ListProxiFactory[185];
         listProxiFactories[111] = new ListProxiFactory(){
             AbstractPersistentRoot create(long objectId, long entryId){
                 return new VerkaufListEntryProxi(objectId, entryId);
@@ -175,6 +175,11 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
                 return new LieferartManagerListEntryProxi(objectId, entryId);
             }
         };
+        listProxiFactories[184] = new ListProxiFactory(){
+            AbstractPersistentRoot create(long objectId, long entryId){
+                return new ProdGEntfernenCommandListEntryProxi(objectId, entryId);
+            }
+        };
         listProxiFactories[117] = new ListProxiFactory(){
             AbstractPersistentRoot create(long objectId, long entryId){
                 return new HinversandListEntryProxi(objectId, entryId);
@@ -215,7 +220,7 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
   }
   private static ProxiFactory [] getTheProxiFactories(){
 	if (proxiFactories == null){
-		proxiFactories = new ProxiFactory [182];
+		proxiFactories = new ProxiFactory [185];
         proxiFactories[111] = new ProxiFactory(){
             AbstractPersistentRoot create(long objectId){
                 return new VerkaufProxi(objectId);
@@ -369,6 +374,11 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
         proxiFactories[97] = new ProxiFactory(){
             AbstractPersistentRoot create(long objectId){
                 return new LieferartManagerProxi(objectId);
+            }
+        };
+        proxiFactories[184] = new ProxiFactory(){
+            AbstractPersistentRoot create(long objectId){
+                return new ProdGEntfernenCommandProxi(objectId);
             }
         };
         proxiFactories[117] = new ProxiFactory(){

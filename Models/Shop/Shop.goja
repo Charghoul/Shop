@@ -20,13 +20,18 @@ server ServiceAdmin extends Service {
 	one-to-one HerstellerManager herstellerManager;
 	void neuerArtikel(ArtikelManager artikelManager, String artikelnummer, String bezeichnung, Fraction preis, Integer minLagerbestand, 		Integer maxLagerbestand, Integer hstLieferzeit);
 	void produktgruppeHinzufuegen(Produktgruppe produktgruppe, String name)  throws ExcAlreadyExists, CycleException;
-	void artikelHinzufuegen(Produktgruppe produktgruppe, Artikel artikel)  throws ExcAlreadyExists, CycleException;
+	void produktgruppeEntfernen(Produktgruppe produktgruppe);
+	void artikelAnhaengen(Produktgruppe produktgruppe, Artikel artikel)  throws ExcAlreadyExists, CycleException;
+	void artikelAbhaengen(Produktgruppe produktgruppe, Artikel artikel);
 	void statusVerkauf(Artikel artikel);
 	void statusAuslauf(Artikel artikel);
 	void neueLieferArt(LieferartManager lieferartManager, String name, Integer lieferzeit, Fraction preis) throws ExcAlreadyExists;
 	void aendereLieferart(Lieferart lieferart, String name, Integer lieferzeit, Fraction preis) throws ExcAlreadyExists;
 	void artikelEinlagern(Warenlager warenlager, Artikel artikel, Integer menge) throws ExcLagerbestandOverMax;
 	void artikelEntnehmen(Warenlager warenlager, Position position, Integer menge);
+	void verringereMenge(Position position, Integer menge) throws ExcLagerbestandUnderZero;
+	void aendereMenge(Position position, Integer menge) throws ExcLagerbestandUnderZero, ExcLagerbestandOverMax;
+	void erhoeheMenge(Position position, Integer menge) throws ExcLagerbestandOverMax;
 	void aendereArtikel(Artikel artikel, String bezeichnung, Fraction preis, Integer minLagerbestand, Integer maxLagerbestand, Integer hstLieferzeit) throws ExcAlreadyExists;
 	void neuerHersteller(HerstellerManager herstellerManager, String name) throws ExcAlreadyExists;
 	void aendereHersteller(Hersteller hersteller, String name) throws ExcAlreadyExists;
@@ -38,7 +43,6 @@ server ServiceRegister extends Service {
 singleton ArtikelManager{
 	Artikel ** artikelListe;
 	Produktgruppe ** produktgruppen;
-	void produktgruppeHinzufuegen(Produktgruppe produktgruppe, String name) throws ExcAlreadyExists, CycleException;
 	active void neuerArtikel(String artikelnummer, String bezeichnung, Fraction preis, Integer minLagerbestand, 		Integer maxLagerbestand, Integer hstLieferzeit) throws UserException;
 	active void aendereArtikel(Artikel artikel, String bezeichnung, Fraction preis, Integer minLagerbestand, Integer maxLagerbestand, Integer hstLieferzeit) throws ExcAlreadyExists;
 	void herstellerHinzufuegen(Artikel artikel, Hersteller hersteller);
@@ -95,10 +99,13 @@ class Artikel extends Komponente{
 	void herstellerHinzufuegen(Hersteller hersteller);
 }
 class Produktgruppe extends Komponente{
-	Komponente**komponentenListe hierarchy Hierarchie;
+	symmetric Komponente**komponentenListe hierarchy Hierarchie;
 	prior indexed String name;
 	void produktgruppeHinzufuegen(String name) throws ExcAlreadyExists, CycleException;
-	void artikelHinzufuegen(Artikel artikel) throws ExcAlreadyExists, CycleException;
+	active void prodGEntfernen() throws ExcHasChildren, ExcHasNoParent;
+	void artikelAnhaengen(Artikel artikel) throws ExcAlreadyExists, CycleException;
+	void artikelAbhaengen(Artikel artikel);
+	
 }
 class Hersteller{
 	prior indexed String name;
@@ -116,10 +123,10 @@ class Lieferung{
 	Integer lieferversuche;
 }
 class Position{
-	prior Artikel artikel;
+	no-view prior Artikel artikel;
 	prior Integer menge;
 	void verringereMenge(Integer menge) throws ExcLagerbestandUnderZero;
-	void aendereMenge(Integer menge) throws ExcLagerbestandUnderZero;
+	void aendereMenge(Integer menge) throws ExcLagerbestandUnderZero, ExcLagerbestandOverMax;
 	void erhoeheMenge(Integer menge) throws ExcLagerbestandOverMax;
 	Position enthaeltArtikel(Artikel artikel);
 }
@@ -149,6 +156,8 @@ abstract class BooleanX{}
 singleton TrueX extends BooleanX{}
 singleton FalseX extends BooleanX{}
 
+exception ExcHasNoParent{}
+exception ExcHasChildren{}
 exception ExcInconsistentStatusChange{}
 exception ExcAlreadyExists{}
 exception ExcLagerbestandOverMax{}

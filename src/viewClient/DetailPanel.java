@@ -1599,7 +1599,6 @@ class ProduktgruppeDefaultDetailPanel extends DefaultDetailPanel{
 
 class PositionDefaultDetailPanel extends DefaultDetailPanel{
     
-    protected static final String Position$$artikel = "Position$$artikel";
     protected static final String Position$$menge = "Position$$menge";
     
     protected PositionDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {

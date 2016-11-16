@@ -33,14 +33,20 @@ public interface ServiceAdmin4Public extends Service4Public {
 				throws model.ExcAlreadyExists, PersistenceException;
     public void aendereLieferart(final Lieferart4Public lieferart, final String name, final long lieferzeit, final common.Fraction preis) 
 				throws model.ExcAlreadyExists, PersistenceException;
+    public void aendereMenge(final Position4Public position, final long menge) 
+				throws model.ExcLagerbestandUnderZero, model.ExcLagerbestandOverMax, PersistenceException;
+    public void artikelAbhaengen(final Produktgruppe4Public produktgruppe, final Artikel4Public artikel) 
+				throws PersistenceException;
+    public void artikelAnhaengen(final Produktgruppe4Public produktgruppe, final Artikel4Public artikel) 
+				throws model.ExcAlreadyExists, model.CycleException, PersistenceException;
     public void artikelEinlagern(final Warenlager4Public warenlager, final Artikel4Public artikel, final long menge) 
 				throws model.ExcLagerbestandOverMax, PersistenceException;
     public void artikelEntnehmen(final Warenlager4Public warenlager, final Position4Public position, final long menge) 
 				throws PersistenceException;
-    public void artikelHinzufuegen(final Produktgruppe4Public produktgruppe, final Artikel4Public artikel) 
-				throws model.ExcAlreadyExists, model.CycleException, PersistenceException;
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException;
+    public void erhoeheMenge(final Position4Public position, final long menge) 
+				throws model.ExcLagerbestandOverMax, PersistenceException;
     public void herstellerHinzufuegen(final Artikel4Public artikel, final Hersteller4Public hersteller) 
 				throws PersistenceException;
     public void initializeOnCreation() 
@@ -53,12 +59,16 @@ public interface ServiceAdmin4Public extends Service4Public {
 				throws PersistenceException;
     public void neuerHersteller(final HerstellerManager4Public herstellerManager, final String name) 
 				throws model.ExcAlreadyExists, PersistenceException;
+    public void produktgruppeEntfernen(final Produktgruppe4Public produktgruppe) 
+				throws PersistenceException;
     public void produktgruppeHinzufuegen(final Produktgruppe4Public produktgruppe, final String name) 
 				throws model.ExcAlreadyExists, model.CycleException, PersistenceException;
     public void statusAuslauf(final Artikel4Public artikel) 
 				throws PersistenceException;
     public void statusVerkauf(final Artikel4Public artikel) 
 				throws PersistenceException;
+    public void verringereMenge(final Position4Public position, final long menge) 
+				throws model.ExcLagerbestandUnderZero, PersistenceException;
 
 }
 

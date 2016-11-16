@@ -124,6 +124,18 @@ public class ServiceAdminICProxi extends ServiceICProxi implements PersistentSer
 				throws model.ExcAlreadyExists, PersistenceException{
         ((PersistentServiceAdmin)this.getTheObject()).aendereLieferart(lieferart, name, lieferzeit, preis);
     }
+    public void aendereMenge(final Position4Public position, final long menge) 
+				throws model.ExcLagerbestandUnderZero, model.ExcLagerbestandOverMax, PersistenceException{
+        ((PersistentServiceAdmin)this.getTheObject()).aendereMenge(position, menge);
+    }
+    public void artikelAbhaengen(final Produktgruppe4Public produktgruppe, final Artikel4Public artikel) 
+				throws PersistenceException{
+        ((PersistentServiceAdmin)this.getTheObject()).artikelAbhaengen(produktgruppe, artikel);
+    }
+    public void artikelAnhaengen(final Produktgruppe4Public produktgruppe, final Artikel4Public artikel) 
+				throws model.ExcAlreadyExists, model.CycleException, PersistenceException{
+        ((PersistentServiceAdmin)this.getTheObject()).artikelAnhaengen(produktgruppe, artikel);
+    }
     public void artikelEinlagern(final Warenlager4Public warenlager, final Artikel4Public artikel, final long menge) 
 				throws model.ExcLagerbestandOverMax, PersistenceException{
         ((PersistentServiceAdmin)this.getTheObject()).artikelEinlagern(warenlager, artikel, menge);
@@ -131,10 +143,6 @@ public class ServiceAdminICProxi extends ServiceICProxi implements PersistentSer
     public void artikelEntnehmen(final Warenlager4Public warenlager, final Position4Public position, final long menge) 
 				throws PersistenceException{
         ((PersistentServiceAdmin)this.getTheObject()).artikelEntnehmen(warenlager, position, menge);
-    }
-    public void artikelHinzufuegen(final Produktgruppe4Public produktgruppe, final Artikel4Public artikel) 
-				throws model.ExcAlreadyExists, model.CycleException, PersistenceException{
-        ((PersistentServiceAdmin)this.getTheObject()).artikelHinzufuegen(produktgruppe, artikel);
     }
     public void connected(final String user) 
 				throws PersistenceException{
@@ -147,6 +155,10 @@ public class ServiceAdminICProxi extends ServiceICProxi implements PersistentSer
     public void disconnected() 
 				throws PersistenceException{
         ((PersistentServiceAdmin)this.getTheObject()).disconnected();
+    }
+    public void erhoeheMenge(final Position4Public position, final long menge) 
+				throws model.ExcLagerbestandOverMax, PersistenceException{
+        ((PersistentServiceAdmin)this.getTheObject()).erhoeheMenge(position, menge);
     }
     public void handleException(final Command command, final PersistenceException exception) 
 				throws PersistenceException{
@@ -184,6 +196,10 @@ public class ServiceAdminICProxi extends ServiceICProxi implements PersistentSer
 				throws model.ExcAlreadyExists, PersistenceException{
         ((PersistentServiceAdmin)this.getTheObject()).neuerHersteller(herstellerManager, name);
     }
+    public void produktgruppeEntfernen(final Produktgruppe4Public produktgruppe) 
+				throws PersistenceException{
+        ((PersistentServiceAdmin)this.getTheObject()).produktgruppeEntfernen(produktgruppe);
+    }
     public void produktgruppeHinzufuegen(final Produktgruppe4Public produktgruppe, final String name) 
 				throws model.ExcAlreadyExists, model.CycleException, PersistenceException{
         ((PersistentServiceAdmin)this.getTheObject()).produktgruppeHinzufuegen(produktgruppe, name);
@@ -195,6 +211,10 @@ public class ServiceAdminICProxi extends ServiceICProxi implements PersistentSer
     public void statusVerkauf(final Artikel4Public artikel) 
 				throws PersistenceException{
         ((PersistentServiceAdmin)this.getTheObject()).statusVerkauf(artikel);
+    }
+    public void verringereMenge(final Position4Public position, final long menge) 
+				throws model.ExcLagerbestandUnderZero, PersistenceException{
+        ((PersistentServiceAdmin)this.getTheObject()).verringereMenge(position, menge);
     }
 
     
