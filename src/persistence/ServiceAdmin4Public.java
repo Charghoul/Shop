@@ -40,7 +40,9 @@ public interface ServiceAdmin4Public extends Service4Public {
     public void artikelAnhaengen(final Produktgruppe4Public produktgruppe, final Artikel4Public artikel) 
 				throws model.ExcAlreadyExists, model.CycleException, PersistenceException;
     public void artikelEinlagern(final Warenlager4Public warenlager, final Artikel4Public artikel, final long menge) 
-				throws model.ExcLagerbestandOverMax, PersistenceException;
+				throws PersistenceException;
+    public void artikelEntfernen(final Warenlager4Public warenlager, final Position4Public position) 
+				throws PersistenceException;
     public void artikelEntnehmen(final Warenlager4Public warenlager, final Position4Public position, final long menge) 
 				throws PersistenceException;
     public void copyingPrivateUserAttributes(final Anything copy) 

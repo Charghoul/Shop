@@ -7,6 +7,7 @@ import model.visitor.AnythingReturnExceptionVisitor;
 import model.visitor.AnythingReturnVisitor;
 import model.visitor.AnythingVisitor;
 import persistence.*;
+import serverConstants.ErrorMessages;
 
 
 /* Additional import section end */
@@ -147,6 +148,24 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
     }
     
     
+    public void artikelEinlagern(final Artikel4Public artikel, final long menge, final Invoker invoker) 
+				throws PersistenceException{
+        java.sql.Date now = new java.sql.Date(new java.util.Date().getTime());
+		ArtikelEinlagernCommand4Public command = model.meta.ArtikelEinlagernCommand.createArtikelEinlagernCommand(menge, now, now);
+		command.setArtikel(artikel);
+		command.setInvoker(invoker);
+		command.setCommandReceiver(getThis());
+		model.meta.CommandCoordinator.getTheCommandCoordinator().coordinate(command);
+    }
+    public void artikelEntfernen(final Position4Public position, final Invoker invoker) 
+				throws PersistenceException{
+        java.sql.Date now = new java.sql.Date(new java.util.Date().getTime());
+		ArtikelEntfernenCommand4Public command = model.meta.ArtikelEntfernenCommand.createArtikelEntfernenCommand(now, now);
+		command.setPosition(position);
+		command.setInvoker(invoker);
+		command.setCommandReceiver(getThis());
+		model.meta.CommandCoordinator.getTheCommandCoordinator().coordinate(command);
+    }
     public void artikelEntnehmen(final Position4Public position, final long menge, final Invoker invoker) 
 				throws PersistenceException{
         java.sql.Date now = new java.sql.Date(new java.util.Date().getTime());
@@ -169,16 +188,23 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
     public void artikelEinlagern(final Artikel4Public artikel, final long menge) 
 				throws model.ExcLagerbestandOverMax, PersistenceException{
         // TODO: artikeleinlagern keine Doppelten Funktioniert noch nicht!
-        Position4Public temp = getThis().getWarenListe().findFirst(new Predcate<Position4Public>() {
+
+        Position4Public p4 = getThis().getWarenListe().findFirst(new Predcate<Position4Public>() {
             @Override
             public boolean test(Position4Public argument) throws PersistenceException {
                 return argument.enthaeltArtikel(artikel) != null;
                  }
         });
-        if( temp != null) temp.erhoeheMenge(menge);
+        if( p4 != null) {
+            p4.erhoeheMenge(menge);
+        }
         else getThis().getWarenListe().add(Position.createPosition(artikel, menge));
 
-
+    }
+    public void artikelEntfernen(final Position4Public position) 
+				throws PersistenceException{
+        //TODO: CUSTOM artikelEntfernen überprüfung ob noch sachen auf lager und artikelstatus auslauf
+        getThis().getWarenListe().removeAll(position);
     }
     public void artikelEntnehmen(final Position4Public position, final long menge) 
 				throws model.ExcLagerbestandUnderZero, PersistenceException{
@@ -192,11 +218,8 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
     }
     public void initializeOnCreation() 
 				throws PersistenceException{
-        try {
-            getThis().artikelEinlagern(Artikel.createArtikel("1234","test", Fraction.parse("5"),10,100,3,Neuanlage.getTheNeuanlage()),20);
-        } catch (ExcLagerbestandOverMax excLagerbestandOverMax) {
-            excLagerbestandOverMax.printStackTrace();
-        }
+        Artikel4Public artikel = Artikel.createArtikel("31415926", "Raspberry", Fraction.parse("5/2"), 10, 200, 2, Neuanlage.getTheNeuanlage());
+        getThis().getWarenListe().add(Position.createPosition(artikel,15));
 
     }
     public void initializeOnInstantiation() 

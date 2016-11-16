@@ -28,7 +28,7 @@ public interface ServiceKunde4Public extends Service4Public {
     public String serviceKunde_Menu_Filter(final Anything anything) 
 				throws PersistenceException;
     public void aendereMenge(final Position4Public position, final long menge) 
-				throws model.ExcLagerbestandUnderZero, PersistenceException;
+				throws model.ExcLagerbestandUnderZero, model.ExcLagerbestandOverMax, PersistenceException;
     public void bestellen(final EinkaufsManager4Public einkaufsManager) 
 				throws PersistenceException;
     public void copyingPrivateUserAttributes(final Anything copy) 

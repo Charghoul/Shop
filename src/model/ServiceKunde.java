@@ -229,8 +229,8 @@ public class ServiceKunde extends model.Service implements PersistentServiceKund
     // Start of section that contains operations that must be implemented.
     
     public void aendereMenge(final Position4Public position, final long menge) 
-				throws model.ExcLagerbestandUnderZero, PersistenceException{
-        //TODO: implement method: aendereMenge
+				throws model.ExcLagerbestandUnderZero, model.ExcLagerbestandOverMax, PersistenceException{
+        position.aendereMenge(menge);
         getThis().signalChanged(true);
     }
     public void bestellen(final EinkaufsManager4Public einkaufsManager) 

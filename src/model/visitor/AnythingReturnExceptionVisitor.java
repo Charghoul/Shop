@@ -6,6 +6,8 @@ import persistence.*;
 public interface AnythingReturnExceptionVisitor<R, E extends model.UserException> extends ArtikelstatusReturnExceptionVisitor<R, E> ,BestellstatusReturnExceptionVisitor<R, E> ,BooleanXReturnExceptionVisitor<R, E> ,CommonDateReturnExceptionVisitor<R, E> ,KomponenteReturnExceptionVisitor<R, E> ,ServiceReturnExceptionVisitor<R, E> {
     
     public R handleAendereArtikelCommand(AendereArtikelCommand4Public aendereArtikelCommand) throws PersistenceException, E;
+    public R handleArtikelEinlagernCommand(ArtikelEinlagernCommand4Public artikelEinlagernCommand) throws PersistenceException, E;
+    public R handleArtikelEntfernenCommand(ArtikelEntfernenCommand4Public artikelEntfernenCommand) throws PersistenceException, E;
     public R handleArtikelEntnehmenCommand(ArtikelEntnehmenCommand4Public artikelEntnehmenCommand) throws PersistenceException, E;
     public R handleArtikelManager(ArtikelManager4Public artikelManager) throws PersistenceException, E;
     public R handleBestellung(Bestellung4Public bestellung) throws PersistenceException, E;

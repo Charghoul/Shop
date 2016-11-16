@@ -324,10 +324,16 @@ public class ServiceAdmin extends model.Service implements PersistentServiceAdmi
 
     }
     public void artikelEinlagern(final Warenlager4Public warenlager, final Artikel4Public artikel, final long menge) 
-				throws model.ExcLagerbestandOverMax, PersistenceException{
-        warenlager.artikelEinlagern(artikel, menge);
+				throws PersistenceException{
+        warenlager.artikelEinlagern(artikel, menge,getThis());
         getThis().signalChanged(true);
 
+    }
+    public void artikelEntfernen(final Warenlager4Public warenlager, final Position4Public position) 
+				throws PersistenceException{
+        warenlager.artikelEntfernen(position);
+        getThis().signalChanged(true);
+        
     }
     public void artikelEntnehmen(final Warenlager4Public warenlager, final Position4Public position, final long menge) 
 				throws PersistenceException{

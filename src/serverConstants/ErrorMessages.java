@@ -11,8 +11,8 @@ public class ErrorMessages {
     public static final String LieferArtAlreadyExists = "Eine Lieferzeit mit diesem Namen existiert bereits";
     public static final String StatusDidNotChange = "Der Artikel ist bereits in diesem Status";
     public static final String ArtikelAlreadyInBasket = "Der Artikel ist schon im Einkaufswagen";
-    public static final String LagerbestandUnderZero = "Negativer Lagerbestand nicht möglich!";
-    public static final String LagerbestandOverMax = "maximale Lagerkapazitäten erreicht";
+    public static final String LagerbestandUnderZero = "Negativer Lagerbestand nicht erlaubt!";
+    public static final String LagerbestandOverMax = "maximaler Lagerbestand ueberschritten";
     public static final String HerstellerAlreadyExists = "Dieser Hersteller existiert bereits";
     public static final String StatusUbersprungen = "Status wurde uebersprungen";
     public static final String ProduktgruppeAlreadyExists = "Diese Produktgruppe existiert bereits";

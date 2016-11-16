@@ -97,7 +97,7 @@ public class ServiceKundeProxi extends ServiceProxi implements PersistentService
         ((PersistentServiceKunde)this.getTheObject()).signalChanged(signal);
     }
     public void aendereMenge(final Position4Public position, final long menge) 
-				throws model.ExcLagerbestandUnderZero, PersistenceException{
+				throws model.ExcLagerbestandUnderZero, model.ExcLagerbestandOverMax, PersistenceException{
         ((PersistentServiceKunde)this.getTheObject()).aendereMenge(position, menge);
     }
     public void bestellen(final EinkaufsManager4Public einkaufsManager) 

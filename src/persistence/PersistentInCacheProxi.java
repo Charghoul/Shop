@@ -12,7 +12,7 @@ public abstract class PersistentInCacheProxi extends PersistentRoot {
 		
 	  private static ICProxiFactory [] getTheICProxiFactories(){
 		if (iCProxiFactories == null){
-			iCProxiFactories = new ICProxiFactory[185];
+			iCProxiFactories = new ICProxiFactory[188];
         iCProxiFactories[111] = new ICProxiFactory(){
             PersistentInCacheProxi create(long objectId){
                 return new VerkaufICProxi(objectId);
@@ -21,6 +21,11 @@ public abstract class PersistentInCacheProxi extends PersistentRoot {
         iCProxiFactories[2] = new ICProxiFactory(){
             PersistentInCacheProxi create(long objectId){
                 return new ServerICProxi(objectId);
+            }
+        };
+        iCProxiFactories[186] = new ICProxiFactory(){
+            PersistentInCacheProxi create(long objectId){
+                return new ArtikelEntfernenCommandICProxi(objectId);
             }
         };
         iCProxiFactories[90] = new ICProxiFactory(){
@@ -48,7 +53,7 @@ public abstract class PersistentInCacheProxi extends PersistentRoot {
                 return new BestellungICProxi(objectId);
             }
         };
-        iCProxiFactories[157] = new ICProxiFactory(){
+        iCProxiFactories[187] = new ICProxiFactory(){
             PersistentInCacheProxi create(long objectId){
                 return new ArtikelEntnehmenCommandICProxi(objectId);
             }
@@ -86,6 +91,11 @@ public abstract class PersistentInCacheProxi extends PersistentRoot {
         iCProxiFactories[0] = new ICProxiFactory(){
             PersistentInCacheProxi create(long objectId){
                 return new CommandCoordinatorICProxi(objectId);
+            }
+        };
+        iCProxiFactories[185] = new ICProxiFactory(){
+            PersistentInCacheProxi create(long objectId){
+                return new ArtikelEinlagernCommandICProxi(objectId);
             }
         };
         iCProxiFactories[114] = new ICProxiFactory(){

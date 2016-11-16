@@ -42,7 +42,7 @@ public class ServiceKundeConnection extends ServiceConnection {
     }
     
     @SuppressWarnings("unchecked")
-    public synchronized void aendereMenge(PositionView position, long menge) throws ModelException, ExcLagerbestandUnderZero{
+    public synchronized void aendereMenge(PositionView position, long menge) throws ModelException, ExcLagerbestandUnderZero, ExcLagerbestandOverMax{
         try {
             Vector<Object> parameters = new Vector<Object>();
             if (position == null){
@@ -57,6 +57,8 @@ public class ServiceKundeConnection extends ServiceConnection {
                     throw new ModelException((String)success.get(common.RPCConstantsAndServices.ExceptionMessageFieldName), ((Integer)success.get(common.RPCConstantsAndServices.ExceptionNumberFieldName)).intValue());
                 if(((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == -255)
                     throw ExcLagerbestandUnderZero.fromHashtableToExcLagerbestandUnderZero((java.util.HashMap<String,Object>)success.get(common.RPCConstantsAndServices.ResultFieldName), this.getHandler());
+                if(((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == -265)
+                    throw ExcLagerbestandOverMax.fromHashtableToExcLagerbestandOverMax((java.util.HashMap<String,Object>)success.get(common.RPCConstantsAndServices.ResultFieldName), this.getHandler());
                 throw new ModelException ("Fatal error (unknown exception code:" + (Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName) + ")",0);
             }
         }catch(IOException ioe){
