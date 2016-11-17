@@ -10,6 +10,8 @@ public interface ServerView extends Anything, Remote, AbstractViewRoot {
     
     public ServiceView getService()throws ModelException;
     public void setService(ServiceView newValue) throws ModelException ;
+    public ZeitManagerView getZeitmanager()throws ModelException;
+    public void setZeitmanager(ZeitManagerView newValue) throws ModelException ;
     public java.util.Vector<ErrorDisplayView> getErrors()throws ModelException;
     public void setErrors(java.util.Vector<ErrorDisplayView> newValue) throws ModelException ;
     public String getUser()throws ModelException;

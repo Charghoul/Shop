@@ -3,7 +3,7 @@ package model.visitor;
 
 import persistence.*;
 
-public interface AnythingExceptionVisitor<E extends model.UserException> extends ArtikelstatusExceptionVisitor<E>,BestellstatusExceptionVisitor<E>,BooleanXExceptionVisitor<E>,CommonDateExceptionVisitor<E>,KomponenteExceptionVisitor<E>,ServiceExceptionVisitor<E>{
+public interface AnythingExceptionVisitor<E extends model.UserException> extends ArtikelstatusExceptionVisitor<E>,BestellstatusExceptionVisitor<E>,BooleanXExceptionVisitor<E>,CommonDateExceptionVisitor<E>,KomponenteExceptionVisitor<E>,ServiceExceptionVisitor<E>,ZeitObjektExceptionVisitor<E>{
     
     public void handleAendereArtikelCommand(AendereArtikelCommand4Public aendereArtikelCommand) throws PersistenceException, E;
     public void handleArtikelEinlagernCommand(ArtikelEinlagernCommand4Public artikelEinlagernCommand) throws PersistenceException, E;
@@ -18,11 +18,11 @@ public interface AnythingExceptionVisitor<E extends model.UserException> extends
     public void handleErrorDisplay(ErrorDisplay4Public errorDisplay) throws PersistenceException, E;
     public void handleHersteller(Hersteller4Public hersteller) throws PersistenceException, E;
     public void handleHerstellerManager(HerstellerManager4Public herstellerManager) throws PersistenceException, E;
+    public void handleIntegerWrapper(IntegerWrapper4Public integerWrapper) throws PersistenceException, E;
     public void handleKonto(Konto4Public konto) throws PersistenceException, E;
     public void handleKunde(Kunde4Public kunde) throws PersistenceException, E;
     public void handleLieferart(Lieferart4Public lieferart) throws PersistenceException, E;
     public void handleLieferartManager(LieferartManager4Public lieferartManager) throws PersistenceException, E;
-    public void handleLieferung(Lieferung4Public lieferung) throws PersistenceException, E;
     public void handleNeuerArtikelCommand(NeuerArtikelCommand4Public neuerArtikelCommand) throws PersistenceException, E;
     public void handlePosition(Position4Public position) throws PersistenceException, E;
     public void handleProdGEntfernenCommand(ProdGEntfernenCommand4Public prodGEntfernenCommand) throws PersistenceException, E;
@@ -30,6 +30,8 @@ public interface AnythingExceptionVisitor<E extends model.UserException> extends
     public void handleServer(Server4Public server) throws PersistenceException, E;
     public void handleStatusAuslaufCommand(StatusAuslaufCommand4Public statusAuslaufCommand) throws PersistenceException, E;
     public void handleStatusVerkaufCommand(StatusVerkaufCommand4Public statusVerkaufCommand) throws PersistenceException, E;
+    public void handleThreadOfControl(ThreadOfControl4Public threadOfControl) throws PersistenceException, E;
     public void handleWarenlager(Warenlager4Public warenlager) throws PersistenceException, E;
+    public void handleZeitManager(ZeitManager4Public zeitManager) throws PersistenceException, E;
     
 }

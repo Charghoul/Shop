@@ -1,9 +1,14 @@
 
 package view.objects;
 
-import view.*;
-import viewClient.*;
+import view.ErrorDisplayView;
+import view.ModelException;
+import view.ServiceRegisterView;
 import view.visitor.*;
+import viewClient.ConnectionIndex;
+import viewClient.ConnectionMaster;
+import viewClient.ExceptionAndEventHandler;
+import viewClient.ServiceRegisterConnection;
 
 
 /* Additional import section end */

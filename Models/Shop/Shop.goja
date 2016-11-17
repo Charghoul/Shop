@@ -2,6 +2,7 @@ model Shop {
 
 server Server {
 	Service service;
+	ZeitManager zeitmanager;
 }
 
 abstract server Service {
@@ -9,6 +10,7 @@ abstract server Service {
 server ServiceKunde extends Service {
 	one-to-one EinkaufsManager einkaufsManager;
 	ArtikelManager artikelManager;
+	Warenlager warenlager;
 	void neuePosition(EinkaufsManager einkaufsManager, Artikel artikel, Integer menge) throws UserException;
 	void bestellen(EinkaufsManager einkaufsManager);
 	void aendereMenge(Position position, Integer menge) throws ExcLagerbestandUnderZero, ExcLagerbestandOverMax;
@@ -48,11 +50,31 @@ singleton ArtikelManager{
 	active void aendereArtikel(Artikel artikel, String bezeichnung, Fraction preis, Integer minLagerbestand, Integer maxLagerbestand, Integer hstLieferzeit) throws ExcAlreadyExists;
 	void herstellerHinzufuegen(Artikel artikel, Hersteller hersteller);
 }
+
+class IntegerWrapper {
+	prior Integer theInt;
+	void add(Integer addend);
+}
+
 singleton Warenlager{
+	IntegerWrapper ** Artikel ** templist;
 	Position ** warenListe;
 	active void artikelEntnehmen##artEntf(Position position, Integer menge) throws ExcLagerbestandUnderZero;
 	active void artikelEinlagern(Artikel artikel, Integer menge) throws ExcLagerbestandOverMax;
 	active void artikelEntfernen##artEntn(Position position);
+}
+
+singleton ZeitManager {
+	ZeitObjekt ** zeitObjektListe;
+	void handleTimeUnitElapsed();
+	void neueHstLieferung(Artikel artikel, Integer menge, Integer lieferzeit);
+	void neueKndLieferung(Bestellung bestellung, Lieferart lieferart, Integer lieferzeit);
+}
+
+abstract class ZeitObjekt{
+	prior Integer remainingTime;
+	void reduceTime();
+	void handleTimeElapsed();
 }
 
 class HerstellerManager{
@@ -108,8 +130,6 @@ class Produktgruppe extends Komponente{
 	void removeChild(Produktgruppe child);
 	void artikelAnhaengen(Artikel artikel) throws ExcAlreadyExists, CycleException;
 	void artikelAbhaengen(Artikel artikel);
-	
-	
 }
 class Hersteller{
 	prior indexed String name;
@@ -121,10 +141,18 @@ class Bestellung{
 	prior indexed String bestellID;
 	Bestellstatus bestellstatus;
 }
-class Lieferung{
-	public Bestellung bestellung;
-	 public Lieferart lieferart;
+abstract class Lieferung extends ZeitObjekt{
+
+}
+class KndLieferung extends Lieferung{
+	prior Bestellung bestellung;
+	prior Lieferart lieferart;
 	Integer lieferversuche;
+}
+
+class HstLieferung extends Lieferung{
+	prior Artikel artikel;
+	prior Integer menge;
 }
 class Position{
 	no-view prior Artikel artikel;
@@ -141,6 +169,11 @@ class Lieferart{
 	prior Fraction preis;
 	void aendereLieferart(String name, Integer lieferzeit, Fraction preis) throws ExcAlreadyExists;
 	BooleanX alreadyExists(String name);
+}
+
+class ThreadOfControl{
+	void registerNew(String name, Integer seconds);
+	void run();
 }
 
 abstract class Artikelstatus{}

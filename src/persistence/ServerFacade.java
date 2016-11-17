@@ -29,7 +29,7 @@ public class ServerFacade{
             callable.execute();
             long id = callable.getLong(1);
             callable.close();
-            Server result = new Server(null,null,password,user,hackCount,hackDelay,id);
+            Server result = new Server(null,null,null,password,user,hackCount,hackDelay,id);
             if (idCreateIfLessZero < 0)Cache.getTheCache().put(result);
             return (PersistentServer)PersistentProxi.createProxi(id, -103);
         }catch(SQLException se) {
@@ -45,7 +45,7 @@ public class ServerFacade{
             callable.execute();
             long id = callable.getLong(1);
             callable.close();
-            Server result = new Server(null,null,password,user,hackCount,hackDelay,id);
+            Server result = new Server(null,null,null,password,user,hackCount,hackDelay,id);
             Cache.getTheCache().put(result);
             return (PersistentServer)PersistentProxi.createProxi(id, -103);
         }catch(SQLException se) {
@@ -69,15 +69,19 @@ public class ServerFacade{
             PersistentService service = null;
             if (obj.getLong(2) != 0)
                 service = (PersistentService)PersistentProxi.createProxi(obj.getLong(2), obj.getLong(3));
-            PersistentServer This = null;
+            PersistentZeitManager zeitmanager = null;
             if (obj.getLong(4) != 0)
-                This = (PersistentServer)PersistentProxi.createProxi(obj.getLong(4), obj.getLong(5));
+                zeitmanager = (PersistentZeitManager)PersistentProxi.createProxi(obj.getLong(4), obj.getLong(5));
+            PersistentServer This = null;
+            if (obj.getLong(6) != 0)
+                This = (PersistentServer)PersistentProxi.createProxi(obj.getLong(6), obj.getLong(7));
             Server result = new Server(service,
+                                       zeitmanager,
                                        This,
-                                       obj.getString(6) == null ? "" : obj.getString(6) /* In Oracle "" = null !!! */,
-                                       obj.getString(7) == null ? "" : obj.getString(7) /* In Oracle "" = null !!! */,
-                                       obj.getLong(8),
-                                       obj.getTimestamp(9),
+                                       obj.getString(8) == null ? "" : obj.getString(8) /* In Oracle "" = null !!! */,
+                                       obj.getString(9) == null ? "" : obj.getString(9) /* In Oracle "" = null !!! */,
+                                       obj.getLong(10),
+                                       obj.getTimestamp(11),
                                        ServerId);
             obj.close();
             callable.close();
@@ -132,6 +136,19 @@ public class ServerFacade{
             callable.setLong(1, ServerId);
             callable.setLong(2, serviceVal.getId());
             callable.setLong(3, serviceVal.getClassId());
+            callable.execute();
+            callable.close();
+        }catch(SQLException se) {
+            throw new PersistenceException(se.getMessage(), se.getErrorCode());
+        }
+    }
+    public void zeitmanagerSet(long ServerId, ZeitManager4Public zeitmanagerVal) throws PersistenceException {
+        try{
+            CallableStatement callable;
+            callable = this.con.prepareCall("Begin " + this.schemaName + ".SrvrFacade.ztmngrSet(?, ?, ?); end;");
+            callable.setLong(1, ServerId);
+            callable.setLong(2, zeitmanagerVal.getId());
+            callable.setLong(3, zeitmanagerVal.getClassId());
             callable.execute();
             callable.close();
         }catch(SQLException se) {

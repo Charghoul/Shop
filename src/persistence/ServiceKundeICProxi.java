@@ -34,6 +34,12 @@ public class ServiceKundeICProxi extends ServiceICProxi implements PersistentSer
     public void setArtikelManager(ArtikelManager4Public newValue) throws PersistenceException {
         ((PersistentServiceKunde)this.getTheObject()).setArtikelManager(newValue);
     }
+    public Warenlager4Public getWarenlager() throws PersistenceException {
+        return ((PersistentServiceKunde)this.getTheObject()).getWarenlager();
+    }
+    public void setWarenlager(Warenlager4Public newValue) throws PersistenceException {
+        ((PersistentServiceKunde)this.getTheObject()).setWarenlager(newValue);
+    }
     public PersistentServiceKunde getThis() throws PersistenceException {
         return ((PersistentServiceKunde)this.getTheObject()).getThis();
     }

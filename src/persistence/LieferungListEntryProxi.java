@@ -1,6 +1,6 @@
 package persistence;
 
-public class LieferungListEntryProxi extends LieferungProxi implements PersistentLieferungListEntryProxi {
+public abstract class LieferungListEntryProxi extends LieferungProxi implements PersistentLieferungListEntryProxi {
 
   long entryId;
 

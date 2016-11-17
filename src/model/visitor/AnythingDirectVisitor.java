@@ -7,32 +7,15 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     
     public abstract void handleServer(Server4Public server) throws PersistenceException;
     
-    public abstract void handlePosition(Position4Public position) throws PersistenceException;
-    
     public abstract void handleEinkaufsManager(EinkaufsManager4Public einkaufsManager) throws PersistenceException;
     
     public abstract void handleErrorDisplay(ErrorDisplay4Public errorDisplay) throws PersistenceException;
-    
-    public abstract void handleService(Service4Public service) throws PersistenceException;
-    
-    public void handleServiceRegister(ServiceRegister4Public serviceRegister) throws PersistenceException{
-        this.handleService(serviceRegister);
-    }
-    public void handleServiceKunde(ServiceKunde4Public serviceKunde) throws PersistenceException{
-        this.handleService(serviceKunde);
-    }
-    public void handleServiceAdmin(ServiceAdmin4Public serviceAdmin) throws PersistenceException{
-        this.handleService(serviceAdmin);
-    }
-    public abstract void handleArtikelManager(ArtikelManager4Public artikelManager) throws PersistenceException;
     
     public abstract void handleBestellung(Bestellung4Public bestellung) throws PersistenceException;
     
     public abstract void handleHerstellerManager(HerstellerManager4Public herstellerManager) throws PersistenceException;
     
     public abstract void handleLieferart(Lieferart4Public lieferart) throws PersistenceException;
-    
-    public abstract void handleKonto(Konto4Public konto) throws PersistenceException;
     
     public abstract void handleCommandCoordinator(CommandCoordinator4Public commandCoordinator) throws PersistenceException;
     
@@ -44,13 +27,7 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     public void handleProduktgruppe(Produktgruppe4Public produktgruppe) throws PersistenceException{
         this.handleKomponente(produktgruppe);
     }
-    public abstract void handleKunde(Kunde4Public kunde) throws PersistenceException;
-    
-    public abstract void handleHersteller(Hersteller4Public hersteller) throws PersistenceException;
-    
-    public abstract void handleLieferartManager(LieferartManager4Public lieferartManager) throws PersistenceException;
-    
-    public abstract void handleLieferung(Lieferung4Public lieferung) throws PersistenceException;
+    public abstract void handleThreadOfControl(ThreadOfControl4Public threadOfControl) throws PersistenceException;
     
     public abstract void handleBestellstatus(Bestellstatus4Public bestellstatus) throws PersistenceException;
     
@@ -69,6 +46,39 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     public void handleAngenommen(Angenommen4Public angenommen) throws PersistenceException{
         this.handleBestellstatus(angenommen);
     }
+    public abstract void handlePosition(Position4Public position) throws PersistenceException;
+    
+    public abstract void handleZeitObjekt(ZeitObjekt4Public zeitObjekt) throws PersistenceException;
+    
+    public void handleHstLieferung(HstLieferung4Public hstLieferung) throws PersistenceException{
+        this.handleZeitObjekt(hstLieferung);
+    }
+    public void handleKndLieferung(KndLieferung4Public kndLieferung) throws PersistenceException{
+        this.handleZeitObjekt(kndLieferung);
+    }
+    public abstract void handleArtikelManager(ArtikelManager4Public artikelManager) throws PersistenceException;
+    
+    public abstract void handleService(Service4Public service) throws PersistenceException;
+    
+    public void handleServiceRegister(ServiceRegister4Public serviceRegister) throws PersistenceException{
+        this.handleService(serviceRegister);
+    }
+    public void handleServiceKunde(ServiceKunde4Public serviceKunde) throws PersistenceException{
+        this.handleService(serviceKunde);
+    }
+    public void handleServiceAdmin(ServiceAdmin4Public serviceAdmin) throws PersistenceException{
+        this.handleService(serviceAdmin);
+    }
+    public abstract void handleZeitManager(ZeitManager4Public zeitManager) throws PersistenceException;
+    
+    public abstract void handleKonto(Konto4Public konto) throws PersistenceException;
+    
+    public abstract void handleHersteller(Hersteller4Public hersteller) throws PersistenceException;
+    
+    public abstract void handleKunde(Kunde4Public kunde) throws PersistenceException;
+    
+    public abstract void handleLieferartManager(LieferartManager4Public lieferartManager) throws PersistenceException;
+    
     public abstract void handleBooleanX(BooleanX4Public booleanX) throws PersistenceException;
     
     public void handleFalseX(FalseX4Public falseX) throws PersistenceException{
@@ -77,6 +87,8 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     public void handleTrueX(TrueX4Public trueX) throws PersistenceException{
         this.handleBooleanX(trueX);
     }
+    public abstract void handleIntegerWrapper(IntegerWrapper4Public integerWrapper) throws PersistenceException;
+    
     public abstract void handleWarenlager(Warenlager4Public warenlager) throws PersistenceException;
     
     public abstract void handleCommonDate(CommonDate4Public commonDate) throws PersistenceException;

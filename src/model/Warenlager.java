@@ -2,12 +2,10 @@
 package model;
 
 import common.Fraction;
-import model.visitor.AnythingExceptionVisitor;
-import model.visitor.AnythingReturnExceptionVisitor;
-import model.visitor.AnythingReturnVisitor;
-import model.visitor.AnythingVisitor;
+import model.visitor.*;
 import persistence.*;
-import serverConstants.ErrorMessages;
+
+import java.util.HashMap;
 
 
 /* Additional import section end */
@@ -64,6 +62,7 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
     java.util.HashMap<String,Object> result = null;
         if (depth > 0 && essentialLevel <= common.RPCConstantsAndServices.EssentialDepth){
             result = super.toHashtable(allResults, depth, essentialLevel, forGUI, false, tdObserver);
+            result.put("templist", this.getTemplist().getValues().getVector(allResults, depth, essentialLevel, forGUI, tdObserver, false, true));
             result.put("warenListe", this.getWarenListe().getVector(allResults, depth, essentialLevel, forGUI, tdObserver, false, true));
             String uniqueKey = common.RPCConstantsAndServices.createHashtableKey(this.getClassId(), this.getId());
             if (leaf && !allResults.containsKey(uniqueKey)) allResults.put(uniqueKey, result);
@@ -82,12 +81,14 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
     public boolean hasEssentialFields() throws PersistenceException{
         return false;
     }
+    protected Warenlager_TemplistProxi templist;
     protected Warenlager_WarenListeProxi warenListe;
     protected PersistentWarenlager This;
     
     public Warenlager(PersistentWarenlager This,long id) throws PersistenceException {
         /* Shall not be used by clients for object construction! Use static create operation instead! */
         super(id);
+        this.templist = new Warenlager_TemplistProxi(this);
         this.warenListe = new Warenlager_WarenListeProxi(this);
         if (This != null && !(this.isTheSameAs(This))) this.This = This;        
     }
@@ -104,6 +105,9 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
         // Singletons cannot be delayed!
     }
     
+    public Warenlager_TemplistProxi getTemplist() throws PersistenceException {
+        return this.templist;
+    }
     public Warenlager_WarenListeProxi getWarenListe() throws PersistenceException {
         return this.warenListe;
     }
@@ -144,6 +148,7 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
     }
     public int getLeafInfo() throws PersistenceException{
         if (this.getWarenListe().getLength() > 0) return 1;
+        if( this.getTemplist().getValues().getLength() > 0) return 1;
         return 0;
     }
     
@@ -200,6 +205,15 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
         }
         else getThis().getWarenListe().add(Position.createPosition(artikel, menge));
 
+        // Hashmap
+        PersistentIntegerWrapper temp = (PersistentIntegerWrapper) getThis().getTemplist().get(artikel);
+        if (temp == null) {
+            temp = (PersistentIntegerWrapper) (IntegerWrapper.createIntegerWrapper(0));
+        }
+        temp.add(menge);
+        getThis().getTemplist().put(artikel, temp);
+
+
     }
     public void artikelEntfernen(final Position4Public position) 
 				throws PersistenceException{
@@ -218,8 +232,7 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
     }
     public void initializeOnCreation() 
 				throws PersistenceException{
-        Artikel4Public artikel = Artikel.createArtikel("31415926", "Raspberry", Fraction.parse("5/2"), 10, 200, 2, Neuanlage.getTheNeuanlage());
-        getThis().getWarenListe().add(Position.createPosition(artikel,15));
+
 
     }
     public void initializeOnInstantiation() 

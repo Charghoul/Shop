@@ -16,6 +16,7 @@ public abstract class ServiceAdmin$AuthoriseVisitor extends AnythingStandardVisi
     public abstract void handleNeuanlage(PersistentNeuanlage neuanlage) throws PersistenceException;
     public abstract void handleHersteller(PersistentHersteller hersteller) throws PersistenceException;
     public abstract void handleLieferartManager(PersistentLieferartManager lieferartManager) throws PersistenceException;
+    public abstract void handleIntegerWrapper(PersistentIntegerWrapper integerWrapper) throws PersistenceException;
     public abstract void handleWarenlager(PersistentWarenlager warenlager) throws PersistenceException;
     public abstract void handleArtikel(PersistentArtikel artikel) throws PersistenceException;
     public abstract void handleProduktgruppe(PersistentProduktgruppe produktgruppe) throws PersistenceException;

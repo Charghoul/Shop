@@ -22,6 +22,9 @@ public class WarenlagerICProxi extends PersistentInCacheProxiOptimistic implemen
         return 193;
     }
     
+    public Warenlager_TemplistProxi getTemplist() throws PersistenceException {
+        return ((PersistentWarenlager)this.getTheObject()).getTemplist();
+    }
     public Warenlager_WarenListeProxi getWarenListe() throws PersistenceException {
         return ((PersistentWarenlager)this.getTheObject()).getWarenListe();
     }

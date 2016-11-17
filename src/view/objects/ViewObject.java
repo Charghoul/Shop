@@ -1,11 +1,11 @@
 package view.objects;
 
+import common.RPCConstantsAndServices;
+import view.ModelException;
+
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
-
-import view.ModelException;
-import common.RPCConstantsAndServices;
 
 public abstract class ViewObject extends ViewRoot {
 

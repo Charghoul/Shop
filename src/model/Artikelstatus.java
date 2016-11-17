@@ -1,7 +1,6 @@
 
 package model;
 
-import model.visitor.ArtikelstatusVisitor;
 import persistence.*;
 
 

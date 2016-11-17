@@ -1,6 +1,7 @@
 
 package model;
 
+import common.Fraction;
 import model.visitor.*;
 import persistence.*;
 
@@ -375,6 +376,23 @@ public class ServiceAdmin extends model.Service implements PersistentServiceAdmi
         getThis().setWarenlager(model.Warenlager.getTheWarenlager());
         getThis().setLieferartManager(LieferartManager.createLieferartManager());
         getThis().setHerstellerManager(HerstellerManager.createHerstellerManager());
+
+//        //Test Daten
+//        Artikel4Public art1 = Artikel.createArtikel("1234","test", Fraction.parse("5"),10,100,3, Neuanlage.getTheNeuanlage());
+//        Artikel4Public art2 = Artikel.createArtikel("31415626","Raspberry", Fraction.parse("4"),5,200,4, Neuanlage.getTheNeuanlage());
+//
+//        //Manager
+//        PersistentArtikelManager artM = (PersistentArtikelManager) getArtikelManager();
+//        PersistentWarenlager warM = (PersistentWarenlager) getWarenlager();
+//        PersistentLieferartManager lieM = (PersistentLieferartManager) getLieferartManager();
+//        PersistentHerstellerManager herM = (PersistentHerstellerManager) getHerstellerManager();
+//
+//        //Listen
+//        artM.getArtikelListe().add(art1);
+//        artM.getArtikelListe().add(art2);
+//        warM.getWarenListe().add(Position.createPosition(art1,5));
+//        lieM.getLieferartenListe().add(Lieferart.createLieferart("Standard", 3, Fraction.parse("2/1")));
+//        herM.getHerstellerListe().add(Hersteller.createHersteller("Nintendo"));
     }
     public void initializeOnInstantiation() 
 				throws PersistenceException{

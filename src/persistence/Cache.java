@@ -293,11 +293,13 @@ public class Cache {
 		this.number2NameMap.put(270, "Hersteller");
 		this.number2NameMap.put(272, "HerstellerManager");
 		this.number2NameMap.put(218, "Hinversand");
+		this.number2NameMap.put(297, "HstLieferung");
+		this.number2NameMap.put(293, "IntegerWrapper");
+		this.number2NameMap.put(298, "KndLieferung");
 		this.number2NameMap.put(146, "Konto");
 		this.number2NameMap.put(102, "Kunde");
 		this.number2NameMap.put(138, "Lieferart");
 		this.number2NameMap.put(198, "LieferartManager");
-		this.number2NameMap.put(150, "Lieferung");
 		this.number2NameMap.put(214, "Neuanlage");
 		this.number2NameMap.put(264, "NeuerArtikelCommand");
 		this.number2NameMap.put(144, "Position");
@@ -311,10 +313,12 @@ public class Cache {
 		this.number2NameMap.put(-189, "ServiceRegister");
 		this.number2NameMap.put(261, "StatusAuslaufCommand");
 		this.number2NameMap.put(260, "StatusVerkaufCommand");
+		this.number2NameMap.put(289, "ThreadOfControl");
 		this.number2NameMap.put(251, "TrueX");
 		this.number2NameMap.put(212, "Verkauf");
 		this.number2NameMap.put(216, "Vorbestellung");
-		this.number2NameMap.put(193, "Warenlager");	
+		this.number2NameMap.put(193, "Warenlager");
+		this.number2NameMap.put(291, "ZeitManager");	
 	}
 	
 }

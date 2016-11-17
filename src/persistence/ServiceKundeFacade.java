@@ -25,7 +25,7 @@ public class ServiceKundeFacade{
             callable.execute();
             long id = callable.getLong(1);
             callable.close();
-            ServiceKunde result = new ServiceKunde(null,null,null,id);
+            ServiceKunde result = new ServiceKunde(null,null,null,null,id);
             if (idCreateIfLessZero < 0)Cache.getTheCache().put(result);
             return (PersistentServiceKunde)PersistentProxi.createProxi(id, -181);
         }catch(SQLException se) {
@@ -41,7 +41,7 @@ public class ServiceKundeFacade{
             callable.execute();
             long id = callable.getLong(1);
             callable.close();
-            ServiceKunde result = new ServiceKunde(null,null,null,id);
+            ServiceKunde result = new ServiceKunde(null,null,null,null,id);
             Cache.getTheCache().put(result);
             return (PersistentServiceKunde)PersistentProxi.createProxi(id, -181);
         }catch(SQLException se) {
@@ -71,9 +71,13 @@ public class ServiceKundeFacade{
             PersistentArtikelManager artikelManager = null;
             if (obj.getLong(6) != 0)
                 artikelManager = (PersistentArtikelManager)PersistentProxi.createProxi(obj.getLong(6), obj.getLong(7));
+            PersistentWarenlager warenlager = null;
+            if (obj.getLong(8) != 0)
+                warenlager = (PersistentWarenlager)PersistentProxi.createProxi(obj.getLong(8), obj.getLong(9));
             ServiceKunde result = new ServiceKunde(This,
                                                    einkaufsManager,
                                                    artikelManager,
+                                                   warenlager,
                                                    ServiceKundeId);
             obj.close();
             callable.close();
@@ -105,6 +109,19 @@ public class ServiceKundeFacade{
             callable.setLong(1, ServiceKundeId);
             callable.setLong(2, artikelManagerVal.getId());
             callable.setLong(3, artikelManagerVal.getClassId());
+            callable.execute();
+            callable.close();
+        }catch(SQLException se) {
+            throw new PersistenceException(se.getMessage(), se.getErrorCode());
+        }
+    }
+    public void warenlagerSet(long ServiceKundeId, Warenlager4Public warenlagerVal) throws PersistenceException {
+        try{
+            CallableStatement callable;
+            callable = this.con.prepareCall("Begin " + this.schemaName + ".SrvcKndFacade.wrnlgrSet(?, ?, ?); end;");
+            callable.setLong(1, ServiceKundeId);
+            callable.setLong(2, warenlagerVal.getId());
+            callable.setLong(3, warenlagerVal.getClassId());
             callable.execute();
             callable.close();
         }catch(SQLException se) {
