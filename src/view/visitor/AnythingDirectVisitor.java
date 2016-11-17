@@ -7,32 +7,15 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     
     public abstract void handleServer(ServerView server) throws ModelException;
     
-    public abstract void handlePosition(PositionView position) throws ModelException;
-    
     public abstract void handleEinkaufsManager(EinkaufsManagerView einkaufsManager) throws ModelException;
     
     public abstract void handleErrorDisplay(ErrorDisplayView errorDisplay) throws ModelException;
-    
-    public abstract void handleService(ServiceView service) throws ModelException;
-    
-    public void handleServiceRegister(ServiceRegisterView serviceRegister) throws ModelException{
-        this.handleService(serviceRegister);
-    }
-    public void handleServiceKunde(ServiceKundeView serviceKunde) throws ModelException{
-        this.handleService(serviceKunde);
-    }
-    public void handleServiceAdmin(ServiceAdminView serviceAdmin) throws ModelException{
-        this.handleService(serviceAdmin);
-    }
-    public abstract void handleArtikelManager(ArtikelManagerView artikelManager) throws ModelException;
     
     public abstract void handleBestellung(BestellungView bestellung) throws ModelException;
     
     public abstract void handleHerstellerManager(HerstellerManagerView herstellerManager) throws ModelException;
     
     public abstract void handleLieferart(LieferartView lieferart) throws ModelException;
-    
-    public abstract void handleKonto(KontoView konto) throws ModelException;
     
     public abstract void handleKomponente(KomponenteView komponente) throws ModelException;
     
@@ -42,13 +25,7 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     public void handleProduktgruppe(ProduktgruppeView produktgruppe) throws ModelException{
         this.handleKomponente(produktgruppe);
     }
-    public abstract void handleKunde(KundeView kunde) throws ModelException;
-    
-    public abstract void handleHersteller(HerstellerView hersteller) throws ModelException;
-    
-    public abstract void handleLieferartManager(LieferartManagerView lieferartManager) throws ModelException;
-    
-    public abstract void handleLieferung(LieferungView lieferung) throws ModelException;
+    public abstract void handleThreadOfControl(ThreadOfControlView threadOfControl) throws ModelException;
     
     public abstract void handleBestellstatus(BestellstatusView bestellstatus) throws ModelException;
     
@@ -67,6 +44,39 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     public void handleAngenommen(AngenommenView angenommen) throws ModelException{
         this.handleBestellstatus(angenommen);
     }
+    public abstract void handlePosition(PositionView position) throws ModelException;
+    
+    public abstract void handleZeitObjekt(ZeitObjektView zeitObjekt) throws ModelException;
+    
+    public void handleHstLieferung(HstLieferungView hstLieferung) throws ModelException{
+        this.handleZeitObjekt(hstLieferung);
+    }
+    public void handleKndLieferung(KndLieferungView kndLieferung) throws ModelException{
+        this.handleZeitObjekt(kndLieferung);
+    }
+    public abstract void handleArtikelManager(ArtikelManagerView artikelManager) throws ModelException;
+    
+    public abstract void handleService(ServiceView service) throws ModelException;
+    
+    public void handleServiceRegister(ServiceRegisterView serviceRegister) throws ModelException{
+        this.handleService(serviceRegister);
+    }
+    public void handleServiceKunde(ServiceKundeView serviceKunde) throws ModelException{
+        this.handleService(serviceKunde);
+    }
+    public void handleServiceAdmin(ServiceAdminView serviceAdmin) throws ModelException{
+        this.handleService(serviceAdmin);
+    }
+    public abstract void handleZeitManager(ZeitManagerView zeitManager) throws ModelException;
+    
+    public abstract void handleKonto(KontoView konto) throws ModelException;
+    
+    public abstract void handleHersteller(HerstellerView hersteller) throws ModelException;
+    
+    public abstract void handleKunde(KundeView kunde) throws ModelException;
+    
+    public abstract void handleLieferartManager(LieferartManagerView lieferartManager) throws ModelException;
+    
     public abstract void handleBooleanX(BooleanXView booleanX) throws ModelException;
     
     public void handleFalseX(FalseXView falseX) throws ModelException{
@@ -75,6 +85,8 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     public void handleTrueX(TrueXView trueX) throws ModelException{
         this.handleBooleanX(trueX);
     }
+    public abstract void handleIntegerWrapper(IntegerWrapperView integerWrapper) throws ModelException;
+    
     public abstract void handleWarenlager(WarenlagerView warenlager) throws ModelException;
     
     public abstract void handleArtikelstatus(ArtikelstatusView artikelstatus) throws ModelException;

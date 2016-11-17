@@ -2,8 +2,11 @@
 package view.objects;
 
 import view.*;
-import viewClient.*;
 import view.visitor.*;
+import viewClient.ConnectionIndex;
+import viewClient.ConnectionMaster;
+import viewClient.ExceptionAndEventHandler;
+import viewClient.ServiceKundeConnection;
 
 
 /* Additional import section end */
@@ -12,12 +15,14 @@ public class ServiceKunde extends view.objects.Service implements ServiceKundeVi
     
     protected EinkaufsManagerView einkaufsManager;
     protected ArtikelManagerView artikelManager;
+    protected WarenlagerView warenlager;
     
-    public ServiceKunde(java.util.Vector<ErrorDisplayView> errors,EinkaufsManagerView einkaufsManager,ArtikelManagerView artikelManager,long id, long classId) {
+    public ServiceKunde(java.util.Vector<ErrorDisplayView> errors,EinkaufsManagerView einkaufsManager,ArtikelManagerView artikelManager,WarenlagerView warenlager,long id, long classId) {
         /* Shall not be used. Objects are created on the server only */
         super(errors,id, classId);
         this.einkaufsManager = einkaufsManager;
-        this.artikelManager = artikelManager;        
+        this.artikelManager = artikelManager;
+        this.warenlager = warenlager;        
     }
     
     static public long getTypeId() {
@@ -39,6 +44,12 @@ public class ServiceKunde extends view.objects.Service implements ServiceKundeVi
     }
     public void setArtikelManager(ArtikelManagerView newValue) throws ModelException {
         this.artikelManager = newValue;
+    }
+    public WarenlagerView getWarenlager()throws ModelException{
+        return this.warenlager;
+    }
+    public void setWarenlager(WarenlagerView newValue) throws ModelException {
+        this.warenlager = newValue;
     }
     
     public void accept(ServiceVisitor visitor) throws ModelException {
@@ -91,6 +102,10 @@ public class ServiceKunde extends view.objects.Service implements ServiceKundeVi
         if (artikelManager != null) {
             ((ViewProxi)artikelManager).setObject((ViewObject)resultTable.get(common.RPCConstantsAndServices.createHashtableKey(artikelManager.getClassId(), artikelManager.getId())));
         }
+        WarenlagerView warenlager = this.getWarenlager();
+        if (warenlager != null) {
+            ((ViewProxi)warenlager).setObject((ViewObject)resultTable.get(common.RPCConstantsAndServices.createHashtableKey(warenlager.getClassId(), warenlager.getId())));
+        }
         
     }
     public void sortSetValuedFields() throws ModelException {
@@ -102,17 +117,21 @@ public class ServiceKunde extends view.objects.Service implements ServiceKundeVi
         if(this.getEinkaufsManager() != null) index = index - 1;
         if(index == 0 && this.getArtikelManager() != null) return new ArtikelManagerServiceKundeWrapper(this, originalIndex, (ViewRoot)this.getArtikelManager());
         if(this.getArtikelManager() != null) index = index - 1;
+        if(index == 0 && this.getWarenlager() != null) return new WarenlagerServiceKundeWrapper(this, originalIndex, (ViewRoot)this.getWarenlager());
+        if(this.getWarenlager() != null) index = index - 1;
         return null;
     }
     public int getChildCount() throws ModelException {
         return 0 
             + (this.getEinkaufsManager() == null ? 0 : 1)
-            + (this.getArtikelManager() == null ? 0 : 1);
+            + (this.getArtikelManager() == null ? 0 : 1)
+            + (this.getWarenlager() == null ? 0 : 1);
     }
     public boolean isLeaf() throws ModelException {
         return true 
             && (this.getEinkaufsManager() == null ? true : false)
-            && (this.getArtikelManager() == null ? true : false);
+            && (this.getArtikelManager() == null ? true : false)
+            && (this.getWarenlager() == null ? true : false);
     }
     public int getIndexOfChild(Object child) throws ModelException {
         int result = 0;
@@ -120,6 +139,8 @@ public class ServiceKunde extends view.objects.Service implements ServiceKundeVi
         if(this.getEinkaufsManager() != null) result = result + 1;
         if(this.getArtikelManager() != null && this.getArtikelManager().equals(child)) return result;
         if(this.getArtikelManager() != null) result = result + 1;
+        if(this.getWarenlager() != null && this.getWarenlager().equals(child)) return result;
+        if(this.getWarenlager() != null) result = result + 1;
         return -1;
     }
     public int getRowCount(){

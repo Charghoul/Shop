@@ -3,7 +3,7 @@ package view.visitor;
 
 import view.*;
 
-public interface AnythingExceptionVisitor<E extends view.UserException> extends ArtikelstatusExceptionVisitor<E>,BestellstatusExceptionVisitor<E>,BooleanXExceptionVisitor<E>,KomponenteExceptionVisitor<E>,ServiceExceptionVisitor<E>{
+public interface AnythingExceptionVisitor<E extends view.UserException> extends ArtikelstatusExceptionVisitor<E>,BestellstatusExceptionVisitor<E>,BooleanXExceptionVisitor<E>,KomponenteExceptionVisitor<E>,ServiceExceptionVisitor<E>,ZeitObjektExceptionVisitor<E>{
     
     public void handleArtikelManager(ArtikelManagerView artikelManager) throws ModelException, E;
     public void handleBestellung(BestellungView bestellung) throws ModelException, E;
@@ -11,13 +11,15 @@ public interface AnythingExceptionVisitor<E extends view.UserException> extends 
     public void handleErrorDisplay(ErrorDisplayView errorDisplay) throws ModelException, E;
     public void handleHersteller(HerstellerView hersteller) throws ModelException, E;
     public void handleHerstellerManager(HerstellerManagerView herstellerManager) throws ModelException, E;
+    public void handleIntegerWrapper(IntegerWrapperView integerWrapper) throws ModelException, E;
     public void handleKonto(KontoView konto) throws ModelException, E;
     public void handleKunde(KundeView kunde) throws ModelException, E;
     public void handleLieferart(LieferartView lieferart) throws ModelException, E;
     public void handleLieferartManager(LieferartManagerView lieferartManager) throws ModelException, E;
-    public void handleLieferung(LieferungView lieferung) throws ModelException, E;
     public void handlePosition(PositionView position) throws ModelException, E;
     public void handleServer(ServerView server) throws ModelException, E;
+    public void handleThreadOfControl(ThreadOfControlView threadOfControl) throws ModelException, E;
     public void handleWarenlager(WarenlagerView warenlager) throws ModelException, E;
+    public void handleZeitManager(ZeitManagerView zeitManager) throws ModelException, E;
     
 }

@@ -2,12 +2,12 @@
 package model;
 
 import common.Fraction;
-import model.visitor.AnythingExceptionVisitor;
-import model.visitor.AnythingReturnExceptionVisitor;
-import model.visitor.AnythingReturnVisitor;
-import model.visitor.AnythingVisitor;
+import model.meta.*;
+import model.visitor.*;
 import persistence.*;
 import serverConstants.ErrorMessages;
+
+import java.util.EventListener;
 
 
 /* Additional import section end */
@@ -199,8 +199,7 @@ public class ArtikelManager extends PersistentObject implements PersistentArtike
     public void initializeOnCreation() 
 				throws PersistenceException{
         getThis().getProduktgruppen().add(Produktgruppe.createProduktgruppe("Katalog"));
-        //Test Daten
-        getThis().getArtikelListe().add(Artikel.createArtikel("1234","test", Fraction.parse("5"),10,100,3, Neuanlage.getTheNeuanlage()));
+
         
     }
     public void initializeOnInstantiation() 

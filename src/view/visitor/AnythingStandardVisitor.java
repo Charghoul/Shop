@@ -38,11 +38,20 @@ public abstract class AnythingStandardVisitor implements AnythingVisitor {
     public void handleServiceRegister(ServiceRegisterView serviceRegister) throws ModelException{
         this.standardHandling(serviceRegister);
     }
+    public void handleHstLieferung(HstLieferungView hstLieferung) throws ModelException{
+        this.standardHandling(hstLieferung);
+    }
     public void handleGeliefert(GeliefertView geliefert) throws ModelException{
         this.standardHandling(geliefert);
     }
+    public void handleKndLieferung(KndLieferungView kndLieferung) throws ModelException{
+        this.standardHandling(kndLieferung);
+    }
     public void handleServiceKunde(ServiceKundeView serviceKunde) throws ModelException{
         this.standardHandling(serviceKunde);
+    }
+    public void handleThreadOfControl(ThreadOfControlView threadOfControl) throws ModelException{
+        this.standardHandling(threadOfControl);
     }
     public void handleArtikel(ArtikelView artikel) throws ModelException{
         this.standardHandling(artikel);
@@ -53,11 +62,14 @@ public abstract class AnythingStandardVisitor implements AnythingVisitor {
     public void handlePosition(PositionView position) throws ModelException{
         this.standardHandling(position);
     }
+    public void handleArtikelManager(ArtikelManagerView artikelManager) throws ModelException{
+        this.standardHandling(artikelManager);
+    }
     public void handleServiceAdmin(ServiceAdminView serviceAdmin) throws ModelException{
         this.standardHandling(serviceAdmin);
     }
-    public void handleArtikelManager(ArtikelManagerView artikelManager) throws ModelException{
-        this.standardHandling(artikelManager);
+    public void handleZeitManager(ZeitManagerView zeitManager) throws ModelException{
+        this.standardHandling(zeitManager);
     }
     public void handleKonto(KontoView konto) throws ModelException{
         this.standardHandling(konto);
@@ -68,11 +80,11 @@ public abstract class AnythingStandardVisitor implements AnythingVisitor {
     public void handleRueckversand(RueckversandView rueckversand) throws ModelException{
         this.standardHandling(rueckversand);
     }
-    public void handleKunde(KundeView kunde) throws ModelException{
-        this.standardHandling(kunde);
-    }
     public void handleHersteller(HerstellerView hersteller) throws ModelException{
         this.standardHandling(hersteller);
+    }
+    public void handleKunde(KundeView kunde) throws ModelException{
+        this.standardHandling(kunde);
     }
     public void handleLieferartManager(LieferartManagerView lieferartManager) throws ModelException{
         this.standardHandling(lieferartManager);
@@ -83,8 +95,8 @@ public abstract class AnythingStandardVisitor implements AnythingVisitor {
     public void handleAngenommen(AngenommenView angenommen) throws ModelException{
         this.standardHandling(angenommen);
     }
-    public void handleLieferung(LieferungView lieferung) throws ModelException{
-        this.standardHandling(lieferung);
+    public void handleIntegerWrapper(IntegerWrapperView integerWrapper) throws ModelException{
+        this.standardHandling(integerWrapper);
     }
     public void handleWarenlager(WarenlagerView warenlager) throws ModelException{
         this.standardHandling(warenlager);

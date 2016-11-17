@@ -55,9 +55,10 @@ public class ToString$Visitor extends model.visitor.ToString$Visitor {
 
 	}
 
-	@Override
-	public void handleLieferung(Lieferung4Public lieferung) throws PersistenceException {
 
+	@Override
+	public void handleIntegerWrapper(IntegerWrapper4Public integerWrapper) throws PersistenceException {
+		result = ((PersistentIntegerWrapper)integerWrapper).getTheInt() + "";
 	}
 
 
@@ -123,7 +124,17 @@ public class ToString$Visitor extends model.visitor.ToString$Visitor {
 	}
 
 	@Override
+	public void handleHstLieferung(HstLieferung4Public hstLieferung) throws PersistenceException {
+
+	}
+
+	@Override
 	public void handleGeliefert(Geliefert4Public geliefert) throws PersistenceException {
+
+	}
+
+	@Override
+	public void handleKndLieferung(KndLieferung4Public kndLieferung) throws PersistenceException {
 
 	}
 
@@ -131,6 +142,10 @@ public class ToString$Visitor extends model.visitor.ToString$Visitor {
 	public void handleServiceKunde(ServiceKunde4Public serviceKunde) throws PersistenceException {
 	}
 
+	@Override
+	public void handleThreadOfControl(ThreadOfControl4Public threadOfControl) throws PersistenceException {
+
+	}
 
 
 	@Override
@@ -179,6 +194,11 @@ public class ToString$Visitor extends model.visitor.ToString$Visitor {
 	@Override
 	public void handleArtikelManager(ArtikelManager4Public artikelManager) throws PersistenceException {
 		this.result = ToStringConstants.ArtikelManager;
+	}
+
+	@Override
+	public void handleZeitManager(ZeitManager4Public zeitManager) throws PersistenceException {
+
 	}
 
 

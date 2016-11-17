@@ -3,7 +3,7 @@ package model.visitor;
 
 import persistence.*;
 
-public interface AnythingReturnExceptionVisitor<R, E extends model.UserException> extends ArtikelstatusReturnExceptionVisitor<R, E> ,BestellstatusReturnExceptionVisitor<R, E> ,BooleanXReturnExceptionVisitor<R, E> ,CommonDateReturnExceptionVisitor<R, E> ,KomponenteReturnExceptionVisitor<R, E> ,ServiceReturnExceptionVisitor<R, E> {
+public interface AnythingReturnExceptionVisitor<R, E extends model.UserException> extends ArtikelstatusReturnExceptionVisitor<R, E> ,BestellstatusReturnExceptionVisitor<R, E> ,BooleanXReturnExceptionVisitor<R, E> ,CommonDateReturnExceptionVisitor<R, E> ,KomponenteReturnExceptionVisitor<R, E> ,ServiceReturnExceptionVisitor<R, E> ,ZeitObjektReturnExceptionVisitor<R, E> {
     
     public R handleAendereArtikelCommand(AendereArtikelCommand4Public aendereArtikelCommand) throws PersistenceException, E;
     public R handleArtikelEinlagernCommand(ArtikelEinlagernCommand4Public artikelEinlagernCommand) throws PersistenceException, E;
@@ -18,11 +18,11 @@ public interface AnythingReturnExceptionVisitor<R, E extends model.UserException
     public R handleErrorDisplay(ErrorDisplay4Public errorDisplay) throws PersistenceException, E;
     public R handleHersteller(Hersteller4Public hersteller) throws PersistenceException, E;
     public R handleHerstellerManager(HerstellerManager4Public herstellerManager) throws PersistenceException, E;
+    public R handleIntegerWrapper(IntegerWrapper4Public integerWrapper) throws PersistenceException, E;
     public R handleKonto(Konto4Public konto) throws PersistenceException, E;
     public R handleKunde(Kunde4Public kunde) throws PersistenceException, E;
     public R handleLieferart(Lieferart4Public lieferart) throws PersistenceException, E;
     public R handleLieferartManager(LieferartManager4Public lieferartManager) throws PersistenceException, E;
-    public R handleLieferung(Lieferung4Public lieferung) throws PersistenceException, E;
     public R handleNeuerArtikelCommand(NeuerArtikelCommand4Public neuerArtikelCommand) throws PersistenceException, E;
     public R handlePosition(Position4Public position) throws PersistenceException, E;
     public R handleProdGEntfernenCommand(ProdGEntfernenCommand4Public prodGEntfernenCommand) throws PersistenceException, E;
@@ -30,6 +30,8 @@ public interface AnythingReturnExceptionVisitor<R, E extends model.UserException
     public R handleServer(Server4Public server) throws PersistenceException, E;
     public R handleStatusAuslaufCommand(StatusAuslaufCommand4Public statusAuslaufCommand) throws PersistenceException, E;
     public R handleStatusVerkaufCommand(StatusVerkaufCommand4Public statusVerkaufCommand) throws PersistenceException, E;
+    public R handleThreadOfControl(ThreadOfControl4Public threadOfControl) throws PersistenceException, E;
     public R handleWarenlager(Warenlager4Public warenlager) throws PersistenceException, E;
+    public R handleZeitManager(ZeitManager4Public zeitManager) throws PersistenceException, E;
     
 }

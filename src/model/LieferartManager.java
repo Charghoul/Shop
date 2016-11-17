@@ -2,10 +2,7 @@
 package model;
 
 import common.Fraction;
-import model.visitor.AnythingExceptionVisitor;
-import model.visitor.AnythingReturnExceptionVisitor;
-import model.visitor.AnythingReturnVisitor;
-import model.visitor.AnythingVisitor;
+import model.visitor.*;
 import persistence.*;
 import serverConstants.ErrorMessages;
 
@@ -195,7 +192,7 @@ public class LieferartManager extends PersistentObject implements PersistentLief
     }
     public void initializeOnCreation() 
 				throws PersistenceException{
-        getThis().getLieferartenListe().add(Lieferart.createLieferart("Standard", 3, Fraction.parse("2/1")));
+
         
     }
     public void initializeOnInstantiation() 

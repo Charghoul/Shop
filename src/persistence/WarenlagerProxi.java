@@ -18,6 +18,9 @@ public class WarenlagerProxi extends PersistentProxi implements PersistentWarenl
         return 193;
     }
     
+    public Warenlager_TemplistProxi getTemplist() throws PersistenceException {
+        return ((PersistentWarenlager)this.getTheObject()).getTemplist();
+    }
     public Warenlager_WarenListeProxi getWarenListe() throws PersistenceException {
         return ((PersistentWarenlager)this.getTheObject()).getWarenListe();
     }

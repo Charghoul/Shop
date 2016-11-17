@@ -1,19 +1,27 @@
 
 package view.objects;
 
-import view.*;
-import view.visitor.*;
+import view.IntegerWrapperView;
+import view.ModelException;
+import view.PositionView;
+import view.WarenlagerView;
+import view.visitor.AnythingExceptionVisitor;
+import view.visitor.AnythingReturnExceptionVisitor;
+import view.visitor.AnythingReturnVisitor;
+import view.visitor.AnythingVisitor;
 
 
 /* Additional import section end */
 
 public class Warenlager extends ViewObject implements WarenlagerView{
     
+    protected java.util.Vector<IntegerWrapperView> templist;
     protected java.util.Vector<PositionView> warenListe;
     
-    public Warenlager(java.util.Vector<PositionView> warenListe,long id, long classId) {
+    public Warenlager(java.util.Vector<IntegerWrapperView> templist,java.util.Vector<PositionView> warenListe,long id, long classId) {
         /* Shall not be used. Objects are created on the server only */
         super(id, classId);
+        this.templist = templist;
         this.warenListe = warenListe;        
     }
     
@@ -25,6 +33,12 @@ public class Warenlager extends ViewObject implements WarenlagerView{
         return getTypeId();
     }
     
+    public java.util.Vector<IntegerWrapperView> getTemplist()throws ModelException{
+        return this.templist;
+    }
+    public void setTemplist(java.util.Vector<IntegerWrapperView> newValue) throws ModelException {
+        this.templist = newValue;
+    }
     public java.util.Vector<PositionView> getWarenListe()throws ModelException{
         return this.warenListe;
     }
@@ -46,6 +60,10 @@ public class Warenlager extends ViewObject implements WarenlagerView{
     }
     
     public void resolveProxies(java.util.HashMap<String,Object> resultTable) throws ModelException {
+        java.util.Vector<?> templist = this.getTemplist();
+        if (templist != null) {
+            ViewObject.resolveVectorProxies(templist, resultTable);
+        }
         java.util.Vector<?> warenListe = this.getWarenListe();
         if (warenListe != null) {
             ViewObject.resolveVectorProxies(warenListe, resultTable);
@@ -57,20 +75,29 @@ public class Warenlager extends ViewObject implements WarenlagerView{
     }
     public ViewObjectInTree getChild(int originalIndex) throws ModelException{
         int index = originalIndex;
+        if(index < this.getTemplist().size()) return new TemplistWarenlagerWrapper(this, originalIndex, (ViewRoot)this.getTemplist().get(index));
+        index = index - this.getTemplist().size();
         if(index < this.getWarenListe().size()) return new WarenListeWarenlagerWrapper(this, originalIndex, (ViewRoot)this.getWarenListe().get(index));
         index = index - this.getWarenListe().size();
         return null;
     }
     public int getChildCount() throws ModelException {
         return 0 
+            + (this.getTemplist().size())
             + (this.getWarenListe().size());
     }
     public boolean isLeaf() throws ModelException {
         return true 
+            && (this.getTemplist().size() == 0)
             && (this.getWarenListe().size() == 0);
     }
     public int getIndexOfChild(Object child) throws ModelException {
         int result = 0;
+        java.util.Iterator<?> getTemplistIterator = this.getTemplist().iterator();
+        while(getTemplistIterator.hasNext()){
+            if(getTemplistIterator.next().equals(child)) return result;
+            result = result + 1;
+        }
         java.util.Iterator<?> getWarenListeIterator = this.getWarenListe().iterator();
         while(getWarenListeIterator.hasNext()){
             if(getWarenListeIterator.next().equals(child)) return result;

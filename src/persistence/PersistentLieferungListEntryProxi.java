@@ -1,5 +1,5 @@
 package persistence;
 
-public interface PersistentLieferungListEntryProxi extends PersistentListEntryProxi {
+public interface PersistentLieferungListEntryProxi extends PersistentZeitObjektListEntryProxi {
 
 }

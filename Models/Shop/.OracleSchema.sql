@@ -51,6 +51,9 @@ create table Srvr(
     SrvrSrvc number,
     SrvrSrvcCls number,
     constraint FSrvrSrvc foreign key (SrvrSrvcCls) references Cls (id),
+    SrvrZtmngr number,
+    SrvrZtmngrCls number,
+    constraint FSrvrZtmngr foreign key (SrvrZtmngrCls) references Cls (id),
     SrvrThis number,
     SrvrThisCls number,
     constraint FSrvrThis foreign key (SrvrThisCls) references Cls (id),
@@ -88,21 +91,6 @@ create table EnkfsMngr(
     EnkfsMngrThisCls number,
     constraint FEnkfsMngrThis foreign key (EnkfsMngrThisCls) references Cls (id)    
 );
-
-create table Bstllng(
-    id number primary key,
-    Cls number not null,
-    constraint FBstllngCls foreign key (Cls) references Cls (id) on delete cascade,
-    BstllngBstllID varchar2(2000),
-    BstllngBstllstts number,
-    BstllngBstllsttsCls number,
-    constraint FBstllngBstllstts foreign key (BstllngBstllsttsCls) references Cls (id),
-    BstllngThis number,
-    BstllngThisCls number,
-    constraint FBstllngThis foreign key (BstllngThisCls) references Cls (id)    
-);
-create index IBstllIDBstllng on Bstllng (BstllngBstllID);
-
 
 create table ArtEntfCMD(
     id number primary key,
@@ -163,6 +151,122 @@ create table RgstrCMD(
     constraint FRgstrCMDMyCmmnDt foreign key (RgstrCMDMyCmmnDtCls) references Cls (id)    
 );
 
+create table CmmndCrdntr(
+    id number primary key,
+    Cls number not null,
+    constraint FCmmndCrdntrCls foreign key (Cls) references Cls (id) on delete cascade    
+);
+
+create table Bstllstts(
+    id number primary key,
+    Cls number not null,
+    constraint FBstllsttsCls foreign key (Cls) references Cls (id) on delete cascade,
+    BstllsttsThis number,
+    BstllsttsThisCls number,
+    constraint FBstllsttsThis foreign key (BstllsttsThisCls) references Cls (id)    
+);
+
+create table Pstn(
+    id number primary key,
+    Cls number not null,
+    constraint FPstnCls foreign key (Cls) references Cls (id) on delete cascade,
+    PstnArtkl number,
+    PstnArtklCls number,
+    constraint FPstnArtkl foreign key (PstnArtklCls) references Cls (id),
+    PstnMng number,
+    PstnThis number,
+    PstnThisCls number,
+    constraint FPstnThis foreign key (PstnThisCls) references Cls (id)    
+);
+
+create table ArtklMngr(
+    id number primary key,
+    Cls number not null,
+    constraint FArtklMngrCls foreign key (Cls) references Cls (id) on delete cascade,
+    ArtklMngrThis number,
+    ArtklMngrThisCls number,
+    constraint FArtklMngrThis foreign key (ArtklMngrThisCls) references Cls (id)    
+);
+
+create table SttsVrkfCMD(
+    id number primary key,
+    Cls number not null,
+    constraint FSttsVrkfCMDCls foreign key (Cls) references Cls (id) on delete cascade,
+    SttsVrkfCMDInvoker number,
+    SttsVrkfCMDInvokerCls number,
+    constraint FSttsVrkfCMDInvoker foreign key (SttsVrkfCMDInvokerCls) references Cls (id),
+    SttsVrkfCMDCReceiver number,
+    SttsVrkfCMDCReceiverCls number,
+    constraint FSttsVrkfCMDCReceiver foreign key (SttsVrkfCMDCReceiverCls) references Cls (id),
+    SttsVrkfCMDMyCmmnDt number,
+    SttsVrkfCMDMyCmmnDtCls number,
+    constraint FSttsVrkfCMDMyCmmnDt foreign key (SttsVrkfCMDMyCmmnDtCls) references Cls (id)    
+);
+
+create table Knt(
+    id number primary key,
+    Cls number not null,
+    constraint FKntCls foreign key (Cls) references Cls (id) on delete cascade,
+    KntKntstnd varchar2(2000),
+    KntLmt varchar2(2000),
+    KntThis number,
+    KntThisCls number,
+    constraint FKntThis foreign key (KntThisCls) references Cls (id)    
+);
+
+create table Hrstllr(
+    id number primary key,
+    Cls number not null,
+    constraint FHrstllrCls foreign key (Cls) references Cls (id) on delete cascade,
+    HrstllrNm varchar2(2000),
+    HrstllrThis number,
+    HrstllrThisCls number,
+    constraint FHrstllrThis foreign key (HrstllrThisCls) references Cls (id)    
+);
+create index INmHrstllr on Hrstllr (HrstllrNm);
+
+
+create table BlnX(
+    id number primary key,
+    Cls number not null,
+    constraint FBlnXCls foreign key (Cls) references Cls (id) on delete cascade,
+    BlnXThis number,
+    BlnXThisCls number,
+    constraint FBlnXThis foreign key (BlnXThisCls) references Cls (id)    
+);
+
+create table Wrnlgr(
+    id number primary key,
+    Cls number not null,
+    constraint FWrnlgrCls foreign key (Cls) references Cls (id) on delete cascade,
+    WrnlgrThis number,
+    WrnlgrThisCls number,
+    constraint FWrnlgrThis foreign key (WrnlgrThisCls) references Cls (id)    
+);
+
+create table CmmnDt(
+    id number primary key,
+    Cls number not null,
+    constraint FCmmnDtCls foreign key (Cls) references Cls (id) on delete cascade,
+    CmmnDtCrtdt Date,
+    CmmnDtCmmtdt Date    
+);
+
+create table Bstllng(
+    id number primary key,
+    Cls number not null,
+    constraint FBstllngCls foreign key (Cls) references Cls (id) on delete cascade,
+    BstllngBstllID varchar2(2000),
+    BstllngBstllstts number,
+    BstllngBstllsttsCls number,
+    constraint FBstllngBstllstts foreign key (BstllngBstllsttsCls) references Cls (id),
+    BstllngThis number,
+    BstllngThisCls number,
+    constraint FBstllngThis foreign key (BstllngThisCls) references Cls (id)    
+);
+create index IBstllIDBstllng on Bstllng (BstllngBstllID);
+
+
 create table AndrArtklCMD(
     id number primary key,
     Cls number not null,
@@ -212,12 +316,6 @@ create index IBzchnngArtkl on Kmpnnt (ArtklBzchnng);
 create index INmPrdktgrpp on Kmpnnt (PrdktgrppNm);
 
 
-create table CmmndCrdntr(
-    id number primary key,
-    Cls number not null,
-    constraint FCmmndCrdntrCls foreign key (Cls) references Cls (id) on delete cascade    
-);
-
 create table ArtklEnlgrnCMD(
     id number primary key,
     Cls number not null,
@@ -237,26 +335,34 @@ create table ArtklEnlgrnCMD(
     constraint FArtklEnlgrnCMDMyCmmnDt foreign key (ArtklEnlgrnCMDMyCmmnDtCls) references Cls (id)    
 );
 
-create table Bstllstts(
+create table ThrdOfCntrl(
     id number primary key,
     Cls number not null,
-    constraint FBstllsttsCls foreign key (Cls) references Cls (id) on delete cascade,
-    BstllsttsThis number,
-    BstllsttsThisCls number,
-    constraint FBstllsttsThis foreign key (BstllsttsThisCls) references Cls (id)    
+    constraint FThrdOfCntrlCls foreign key (Cls) references Cls (id) on delete cascade,
+    ThrdOfCntrlThis number,
+    ThrdOfCntrlThisCls number,
+    constraint FThrdOfCntrlThis foreign key (ThrdOfCntrlThisCls) references Cls (id)    
 );
 
-create table Pstn(
+create table ZtObjkt(
     id number primary key,
     Cls number not null,
-    constraint FPstnCls foreign key (Cls) references Cls (id) on delete cascade,
-    PstnArtkl number,
-    PstnArtklCls number,
-    constraint FPstnArtkl foreign key (PstnArtklCls) references Cls (id),
-    PstnMng number,
-    PstnThis number,
-    PstnThisCls number,
-    constraint FPstnThis foreign key (PstnThisCls) references Cls (id)    
+    constraint FZtObjktCls foreign key (Cls) references Cls (id) on delete cascade,
+    ZtObjktRmnngTm number,
+    ZtObjktThis number,
+    ZtObjktThisCls number,
+    constraint FZtObjktThis foreign key (ZtObjktThisCls) references Cls (id),
+    HstLfrngArtkl number,
+    HstLfrngArtklCls number,
+    constraint FHstLfrngArtkl foreign key (HstLfrngArtklCls) references Cls (id),
+    HstLfrngMng number,
+    KndLfrngBstllng number,
+    KndLfrngBstllngCls number,
+    constraint FKndLfrngBstllng foreign key (KndLfrngBstllngCls) references Cls (id),
+    KndLfrngLfrrt number,
+    KndLfrngLfrrtCls number,
+    constraint FKndLfrngLfrrt foreign key (KndLfrngLfrrtCls) references Cls (id),
+    KndLfrngLfrvrsch number    
 );
 
 create table Srvc(
@@ -272,6 +378,9 @@ create table Srvc(
     SrvcKndArtklMngr number,
     SrvcKndArtklMngrCls number,
     constraint FSrvcKndArtklMngr foreign key (SrvcKndArtklMngrCls) references Cls (id),
+    SrvcKndWrnlgr number,
+    SrvcKndWrnlgrCls number,
+    constraint FSrvcKndWrnlgr foreign key (SrvcKndWrnlgrCls) references Cls (id),
     SrvcAdmnWrnlgr number,
     SrvcAdmnWrnlgrCls number,
     constraint FSrvcAdmnWrnlgr foreign key (SrvcAdmnWrnlgrCls) references Cls (id),
@@ -289,15 +398,6 @@ create index IEnkfsMngrSrvcKnd on Srvc (SrvcKndEnkfsMngr, SrvcKndEnkfsMngrCls);
 create index ILfrrtMngrSrvcAdmn on Srvc (SrvcAdmnLfrrtMngr, SrvcAdmnLfrrtMngrCls);
 create index IHrstllrMngrSrvcAdmn on Srvc (SrvcAdmnHrstllrMngr, SrvcAdmnHrstllrMngrCls);
 
-
-create table ArtklMngr(
-    id number primary key,
-    Cls number not null,
-    constraint FArtklMngrCls foreign key (Cls) references Cls (id) on delete cascade,
-    ArtklMngrThis number,
-    ArtklMngrThisCls number,
-    constraint FArtklMngrThis foreign key (ArtklMngrThisCls) references Cls (id)    
-);
 
 create table SttsAslfCMD(
     id number primary key,
@@ -335,30 +435,13 @@ create table NrArtklCMD(
     constraint FNrArtklCMDMyCmmnDt foreign key (NrArtklCMDMyCmmnDtCls) references Cls (id)    
 );
 
-create table SttsVrkfCMD(
+create table ZtMngr(
     id number primary key,
     Cls number not null,
-    constraint FSttsVrkfCMDCls foreign key (Cls) references Cls (id) on delete cascade,
-    SttsVrkfCMDInvoker number,
-    SttsVrkfCMDInvokerCls number,
-    constraint FSttsVrkfCMDInvoker foreign key (SttsVrkfCMDInvokerCls) references Cls (id),
-    SttsVrkfCMDCReceiver number,
-    SttsVrkfCMDCReceiverCls number,
-    constraint FSttsVrkfCMDCReceiver foreign key (SttsVrkfCMDCReceiverCls) references Cls (id),
-    SttsVrkfCMDMyCmmnDt number,
-    SttsVrkfCMDMyCmmnDtCls number,
-    constraint FSttsVrkfCMDMyCmmnDt foreign key (SttsVrkfCMDMyCmmnDtCls) references Cls (id)    
-);
-
-create table Knt(
-    id number primary key,
-    Cls number not null,
-    constraint FKntCls foreign key (Cls) references Cls (id) on delete cascade,
-    KntKntstnd varchar2(2000),
-    KntLmt varchar2(2000),
-    KntThis number,
-    KntThisCls number,
-    constraint FKntThis foreign key (KntThisCls) references Cls (id)    
+    constraint FZtMngrCls foreign key (Cls) references Cls (id) on delete cascade,
+    ZtMngrThis number,
+    ZtMngrThisCls number,
+    constraint FZtMngrThis foreign key (ZtMngrThisCls) references Cls (id)    
 );
 
 create table Knd(
@@ -375,18 +458,6 @@ create table Knd(
     constraint FKndThis foreign key (KndThisCls) references Cls (id)    
 );
 create index IBntzrnmKnd on Knd (KndBntzrnm);
-
-
-create table Hrstllr(
-    id number primary key,
-    Cls number not null,
-    constraint FHrstllrCls foreign key (Cls) references Cls (id) on delete cascade,
-    HrstllrNm varchar2(2000),
-    HrstllrThis number,
-    HrstllrThisCls number,
-    constraint FHrstllrThis foreign key (HrstllrThisCls) references Cls (id)    
-);
-create index INmHrstllr on Hrstllr (HrstllrNm);
 
 
 create table LfrrtMngr(
@@ -413,46 +484,14 @@ create table PrdGEntfrnnCMD(
     constraint FPrdGEntfrnnCMDMyCmmnDt foreign key (PrdGEntfrnnCMDMyCmmnDtCls) references Cls (id)    
 );
 
-create table Lfrng(
+create table IntgrWrppr(
     id number primary key,
     Cls number not null,
-    constraint FLfrngCls foreign key (Cls) references Cls (id) on delete cascade,
-    LfrngBstllng number,
-    LfrngBstllngCls number,
-    constraint FLfrngBstllng foreign key (LfrngBstllngCls) references Cls (id),
-    LfrngLfrrt number,
-    LfrngLfrrtCls number,
-    constraint FLfrngLfrrt foreign key (LfrngLfrrtCls) references Cls (id),
-    LfrngLfrvrsch number,
-    LfrngThis number,
-    LfrngThisCls number,
-    constraint FLfrngThis foreign key (LfrngThisCls) references Cls (id)    
-);
-
-create table BlnX(
-    id number primary key,
-    Cls number not null,
-    constraint FBlnXCls foreign key (Cls) references Cls (id) on delete cascade,
-    BlnXThis number,
-    BlnXThisCls number,
-    constraint FBlnXThis foreign key (BlnXThisCls) references Cls (id)    
-);
-
-create table Wrnlgr(
-    id number primary key,
-    Cls number not null,
-    constraint FWrnlgrCls foreign key (Cls) references Cls (id) on delete cascade,
-    WrnlgrThis number,
-    WrnlgrThisCls number,
-    constraint FWrnlgrThis foreign key (WrnlgrThisCls) references Cls (id)    
-);
-
-create table CmmnDt(
-    id number primary key,
-    Cls number not null,
-    constraint FCmmnDtCls foreign key (Cls) references Cls (id) on delete cascade,
-    CmmnDtCrtdt Date,
-    CmmnDtCmmtdt Date    
+    constraint FIntgrWrpprCls foreign key (Cls) references Cls (id) on delete cascade,
+    IntgrWrpprThInt number,
+    IntgrWrpprThis number,
+    IntgrWrpprThisCls number,
+    constraint FIntgrWrpprThis foreign key (IntgrWrpprThisCls) references Cls (id)    
 );
 
 create table Artklstts(
@@ -479,16 +518,6 @@ create table EnkfsMngrEnkfsLst(
     constraint FEnkfsMngrEnkfsLstfrm foreign key(frm) references EnkfsMngr(id)
 );
 create index IFrmEnkfsMngrEnkfsLst on EnkfsMngrEnkfsLst(frm);
-
-create table BstllngPstnsLst(
-    id number primary key,
-    frm number not null,
-    pstnsLst number not null,
-    Cls number not null,
-    constraint FBstllngPstnsLstCls foreign key(Cls) references Cls(id) on delete cascade,
-    constraint FBstllngPstnsLstfrm foreign key(frm) references Bstllng(id)
-);
-create index IFrmBstllngPstnsLst on BstllngPstnsLst(frm);
 
 create table HrstllrMngrHrstllrLst(
     id number primary key,
@@ -542,15 +571,19 @@ create table ArtklMngrPrdktgrppn(
 );
 create index IFrmArtklMngrPrdktgrppn on ArtklMngrPrdktgrppn(frm);
 
-create table LfrrtMngrLfrrtnLst(
+create table WrnlgrTmplst(
     id number primary key,
     frm number not null,
-    lfrrtnLst number not null,
+    WrnlgrTmplstindxx number not null,
+    WrnlgrTmplstindxxCls number not null,
+    constraint FWrnlgrTmplstindxx foreign key (WrnlgrTmplstindxxCls) references Cls (id),
+    tmplst number not null,
     Cls number not null,
-    constraint FLfrrtMngrLfrrtnLstCls foreign key(Cls) references Cls(id) on delete cascade,
-    constraint FLfrrtMngrLfrrtnLstfrm foreign key(frm) references LfrrtMngr(id)
+    constraint FWrnlgrTmplstCls foreign key(Cls) references Cls(id) on delete cascade,
+    constraint FWrnlgrTmplstfrm foreign key(frm) references Wrnlgr(id)
 );
-create index IFrmLfrrtMngrLfrrtnLst on LfrrtMngrLfrrtnLst(frm);
+create index IFrmWrnlgrTmplst on WrnlgrTmplst(frm);
+create index IIndxxWrnlgrTmplst on WrnlgrTmplst(WrnlgrTmplstindxx);
 
 create table WrnlgrWrnLst(
     id number primary key,
@@ -561,6 +594,36 @@ create table WrnlgrWrnLst(
     constraint FWrnlgrWrnLstfrm foreign key(frm) references Wrnlgr(id)
 );
 create index IFrmWrnlgrWrnLst on WrnlgrWrnLst(frm);
+
+create table BstllngPstnsLst(
+    id number primary key,
+    frm number not null,
+    pstnsLst number not null,
+    Cls number not null,
+    constraint FBstllngPstnsLstCls foreign key(Cls) references Cls(id) on delete cascade,
+    constraint FBstllngPstnsLstfrm foreign key(frm) references Bstllng(id)
+);
+create index IFrmBstllngPstnsLst on BstllngPstnsLst(frm);
+
+create table ZtMngrZtObjktLst(
+    id number primary key,
+    frm number not null,
+    ztObjktLst number not null,
+    Cls number not null,
+    constraint FZtMngrZtObjktLstCls foreign key(Cls) references Cls(id) on delete cascade,
+    constraint FZtMngrZtObjktLstfrm foreign key(frm) references ZtMngr(id)
+);
+create index IFrmZtMngrZtObjktLst on ZtMngrZtObjktLst(frm);
+
+create table LfrrtMngrLfrrtnLst(
+    id number primary key,
+    frm number not null,
+    lfrrtnLst number not null,
+    Cls number not null,
+    constraint FLfrrtMngrLfrrtnLstCls foreign key(Cls) references Cls(id) on delete cascade,
+    constraint FLfrrtMngrLfrrtnLstfrm foreign key(frm) references LfrrtMngr(id)
+);
+create index IFrmLfrrtMngrLfrrtnLst on LfrrtMngrLfrrtnLst(frm);
 
 create table CmmndExctrCommands(
     id number primary key,

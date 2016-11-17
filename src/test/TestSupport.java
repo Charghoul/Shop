@@ -35,14 +35,15 @@ public class TestSupport {
 	private TestSupport(){}	
 	
 	public static void prepareSingletons(){
-        model.Verkauf.reset$For$Test = true;
-        model.Auslauf.reset$For$Test = true;
-        model.FalseX.reset$For$Test = true;
         model.Neuanlage.reset$For$Test = true;
         model.meta.CommandCoordinator.reset$For$Test = true;
         model.ArtikelManager.reset$For$Test = true;
         model.Warenlager.reset$For$Test = true;
         model.TrueX.reset$For$Test = true;
+        model.Verkauf.reset$For$Test = true;
+        model.Auslauf.reset$For$Test = true;
+        model.FalseX.reset$For$Test = true;
+        model.ZeitManager.reset$For$Test = true;
 
 	}
 

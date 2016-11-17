@@ -71,6 +71,75 @@ public class WarenlagerFacade{
             throw new PersistenceException(se.getMessage(), se.getErrorCode());
         }
     }
+    public long templistAdd(long WarenlagerId, Artikel4Public indxxVal, IntegerWrapper4Public templistVal) throws PersistenceException {
+        try{
+            CallableStatement callable;
+            callable = this.con.prepareCall("Begin ? := " + this.schemaName + ".WrnlgrFacade.tmplstAdd(?, ?, ?, ?, ?); end;");
+            callable.registerOutParameter(1, oracle.jdbc.OracleTypes.NUMBER);
+            callable.setLong(2, WarenlagerId);
+            callable.setLong(3, indxxVal.getId());
+            callable.setLong(4, indxxVal.getClassId());
+            callable.setLong(5, templistVal.getId());
+            callable.setLong(6, templistVal.getClassId());
+            callable.execute();
+            long result = callable.getLong(1);
+            callable.close();
+            return result;
+        }catch(SQLException se) {
+            throw new PersistenceException(se.getMessage(), se.getErrorCode());
+        }
+    }
+    public void templistRem(long WarenlagerId, Artikel4Public indxxVal) throws PersistenceException {
+        try{
+            CallableStatement callable;
+            callable = this.con.prepareCall("Begin " + this.schemaName + ".WrnlgrFacade.tmplstRem(?,?,?); end;");
+            callable.setLong(1, WarenlagerId);
+            callable.setLong(2, indxxVal.getId());
+            callable.setLong(3, indxxVal.getClassId());
+            callable.execute();
+            callable.close();
+        }catch(SQLException se) {
+            throw new PersistenceException(se.getMessage(), se.getErrorCode());
+        }
+    }
+    public PersistentIntegerWrapper templistGet(long WarenlagerId, Artikel4Public indxxVal) throws PersistenceException {
+        try{
+            CallableStatement callable;
+            callable = this.con.prepareCall("Begin ? := " + this.schemaName + ".WrnlgrFacade.tmplstGet(?,?,?); end;");
+            callable.registerOutParameter(1, oracle.jdbc.OracleTypes.CURSOR);
+            callable.setLong(2, WarenlagerId);
+            callable.setLong(3, indxxVal.getId());
+            callable.setLong(4, indxxVal.getClassId());
+            callable.execute();
+            ResultSet list = ((oracle.jdbc.OracleCallableStatement)callable).getCursor(1);
+            PersistentIntegerWrapper result = null;
+            if (list.next()) result = (PersistentIntegerWrapper)PersistentProxi.createListEntryProxi(list.getLong(1), list.getLong(2), list.getLong(3));
+            list.close();
+            callable.close();
+            return result;
+        }catch(SQLException se) {
+            throw new PersistenceException(se.getMessage(), se.getErrorCode());
+        }
+    }
+    public IntegerWrapperSearchList templistGetValues(long WarenlagerId) throws PersistenceException {
+        try{
+            CallableStatement callable;
+            callable = this.con.prepareCall("Begin ? := " + this.schemaName + ".WrnlgrFacade.tmplstGetValues(?); end;");
+            callable.registerOutParameter(1, oracle.jdbc.OracleTypes.CURSOR);
+            callable.setLong(2, WarenlagerId);
+            callable.execute();
+            ResultSet list = ((oracle.jdbc.OracleCallableStatement)callable).getCursor(1);
+            IntegerWrapperSearchList result = new IntegerWrapperSearchList();
+            while (list.next()) {
+                result.add((PersistentIntegerWrapper)PersistentProxi.createListEntryProxi(list.getLong(1), list.getLong(2), list.getLong(3)));
+            }
+            list.close();
+            callable.close();
+            return result;
+        }catch(SQLException se) {
+            throw new PersistenceException(se.getMessage(), se.getErrorCode());
+        }
+    }
     public long warenListeAdd(long WarenlagerId, Position4Public warenListeVal) throws PersistenceException {
         try{
             CallableStatement callable;

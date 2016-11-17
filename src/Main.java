@@ -1,9 +1,3 @@
-
-
-
-
-import java.util.List;
-
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -14,36 +8,27 @@ import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.SplitPane;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToolBar;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-
 import model.DBConnectionConstants;
-
 import modelServer.ConnectionServer;
 import modelServer.RemoteServerMaster;
 import modelServer.ServerReporter;
-
+import persistence.Cache;
+import persistence.ConnectionHandler;
 import persistence.PersistenceException;
-import persistence.*;
-
 import view.ModelException;
-
 import viewClient.ClientReporter;
 import viewClient.ConnectionMaster;
 import viewClient.MainView;
 import viewClient.ServerConnection;
+
+import java.util.List;
 
 public class Main extends Application implements ServerReporter, ClientReporter {
 

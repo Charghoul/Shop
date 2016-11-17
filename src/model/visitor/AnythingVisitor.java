@@ -3,7 +3,7 @@ package model.visitor;
 
 import persistence.*;
 
-public interface AnythingVisitor extends ArtikelstatusVisitor,BestellstatusVisitor,BooleanXVisitor,CommonDateVisitor,KomponenteVisitor,ServiceVisitor{
+public interface AnythingVisitor extends ArtikelstatusVisitor,BestellstatusVisitor,BooleanXVisitor,CommonDateVisitor,KomponenteVisitor,ServiceVisitor,ZeitObjektVisitor{
     
     public void handleAendereArtikelCommand(AendereArtikelCommand4Public aendereArtikelCommand) throws PersistenceException;
     public void handleArtikelEinlagernCommand(ArtikelEinlagernCommand4Public artikelEinlagernCommand) throws PersistenceException;
@@ -18,11 +18,11 @@ public interface AnythingVisitor extends ArtikelstatusVisitor,BestellstatusVisit
     public void handleErrorDisplay(ErrorDisplay4Public errorDisplay) throws PersistenceException;
     public void handleHersteller(Hersteller4Public hersteller) throws PersistenceException;
     public void handleHerstellerManager(HerstellerManager4Public herstellerManager) throws PersistenceException;
+    public void handleIntegerWrapper(IntegerWrapper4Public integerWrapper) throws PersistenceException;
     public void handleKonto(Konto4Public konto) throws PersistenceException;
     public void handleKunde(Kunde4Public kunde) throws PersistenceException;
     public void handleLieferart(Lieferart4Public lieferart) throws PersistenceException;
     public void handleLieferartManager(LieferartManager4Public lieferartManager) throws PersistenceException;
-    public void handleLieferung(Lieferung4Public lieferung) throws PersistenceException;
     public void handleNeuerArtikelCommand(NeuerArtikelCommand4Public neuerArtikelCommand) throws PersistenceException;
     public void handlePosition(Position4Public position) throws PersistenceException;
     public void handleProdGEntfernenCommand(ProdGEntfernenCommand4Public prodGEntfernenCommand) throws PersistenceException;
@@ -30,6 +30,8 @@ public interface AnythingVisitor extends ArtikelstatusVisitor,BestellstatusVisit
     public void handleServer(Server4Public server) throws PersistenceException;
     public void handleStatusAuslaufCommand(StatusAuslaufCommand4Public statusAuslaufCommand) throws PersistenceException;
     public void handleStatusVerkaufCommand(StatusVerkaufCommand4Public statusVerkaufCommand) throws PersistenceException;
+    public void handleThreadOfControl(ThreadOfControl4Public threadOfControl) throws PersistenceException;
     public void handleWarenlager(Warenlager4Public warenlager) throws PersistenceException;
+    public void handleZeitManager(ZeitManager4Public zeitManager) throws PersistenceException;
     
 }
