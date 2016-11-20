@@ -1908,7 +1908,6 @@ final class NoDetailPanel extends DetailPanel {
 		if( this.noDetailsCenterVertical == null){
 			this.noDetailsCenterVertical = new FlowPane( Orientation.VERTICAL );
 			this.noDetailsCenterVertical.getChildren().add( new Pane());
-			this.noDetailsCenterVertical.getChildren().add( new Label("No Details!!!"));
 			this.noDetailsCenterVertical.getChildren().add( new Pane());
 		}
 		return this.noDetailsCenterVertical;

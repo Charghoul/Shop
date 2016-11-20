@@ -14,8 +14,8 @@ public class BestellungProxi extends ViewProxi implements BestellungView{
     @SuppressWarnings("unchecked")
     public BestellungView getRemoteObject(java.util.HashMap<String,Object> resultTable, ExceptionAndEventHandler connectionKey) throws ModelException{
         java.util.Vector<String> positionsListe_string = (java.util.Vector<String>)resultTable.get("positionsListe");
-        java.util.Vector<PositionView> positionsListe = ViewProxi.getProxiVector(positionsListe_string, connectionKey);
-        String bestellID = (String)resultTable.get("bestellID");
+        java.util.Vector<PositionInBestellungView> positionsListe = ViewProxi.getProxiVector(positionsListe_string, connectionKey);
+        long bestellID = new Long((String)resultTable.get("bestellID")).longValue();
         ViewProxi bestellstatus = null;
         String bestellstatus$String = (String)resultTable.get("bestellstatus");
         if (bestellstatus$String != null) {
@@ -23,7 +23,7 @@ public class BestellungProxi extends ViewProxi implements BestellungView{
             bestellstatus = view.objects.ViewProxi.createProxi(bestellstatus$Info,connectionKey);
             bestellstatus.setToString(bestellstatus$Info.getToString());
         }
-        BestellungView result$$ = new Bestellung(positionsListe,(String)bestellID,(BestellstatusView)bestellstatus, this.getId(), this.getClassId());
+        BestellungView result$$ = new Bestellung(positionsListe,(long)bestellID,(BestellstatusView)bestellstatus, this.getId(), this.getClassId());
         ((ViewRoot)result$$).setToString((String) resultTable.get(common.RPCConstantsAndServices.RPCToStringFieldName));
         return result$$;
     }
@@ -35,20 +35,16 @@ public class BestellungProxi extends ViewProxi implements BestellungView{
         int index = originalIndex;
         if(index < this.getPositionsListe().size()) return new PositionsListeBestellungWrapper(this, originalIndex, (ViewRoot)this.getPositionsListe().get(index));
         index = index - this.getPositionsListe().size();
-        if(index == 0 && this.getBestellstatus() != null) return new BestellstatusBestellungWrapper(this, originalIndex, (ViewRoot)this.getBestellstatus());
-        if(this.getBestellstatus() != null) index = index - 1;
         return null;
     }
     public int getChildCount() throws ModelException {
         return 0 
-            + (this.getPositionsListe().size())
-            + (this.getBestellstatus() == null ? 0 : 1);
+            + (this.getPositionsListe().size());
     }
     public boolean isLeaf() throws ModelException {
         if (this.object == null) return this.getLeafInfo() == 0;
         return true 
-            && (this.getPositionsListe().size() == 0)
-            && (this.getBestellstatus() == null ? true : false);
+            && (this.getPositionsListe().size() == 0);
     }
     public int getIndexOfChild(Object child) throws ModelException {
         int result = 0;
@@ -57,21 +53,19 @@ public class BestellungProxi extends ViewProxi implements BestellungView{
             if(getPositionsListeIterator.next().equals(child)) return result;
             result = result + 1;
         }
-        if(this.getBestellstatus() != null && this.getBestellstatus().equals(child)) return result;
-        if(this.getBestellstatus() != null) result = result + 1;
         return -1;
     }
     
-    public java.util.Vector<PositionView> getPositionsListe()throws ModelException{
+    public java.util.Vector<PositionInBestellungView> getPositionsListe()throws ModelException{
         return ((Bestellung)this.getTheObject()).getPositionsListe();
     }
-    public void setPositionsListe(java.util.Vector<PositionView> newValue) throws ModelException {
+    public void setPositionsListe(java.util.Vector<PositionInBestellungView> newValue) throws ModelException {
         ((Bestellung)this.getTheObject()).setPositionsListe(newValue);
     }
-    public String getBestellID()throws ModelException{
+    public long getBestellID()throws ModelException{
         return ((Bestellung)this.getTheObject()).getBestellID();
     }
-    public void setBestellID(String newValue) throws ModelException {
+    public void setBestellID(long newValue) throws ModelException {
         ((Bestellung)this.getTheObject()).setBestellID(newValue);
     }
     public BestellstatusView getBestellstatus()throws ModelException{

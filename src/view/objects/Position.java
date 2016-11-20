@@ -4,24 +4,17 @@ package view.objects;
 import view.ArtikelView;
 import view.ModelException;
 import view.PositionView;
-import view.visitor.AnythingExceptionVisitor;
-import view.visitor.AnythingReturnExceptionVisitor;
-import view.visitor.AnythingReturnVisitor;
-import view.visitor.AnythingVisitor;
+import view.visitor.*;
 
 
 /* Additional import section end */
 
-public class Position extends ViewObject implements PositionView{
+public class Position extends view.objects.PositionAbstrakt implements PositionView{
     
-    protected ArtikelView artikel;
-    protected long menge;
     
     public Position(ArtikelView artikel,long menge,long id, long classId) {
         /* Shall not be used. Objects are created on the server only */
-        super(id, classId);
-        this.artikel = artikel;
-        this.menge = menge;        
+        super((ArtikelView)artikel,(long)menge,id, classId);        
     }
     
     static public long getTypeId() {
@@ -32,19 +25,19 @@ public class Position extends ViewObject implements PositionView{
         return getTypeId();
     }
     
-    public ArtikelView getArtikel()throws ModelException{
-        return this.artikel;
-    }
-    public void setArtikel(ArtikelView newValue) throws ModelException {
-        this.artikel = newValue;
-    }
-    public long getMenge()throws ModelException{
-        return this.menge;
-    }
-    public void setMenge(long newValue) throws ModelException {
-        this.menge = newValue;
-    }
     
+    public void accept(PositionAbstraktVisitor visitor) throws ModelException {
+        visitor.handlePosition(this);
+    }
+    public <R> R accept(PositionAbstraktReturnVisitor<R>  visitor) throws ModelException {
+         return visitor.handlePosition(this);
+    }
+    public <E extends view.UserException>  void accept(PositionAbstraktExceptionVisitor<E> visitor) throws ModelException, E {
+         visitor.handlePosition(this);
+    }
+    public <R, E extends view.UserException> R accept(PositionAbstraktReturnExceptionVisitor<R, E>  visitor) throws ModelException, E {
+         return visitor.handlePosition(this);
+    }
     public void accept(AnythingVisitor visitor) throws ModelException {
         visitor.handlePosition(this);
     }

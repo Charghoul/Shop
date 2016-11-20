@@ -19,6 +19,8 @@ public class ErrorMessages {
     public static final String ArtikelAlreadyInProduktListe = "Dieses Produkt ist bereits in dieser Produktliste enthalten";
     public static final String ProduktgruppeHasChildren = "Diese Produktgruppe enhält weitere Komponenten";
     public static final String ProduktgruppeHasNoParent = "Diese Produktgruppe ist der Katalog und daher nicht entfernbar";
+    public static final String EinkaufslisteNichtVerfuegbar = "Die Artikel sind in den Mengen aktuell nicht verfuegbar";
+    public static final String ArtikelNichtVerfuegbar = " ist nicht ausreichend verfuegbar";
 
     private ErrorMessages(){}
 }

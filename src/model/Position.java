@@ -8,13 +8,8 @@ import serverConstants.ErrorMessages;
 
 /* Additional import section end */
 
-public class Position extends PersistentObject implements PersistentPosition{
+public class Position extends model.PositionAbstrakt implements PersistentPosition{
     
-    /** Throws persistence exception if the object with the given id does not exist. */
-    public static Position4Public getById(long objectId) throws PersistenceException{
-        long classId = ConnectionHandler.getTheConnectionHandler().thePositionFacade.getClass(objectId);
-        return (Position4Public)PersistentProxi.createProxi(objectId, classId);
-    }
     
     public static Position4Public createPosition(Artikel4Public artikel,long menge) throws PersistenceException{
         return createPosition(artikel,menge,false);
@@ -60,16 +55,6 @@ public class Position extends PersistentObject implements PersistentPosition{
     java.util.HashMap<String,Object> result = null;
         if (depth > 0 && essentialLevel <= common.RPCConstantsAndServices.EssentialDepth){
             result = super.toHashtable(allResults, depth, essentialLevel, forGUI, false, tdObserver);
-            AbstractPersistentRoot artikel = (AbstractPersistentRoot)this.getArtikel();
-            if (artikel != null) {
-                result.put("artikel", artikel.createProxiInformation(false, essentialLevel <= 1));
-                if(depth > 1) {
-                    artikel.toHashtable(allResults, depth - 1, essentialLevel, forGUI, true , tdObserver);
-                }else{
-                    if(forGUI && artikel.hasEssentialFields())artikel.toHashtable(allResults, depth, essentialLevel + 1, false, true, tdObserver);
-                }
-            }
-            result.put("menge", new Long(this.getMenge()).toString());
             String uniqueKey = common.RPCConstantsAndServices.createHashtableKey(this.getClassId(), this.getId());
             if (leaf && !allResults.containsKey(uniqueKey)) allResults.put(uniqueKey, result);
         }
@@ -80,6 +65,7 @@ public class Position extends PersistentObject implements PersistentPosition{
         Position result = this;
         result = new Position(this.artikel, 
                               this.menge, 
+                              this.subService, 
                               this.This, 
                               this.getId());
         this.copyingPrivateUserAttributes(result);
@@ -89,16 +75,10 @@ public class Position extends PersistentObject implements PersistentPosition{
     public boolean hasEssentialFields() throws PersistenceException{
         return false;
     }
-    protected PersistentArtikel artikel;
-    protected long menge;
-    protected PersistentPosition This;
     
-    public Position(PersistentArtikel artikel,long menge,PersistentPosition This,long id) throws PersistenceException {
+    public Position(PersistentArtikel artikel,long menge,SubjInterface subService,PersistentPositionAbstrakt This,long id) throws PersistenceException {
         /* Shall not be used by clients for object construction! Use static create operation instead! */
-        super(id);
-        this.artikel = artikel;
-        this.menge = menge;
-        if (This != null && !(this.isTheSameAs(This))) this.This = This;        
+        super((PersistentArtikel)artikel,(long)menge,(SubjInterface)subService,(PersistentPositionAbstrakt)This,id);        
     }
     
     static public long getTypeId() {
@@ -114,53 +94,9 @@ public class Position extends PersistentObject implements PersistentPosition{
         if (this.getClassId() == 144) ConnectionHandler.getTheConnectionHandler().thePositionFacade
             .newPosition(menge,this.getId());
         super.store();
-        if(this.getArtikel() != null){
-            this.getArtikel().store();
-            ConnectionHandler.getTheConnectionHandler().thePositionFacade.artikelSet(this.getId(), getArtikel());
-        }
-        if(!this.isTheSameAs(this.getThis())){
-            this.getThis().store();
-            ConnectionHandler.getTheConnectionHandler().thePositionFacade.ThisSet(this.getId(), getThis());
-        }
         
     }
     
-    public Artikel4Public getArtikel() throws PersistenceException {
-        return this.artikel;
-    }
-    public void setArtikel(Artikel4Public newValue) throws PersistenceException {
-        if (newValue == null) throw new PersistenceException("Null values not allowed!", 0);
-        if(newValue.isTheSameAs(this.artikel)) return;
-        long objectId = newValue.getId();
-        long classId = newValue.getClassId();
-        this.artikel = (PersistentArtikel)PersistentProxi.createProxi(objectId, classId);
-        if(!this.isDelayed$Persistence()){
-            newValue.store();
-            ConnectionHandler.getTheConnectionHandler().thePositionFacade.artikelSet(this.getId(), newValue);
-        }
-    }
-    public long getMenge() throws PersistenceException {
-        return this.menge;
-    }
-    public void setMenge(long newValue) throws PersistenceException {
-        if(!this.isDelayed$Persistence()) ConnectionHandler.getTheConnectionHandler().thePositionFacade.mengeSet(this.getId(), newValue);
-        this.menge = newValue;
-    }
-    protected void setThis(PersistentPosition newValue) throws PersistenceException {
-        if (newValue == null) throw new PersistenceException("Null values not allowed!", 0);
-        if (newValue.isTheSameAs(this)){
-            this.This = null;
-            return;
-        }
-        if(newValue.isTheSameAs(this.This)) return;
-        long objectId = newValue.getId();
-        long classId = newValue.getClassId();
-        this.This = (PersistentPosition)PersistentProxi.createProxi(objectId, classId);
-        if(!this.isDelayed$Persistence()){
-            newValue.store();
-            ConnectionHandler.getTheConnectionHandler().thePositionFacade.ThisSet(this.getId(), newValue);
-        }
-    }
     public PersistentPosition getThis() throws PersistenceException {
         if(this.This == null){
             PersistentPosition result = (PersistentPosition)PersistentProxi.createProxi(this.getId(),this.getClassId());
@@ -169,6 +105,18 @@ public class Position extends PersistentObject implements PersistentPosition{
         }return (PersistentPosition)this.This;
     }
     
+    public void accept(PositionAbstraktVisitor visitor) throws PersistenceException {
+        visitor.handlePosition(this);
+    }
+    public <R> R accept(PositionAbstraktReturnVisitor<R>  visitor) throws PersistenceException {
+         return visitor.handlePosition(this);
+    }
+    public <E extends model.UserException>  void accept(PositionAbstraktExceptionVisitor<E> visitor) throws PersistenceException, E {
+         visitor.handlePosition(this);
+    }
+    public <R, E extends model.UserException> R accept(PositionAbstraktReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E {
+         return visitor.handlePosition(this);
+    }
     public void accept(AnythingVisitor visitor) throws PersistenceException {
         visitor.handlePosition(this);
     }
@@ -181,11 +129,32 @@ public class Position extends PersistentObject implements PersistentPosition{
     public <R, E extends model.UserException> R accept(AnythingReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E {
          return visitor.handlePosition(this);
     }
+    public void accept(SubjInterfaceVisitor visitor) throws PersistenceException {
+        visitor.handlePosition(this);
+    }
+    public <R> R accept(SubjInterfaceReturnVisitor<R>  visitor) throws PersistenceException {
+         return visitor.handlePosition(this);
+    }
+    public <E extends model.UserException>  void accept(SubjInterfaceExceptionVisitor<E> visitor) throws PersistenceException, E {
+         visitor.handlePosition(this);
+    }
+    public <R, E extends model.UserException> R accept(SubjInterfaceReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E {
+         return visitor.handlePosition(this);
+    }
     public int getLeafInfo() throws PersistenceException{
         return 0;
     }
     
     
+    public synchronized void deregister(final ObsInterface observee) 
+				throws PersistenceException{
+        SubjInterface subService = getThis().getSubService();
+		if (subService == null) {
+			subService = model.Subj.createSubj(this.isDelayed$Persistence());
+			getThis().setSubService(subService);
+		}
+		subService.deregister(observee);
+    }
     public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
 				throws PersistenceException{
         this.setThis((PersistentPosition)This);
@@ -193,6 +162,24 @@ public class Position extends PersistentObject implements PersistentPosition{
 			this.setArtikel((PersistentArtikel)final$$Fields.get("artikel"));
 			this.setMenge((Long)final$$Fields.get("menge"));
 		}
+    }
+    public synchronized void register(final ObsInterface observee) 
+				throws PersistenceException{
+        SubjInterface subService = getThis().getSubService();
+		if (subService == null) {
+			subService = model.Subj.createSubj(this.isDelayed$Persistence());
+			getThis().setSubService(subService);
+		}
+		subService.register(observee);
+    }
+    public synchronized void updateObservers(final model.meta.Mssgs event) 
+				throws PersistenceException{
+        SubjInterface subService = getThis().getSubService();
+		if (subService == null) {
+			subService = model.Subj.createSubj(this.isDelayed$Persistence());
+			getThis().setSubService(subService);
+		}
+		subService.updateObservers(event);
     }
     
     
@@ -213,19 +200,10 @@ public class Position extends PersistentObject implements PersistentPosition{
         //TODO: implement method: copyingPrivateUserAttributes
         
     }
-    public Position4Public enthaeltArtikel(final Artikel4Public artikel) 
-				throws PersistenceException{
-        if(getThis().getArtikel().equals(artikel)){
-            return getThis();
-        }
-        else {
-            return null;
-        }
-    }
     public void erhoeheMenge(final long menge) 
 				throws model.ExcLagerbestandOverMax, PersistenceException{
         long newMenge = getThis().getMenge() + menge;
-        if( getArtikel().groesserMax(newMenge).equals(TrueX.getTheTrueX())){
+        if( getArtikel().getMaxLagerbestand() < menge){
             throw new ExcLagerbestandOverMax(ErrorMessages.LagerbestandOverMax);
         }
         getThis().setMenge(newMenge);

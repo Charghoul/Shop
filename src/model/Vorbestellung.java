@@ -9,43 +9,52 @@ import persistence.*;
 
 public class Vorbestellung extends model.Bestellstatus implements PersistentVorbestellung{
     
-    
-    public static Vorbestellung4Public createVorbestellung() throws PersistenceException{
-        return createVorbestellung(false);
-    }
-    
-    public static Vorbestellung4Public createVorbestellung(boolean delayed$Persistence) throws PersistenceException {
-        PersistentVorbestellung result = null;
-        if(delayed$Persistence){
-            result = ConnectionHandler.getTheConnectionHandler().theVorbestellungFacade
-                .newDelayedVorbestellung();
-            result.setDelayed$Persistence(true);
-        }else{
-            result = ConnectionHandler.getTheConnectionHandler().theVorbestellungFacade
-                .newVorbestellung(-1);
+    private static Vorbestellung4Public theVorbestellung = null;
+    public static boolean reset$For$Test = false;
+    private static final Object $$lock = new Object();
+    public static Vorbestellung4Public getTheVorbestellung() throws PersistenceException{
+        if (theVorbestellung == null || reset$For$Test){
+            if (reset$For$Test) theVorbestellung = null;
+            class Initializer implements Runnable {
+                PersistenceException exception = null;
+                public void /* internal */ run(){
+                    this.produceSingleton();
+                }
+                void produceSingleton() {
+                    synchronized ($$lock){
+                        try {
+                            Vorbestellung4Public proxi = null;
+                            proxi = ConnectionHandler.getTheConnectionHandler().theVorbestellungFacade.getTheVorbestellung();
+                            theVorbestellung = proxi;
+                            if(proxi.getId() < 0) {
+                                ((AbstractPersistentRoot)proxi).setId(proxi.getId() * -1);
+                                proxi.initialize(proxi, new java.util.HashMap<String,Object>());
+                                proxi.initializeOnCreation();
+                            }
+                        } catch (PersistenceException e){
+                            exception = e;
+                        } finally {
+                            $$lock.notify();
+                        }
+                        
+                    }
+                }
+                Vorbestellung4Public getResult() throws PersistenceException{
+                    synchronized ($$lock) {
+                        if (exception == null && theVorbestellung== null) try {$$lock.wait();} catch (InterruptedException e) {}
+                        if(exception != null) throw exception;
+                        return theVorbestellung;
+                    }
+                }
+                
+            }
+            reset$For$Test = false;
+            Initializer initializer = new Initializer();
+            new Thread(initializer).start();
+            return initializer.getResult();
         }
-        java.util.HashMap<String,Object> final$$Fields = new java.util.HashMap<String,Object>();
-        result.initialize(result, final$$Fields);
-        result.initializeOnCreation();
-        return result;
+        return theVorbestellung;
     }
-    
-    public static Vorbestellung4Public createVorbestellung(boolean delayed$Persistence,Vorbestellung4Public This) throws PersistenceException {
-        PersistentVorbestellung result = null;
-        if(delayed$Persistence){
-            result = ConnectionHandler.getTheConnectionHandler().theVorbestellungFacade
-                .newDelayedVorbestellung();
-            result.setDelayed$Persistence(true);
-        }else{
-            result = ConnectionHandler.getTheConnectionHandler().theVorbestellungFacade
-                .newVorbestellung(-1);
-        }
-        java.util.HashMap<String,Object> final$$Fields = new java.util.HashMap<String,Object>();
-        result.initialize(This, final$$Fields);
-        result.initializeOnCreation();
-        return result;
-    }
-    
     public java.util.HashMap<String,Object> toHashtable(java.util.HashMap<String,Object> allResults, int depth, int essentialLevel, boolean forGUI, boolean leaf, TDObserver tdObserver) throws PersistenceException {
     java.util.HashMap<String,Object> result = null;
         if (depth > 0 && essentialLevel <= common.RPCConstantsAndServices.EssentialDepth){
@@ -58,7 +67,8 @@ public class Vorbestellung extends model.Bestellstatus implements PersistentVorb
     
     public Vorbestellung provideCopy() throws PersistenceException{
         Vorbestellung result = this;
-        result = new Vorbestellung(this.This, 
+        result = new Vorbestellung(this.subService, 
+                                   this.This, 
                                    this.getId());
         this.copyingPrivateUserAttributes(result);
         return result;
@@ -68,9 +78,9 @@ public class Vorbestellung extends model.Bestellstatus implements PersistentVorb
         return false;
     }
     
-    public Vorbestellung(PersistentBestellstatus This,long id) throws PersistenceException {
+    public Vorbestellung(SubjInterface subService,PersistentBestellstatus This,long id) throws PersistenceException {
         /* Shall not be used by clients for object construction! Use static create operation instead! */
-        super((PersistentBestellstatus)This,id);        
+        super((SubjInterface)subService,(PersistentBestellstatus)This,id);        
     }
     
     static public long getTypeId() {
@@ -82,11 +92,7 @@ public class Vorbestellung extends model.Bestellstatus implements PersistentVorb
     }
     
     public void store() throws PersistenceException {
-        if(!this.isDelayed$Persistence()) return;
-        if (this.getClassId() == 216) ConnectionHandler.getTheConnectionHandler().theVorbestellungFacade
-            .newVorbestellung(this.getId());
-        super.store();
-        
+        // Singletons cannot be delayed!
     }
     
     public PersistentVorbestellung getThis() throws PersistenceException {
@@ -121,16 +127,55 @@ public class Vorbestellung extends model.Bestellstatus implements PersistentVorb
     public <R, E extends model.UserException> R accept(AnythingReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E {
          return visitor.handleVorbestellung(this);
     }
+    public void accept(SubjInterfaceVisitor visitor) throws PersistenceException {
+        visitor.handleVorbestellung(this);
+    }
+    public <R> R accept(SubjInterfaceReturnVisitor<R>  visitor) throws PersistenceException {
+         return visitor.handleVorbestellung(this);
+    }
+    public <E extends model.UserException>  void accept(SubjInterfaceExceptionVisitor<E> visitor) throws PersistenceException, E {
+         visitor.handleVorbestellung(this);
+    }
+    public <R, E extends model.UserException> R accept(SubjInterfaceReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E {
+         return visitor.handleVorbestellung(this);
+    }
     public int getLeafInfo() throws PersistenceException{
         return 0;
     }
     
     
+    public synchronized void deregister(final ObsInterface observee) 
+				throws PersistenceException{
+        SubjInterface subService = getThis().getSubService();
+		if (subService == null) {
+			subService = model.Subj.createSubj(this.isDelayed$Persistence());
+			getThis().setSubService(subService);
+		}
+		subService.deregister(observee);
+    }
     public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
 				throws PersistenceException{
         this.setThis((PersistentVorbestellung)This);
 		if(this.isTheSameAs(This)){
 		}
+    }
+    public synchronized void register(final ObsInterface observee) 
+				throws PersistenceException{
+        SubjInterface subService = getThis().getSubService();
+		if (subService == null) {
+			subService = model.Subj.createSubj(this.isDelayed$Persistence());
+			getThis().setSubService(subService);
+		}
+		subService.register(observee);
+    }
+    public synchronized void updateObservers(final model.meta.Mssgs event) 
+				throws PersistenceException{
+        SubjInterface subService = getThis().getSubService();
+		if (subService == null) {
+			subService = model.Subj.createSubj(this.isDelayed$Persistence());
+			getThis().setSubService(subService);
+		}
+		subService.updateObservers(event);
     }
     
     

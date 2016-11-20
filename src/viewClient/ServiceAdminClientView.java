@@ -1,26 +1,41 @@
 package viewClient;
 
-import com.sun.javafx.geom.Point2D;
+import view.*;
+import view.objects.ViewRoot;
+import view.objects.ViewObjectInTree;
+
+import view.visitor.AnythingStandardVisitor;
+
+import java.util.Optional;
+
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.SelectionMode;
+import javafx.scene.control.SelectionModel;
+import javafx.scene.control.SplitPane;
+import javafx.scene.control.TitledPane;
+import javafx.scene.control.ToolBar;
+import javafx.scene.control.TreeItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
-import view.*;
-import view.objects.ViewObjectInTree;
-import view.objects.ViewRoot;
-import view.visitor.AnythingStandardVisitor;
+
+
+import com.sun.javafx.geom.Point2D;
 
 import javax.swing.tree.TreeModel;
-import java.util.Optional;
 
 
 public class ServiceAdminClientView extends BorderPane implements ExceptionAndEventHandler{
@@ -205,7 +220,7 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
 	private DetailPanel getDetailView(final Anything anything) throws ModelException {
 		class PanelDecider extends AnythingStandardVisitor {
 
-			private DetailPanel result;
+			private DefaultDetailPanel result;
 			
 			public DetailPanel getResult() {
 				return this.result;
@@ -213,6 +228,19 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
 			protected void standardHandling(Anything Anything) throws ModelException {
 				this.result = null;
 			}
+
+			@Override
+			public void handleArtikel(ArtikelView artikel) throws ModelException {
+				result = new ArtikelDefaultDetailPanel(ServiceAdminClientView.this,artikel);
+				result.registerUpdater(ArtikelDefaultDetailPanel.Artikel$$hstLieferzeit, new UpdaterForInteger() {
+					@Override
+					public void update(String text) throws ModelException {
+						getConnection().aendereHstLieferzeit(artikel,Integer.parseInt(text));
+					}
+				});
+			}
+
+
 			//TODO Overwrite all handle methods for the types for which you intend to provide a special panel!
 		}
 		PanelDecider decider = new PanelDecider();
@@ -296,24 +324,25 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
 
 
     interface MenuItemVisitor{
-        ImageView handle(AendereArtikelPRMTRArtikelPRMTRStringPRMTRFractionPRMTRIntegerPRMTRIntegerPRMTRIntegerPRMTRMenuItem menuItem);
+        ImageView handle(AendereArtikelPRMTRArtikelPRMTRFractionPRMTRIntegerPRMTRIntegerPRMTRIntegerPRMTRMenuItem menuItem);
         ImageView handle(AendereHerstellerPRMTRHerstellerPRMTRStringPRMTRMenuItem menuItem);
+        ImageView handle(AendereHstLieferzeitPRMTRArtikelPRMTRIntegerPRMTRMenuItem menuItem);
         ImageView handle(AendereLieferartPRMTRLieferartPRMTRStringPRMTRIntegerPRMTRFractionPRMTRMenuItem menuItem);
         ImageView handle(AendereMengePRMTRPositionPRMTRIntegerPRMTRMenuItem menuItem);
         ImageView handle(ArtikelAbhaengenPRMTRProduktgruppePRMTRArtikelPRMTRMenuItem menuItem);
         ImageView handle(ArtikelAnhaengenPRMTRProduktgruppePRMTRArtikelPRMTRMenuItem menuItem);
         ImageView handle(ArtikelEinlagernPRMTRWarenlagerPRMTRArtikelPRMTRIntegerPRMTRMenuItem menuItem);
         ImageView handle(ArtikelEntfernenPRMTRWarenlagerPRMTRPositionPRMTRMenuItem menuItem);
-        ImageView handle(ArtikelEntnehmenPRMTRWarenlagerPRMTRPositionPRMTRIntegerPRMTRMenuItem menuItem);
+        ImageView handle(ArtikelEntnehmenPRMTRWarenlagerPRMTRArtikelPRMTRIntegerPRMTRMenuItem menuItem);
+        ImageView handle(StatusAuslaufPRMTRArtikelPRMTRMenuItem menuItem);
         ImageView handle(ErhoeheMengePRMTRPositionPRMTRIntegerPRMTRMenuItem menuItem);
+        ImageView handle(StatusVerkaufPRMTRArtikelPRMTRMenuItem menuItem);
         ImageView handle(HerstellerHinzufuegenPRMTRArtikelPRMTRHerstellerPRMTRMenuItem menuItem);
         ImageView handle(NeueLieferArtPRMTRLieferartManagerPRMTRStringPRMTRIntegerPRMTRFractionPRMTRMenuItem menuItem);
         ImageView handle(NeuerArtikelPRMTRArtikelManagerPRMTRStringPRMTRStringPRMTRFractionPRMTRIntegerPRMTRIntegerPRMTRIntegerPRMTRMenuItem menuItem);
         ImageView handle(NeuerHerstellerPRMTRHerstellerManagerPRMTRStringPRMTRMenuItem menuItem);
         ImageView handle(ProduktgruppeEntfernenPRMTRProduktgruppePRMTRMenuItem menuItem);
         ImageView handle(ProduktgruppeHinzufuegenPRMTRProduktgruppePRMTRStringPRMTRMenuItem menuItem);
-        ImageView handle(StatusAuslaufPRMTRArtikelPRMTRMenuItem menuItem);
-        ImageView handle(StatusVerkaufPRMTRArtikelPRMTRMenuItem menuItem);
         ImageView handle(VerringereMengePRMTRPositionPRMTRIntegerPRMTRMenuItem menuItem);
     }
     private abstract class ServiceAdminMenuItem extends MenuItem{
@@ -322,12 +351,17 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
         }
         abstract protected ImageView accept(MenuItemVisitor visitor);
     }
-    private class AendereArtikelPRMTRArtikelPRMTRStringPRMTRFractionPRMTRIntegerPRMTRIntegerPRMTRIntegerPRMTRMenuItem extends ServiceAdminMenuItem{
+    private class AendereArtikelPRMTRArtikelPRMTRFractionPRMTRIntegerPRMTRIntegerPRMTRIntegerPRMTRMenuItem extends ServiceAdminMenuItem{
         protected ImageView accept(MenuItemVisitor visitor){
             return visitor.handle(this);
         }
     }
     private class AendereHerstellerPRMTRHerstellerPRMTRStringPRMTRMenuItem extends ServiceAdminMenuItem{
+        protected ImageView accept(MenuItemVisitor visitor){
+            return visitor.handle(this);
+        }
+    }
+    private class AendereHstLieferzeitPRMTRArtikelPRMTRIntegerPRMTRMenuItem extends ServiceAdminMenuItem{
         protected ImageView accept(MenuItemVisitor visitor){
             return visitor.handle(this);
         }
@@ -362,12 +396,22 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
             return visitor.handle(this);
         }
     }
-    private class ArtikelEntnehmenPRMTRWarenlagerPRMTRPositionPRMTRIntegerPRMTRMenuItem extends ServiceAdminMenuItem{
+    private class ArtikelEntnehmenPRMTRWarenlagerPRMTRArtikelPRMTRIntegerPRMTRMenuItem extends ServiceAdminMenuItem{
+        protected ImageView accept(MenuItemVisitor visitor){
+            return visitor.handle(this);
+        }
+    }
+    private class StatusAuslaufPRMTRArtikelPRMTRMenuItem extends ServiceAdminMenuItem{
         protected ImageView accept(MenuItemVisitor visitor){
             return visitor.handle(this);
         }
     }
     private class ErhoeheMengePRMTRPositionPRMTRIntegerPRMTRMenuItem extends ServiceAdminMenuItem{
+        protected ImageView accept(MenuItemVisitor visitor){
+            return visitor.handle(this);
+        }
+    }
+    private class StatusVerkaufPRMTRArtikelPRMTRMenuItem extends ServiceAdminMenuItem{
         protected ImageView accept(MenuItemVisitor visitor){
             return visitor.handle(this);
         }
@@ -398,16 +442,6 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
         }
     }
     private class ProduktgruppeHinzufuegenPRMTRProduktgruppePRMTRStringPRMTRMenuItem extends ServiceAdminMenuItem{
-        protected ImageView accept(MenuItemVisitor visitor){
-            return visitor.handle(this);
-        }
-    }
-    private class StatusAuslaufPRMTRArtikelPRMTRMenuItem extends ServiceAdminMenuItem{
-        protected ImageView accept(MenuItemVisitor visitor){
-            return visitor.handle(this);
-        }
-    }
-    private class StatusVerkaufPRMTRArtikelPRMTRMenuItem extends ServiceAdminMenuItem{
         protected ImageView accept(MenuItemVisitor visitor){
             return visitor.handle(this);
         }
@@ -532,17 +566,74 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
                 result.getItems().add(item);
             }
             if (selected instanceof ArtikelView){
-                item = new AendereArtikelPRMTRArtikelPRMTRStringPRMTRFractionPRMTRIntegerPRMTRIntegerPRMTRIntegerPRMTRMenuItem();
+                item = new AendereArtikelPRMTRArtikelPRMTRFractionPRMTRIntegerPRMTRIntegerPRMTRIntegerPRMTRMenuItem();
                 item.setText("aendereArtikel ... ");
                 item.setOnAction(new EventHandler<ActionEvent>(){
                     public void handle(javafx.event.ActionEvent e) {
-                        final ServiceAdminAendereArtikelArtikelStringFractionIntegerIntegerIntegerMssgWizard wizard = new ServiceAdminAendereArtikelArtikelStringFractionIntegerIntegerIntegerMssgWizard("aendereArtikel");
+                        final ServiceAdminAendereArtikelArtikelFractionIntegerIntegerIntegerMssgWizard wizard = new ServiceAdminAendereArtikelArtikelFractionIntegerIntegerIntegerMssgWizard("aendereArtikel");
                         wizard.setFirstArgument((ArtikelView)selected);
                         wizard.setWidth(getNavigationPanel().getWidth());
                         wizard.showAndWait();
                     }
                 });
                 result.getItems().add(item);
+                item = new AendereHstLieferzeitPRMTRArtikelPRMTRIntegerPRMTRMenuItem();
+                item.setText("aendereHstLieferzeit ... ");
+                item.setOnAction(new EventHandler<ActionEvent>(){
+                    public void handle(javafx.event.ActionEvent e) {
+                        final ServiceAdminAendereHstLieferzeitArtikelIntegerMssgWizard wizard = new ServiceAdminAendereHstLieferzeitArtikelIntegerMssgWizard("aendereHstLieferzeit");
+                        wizard.setFirstArgument((ArtikelView)selected);
+                        wizard.setWidth(getNavigationPanel().getWidth());
+                        wizard.showAndWait();
+                    }
+                });
+                result.getItems().add(item);
+                if (filter_statusAuslauf((ArtikelView) selected)) {
+                    item = new StatusAuslaufPRMTRArtikelPRMTRMenuItem();
+                    item.setText("einstellen");
+                    item.setOnAction(new EventHandler<ActionEvent>(){
+                        public void handle(javafx.event.ActionEvent e) {
+                            Alert confirm = new Alert(AlertType.CONFIRMATION);
+                            confirm.setTitle(GUIConstants.ConfirmButtonText);
+                            confirm.setHeaderText(null);
+                            confirm.setContentText("einstellen" + GUIConstants.ConfirmQuestionMark);
+                            Optional<ButtonType> buttonResult = confirm.showAndWait();
+                            if (buttonResult.get() == ButtonType.OK) {
+                                try {
+                                    getConnection().statusAuslauf((ArtikelView)selected);
+                                    getConnection().setEagerRefresh();
+                                    
+                                }catch(ModelException me){
+                                    handleException(me);
+                                }
+                            }
+                        }
+                    });
+                    result.getItems().add(item);
+                }
+                if (filter_statusVerkauf((ArtikelView) selected)) {
+                    item = new StatusVerkaufPRMTRArtikelPRMTRMenuItem();
+                    item.setText("freigeben");
+                    item.setOnAction(new EventHandler<ActionEvent>(){
+                        public void handle(javafx.event.ActionEvent e) {
+                            Alert confirm = new Alert(AlertType.CONFIRMATION);
+                            confirm.setTitle(GUIConstants.ConfirmButtonText);
+                            confirm.setHeaderText(null);
+                            confirm.setContentText("freigeben" + GUIConstants.ConfirmQuestionMark);
+                            Optional<ButtonType> buttonResult = confirm.showAndWait();
+                            if (buttonResult.get() == ButtonType.OK) {
+                                try {
+                                    getConnection().statusVerkauf((ArtikelView)selected);
+                                    getConnection().setEagerRefresh();
+                                    
+                                }catch(ModelException me){
+                                    handleException(me);
+                                }
+                            }
+                        }
+                    });
+                    result.getItems().add(item);
+                }
                 item = new HerstellerHinzufuegenPRMTRArtikelPRMTRHerstellerPRMTRMenuItem();
                 item.setText("herstellerHinzufuegen ... ");
                 item.setOnAction(new EventHandler<ActionEvent>(){
@@ -551,48 +642,6 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
                         wizard.setFirstArgument((ArtikelView)selected);
                         wizard.setWidth(getNavigationPanel().getWidth());
                         wizard.showAndWait();
-                    }
-                });
-                result.getItems().add(item);
-                item = new StatusAuslaufPRMTRArtikelPRMTRMenuItem();
-                item.setText("statusAuslauf");
-                item.setOnAction(new EventHandler<ActionEvent>(){
-                    public void handle(javafx.event.ActionEvent e) {
-                        Alert confirm = new Alert(AlertType.CONFIRMATION);
-                        confirm.setTitle(GUIConstants.ConfirmButtonText);
-                        confirm.setHeaderText(null);
-                        confirm.setContentText("statusAuslauf" + GUIConstants.ConfirmQuestionMark);
-                        Optional<ButtonType> buttonResult = confirm.showAndWait();
-                        if (buttonResult.get() == ButtonType.OK) {
-                            try {
-                                getConnection().statusAuslauf((ArtikelView)selected);
-                                getConnection().setEagerRefresh();
-                                
-                            }catch(ModelException me){
-                                handleException(me);
-                            }
-                        }
-                    }
-                });
-                result.getItems().add(item);
-                item = new StatusVerkaufPRMTRArtikelPRMTRMenuItem();
-                item.setText("statusVerkauf");
-                item.setOnAction(new EventHandler<ActionEvent>(){
-                    public void handle(javafx.event.ActionEvent e) {
-                        Alert confirm = new Alert(AlertType.CONFIRMATION);
-                        confirm.setTitle(GUIConstants.ConfirmButtonText);
-                        confirm.setHeaderText(null);
-                        confirm.setContentText("statusVerkauf" + GUIConstants.ConfirmQuestionMark);
-                        Optional<ButtonType> buttonResult = confirm.showAndWait();
-                        if (buttonResult.get() == ButtonType.OK) {
-                            try {
-                                getConnection().statusVerkauf((ArtikelView)selected);
-                                getConnection().setEagerRefresh();
-                                
-                            }catch(ModelException me){
-                                handleException(me);
-                            }
-                        }
                     }
                 });
                 result.getItems().add(item);
@@ -676,11 +725,11 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
                     }
                 });
                 result.getItems().add(item);
-                item = new ArtikelEntnehmenPRMTRWarenlagerPRMTRPositionPRMTRIntegerPRMTRMenuItem();
+                item = new ArtikelEntnehmenPRMTRWarenlagerPRMTRArtikelPRMTRIntegerPRMTRMenuItem();
                 item.setText("artikelEntnehmen ... ");
                 item.setOnAction(new EventHandler<ActionEvent>(){
                     public void handle(javafx.event.ActionEvent e) {
-                        final ServiceAdminArtikelEntnehmenWarenlagerPositionIntegerMssgWizard wizard = new ServiceAdminArtikelEntnehmenWarenlagerPositionIntegerMssgWizard("artikelEntnehmen");
+                        final ServiceAdminArtikelEntnehmenWarenlagerArtikelIntegerMssgWizard wizard = new ServiceAdminArtikelEntnehmenWarenlagerArtikelIntegerMssgWizard("artikelEntnehmen");
                         wizard.setFirstArgument((WarenlagerView)selected);
                         wizard.setWidth(getNavigationPanel().getWidth());
                         wizard.showAndWait();
@@ -700,26 +749,31 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
     private void setPreCalculatedFilters(String switchOff) {
         this.preCalculatedFilters = switchOff;
     }
+    private boolean filter_statusAuslauf(ArtikelView argument){
+        return this.getPreCalculatedFilters().contains("+++statusAuslaufPRMTRArtikelPRMTR");
+    }
+    private boolean filter_statusVerkauf(ArtikelView argument){
+        return this.getPreCalculatedFilters().contains("+++statusVerkaufPRMTRArtikelPRMTR");
+    }
     
-	class ServiceAdminAendereArtikelArtikelStringFractionIntegerIntegerIntegerMssgWizard extends Wizard {
+	class ServiceAdminAendereArtikelArtikelFractionIntegerIntegerIntegerMssgWizard extends Wizard {
 
-		protected ServiceAdminAendereArtikelArtikelStringFractionIntegerIntegerIntegerMssgWizard(String operationName){
+		protected ServiceAdminAendereArtikelArtikelFractionIntegerIntegerIntegerMssgWizard(String operationName){
 			super(ServiceAdminClientView.this);
 			getOkButton().setText(operationName);
-			getOkButton().setGraphic(new AendereArtikelPRMTRArtikelPRMTRStringPRMTRFractionPRMTRIntegerPRMTRIntegerPRMTRIntegerPRMTRMenuItem ().getGraphic());
+			getOkButton().setGraphic(new AendereArtikelPRMTRArtikelPRMTRFractionPRMTRIntegerPRMTRIntegerPRMTRIntegerPRMTRMenuItem ().getGraphic());
 		}
 		protected void initialize(){
-			this.helpFileName = "ServiceAdminAendereArtikelArtikelStringFractionIntegerIntegerIntegerMssgWizard.help";
+			this.helpFileName = "ServiceAdminAendereArtikelArtikelFractionIntegerIntegerIntegerMssgWizard.help";
 			super.initialize();		
 		}
 				
 		protected void perform() {
 			try {
-				getConnection().aendereArtikel(firstArgument, ((StringSelectionPanel)getParametersPanel().getChildren().get(0)).getResult(),
-									((FractionSelectionPanel)getParametersPanel().getChildren().get(1)).getResult(),
+				getConnection().aendereArtikel(firstArgument, ((FractionSelectionPanel)getParametersPanel().getChildren().get(0)).getResult(),
+									((IntegerSelectionPanel)getParametersPanel().getChildren().get(1)).getResult().longValue(),
 									((IntegerSelectionPanel)getParametersPanel().getChildren().get(2)).getResult().longValue(),
-									((IntegerSelectionPanel)getParametersPanel().getChildren().get(3)).getResult().longValue(),
-									((IntegerSelectionPanel)getParametersPanel().getChildren().get(4)).getResult().longValue());
+									((IntegerSelectionPanel)getParametersPanel().getChildren().get(3)).getResult().longValue());
 				getConnection().setEagerRefresh();
 				this.close();	
 			} catch(ModelException me){
@@ -738,7 +792,6 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
 			return false;
 		}
 		protected void addParameters(){
-			getParametersPanel().getChildren().add(new StringSelectionPanel("bezeichnung", this));
 			getParametersPanel().getChildren().add(new FractionSelectionPanel("preis", this));
 			getParametersPanel().getChildren().add(new IntegerSelectionPanel("minLagerbestand", this));
 			getParametersPanel().getChildren().add(new IntegerSelectionPanel("maxLagerbestand", this));
@@ -755,36 +808,29 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
 			this.setTitle(this.firstArgument.toString());
 			try{
 				final SelectionPanel selectionPanel0 = (SelectionPanel)getParametersPanel().getChildren().get(0);
-				selectionPanel0.preset(firstArgument.getBezeichnung());
+				selectionPanel0.preset(firstArgument.getPreis());
 				if (!selectionPanel0.check()) selectionPanel0.preset("");
 			}catch(ModelException me){
 				 handleException(me);
 			}
 			try{
 				final SelectionPanel selectionPanel1 = (SelectionPanel)getParametersPanel().getChildren().get(1);
-				selectionPanel1.preset(firstArgument.getPreis());
+				selectionPanel1.preset(firstArgument.getMinLagerbestand());
 				if (!selectionPanel1.check()) selectionPanel1.preset("");
 			}catch(ModelException me){
 				 handleException(me);
 			}
 			try{
 				final SelectionPanel selectionPanel2 = (SelectionPanel)getParametersPanel().getChildren().get(2);
-				selectionPanel2.preset(firstArgument.getMinLagerbestand());
+				selectionPanel2.preset(firstArgument.getMaxLagerbestand());
 				if (!selectionPanel2.check()) selectionPanel2.preset("");
 			}catch(ModelException me){
 				 handleException(me);
 			}
 			try{
 				final SelectionPanel selectionPanel3 = (SelectionPanel)getParametersPanel().getChildren().get(3);
-				selectionPanel3.preset(firstArgument.getMaxLagerbestand());
+				selectionPanel3.preset(firstArgument.getHstLieferzeit());
 				if (!selectionPanel3.check()) selectionPanel3.preset("");
-			}catch(ModelException me){
-				 handleException(me);
-			}
-			try{
-				final SelectionPanel selectionPanel4 = (SelectionPanel)getParametersPanel().getChildren().get(4);
-				selectionPanel4.preset(firstArgument.getHstLieferzeit());
-				if (!selectionPanel4.check()) selectionPanel4.preset("");
 			}catch(ModelException me){
 				 handleException(me);
 			}
@@ -841,6 +887,60 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
 			try{
 				final SelectionPanel selectionPanel0 = (SelectionPanel)getParametersPanel().getChildren().get(0);
 				selectionPanel0.preset(firstArgument.getName());
+				if (!selectionPanel0.check()) selectionPanel0.preset("");
+			}catch(ModelException me){
+				 handleException(me);
+			}
+			this.check();
+		}
+		
+		
+	}
+
+	class ServiceAdminAendereHstLieferzeitArtikelIntegerMssgWizard extends Wizard {
+
+		protected ServiceAdminAendereHstLieferzeitArtikelIntegerMssgWizard(String operationName){
+			super(ServiceAdminClientView.this);
+			getOkButton().setText(operationName);
+			getOkButton().setGraphic(new AendereHstLieferzeitPRMTRArtikelPRMTRIntegerPRMTRMenuItem ().getGraphic());
+		}
+		protected void initialize(){
+			this.helpFileName = "ServiceAdminAendereHstLieferzeitArtikelIntegerMssgWizard.help";
+			super.initialize();		
+		}
+				
+		protected void perform() {
+			try {
+				getConnection().aendereHstLieferzeit(firstArgument, ((IntegerSelectionPanel)getParametersPanel().getChildren().get(0)).getResult().longValue());
+				getConnection().setEagerRefresh();
+				this.close();	
+			} catch(ModelException me){
+				handleException(me);
+				this.close();
+			}
+			
+		}
+		protected String checkCompleteParameterSet(){
+			return null;
+		}
+		protected boolean isModifying () {
+			return false;
+		}
+		protected void addParameters(){
+			getParametersPanel().getChildren().add(new IntegerSelectionPanel("hstLieferzeit", this));		
+		}	
+		protected void handleDependencies(int i) {
+		}
+		
+		
+		private ArtikelView firstArgument; 
+	
+		public void setFirstArgument(ArtikelView firstArgument){
+			this.firstArgument = firstArgument;
+			this.setTitle(this.firstArgument.toString());
+			try{
+				final SelectionPanel selectionPanel0 = (SelectionPanel)getParametersPanel().getChildren().get(0);
+				selectionPanel0.preset(firstArgument.getHstLieferzeit());
 				if (!selectionPanel0.check()) selectionPanel0.preset("");
 			}catch(ModelException me){
 				 handleException(me);
@@ -1071,9 +1171,19 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
 			return false;
 		}
 		protected void addParameters(){
-			final ObjectSelectionPanel panel2 = new ObjectSelectionPanel("artikel", "view.ArtikelView", null, this);
-			getParametersPanel().getChildren().add(panel2);
-			panel2.setBrowserRoot((ViewRoot) getConnection().getServiceAdminView());		
+			try{
+				final ObjectSelectionPanel panel2 = new ObjectSelectionPanel("artikel", "view.ArtikelView", null, this);
+				getParametersPanel().getChildren().add(panel2);
+				panel2.setBrowserRoot((ViewRoot)getConnection().artikel_Path_In_ArtikelAnhaengen());
+			}catch(ModelException me){;
+				handleException(me);
+				close();
+				return;
+			 }catch(UserException ue){;
+				handleUserException(ue);
+				close();
+				return;
+			 }		
 		}	
 		protected void handleDependencies(int i) {
 		}
@@ -1121,9 +1231,19 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
 			return false;
 		}
 		protected void addParameters(){
-			final ObjectSelectionPanel panel3 = new ObjectSelectionPanel("artikel", "view.ArtikelView", null, this);
-			getParametersPanel().getChildren().add(panel3);
-			panel3.setBrowserRoot((ViewRoot) getConnection().getServiceAdminView());
+			try{
+				final ObjectSelectionPanel panel3 = new ObjectSelectionPanel("artikel", "view.ArtikelView", null, this);
+				getParametersPanel().getChildren().add(panel3);
+				panel3.setBrowserRoot((ViewRoot)getConnection().artikel_Path_In_ArtikelEinlagern());
+			}catch(ModelException me){;
+				handleException(me);
+				close();
+				return;
+			 }catch(UserException ue){;
+				handleUserException(ue);
+				close();
+				return;
+			 }
 			getParametersPanel().getChildren().add(new IntegerSelectionPanel("menge", this));		
 		}	
 		protected void handleDependencies(int i) {
@@ -1171,9 +1291,19 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
 			return false;
 		}
 		protected void addParameters(){
-			final ObjectSelectionPanel panel4 = new ObjectSelectionPanel("position", "view.PositionView", null, this);
-			getParametersPanel().getChildren().add(panel4);
-			panel4.setBrowserRoot((ViewRoot) getConnection().getServiceAdminView());		
+			try{
+				final ObjectSelectionPanel panel4 = new ObjectSelectionPanel("position", "view.PositionView", null, this);
+				getParametersPanel().getChildren().add(panel4);
+				panel4.setBrowserRoot((ViewRoot)getConnection().position_Path_In_ArtikelEntfernen());
+			}catch(ModelException me){;
+				handleException(me);
+				close();
+				return;
+			 }catch(UserException ue){;
+				handleUserException(ue);
+				close();
+				return;
+			 }		
 		}	
 		protected void handleDependencies(int i) {
 		}
@@ -1190,21 +1320,21 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
 		
 	}
 
-	class ServiceAdminArtikelEntnehmenWarenlagerPositionIntegerMssgWizard extends Wizard {
+	class ServiceAdminArtikelEntnehmenWarenlagerArtikelIntegerMssgWizard extends Wizard {
 
-		protected ServiceAdminArtikelEntnehmenWarenlagerPositionIntegerMssgWizard(String operationName){
+		protected ServiceAdminArtikelEntnehmenWarenlagerArtikelIntegerMssgWizard(String operationName){
 			super(ServiceAdminClientView.this);
 			getOkButton().setText(operationName);
-			getOkButton().setGraphic(new ArtikelEntnehmenPRMTRWarenlagerPRMTRPositionPRMTRIntegerPRMTRMenuItem ().getGraphic());
+			getOkButton().setGraphic(new ArtikelEntnehmenPRMTRWarenlagerPRMTRArtikelPRMTRIntegerPRMTRMenuItem ().getGraphic());
 		}
 		protected void initialize(){
-			this.helpFileName = "ServiceAdminArtikelEntnehmenWarenlagerPositionIntegerMssgWizard.help";
+			this.helpFileName = "ServiceAdminArtikelEntnehmenWarenlagerArtikelIntegerMssgWizard.help";
 			super.initialize();		
 		}
 				
 		protected void perform() {
 			try {
-				getConnection().artikelEntnehmen(firstArgument, (PositionView)((ObjectSelectionPanel)getParametersPanel().getChildren().get(0)).getResult(),
+				getConnection().artikelEntnehmen(firstArgument, (ArtikelView)((ObjectSelectionPanel)getParametersPanel().getChildren().get(0)).getResult(),
 									((IntegerSelectionPanel)getParametersPanel().getChildren().get(1)).getResult().longValue());
 				getConnection().setEagerRefresh();
 				this.close();	
@@ -1221,9 +1351,19 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
 			return false;
 		}
 		protected void addParameters(){
-			final ObjectSelectionPanel panel5 = new ObjectSelectionPanel("position", "view.PositionView", null, this);
-			getParametersPanel().getChildren().add(panel5);
-			panel5.setBrowserRoot((ViewRoot) getConnection().getServiceAdminView());
+			try{
+				final ObjectSelectionPanel panel5 = new ObjectSelectionPanel("artikel", "view.ArtikelView", null, this);
+				getParametersPanel().getChildren().add(panel5);
+				panel5.setBrowserRoot((ViewRoot)getConnection().artikel_Path_In_ArtikelEntnehmen());
+			}catch(ModelException me){;
+				handleException(me);
+				close();
+				return;
+			 }catch(UserException ue){;
+				handleUserException(ue);
+				close();
+				return;
+			 }
 			getParametersPanel().getChildren().add(new IntegerSelectionPanel("menge", this));		
 		}	
 		protected void handleDependencies(int i) {
@@ -1328,9 +1468,19 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
 			return false;
 		}
 		protected void addParameters(){
-			final ObjectSelectionPanel panel6 = new ObjectSelectionPanel("hersteller", "view.HerstellerView", null, this);
-			getParametersPanel().getChildren().add(panel6);
-			panel6.setBrowserRoot((ViewRoot) getConnection().getServiceAdminView());		
+			try{
+				final ObjectSelectionPanel panel6 = new ObjectSelectionPanel("hersteller", "view.HerstellerView", null, this);
+				getParametersPanel().getChildren().add(panel6);
+				panel6.setBrowserRoot((ViewRoot)getConnection().hersteller_Path_In_HerstellerHinzufuegen());
+			}catch(ModelException me){;
+				handleException(me);
+				close();
+				return;
+			 }catch(UserException ue){;
+				handleUserException(ue);
+				close();
+				return;
+			 }		
 		}	
 		protected void handleDependencies(int i) {
 		}

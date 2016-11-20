@@ -4,7 +4,7 @@ import viewClient.*;
 
 import view.visitor.*;
 
-public interface ServiceAdminView extends ServiceView {
+public interface ServiceAdminView extends ServiceShopView {
     
     public WarenlagerView getWarenlager()throws ModelException;
     public void setWarenlager(WarenlagerView newValue) throws ModelException ;
@@ -14,7 +14,13 @@ public interface ServiceAdminView extends ServiceView {
     public void setLieferartManager(LieferartManagerView newValue) throws ModelException ;
     public HerstellerManagerView getHerstellerManager()throws ModelException;
     public void setHerstellerManager(HerstellerManagerView newValue) throws ModelException ;
+    public ZeitManagerView getZeitManager()throws ModelException;
+    public void setZeitManager(ZeitManagerView newValue) throws ModelException ;
     
+    public void accept(ServiceShopVisitor visitor) throws ModelException;
+    public <R> R accept(ServiceShopReturnVisitor<R>  visitor) throws ModelException;
+    public <E extends view.UserException>  void accept(ServiceShopExceptionVisitor<E> visitor) throws ModelException, E;
+    public <R, E extends view.UserException> R accept(ServiceShopReturnExceptionVisitor<R, E>  visitor) throws ModelException, E;
     public void accept(ServiceVisitor visitor) throws ModelException;
     public <R> R accept(ServiceReturnVisitor<R>  visitor) throws ModelException;
     public <E extends view.UserException>  void accept(ServiceExceptionVisitor<E> visitor) throws ModelException, E;

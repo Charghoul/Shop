@@ -3,9 +3,10 @@ package view.visitor;
 
 import view.*;
 
-public interface AnythingVisitor extends ArtikelstatusVisitor,BestellstatusVisitor,BooleanXVisitor,KomponenteVisitor,ServiceVisitor,ZeitObjektVisitor{
+public interface AnythingVisitor extends ArtikelstatusVisitor,BestellstatusVisitor,KomponenteVisitor,PositionAbstraktVisitor,ServiceVisitor,ZeitObjektVisitor{
     
     public void handleArtikelManager(ArtikelManagerView artikelManager) throws ModelException;
+    public void handleBestellManager(BestellManagerView bestellManager) throws ModelException;
     public void handleBestellung(BestellungView bestellung) throws ModelException;
     public void handleEinkaufsManager(EinkaufsManagerView einkaufsManager) throws ModelException;
     public void handleErrorDisplay(ErrorDisplayView errorDisplay) throws ModelException;
@@ -16,7 +17,7 @@ public interface AnythingVisitor extends ArtikelstatusVisitor,BestellstatusVisit
     public void handleKunde(KundeView kunde) throws ModelException;
     public void handleLieferart(LieferartView lieferart) throws ModelException;
     public void handleLieferartManager(LieferartManagerView lieferartManager) throws ModelException;
-    public void handlePosition(PositionView position) throws ModelException;
+    public void handleProduktKatalog(ProduktKatalogView produktKatalog) throws ModelException;
     public void handleServer(ServerView server) throws ModelException;
     public void handleThreadOfControl(ThreadOfControlView threadOfControl) throws ModelException;
     public void handleWarenlager(WarenlagerView warenlager) throws ModelException;

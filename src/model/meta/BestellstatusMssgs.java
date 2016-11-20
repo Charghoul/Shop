@@ -5,4 +5,4 @@ public interface BestellstatusMssgs {
 }
 
 interface BestellstatusDOWNMssgs extends Mssgs, BestellstatusMssgs{}
-interface BestellstatusUPMssgs extends GeliefertUPMssgs, VorbestellungUPMssgs, RueckversandUPMssgs, HinversandUPMssgs, AngenommenUPMssgs, BestellstatusMssgs{}
+interface BestellstatusUPMssgs extends VerarbeitungUPMssgs, GeliefertUPMssgs, VorbestellungUPMssgs, RueckversandUPMssgs, HinversandUPMssgs, AngenommenUPMssgs, BestellstatusMssgs{}

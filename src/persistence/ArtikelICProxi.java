@@ -98,6 +98,18 @@ public class ArtikelICProxi extends KomponenteICProxi implements PersistentArtik
     public <R, E extends model.UserException> R accept(AnythingReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E {
          return visitor.handleArtikel(this);
     }
+    public void accept(SubjInterfaceVisitor visitor) throws PersistenceException {
+        visitor.handleArtikel(this);
+    }
+    public <R> R accept(SubjInterfaceReturnVisitor<R>  visitor) throws PersistenceException {
+         return visitor.handleArtikel(this);
+    }
+    public <E extends model.UserException>  void accept(SubjInterfaceExceptionVisitor<E> visitor) throws PersistenceException, E {
+         visitor.handleArtikel(this);
+    }
+    public <R, E extends model.UserException> R accept(SubjInterfaceReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E {
+         return visitor.handleArtikel(this);
+    }
     public void accept(HierarchieHIERARCHYVisitor visitor) throws PersistenceException {
         visitor.handleArtikel(this);
     }
@@ -116,6 +128,10 @@ public class ArtikelICProxi extends KomponenteICProxi implements PersistentArtik
 				throws PersistenceException{
         return ((PersistentArtikel)this.getTheObject()).containsHierarchie(part);
     }
+    public void deregister(final ObsInterface observee) 
+				throws PersistenceException{
+        ((PersistentArtikel)this.getTheObject()).deregister(observee);
+    }
     public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
 				throws PersistenceException{
         ((PersistentArtikel)this.getTheObject()).initialize(This, final$$Fields);
@@ -123,6 +139,10 @@ public class ArtikelICProxi extends KomponenteICProxi implements PersistentArtik
     public ProduktgruppeSearchList inverseGetKomponentenListe() 
 				throws PersistenceException{
         return ((PersistentArtikel)this.getTheObject()).inverseGetKomponentenListe();
+    }
+    public void register(final ObsInterface observee) 
+				throws PersistenceException{
+        ((PersistentArtikel)this.getTheObject()).register(observee);
     }
     public void statusAuslauf(final Invoker invoker) 
 				throws PersistenceException{
@@ -136,21 +156,21 @@ public class ArtikelICProxi extends KomponenteICProxi implements PersistentArtik
 				throws PersistenceException{
         return ((PersistentArtikel)this.getTheObject()).strategyHierarchie(strategy);
     }
-    public void aendereArtikel(final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
-				throws model.ExcAlreadyExists, PersistenceException{
-        ((PersistentArtikel)this.getTheObject()).aendereArtikel(bezeichnung, preis, minLagerbestand, maxLagerbestand, hstLieferzeit);
-    }
-    public BooleanX4Public alreadyExists(final String bezeichung) 
+    public void updateObservers(final model.meta.Mssgs event) 
 				throws PersistenceException{
-        return ((PersistentArtikel)this.getTheObject()).alreadyExists(bezeichung);
+        ((PersistentArtikel)this.getTheObject()).updateObservers(event);
+    }
+    public void zuEinkaufswHinz(final long menge, final EinkaufsManager4Public einkaufsManager, final Invoker invoker) 
+				throws PersistenceException{
+        ((PersistentArtikel)this.getTheObject()).zuEinkaufswHinz(menge, einkaufsManager, invoker);
+    }
+    public void aendereArtikel(final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
+				throws model.ExcAlreadyExists, PersistenceException{
+        ((PersistentArtikel)this.getTheObject()).aendereArtikel(preis, minLagerbestand, maxLagerbestand, hstLieferzeit);
     }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{
         ((PersistentArtikel)this.getTheObject()).copyingPrivateUserAttributes(copy);
-    }
-    public BooleanX4Public groesserMax(final long menge) 
-				throws PersistenceException{
-        return ((PersistentArtikel)this.getTheObject()).groesserMax(menge);
     }
     public void herstellerHinzufuegen(final Hersteller4Public hersteller) 
 				throws PersistenceException{
@@ -171,6 +191,10 @@ public class ArtikelICProxi extends KomponenteICProxi implements PersistentArtik
     public void statusVerkauf() 
 				throws model.ExcInconsistentStatusChange, PersistenceException{
         ((PersistentArtikel)this.getTheObject()).statusVerkauf();
+    }
+    public void zuEinkaufswHinz(final long menge, final EinkaufsManager4Public einkaufsManager) 
+				throws model.UserException, PersistenceException{
+        ((PersistentArtikel)this.getTheObject()).zuEinkaufswHinz(menge, einkaufsManager);
     }
 
     

@@ -20,5 +20,8 @@ public abstract class BestellstatusStandardVisitor implements BestellstatusVisit
     public void handleAngenommen(AngenommenView angenommen) throws ModelException{
         this.standardHandling(angenommen);
     }
+    public void handleVerarbeitung(VerarbeitungView verarbeitung) throws ModelException{
+        this.standardHandling(verarbeitung);
+    }
     protected abstract void standardHandling(BestellstatusView bestellstatus) throws ModelException;
 }

@@ -4,7 +4,7 @@ package persistence;
 
 import model.visitor.*;
 
-public class ServiceAdminICProxi extends ServiceICProxi implements PersistentServiceAdmin{
+public class ServiceAdminICProxi extends ServiceShopICProxi implements PersistentServiceAdmin{
     
     public ServiceAdminICProxi(long objectId) {
         super(objectId);
@@ -46,10 +46,25 @@ public class ServiceAdminICProxi extends ServiceICProxi implements PersistentSer
     public void setHerstellerManager(HerstellerManager4Public newValue) throws PersistenceException {
         ((PersistentServiceAdmin)this.getTheObject()).setHerstellerManager(newValue);
     }
+    public void setZeitManager(ServiceAdminZeitManager4Public newValue) throws PersistenceException {
+        ((PersistentServiceAdmin)this.getTheObject()).setZeitManager(newValue);
+    }
     public PersistentServiceAdmin getThis() throws PersistenceException {
         return ((PersistentServiceAdmin)this.getTheObject()).getThis();
     }
     
+    public void accept(ServiceShopVisitor visitor) throws PersistenceException {
+        visitor.handleServiceAdmin(this);
+    }
+    public <R> R accept(ServiceShopReturnVisitor<R>  visitor) throws PersistenceException {
+         return visitor.handleServiceAdmin(this);
+    }
+    public <E extends model.UserException>  void accept(ServiceShopExceptionVisitor<E> visitor) throws PersistenceException, E {
+         visitor.handleServiceAdmin(this);
+    }
+    public <R, E extends model.UserException> R accept(ServiceShopReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E {
+         return visitor.handleServiceAdmin(this);
+    }
     public void accept(ServiceVisitor visitor) throws PersistenceException {
         visitor.handleServiceAdmin(this);
     }
@@ -86,6 +101,18 @@ public class ServiceAdminICProxi extends ServiceICProxi implements PersistentSer
     public <R, E extends model.UserException> R accept(AnythingReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E {
          return visitor.handleServiceAdmin(this);
     }
+    public void accept(SubjInterfaceVisitor visitor) throws PersistenceException {
+        visitor.handleServiceAdmin(this);
+    }
+    public <R> R accept(SubjInterfaceReturnVisitor<R>  visitor) throws PersistenceException {
+         return visitor.handleServiceAdmin(this);
+    }
+    public <E extends model.UserException>  void accept(SubjInterfaceExceptionVisitor<E> visitor) throws PersistenceException, E {
+         visitor.handleServiceAdmin(this);
+    }
+    public <R, E extends model.UserException> R accept(SubjInterfaceReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E {
+         return visitor.handleServiceAdmin(this);
+    }
     public void accept(RemoteVisitor visitor) throws PersistenceException {
         visitor.handleServiceAdmin(this);
     }
@@ -100,25 +127,77 @@ public class ServiceAdminICProxi extends ServiceICProxi implements PersistentSer
     }
     
     
+    public ArtikelManager4Public artikel_Path_In_ArtikelAnhaengen() 
+				throws model.UserException, PersistenceException{
+        return ((PersistentServiceAdmin)this.getTheObject()).artikel_Path_In_ArtikelAnhaengen();
+    }
+    public ArtikelManager4Public artikel_Path_In_ArtikelEinlagern() 
+				throws model.UserException, PersistenceException{
+        return ((PersistentServiceAdmin)this.getTheObject()).artikel_Path_In_ArtikelEinlagern();
+    }
+    public ArtikelManager4Public artikel_Path_In_ArtikelEntnehmen() 
+				throws model.UserException, PersistenceException{
+        return ((PersistentServiceAdmin)this.getTheObject()).artikel_Path_In_ArtikelEntnehmen();
+    }
+    public void deregister(final ObsInterface observee) 
+				throws PersistenceException{
+        ((PersistentServiceAdmin)this.getTheObject()).deregister(observee);
+    }
+    public ProduktKatalog4Public getProduktKatalog() 
+				throws PersistenceException{
+        return ((PersistentServiceAdmin)this.getTheObject()).getProduktKatalog();
+    }
+    public ZeitManager4Public getZeitManager() 
+				throws PersistenceException{
+        return ((PersistentServiceAdmin)this.getTheObject()).getZeitManager();
+    }
+    public HerstellerManager4Public hersteller_Path_In_HerstellerHinzufuegen() 
+				throws model.UserException, PersistenceException{
+        return ((PersistentServiceAdmin)this.getTheObject()).hersteller_Path_In_HerstellerHinzufuegen();
+    }
     public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
 				throws PersistenceException{
         ((PersistentServiceAdmin)this.getTheObject()).initialize(This, final$$Fields);
+    }
+    public Warenlager4Public position_Path_In_ArtikelEntfernen() 
+				throws model.UserException, PersistenceException{
+        return ((PersistentServiceAdmin)this.getTheObject()).position_Path_In_ArtikelEntfernen();
+    }
+    public void register(final ObsInterface observee) 
+				throws PersistenceException{
+        ((PersistentServiceAdmin)this.getTheObject()).register(observee);
     }
     public String serviceAdmin_Menu_Filter(final Anything anything) 
 				throws PersistenceException{
         return ((PersistentServiceAdmin)this.getTheObject()).serviceAdmin_Menu_Filter(anything);
     }
+    public void setProduktKatalog(final ProduktKatalog4Public produktKatalog) 
+				throws PersistenceException{
+        ((PersistentServiceAdmin)this.getTheObject()).setProduktKatalog(produktKatalog);
+    }
+    public void setZeitManager(final ZeitManager4Public zeitManager) 
+				throws PersistenceException{
+        ((PersistentServiceAdmin)this.getTheObject()).setZeitManager(zeitManager);
+    }
     public void signalChanged(final boolean signal) 
 				throws PersistenceException{
         ((PersistentServiceAdmin)this.getTheObject()).signalChanged(signal);
     }
-    public void aendereArtikel(final Artikel4Public artikel, final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
+    public void updateObservers(final model.meta.Mssgs event) 
+				throws PersistenceException{
+        ((PersistentServiceAdmin)this.getTheObject()).updateObservers(event);
+    }
+    public void aendereArtikel(final Artikel4Public artikel, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
 				throws model.ExcAlreadyExists, PersistenceException{
-        ((PersistentServiceAdmin)this.getTheObject()).aendereArtikel(artikel, bezeichnung, preis, minLagerbestand, maxLagerbestand, hstLieferzeit);
+        ((PersistentServiceAdmin)this.getTheObject()).aendereArtikel(artikel, preis, minLagerbestand, maxLagerbestand, hstLieferzeit);
     }
     public void aendereHersteller(final Hersteller4Public hersteller, final String name) 
 				throws model.ExcAlreadyExists, PersistenceException{
         ((PersistentServiceAdmin)this.getTheObject()).aendereHersteller(hersteller, name);
+    }
+    public void aendereHstLieferzeit(final Artikel4Public artikel, final long hstLieferzeit) 
+				throws PersistenceException{
+        ((PersistentServiceAdmin)this.getTheObject()).aendereHstLieferzeit(artikel, hstLieferzeit);
     }
     public void aendereLieferart(final Lieferart4Public lieferart, final String name, final long lieferzeit, final common.Fraction preis) 
 				throws model.ExcAlreadyExists, PersistenceException{
@@ -144,9 +223,9 @@ public class ServiceAdminICProxi extends ServiceICProxi implements PersistentSer
 				throws PersistenceException{
         ((PersistentServiceAdmin)this.getTheObject()).artikelEntfernen(warenlager, position);
     }
-    public void artikelEntnehmen(final Warenlager4Public warenlager, final Position4Public position, final long menge) 
+    public void artikelEntnehmen(final Warenlager4Public warenlager, final Artikel4Public artikel, final long menge) 
 				throws PersistenceException{
-        ((PersistentServiceAdmin)this.getTheObject()).artikelEntnehmen(warenlager, position, menge);
+        ((PersistentServiceAdmin)this.getTheObject()).artikelEntnehmen(warenlager, artikel, menge);
     }
     public void connected(final String user) 
 				throws PersistenceException{
@@ -200,6 +279,10 @@ public class ServiceAdminICProxi extends ServiceICProxi implements PersistentSer
 				throws model.ExcAlreadyExists, PersistenceException{
         ((PersistentServiceAdmin)this.getTheObject()).neuerHersteller(herstellerManager, name);
     }
+    public void produktKatalog_update(final model.meta.ProduktKatalogMssgs event) 
+				throws PersistenceException{
+        ((PersistentServiceAdmin)this.getTheObject()).produktKatalog_update(event);
+    }
     public void produktgruppeEntfernen(final Produktgruppe4Public produktgruppe) 
 				throws PersistenceException{
         ((PersistentServiceAdmin)this.getTheObject()).produktgruppeEntfernen(produktgruppe);
@@ -219,6 +302,10 @@ public class ServiceAdminICProxi extends ServiceICProxi implements PersistentSer
     public void verringereMenge(final Position4Public position, final long menge) 
 				throws model.ExcLagerbestandUnderZero, PersistenceException{
         ((PersistentServiceAdmin)this.getTheObject()).verringereMenge(position, menge);
+    }
+    public void zeitManager_update(final model.meta.ZeitManagerMssgs event) 
+				throws PersistenceException{
+        ((PersistentServiceAdmin)this.getTheObject()).zeitManager_update(event);
     }
 
     

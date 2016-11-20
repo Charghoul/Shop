@@ -18,7 +18,15 @@ public class ToStringConstants {
     public static final String HerstellerManager = "Herstellerverzeichnis";
     public static final String Hersteller = "Hersteller: ";
     public static final String Produktgruppe = "Produktgruppe: ";
-    public static final String MasterDataManager = "Master Data Manager";
+    public static final String ProduktKatalog = "Produkt Katalog";
+    public static final String Verarbeitung = "Verarbeitung";
+    public static final String Hinversand = "Hinversand";
+    public static final String Geliefert = "Geliefert";
+    public static final String Rückversand = "Rückversand";
+    public static final String Vorbestellung  = "Vorbestellung";
+    public static final String Angenommen = "Angenommen";
+    public static final String BestellManager = "Bestellungen";
+    public static final String ZeitManager = "ZeitManager";
 
 
     private ToStringConstants(){}

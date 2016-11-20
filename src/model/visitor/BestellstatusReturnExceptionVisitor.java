@@ -9,6 +9,7 @@ public interface BestellstatusReturnExceptionVisitor<R, E extends model.UserExce
     public R handleGeliefert(Geliefert4Public geliefert) throws PersistenceException, E;
     public R handleHinversand(Hinversand4Public hinversand) throws PersistenceException, E;
     public R handleRueckversand(Rueckversand4Public rueckversand) throws PersistenceException, E;
+    public R handleVerarbeitung(Verarbeitung4Public verarbeitung) throws PersistenceException, E;
     public R handleVorbestellung(Vorbestellung4Public vorbestellung) throws PersistenceException, E;
     
 }

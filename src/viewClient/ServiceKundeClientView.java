@@ -213,7 +213,13 @@ public class ServiceKundeClientView extends BorderPane implements ExceptionAndEv
 			protected void standardHandling(Anything Anything) throws ModelException {
 				this.result = null;
 			}
-			//TODO Overwrite all handle methods for the types for which you intend to provide a special panel!
+
+			@Override
+			public void handleArtikel(ArtikelView artikel) throws ModelException {
+				//super.handleArtikel(artikel);
+				this.result=new NoDetailPanel(ServiceKundeClientView.this);
+			}
+//TODO Overwrite all handle methods for the types for which you intend to provide a special panel!
 		}
 		PanelDecider decider = new PanelDecider();
 		anything.accept(decider);
@@ -297,8 +303,11 @@ public class ServiceKundeClientView extends BorderPane implements ExceptionAndEv
 
     interface MenuItemVisitor{
         ImageView handle(AendereMengePRMTRPositionPRMTRIntegerPRMTRMenuItem menuItem);
-        ImageView handle(BestellenPRMTREinkaufsManagerPRMTRMenuItem menuItem);
+        ImageView handle(BestellenPRMTREinkaufsManagerPRMTRLieferartPRMTRMenuItem menuItem);
         ImageView handle(NeuePositionPRMTREinkaufsManagerPRMTRArtikelPRMTRIntegerPRMTRMenuItem menuItem);
+        ImageView handle(VorbestellenPRMTREinkaufsManagerPRMTRMenuItem menuItem);
+        ImageView handle(ZuEinkaufswagenHinzufuegenPRMTRArtikelPRMTRIntegerPRMTRMenuItem menuItem);
+        ImageView handle(ZuruecksendenPRMTRPositionInBestellungPRMTRMenuItem menuItem);
     }
     private abstract class ServiceKundeMenuItem extends MenuItem{
         private ServiceKundeMenuItem(){
@@ -311,12 +320,27 @@ public class ServiceKundeClientView extends BorderPane implements ExceptionAndEv
             return visitor.handle(this);
         }
     }
-    private class BestellenPRMTREinkaufsManagerPRMTRMenuItem extends ServiceKundeMenuItem{
+    private class BestellenPRMTREinkaufsManagerPRMTRLieferartPRMTRMenuItem extends ServiceKundeMenuItem{
         protected ImageView accept(MenuItemVisitor visitor){
             return visitor.handle(this);
         }
     }
     private class NeuePositionPRMTREinkaufsManagerPRMTRArtikelPRMTRIntegerPRMTRMenuItem extends ServiceKundeMenuItem{
+        protected ImageView accept(MenuItemVisitor visitor){
+            return visitor.handle(this);
+        }
+    }
+    private class VorbestellenPRMTREinkaufsManagerPRMTRMenuItem extends ServiceKundeMenuItem{
+        protected ImageView accept(MenuItemVisitor visitor){
+            return visitor.handle(this);
+        }
+    }
+    private class ZuEinkaufswagenHinzufuegenPRMTRArtikelPRMTRIntegerPRMTRMenuItem extends ServiceKundeMenuItem{
+        protected ImageView accept(MenuItemVisitor visitor){
+            return visitor.handle(this);
+        }
+    }
+    private class ZuruecksendenPRMTRPositionInBestellungPRMTRMenuItem extends ServiceKundeMenuItem{
         protected ImageView accept(MenuItemVisitor visitor){
             return visitor.handle(this);
         }
@@ -335,6 +359,31 @@ public class ServiceKundeClientView extends BorderPane implements ExceptionAndEv
                 this.handleException(me);
                 return result;
             }
+            if (selected instanceof PositionInBestellungView){
+                if (filter_zuruecksenden((PositionInBestellungView) selected)) {
+                    item = new ZuruecksendenPRMTRPositionInBestellungPRMTRMenuItem();
+                    item.setText("zuruecksenden");
+                    item.setOnAction(new EventHandler<ActionEvent>(){
+                        public void handle(javafx.event.ActionEvent e) {
+                            Alert confirm = new Alert(AlertType.CONFIRMATION);
+                            confirm.setTitle(GUIConstants.ConfirmButtonText);
+                            confirm.setHeaderText(null);
+                            confirm.setContentText("zuruecksenden" + GUIConstants.ConfirmQuestionMark);
+                            Optional<ButtonType> buttonResult = confirm.showAndWait();
+                            if (buttonResult.get() == ButtonType.OK) {
+                                try {
+                                    getConnection().zuruecksenden((PositionInBestellungView)selected);
+                                    getConnection().setEagerRefresh();
+                                    
+                                }catch(ModelException me){
+                                    handleException(me);
+                                }
+                            }
+                        }
+                    });
+                    result.getItems().add(item);
+                }
+            }
             if (selected instanceof PositionView){
                 item = new AendereMengePRMTRPositionPRMTRIntegerPRMTRMenuItem();
                 item.setText("aendereMenge ... ");
@@ -349,24 +398,14 @@ public class ServiceKundeClientView extends BorderPane implements ExceptionAndEv
                 result.getItems().add(item);
             }
             if (selected instanceof EinkaufsManagerView){
-                item = new BestellenPRMTREinkaufsManagerPRMTRMenuItem();
-                item.setText("bestellen");
+                item = new BestellenPRMTREinkaufsManagerPRMTRLieferartPRMTRMenuItem();
+                item.setText("bestellen ... ");
                 item.setOnAction(new EventHandler<ActionEvent>(){
                     public void handle(javafx.event.ActionEvent e) {
-                        Alert confirm = new Alert(AlertType.CONFIRMATION);
-                        confirm.setTitle(GUIConstants.ConfirmButtonText);
-                        confirm.setHeaderText(null);
-                        confirm.setContentText("bestellen" + GUIConstants.ConfirmQuestionMark);
-                        Optional<ButtonType> buttonResult = confirm.showAndWait();
-                        if (buttonResult.get() == ButtonType.OK) {
-                            try {
-                                getConnection().bestellen((EinkaufsManagerView)selected);
-                                getConnection().setEagerRefresh();
-                                
-                            }catch(ModelException me){
-                                handleException(me);
-                            }
-                        }
+                        final ServiceKundeBestellenEinkaufsManagerLieferartMssgWizard wizard = new ServiceKundeBestellenEinkaufsManagerLieferartMssgWizard("bestellen");
+                        wizard.setFirstArgument((EinkaufsManagerView)selected);
+                        wizard.setWidth(getNavigationPanel().getWidth());
+                        wizard.showAndWait();
                     }
                 });
                 result.getItems().add(item);
@@ -376,6 +415,40 @@ public class ServiceKundeClientView extends BorderPane implements ExceptionAndEv
                     public void handle(javafx.event.ActionEvent e) {
                         final ServiceKundeNeuePositionEinkaufsManagerArtikelIntegerMssgWizard wizard = new ServiceKundeNeuePositionEinkaufsManagerArtikelIntegerMssgWizard("neuePosition");
                         wizard.setFirstArgument((EinkaufsManagerView)selected);
+                        wizard.setWidth(getNavigationPanel().getWidth());
+                        wizard.showAndWait();
+                    }
+                });
+                result.getItems().add(item);
+                item = new VorbestellenPRMTREinkaufsManagerPRMTRMenuItem();
+                item.setText("vorbestellen");
+                item.setOnAction(new EventHandler<ActionEvent>(){
+                    public void handle(javafx.event.ActionEvent e) {
+                        Alert confirm = new Alert(AlertType.CONFIRMATION);
+                        confirm.setTitle(GUIConstants.ConfirmButtonText);
+                        confirm.setHeaderText(null);
+                        confirm.setContentText("vorbestellen" + GUIConstants.ConfirmQuestionMark);
+                        Optional<ButtonType> buttonResult = confirm.showAndWait();
+                        if (buttonResult.get() == ButtonType.OK) {
+                            try {
+                                getConnection().vorbestellen((EinkaufsManagerView)selected);
+                                getConnection().setEagerRefresh();
+                                
+                            }catch(ModelException me){
+                                handleException(me);
+                            }
+                        }
+                    }
+                });
+                result.getItems().add(item);
+            }
+            if (selected instanceof ArtikelView){
+                item = new ZuEinkaufswagenHinzufuegenPRMTRArtikelPRMTRIntegerPRMTRMenuItem();
+                item.setText("zuEinkaufswagenHinzufuegen ... ");
+                item.setOnAction(new EventHandler<ActionEvent>(){
+                    public void handle(javafx.event.ActionEvent e) {
+                        final ServiceKundeZuEinkaufswagenHinzufuegenArtikelIntegerMssgWizard wizard = new ServiceKundeZuEinkaufswagenHinzufuegenArtikelIntegerMssgWizard("zuEinkaufswagenHinzufuegen");
+                        wizard.setFirstArgument((ArtikelView)selected);
                         wizard.setWidth(getNavigationPanel().getWidth());
                         wizard.showAndWait();
                     }
@@ -393,6 +466,9 @@ public class ServiceKundeClientView extends BorderPane implements ExceptionAndEv
     }
     private void setPreCalculatedFilters(String switchOff) {
         this.preCalculatedFilters = switchOff;
+    }
+    private boolean filter_zuruecksenden(PositionInBestellungView argument){
+        return this.getPreCalculatedFilters().contains("+++zuruecksendenPRMTRPositionInBestellungPRMTR");
     }
     
 	class ServiceKundeAendereMengePositionIntegerMssgWizard extends Wizard {
@@ -455,6 +531,65 @@ public class ServiceKundeClientView extends BorderPane implements ExceptionAndEv
 		
 	}
 
+	class ServiceKundeBestellenEinkaufsManagerLieferartMssgWizard extends Wizard {
+
+		protected ServiceKundeBestellenEinkaufsManagerLieferartMssgWizard(String operationName){
+			super(ServiceKundeClientView.this);
+			getOkButton().setText(operationName);
+			getOkButton().setGraphic(new BestellenPRMTREinkaufsManagerPRMTRLieferartPRMTRMenuItem ().getGraphic());
+		}
+		protected void initialize(){
+			this.helpFileName = "ServiceKundeBestellenEinkaufsManagerLieferartMssgWizard.help";
+			super.initialize();		
+		}
+				
+		protected void perform() {
+			try {
+				getConnection().bestellen(firstArgument, (LieferartView)((ObjectSelectionPanel)getParametersPanel().getChildren().get(0)).getResult());
+				getConnection().setEagerRefresh();
+				this.close();	
+			} catch(ModelException me){
+				handleException(me);
+				this.close();
+			}
+			
+		}
+		protected String checkCompleteParameterSet(){
+			return null;
+		}
+		protected boolean isModifying () {
+			return false;
+		}
+		protected void addParameters(){
+			try{
+				final ObjectSelectionPanel panel1 = new ObjectSelectionPanel("lieferart", "view.LieferartView", null, this);
+				getParametersPanel().getChildren().add(panel1);
+				panel1.setBrowserRoot((ViewRoot)getConnection().lieferart_Path_In_Bestellen());
+			}catch(ModelException me){;
+				handleException(me);
+				close();
+				return;
+			 }catch(UserException ue){;
+				handleUserException(ue);
+				close();
+				return;
+			 }		
+		}	
+		protected void handleDependencies(int i) {
+		}
+		
+		
+		private EinkaufsManagerView firstArgument; 
+	
+		public void setFirstArgument(EinkaufsManagerView firstArgument){
+			this.firstArgument = firstArgument;
+			this.setTitle(this.firstArgument.toString());
+			this.check();
+		}
+		
+		
+	}
+
 	class ServiceKundeNeuePositionEinkaufsManagerArtikelIntegerMssgWizard extends Wizard {
 
 		protected ServiceKundeNeuePositionEinkaufsManagerArtikelIntegerMssgWizard(String operationName){
@@ -489,9 +624,19 @@ public class ServiceKundeClientView extends BorderPane implements ExceptionAndEv
 			return false;
 		}
 		protected void addParameters(){
-			final ObjectSelectionPanel panel1 = new ObjectSelectionPanel("artikel", "view.ArtikelView", null, this);
-			getParametersPanel().getChildren().add(panel1);
-			panel1.setBrowserRoot((ViewRoot) getConnection().getServiceKundeView());
+			try{
+				final ObjectSelectionPanel panel2 = new ObjectSelectionPanel("artikel", "view.ArtikelView", null, this);
+				getParametersPanel().getChildren().add(panel2);
+				panel2.setBrowserRoot((ViewRoot)getConnection().artikel_Path_In_NeuePosition());
+			}catch(ModelException me){;
+				handleException(me);
+				close();
+				return;
+			 }catch(UserException ue){;
+				handleUserException(ue);
+				close();
+				return;
+			 }
 			getParametersPanel().getChildren().add(new IntegerSelectionPanel("menge", this));		
 		}	
 		protected void handleDependencies(int i) {
@@ -501,6 +646,53 @@ public class ServiceKundeClientView extends BorderPane implements ExceptionAndEv
 		private EinkaufsManagerView firstArgument; 
 	
 		public void setFirstArgument(EinkaufsManagerView firstArgument){
+			this.firstArgument = firstArgument;
+			this.setTitle(this.firstArgument.toString());
+			this.check();
+		}
+		
+		
+	}
+
+	class ServiceKundeZuEinkaufswagenHinzufuegenArtikelIntegerMssgWizard extends Wizard {
+
+		protected ServiceKundeZuEinkaufswagenHinzufuegenArtikelIntegerMssgWizard(String operationName){
+			super(ServiceKundeClientView.this);
+			getOkButton().setText(operationName);
+			getOkButton().setGraphic(new ZuEinkaufswagenHinzufuegenPRMTRArtikelPRMTRIntegerPRMTRMenuItem ().getGraphic());
+		}
+		protected void initialize(){
+			this.helpFileName = "ServiceKundeZuEinkaufswagenHinzufuegenArtikelIntegerMssgWizard.help";
+			super.initialize();		
+		}
+				
+		protected void perform() {
+			try {
+				getConnection().zuEinkaufswagenHinzufuegen(firstArgument, ((IntegerSelectionPanel)getParametersPanel().getChildren().get(0)).getResult().longValue());
+				getConnection().setEagerRefresh();
+				this.close();	
+			} catch(ModelException me){
+				handleException(me);
+				this.close();
+			}
+			
+		}
+		protected String checkCompleteParameterSet(){
+			return null;
+		}
+		protected boolean isModifying () {
+			return false;
+		}
+		protected void addParameters(){
+			getParametersPanel().getChildren().add(new IntegerSelectionPanel("menge", this));		
+		}	
+		protected void handleDependencies(int i) {
+		}
+		
+		
+		private ArtikelView firstArgument; 
+	
+		public void setFirstArgument(ArtikelView firstArgument){
 			this.firstArgument = firstArgument;
 			this.setTitle(this.firstArgument.toString());
 			this.check();

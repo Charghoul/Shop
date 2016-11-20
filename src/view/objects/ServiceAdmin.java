@@ -11,20 +11,22 @@ import viewClient.ServiceAdminConnection;
 
 /* Additional import section end */
 
-public class ServiceAdmin extends view.objects.Service implements ServiceAdminView{
+public class ServiceAdmin extends view.objects.ServiceShop implements ServiceAdminView{
     
     protected WarenlagerView warenlager;
     protected ArtikelManagerView artikelManager;
     protected LieferartManagerView lieferartManager;
     protected HerstellerManagerView herstellerManager;
+    protected ZeitManagerView zeitManager;
     
-    public ServiceAdmin(java.util.Vector<ErrorDisplayView> errors,WarenlagerView warenlager,ArtikelManagerView artikelManager,LieferartManagerView lieferartManager,HerstellerManagerView herstellerManager,long id, long classId) {
+    public ServiceAdmin(java.util.Vector<ErrorDisplayView> errors,ProduktKatalogView produktKatalog,WarenlagerView warenlager,ArtikelManagerView artikelManager,LieferartManagerView lieferartManager,HerstellerManagerView herstellerManager,ZeitManagerView zeitManager,long id, long classId) {
         /* Shall not be used. Objects are created on the server only */
-        super(errors,id, classId);
+        super(errors,(ProduktKatalogView)produktKatalog,id, classId);
         this.warenlager = warenlager;
         this.artikelManager = artikelManager;
         this.lieferartManager = lieferartManager;
-        this.herstellerManager = herstellerManager;        
+        this.herstellerManager = herstellerManager;
+        this.zeitManager = zeitManager;        
     }
     
     static public long getTypeId() {
@@ -59,7 +61,25 @@ public class ServiceAdmin extends view.objects.Service implements ServiceAdminVi
     public void setHerstellerManager(HerstellerManagerView newValue) throws ModelException {
         this.herstellerManager = newValue;
     }
+    public ZeitManagerView getZeitManager()throws ModelException{
+        return this.zeitManager;
+    }
+    public void setZeitManager(ZeitManagerView newValue) throws ModelException {
+        this.zeitManager = newValue;
+    }
     
+    public void accept(ServiceShopVisitor visitor) throws ModelException {
+        visitor.handleServiceAdmin(this);
+    }
+    public <R> R accept(ServiceShopReturnVisitor<R>  visitor) throws ModelException {
+         return visitor.handleServiceAdmin(this);
+    }
+    public <E extends view.UserException>  void accept(ServiceShopExceptionVisitor<E> visitor) throws ModelException, E {
+         visitor.handleServiceAdmin(this);
+    }
+    public <R, E extends view.UserException> R accept(ServiceShopReturnExceptionVisitor<R, E>  visitor) throws ModelException, E {
+         return visitor.handleServiceAdmin(this);
+    }
     public void accept(ServiceVisitor visitor) throws ModelException {
         visitor.handleServiceAdmin(this);
     }
@@ -102,6 +122,10 @@ public class ServiceAdmin extends view.objects.Service implements ServiceAdminVi
         if (errors != null) {
             ViewObject.resolveVectorProxies(errors, resultTable);
         }
+        ProduktKatalogView produktKatalog = this.getProduktKatalog();
+        if (produktKatalog != null) {
+            ((ViewProxi)produktKatalog).setObject((ViewObject)resultTable.get(common.RPCConstantsAndServices.createHashtableKey(produktKatalog.getClassId(), produktKatalog.getId())));
+        }
         WarenlagerView warenlager = this.getWarenlager();
         if (warenlager != null) {
             ((ViewProxi)warenlager).setObject((ViewObject)resultTable.get(common.RPCConstantsAndServices.createHashtableKey(warenlager.getClassId(), warenlager.getId())));
@@ -118,6 +142,10 @@ public class ServiceAdmin extends view.objects.Service implements ServiceAdminVi
         if (herstellerManager != null) {
             ((ViewProxi)herstellerManager).setObject((ViewObject)resultTable.get(common.RPCConstantsAndServices.createHashtableKey(herstellerManager.getClassId(), herstellerManager.getId())));
         }
+        ZeitManagerView zeitManager = this.getZeitManager();
+        if (zeitManager != null) {
+            ((ViewProxi)zeitManager).setObject((ViewObject)resultTable.get(common.RPCConstantsAndServices.createHashtableKey(zeitManager.getClassId(), zeitManager.getId())));
+        }
         
     }
     public void sortSetValuedFields() throws ModelException {
@@ -125,6 +153,8 @@ public class ServiceAdmin extends view.objects.Service implements ServiceAdminVi
     }
     public ViewObjectInTree getChild(int originalIndex) throws ModelException{
         int index = originalIndex;
+        if(index == 0 && this.getProduktKatalog() != null) return new ProduktKatalogServiceShopWrapper(this, originalIndex, (ViewRoot)this.getProduktKatalog());
+        if(this.getProduktKatalog() != null) index = index - 1;
         if(index == 0 && this.getWarenlager() != null) return new WarenlagerServiceAdminWrapper(this, originalIndex, (ViewRoot)this.getWarenlager());
         if(this.getWarenlager() != null) index = index - 1;
         if(index == 0 && this.getArtikelManager() != null) return new ArtikelManagerServiceAdminWrapper(this, originalIndex, (ViewRoot)this.getArtikelManager());
@@ -133,24 +163,32 @@ public class ServiceAdmin extends view.objects.Service implements ServiceAdminVi
         if(this.getLieferartManager() != null) index = index - 1;
         if(index == 0 && this.getHerstellerManager() != null) return new HerstellerManagerServiceAdminWrapper(this, originalIndex, (ViewRoot)this.getHerstellerManager());
         if(this.getHerstellerManager() != null) index = index - 1;
+        if(index == 0 && this.getZeitManager() != null) return new ZeitManagerServiceAdminWrapper(this, originalIndex, (ViewRoot)this.getZeitManager());
+        if(this.getZeitManager() != null) index = index - 1;
         return null;
     }
     public int getChildCount() throws ModelException {
         return 0 
+            + (this.getProduktKatalog() == null ? 0 : 1)
             + (this.getWarenlager() == null ? 0 : 1)
             + (this.getArtikelManager() == null ? 0 : 1)
             + (this.getLieferartManager() == null ? 0 : 1)
-            + (this.getHerstellerManager() == null ? 0 : 1);
+            + (this.getHerstellerManager() == null ? 0 : 1)
+            + (this.getZeitManager() == null ? 0 : 1);
     }
     public boolean isLeaf() throws ModelException {
         return true 
+            && (this.getProduktKatalog() == null ? true : false)
             && (this.getWarenlager() == null ? true : false)
             && (this.getArtikelManager() == null ? true : false)
             && (this.getLieferartManager() == null ? true : false)
-            && (this.getHerstellerManager() == null ? true : false);
+            && (this.getHerstellerManager() == null ? true : false)
+            && (this.getZeitManager() == null ? true : false);
     }
     public int getIndexOfChild(Object child) throws ModelException {
         int result = 0;
+        if(this.getProduktKatalog() != null && this.getProduktKatalog().equals(child)) return result;
+        if(this.getProduktKatalog() != null) result = result + 1;
         if(this.getWarenlager() != null && this.getWarenlager().equals(child)) return result;
         if(this.getWarenlager() != null) result = result + 1;
         if(this.getArtikelManager() != null && this.getArtikelManager().equals(child)) return result;
@@ -159,6 +197,8 @@ public class ServiceAdmin extends view.objects.Service implements ServiceAdminVi
         if(this.getLieferartManager() != null) result = result + 1;
         if(this.getHerstellerManager() != null && this.getHerstellerManager().equals(child)) return result;
         if(this.getHerstellerManager() != null) result = result + 1;
+        if(this.getZeitManager() != null && this.getZeitManager().equals(child)) return result;
+        if(this.getZeitManager() != null) result = result + 1;
         return -1;
     }
     public int getRowCount(){

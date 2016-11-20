@@ -6,6 +6,8 @@ import view.visitor.*;
 
 public interface WarenlagerView extends Anything, AbstractViewRoot {
     
+    public java.util.Vector<ArtikelView> getNewList()throws ModelException;
+    public void setNewList(java.util.Vector<ArtikelView> newValue) throws ModelException ;
     public java.util.Vector<IntegerWrapperView> getTemplist()throws ModelException;
     public void setTemplist(java.util.Vector<IntegerWrapperView> newValue) throws ModelException ;
     public java.util.Vector<PositionView> getWarenListe()throws ModelException;

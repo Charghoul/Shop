@@ -15,14 +15,7 @@ public class LieferartManagerProxi extends ViewProxi implements LieferartManager
     public LieferartManagerView getRemoteObject(java.util.HashMap<String,Object> resultTable, ExceptionAndEventHandler connectionKey) throws ModelException{
         java.util.Vector<String> lieferartenListe_string = (java.util.Vector<String>)resultTable.get("lieferartenListe");
         java.util.Vector<LieferartView> lieferartenListe = ViewProxi.getProxiVector(lieferartenListe_string, connectionKey);
-        ViewProxi myService = null;
-        String myService$String = (String)resultTable.get("myService");
-        if (myService$String != null) {
-            common.ProxiInformation myService$Info = common.RPCConstantsAndServices.createProxiInformation(myService$String);
-            myService = view.objects.ViewProxi.createProxi(myService$Info,connectionKey);
-            myService.setToString(myService$Info.getToString());
-        }
-        LieferartManagerView result$$ = new LieferartManager(lieferartenListe,(ServiceAdminView)myService, this.getId(), this.getClassId());
+        LieferartManagerView result$$ = new LieferartManager(lieferartenListe, this.getId(), this.getClassId());
         ((ViewRoot)result$$).setToString((String) resultTable.get(common.RPCConstantsAndServices.RPCToStringFieldName));
         return result$$;
     }
@@ -60,9 +53,6 @@ public class LieferartManagerProxi extends ViewProxi implements LieferartManager
     }
     public void setLieferartenListe(java.util.Vector<LieferartView> newValue) throws ModelException {
         ((LieferartManager)this.getTheObject()).setLieferartenListe(newValue);
-    }
-    public ServiceAdminView getMyService()throws ModelException{
-        return ((LieferartManager)this.getTheObject()).getMyService();
     }
     
     public void accept(AnythingVisitor visitor) throws ModelException {

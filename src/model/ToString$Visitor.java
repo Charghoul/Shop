@@ -47,18 +47,18 @@ public class ToString$Visitor extends model.visitor.ToString$Visitor {
 
 	@Override
 	public void handleHinversand(Hinversand4Public hinversand) throws PersistenceException {
-
+		result = ToStringConstants.Hinversand;
 	}
 
 	@Override
 	public void handleAngenommen(Angenommen4Public angenommen) throws PersistenceException {
-
+		result = ToStringConstants.Angenommen;
 	}
 
 
 	@Override
 	public void handleIntegerWrapper(IntegerWrapper4Public integerWrapper) throws PersistenceException {
-		result = ((PersistentIntegerWrapper)integerWrapper).getTheInt() + "";
+		result = integerWrapper.getTheInt() + "";
 	}
 
 
@@ -67,14 +67,15 @@ public class ToString$Visitor extends model.visitor.ToString$Visitor {
 		this.result= ToStringConstants.Warenlager;
 	}
 
-	@Override
-	public void handleTrueX(TrueX4Public trueX) throws PersistenceException {
-		result = "True";
-	}
 
 	@Override
 	public void handleVerkauf(Verkauf4Public verkauf) throws PersistenceException {
 		result = ToStringConstants.Artikelstatus +ToStringConstants.Verkauf;
+	}
+
+	@Override
+	public void handleVerarbeitung(Verarbeitung4Public verarbeitung) throws PersistenceException {
+		result = ToStringConstants.Verarbeitung;
 	}
 
 	@Override
@@ -93,13 +94,9 @@ public class ToString$Visitor extends model.visitor.ToString$Visitor {
 	}
 
 	@Override
-	public void handleFalseX(FalseX4Public falseX) throws PersistenceException {
-		result = "False";
-	}
-
-	@Override
 	public void handleBestellung(Bestellung4Public bestellung) throws PersistenceException {
-
+		PersistentBestellung persB = (PersistentBestellung)bestellung;
+		result = persB.getBestellID() + " | " + persB.getBestellstatus() +" | " + persB.getPositionsListe().toString();
 	}
 
 	@Override
@@ -130,7 +127,7 @@ public class ToString$Visitor extends model.visitor.ToString$Visitor {
 
 	@Override
 	public void handleGeliefert(Geliefert4Public geliefert) throws PersistenceException {
-
+		result = ToStringConstants.Geliefert;
 	}
 
 	@Override
@@ -147,6 +144,16 @@ public class ToString$Visitor extends model.visitor.ToString$Visitor {
 
 	}
 
+	@Override
+	public void handleBestellManager(BestellManager4Public bestellManager) throws PersistenceException {
+		result = ToStringConstants.BestellManager;
+	}
+
+	@Override
+	public void handleProduktKatalog(ProduktKatalog4Public produktKatalog) throws PersistenceException {
+		result = ToStringConstants.ProduktKatalog;
+	}
+
 
 	@Override
 	public void handleKonto(Konto4Public konto) throws PersistenceException {
@@ -155,12 +162,17 @@ public class ToString$Visitor extends model.visitor.ToString$Visitor {
 
 	@Override
 	public void handleVorbestellung(Vorbestellung4Public vorbestellung) throws PersistenceException {
+		result = ToStringConstants.Vorbestellung;
+	}
 
+	@Override
+	public void handlePositionInBestellung(PositionInBestellung4Public positionInBestellung) throws PersistenceException {
+		result = positionInBestellung.getMenge() + " Stck. - " + positionInBestellung.getArtikel().toString();
 	}
 
 	@Override
 	public void handleRueckversand(Rueckversand4Public rueckversand) throws PersistenceException {
-
+		result = ToStringConstants.Rückversand;
 	}
 
 	@Override
@@ -170,6 +182,10 @@ public class ToString$Visitor extends model.visitor.ToString$Visitor {
 				+" | " + persistentArtikel.getArtikelstatus();
 		if(persistentArtikel.getHersteller()!=null){
 			temp = temp +" | " + persistentArtikel.getHersteller();
+		}
+		IntegerWrapper4Public bestand = ((PersistentWarenlager) Warenlager.getTheWarenlager()).getTemplist().get(artikel);
+		if(bestand != null) {
+			temp = temp + " | Bestand: " + bestand.getTheInt();
 		}
 		result = temp;
 	}
@@ -182,8 +198,7 @@ public class ToString$Visitor extends model.visitor.ToString$Visitor {
 
 	@Override
 	public void handlePosition(Position4Public position) throws PersistenceException {
-		PersistentPosition persistentPosition = (PersistentPosition) position;
-		result = persistentPosition.getMenge() + " Stck. - " + persistentPosition.getArtikel().toString();
+		result = position.getMenge() + " Stck. - " + position.getArtikel().toString();
 	}
 
 
@@ -198,7 +213,7 @@ public class ToString$Visitor extends model.visitor.ToString$Visitor {
 
 	@Override
 	public void handleZeitManager(ZeitManager4Public zeitManager) throws PersistenceException {
-
+		result = ToStringConstants.ZeitManager;
 	}
 
 

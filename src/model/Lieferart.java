@@ -83,6 +83,7 @@ public class Lieferart extends PersistentObject implements PersistentLieferart{
         result = new Lieferart(this.name, 
                                this.lieferzeit, 
                                this.preis, 
+                               this.subService, 
                                this.This, 
                                this.getId());
         this.copyingPrivateUserAttributes(result);
@@ -95,14 +96,16 @@ public class Lieferart extends PersistentObject implements PersistentLieferart{
     protected String name;
     protected long lieferzeit;
     protected common.Fraction preis;
+    protected SubjInterface subService;
     protected PersistentLieferart This;
     
-    public Lieferart(String name,long lieferzeit,common.Fraction preis,PersistentLieferart This,long id) throws PersistenceException {
+    public Lieferart(String name,long lieferzeit,common.Fraction preis,SubjInterface subService,PersistentLieferart This,long id) throws PersistenceException {
         /* Shall not be used by clients for object construction! Use static create operation instead! */
         super(id);
         this.name = name;
         this.lieferzeit = lieferzeit;
         this.preis = preis;
+        this.subService = subService;
         if (This != null && !(this.isTheSameAs(This))) this.This = This;        
     }
     
@@ -119,6 +122,10 @@ public class Lieferart extends PersistentObject implements PersistentLieferart{
         if (this.getClassId() == 138) ConnectionHandler.getTheConnectionHandler().theLieferartFacade
             .newLieferart(name,lieferzeit,preis,this.getId());
         super.store();
+        if(this.getSubService() != null){
+            this.getSubService().store();
+            ConnectionHandler.getTheConnectionHandler().theLieferartFacade.subServiceSet(this.getId(), getSubService());
+        }
         if(!this.isTheSameAs(this.getThis())){
             this.getThis().store();
             ConnectionHandler.getTheConnectionHandler().theLieferartFacade.ThisSet(this.getId(), getThis());
@@ -147,6 +154,20 @@ public class Lieferart extends PersistentObject implements PersistentLieferart{
     public void setPreis(common.Fraction newValue) throws PersistenceException {
         if(!this.isDelayed$Persistence()) ConnectionHandler.getTheConnectionHandler().theLieferartFacade.preisSet(this.getId(), newValue);
         this.preis = newValue;
+    }
+    public SubjInterface getSubService() throws PersistenceException {
+        return this.subService;
+    }
+    public void setSubService(SubjInterface newValue) throws PersistenceException {
+        if (newValue == null) throw new PersistenceException("Null values not allowed!", 0);
+        if(newValue.isTheSameAs(this.subService)) return;
+        long objectId = newValue.getId();
+        long classId = newValue.getClassId();
+        this.subService = (SubjInterface)PersistentProxi.createProxi(objectId, classId);
+        if(!this.isDelayed$Persistence()){
+            newValue.store();
+            ConnectionHandler.getTheConnectionHandler().theLieferartFacade.subServiceSet(this.getId(), newValue);
+        }
     }
     protected void setThis(PersistentLieferart newValue) throws PersistenceException {
         if (newValue == null) throw new PersistenceException("Null values not allowed!", 0);
@@ -183,11 +204,32 @@ public class Lieferart extends PersistentObject implements PersistentLieferart{
     public <R, E extends model.UserException> R accept(AnythingReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E {
          return visitor.handleLieferart(this);
     }
+    public void accept(SubjInterfaceVisitor visitor) throws PersistenceException {
+        visitor.handleLieferart(this);
+    }
+    public <R> R accept(SubjInterfaceReturnVisitor<R>  visitor) throws PersistenceException {
+         return visitor.handleLieferart(this);
+    }
+    public <E extends model.UserException>  void accept(SubjInterfaceExceptionVisitor<E> visitor) throws PersistenceException, E {
+         visitor.handleLieferart(this);
+    }
+    public <R, E extends model.UserException> R accept(SubjInterfaceReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E {
+         return visitor.handleLieferart(this);
+    }
     public int getLeafInfo() throws PersistenceException{
         return 0;
     }
     
     
+    public synchronized void deregister(final ObsInterface observee) 
+				throws PersistenceException{
+        SubjInterface subService = getThis().getSubService();
+		if (subService == null) {
+			subService = model.Subj.createSubj(this.isDelayed$Persistence());
+			getThis().setSubService(subService);
+		}
+		subService.deregister(observee);
+    }
     public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
 				throws PersistenceException{
         this.setThis((PersistentLieferart)This);
@@ -197,28 +239,38 @@ public class Lieferart extends PersistentObject implements PersistentLieferart{
 			this.setPreis((common.Fraction)final$$Fields.get("preis"));
 		}
     }
+    public synchronized void register(final ObsInterface observee) 
+				throws PersistenceException{
+        SubjInterface subService = getThis().getSubService();
+		if (subService == null) {
+			subService = model.Subj.createSubj(this.isDelayed$Persistence());
+			getThis().setSubService(subService);
+		}
+		subService.register(observee);
+    }
+    public synchronized void updateObservers(final model.meta.Mssgs event) 
+				throws PersistenceException{
+        SubjInterface subService = getThis().getSubService();
+		if (subService == null) {
+			subService = model.Subj.createSubj(this.isDelayed$Persistence());
+			getThis().setSubService(subService);
+		}
+		subService.updateObservers(event);
+    }
     
     
     // Start of section that contains operations that must be implemented.
     
-    public void aendereLieferart(final String name, final long lieferzeit, final common.Fraction preis) 
+    public void aendereLieferart(final long lieferzeit, final common.Fraction preis) 
 				throws model.ExcAlreadyExists, PersistenceException{
-        if(getThis().alreadyExists(name).equals(TrueX.getTheTrueX())){
+        if(Lieferart.getLieferartByName(name) != null){
             throw new ExcAlreadyExists(ErrorMessages.LieferArtAlreadyExists);
         }
         else {
-            getThis().setName(name);
             getThis().setPreis(preis);
             getThis().setLieferzeit(lieferzeit);
         }
         
-    }
-    public BooleanX4Public alreadyExists(final String name) 
-				throws PersistenceException{
-        if(Lieferart.getLieferartByName(name).iterator().hasNext()){
-            return TrueX.getTheTrueX();
-        }
-        else return FalseX.getTheFalseX();
     }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{

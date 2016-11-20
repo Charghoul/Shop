@@ -5,6 +5,10 @@ import model.visitor.*;
 
 public interface Artikel4Public extends Komponente4Public {
     
+    public long getMaxLagerbestand() throws PersistenceException ;
+    public long getHstLieferzeit() throws PersistenceException ;
+    public void setHstLieferzeit(long newValue) throws PersistenceException ;
+    public Artikelstatus4Public getArtikelstatus() throws PersistenceException ;
     
     public void accept(KomponenteVisitor visitor) throws PersistenceException;
     public <R> R accept(KomponenteReturnVisitor<R>  visitor) throws PersistenceException;
@@ -14,6 +18,10 @@ public interface Artikel4Public extends Komponente4Public {
     public <R> R accept(AnythingReturnVisitor<R>  visitor) throws PersistenceException;
     public <E extends model.UserException>  void accept(AnythingExceptionVisitor<E> visitor) throws PersistenceException, E;
     public <R, E extends model.UserException> R accept(AnythingReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E;
+    public void accept(SubjInterfaceVisitor visitor) throws PersistenceException;
+    public <R> R accept(SubjInterfaceReturnVisitor<R>  visitor) throws PersistenceException;
+    public <E extends model.UserException>  void accept(SubjInterfaceExceptionVisitor<E> visitor) throws PersistenceException, E;
+    public <R, E extends model.UserException> R accept(SubjInterfaceReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E;
     public void accept(HierarchieHIERARCHYVisitor visitor) throws PersistenceException;
     public <R> R accept(HierarchieHIERARCHYReturnVisitor<R>  visitor) throws PersistenceException;
     public <E extends model.UserException>  void accept(HierarchieHIERARCHYExceptionVisitor<E> visitor) throws PersistenceException, E;
@@ -29,13 +37,11 @@ public interface Artikel4Public extends Komponente4Public {
 				throws PersistenceException;
     public <T> T strategyHierarchie(final HierarchieHIERARCHYStrategy<T> strategy) 
 				throws PersistenceException;
-    public void aendereArtikel(final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
+    public void zuEinkaufswHinz(final long menge, final EinkaufsManager4Public einkaufsManager, final Invoker invoker) 
+				throws PersistenceException;
+    public void aendereArtikel(final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
 				throws model.ExcAlreadyExists, PersistenceException;
-    public BooleanX4Public alreadyExists(final String bezeichung) 
-				throws PersistenceException;
     public void copyingPrivateUserAttributes(final Anything copy) 
-				throws PersistenceException;
-    public BooleanX4Public groesserMax(final long menge) 
 				throws PersistenceException;
     public void herstellerHinzufuegen(final Hersteller4Public hersteller) 
 				throws PersistenceException;
@@ -47,6 +53,8 @@ public interface Artikel4Public extends Komponente4Public {
 				throws model.ExcInconsistentStatusChange, PersistenceException;
     public void statusVerkauf() 
 				throws model.ExcInconsistentStatusChange, PersistenceException;
+    public void zuEinkaufswHinz(final long menge, final EinkaufsManager4Public einkaufsManager) 
+				throws model.UserException, PersistenceException;
 
 }
 

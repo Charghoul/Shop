@@ -1,6 +1,7 @@
 
 package model;
 
+import model.meta.ProduktKatalogMssgs;
 import model.visitor.*;
 import persistence.*;
 
@@ -9,7 +10,7 @@ import java.util.Observable;
 
 /* Additional import section end */
 
-public class ServiceKunde extends model.Service implements PersistentServiceKunde{
+public class ServiceKunde extends model.ServiceShop implements PersistentServiceKunde{
     
     
     public static ServiceKunde4Public createServiceKunde() throws PersistenceException{
@@ -61,22 +62,22 @@ public class ServiceKunde extends model.Service implements PersistentServiceKund
                     if(forGUI && einkaufsManager.hasEssentialFields())einkaufsManager.toHashtable(allResults, depth, essentialLevel + 1, false, true, tdObserver);
                 }
             }
-            AbstractPersistentRoot artikelManager = (AbstractPersistentRoot)this.getArtikelManager();
-            if (artikelManager != null) {
-                result.put("artikelManager", artikelManager.createProxiInformation(false, essentialLevel <= 1));
+            AbstractPersistentRoot lieferartManager = (AbstractPersistentRoot)this.getLieferartManager();
+            if (lieferartManager != null) {
+                result.put("lieferartManager", lieferartManager.createProxiInformation(false, essentialLevel <= 1));
                 if(depth > 1) {
-                    artikelManager.toHashtable(allResults, depth - 1, essentialLevel, forGUI, true , tdObserver);
+                    lieferartManager.toHashtable(allResults, depth - 1, essentialLevel, forGUI, true , tdObserver);
                 }else{
-                    if(forGUI && artikelManager.hasEssentialFields())artikelManager.toHashtable(allResults, depth, essentialLevel + 1, false, true, tdObserver);
+                    if(forGUI && lieferartManager.hasEssentialFields())lieferartManager.toHashtable(allResults, depth, essentialLevel + 1, false, true, tdObserver);
                 }
             }
-            AbstractPersistentRoot warenlager = (AbstractPersistentRoot)this.getWarenlager();
-            if (warenlager != null) {
-                result.put("warenlager", warenlager.createProxiInformation(false, essentialLevel <= 1));
+            AbstractPersistentRoot bestellManager = (AbstractPersistentRoot)this.getBestellManager();
+            if (bestellManager != null) {
+                result.put("bestellManager", bestellManager.createProxiInformation(false, essentialLevel <= 1));
                 if(depth > 1) {
-                    warenlager.toHashtable(allResults, depth - 1, essentialLevel, forGUI, true , tdObserver);
+                    bestellManager.toHashtable(allResults, depth - 1, essentialLevel, forGUI, true , tdObserver);
                 }else{
-                    if(forGUI && warenlager.hasEssentialFields())warenlager.toHashtable(allResults, depth, essentialLevel + 1, false, true, tdObserver);
+                    if(forGUI && bestellManager.hasEssentialFields())bestellManager.toHashtable(allResults, depth, essentialLevel + 1, false, true, tdObserver);
                 }
             }
             String uniqueKey = common.RPCConstantsAndServices.createHashtableKey(this.getClassId(), this.getId());
@@ -87,11 +88,14 @@ public class ServiceKunde extends model.Service implements PersistentServiceKund
     
     public ServiceKunde provideCopy() throws PersistenceException{
         ServiceKunde result = this;
-        result = new ServiceKunde(this.This, 
+        result = new ServiceKunde(this.subService, 
+                                  this.This, 
+                                  this.produktKatalog, 
                                   this.einkaufsManager, 
-                                  this.artikelManager, 
-                                  this.warenlager, 
+                                  this.lieferartManager, 
+                                  this.bestellManager, 
                                   this.getId());
+        result.errors = this.errors.copy(result);
         result.errors = this.errors.copy(result);
         this.copyingPrivateUserAttributes(result);
         return result;
@@ -101,15 +105,15 @@ public class ServiceKunde extends model.Service implements PersistentServiceKund
         return false;
     }
     protected PersistentEinkaufsManager einkaufsManager;
-    protected PersistentArtikelManager artikelManager;
-    protected PersistentWarenlager warenlager;
+    protected PersistentLieferartManager lieferartManager;
+    protected PersistentServiceKundeBestellManager bestellManager;
     
-    public ServiceKunde(PersistentService This,PersistentEinkaufsManager einkaufsManager,PersistentArtikelManager artikelManager,PersistentWarenlager warenlager,long id) throws PersistenceException {
+    public ServiceKunde(SubjInterface subService,PersistentService This,PersistentServiceShopProduktKatalog produktKatalog,PersistentEinkaufsManager einkaufsManager,PersistentLieferartManager lieferartManager,PersistentServiceKundeBestellManager bestellManager,long id) throws PersistenceException {
         /* Shall not be used by clients for object construction! Use static create operation instead! */
-        super((PersistentService)This,id);
+        super((SubjInterface)subService,(PersistentService)This,(PersistentServiceShopProduktKatalog)produktKatalog,id);
         this.einkaufsManager = einkaufsManager;
-        this.artikelManager = artikelManager;
-        this.warenlager = warenlager;        
+        this.lieferartManager = lieferartManager;
+        this.bestellManager = bestellManager;        
     }
     
     static public long getTypeId() {
@@ -129,13 +133,13 @@ public class ServiceKunde extends model.Service implements PersistentServiceKund
             this.getEinkaufsManager().store();
             ConnectionHandler.getTheConnectionHandler().theServiceKundeFacade.einkaufsManagerSet(this.getId(), getEinkaufsManager());
         }
-        if(this.getArtikelManager() != null){
-            this.getArtikelManager().store();
-            ConnectionHandler.getTheConnectionHandler().theServiceKundeFacade.artikelManagerSet(this.getId(), getArtikelManager());
+        if(this.getLieferartManager() != null){
+            this.getLieferartManager().store();
+            ConnectionHandler.getTheConnectionHandler().theServiceKundeFacade.lieferartManagerSet(this.getId(), getLieferartManager());
         }
-        if(this.getWarenlager() != null){
-            this.getWarenlager().store();
-            ConnectionHandler.getTheConnectionHandler().theServiceKundeFacade.warenlagerSet(this.getId(), getWarenlager());
+        if(this.bestellManager != null){
+            this.bestellManager.store();
+            ConnectionHandler.getTheConnectionHandler().theServiceKundeFacade.bestellManagerSet(this.getId(), bestellManager);
         }
         
     }
@@ -154,32 +158,29 @@ public class ServiceKunde extends model.Service implements PersistentServiceKund
             ConnectionHandler.getTheConnectionHandler().theServiceKundeFacade.einkaufsManagerSet(this.getId(), newValue);
         }
     }
-    public ArtikelManager4Public getArtikelManager() throws PersistenceException {
-        return this.artikelManager;
+    public LieferartManager4Public getLieferartManager() throws PersistenceException {
+        return this.lieferartManager;
     }
-    public void setArtikelManager(ArtikelManager4Public newValue) throws PersistenceException {
+    public void setLieferartManager(LieferartManager4Public newValue) throws PersistenceException {
         if (newValue == null) throw new PersistenceException("Null values not allowed!", 0);
-        if(newValue.isTheSameAs(this.artikelManager)) return;
+        if(newValue.isTheSameAs(this.lieferartManager)) return;
         long objectId = newValue.getId();
         long classId = newValue.getClassId();
-        this.artikelManager = (PersistentArtikelManager)PersistentProxi.createProxi(objectId, classId);
+        this.lieferartManager = (PersistentLieferartManager)PersistentProxi.createProxi(objectId, classId);
         if(!this.isDelayed$Persistence()){
             newValue.store();
-            ConnectionHandler.getTheConnectionHandler().theServiceKundeFacade.artikelManagerSet(this.getId(), newValue);
+            ConnectionHandler.getTheConnectionHandler().theServiceKundeFacade.lieferartManagerSet(this.getId(), newValue);
         }
     }
-    public Warenlager4Public getWarenlager() throws PersistenceException {
-        return this.warenlager;
-    }
-    public void setWarenlager(Warenlager4Public newValue) throws PersistenceException {
+    public void setBestellManager(ServiceKundeBestellManager4Public newValue) throws PersistenceException {
         if (newValue == null) throw new PersistenceException("Null values not allowed!", 0);
-        if(newValue.isTheSameAs(this.warenlager)) return;
+        if(newValue.isTheSameAs(this.bestellManager)) return;
         long objectId = newValue.getId();
         long classId = newValue.getClassId();
-        this.warenlager = (PersistentWarenlager)PersistentProxi.createProxi(objectId, classId);
+        this.bestellManager = (PersistentServiceKundeBestellManager)PersistentProxi.createProxi(objectId, classId);
         if(!this.isDelayed$Persistence()){
             newValue.store();
-            ConnectionHandler.getTheConnectionHandler().theServiceKundeFacade.warenlagerSet(this.getId(), newValue);
+            ConnectionHandler.getTheConnectionHandler().theServiceKundeFacade.bestellManagerSet(this.getId(), newValue);
         }
     }
     public PersistentServiceKunde getThis() throws PersistenceException {
@@ -190,6 +191,18 @@ public class ServiceKunde extends model.Service implements PersistentServiceKund
         }return (PersistentServiceKunde)this.This;
     }
     
+    public void accept(ServiceShopVisitor visitor) throws PersistenceException {
+        visitor.handleServiceKunde(this);
+    }
+    public <R> R accept(ServiceShopReturnVisitor<R>  visitor) throws PersistenceException {
+         return visitor.handleServiceKunde(this);
+    }
+    public <E extends model.UserException>  void accept(ServiceShopExceptionVisitor<E> visitor) throws PersistenceException, E {
+         visitor.handleServiceKunde(this);
+    }
+    public <R, E extends model.UserException> R accept(ServiceShopReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E {
+         return visitor.handleServiceKunde(this);
+    }
     public void accept(ServiceVisitor visitor) throws PersistenceException {
         visitor.handleServiceKunde(this);
     }
@@ -226,6 +239,18 @@ public class ServiceKunde extends model.Service implements PersistentServiceKund
     public <R, E extends model.UserException> R accept(AnythingReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E {
          return visitor.handleServiceKunde(this);
     }
+    public void accept(SubjInterfaceVisitor visitor) throws PersistenceException {
+        visitor.handleServiceKunde(this);
+    }
+    public <R> R accept(SubjInterfaceReturnVisitor<R>  visitor) throws PersistenceException {
+         return visitor.handleServiceKunde(this);
+    }
+    public <E extends model.UserException>  void accept(SubjInterfaceExceptionVisitor<E> visitor) throws PersistenceException, E {
+         visitor.handleServiceKunde(this);
+    }
+    public <R, E extends model.UserException> R accept(SubjInterfaceReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E {
+         return visitor.handleServiceKunde(this);
+    }
     public void accept(RemoteVisitor visitor) throws PersistenceException {
         visitor.handleServiceKunde(this);
     }
@@ -239,23 +264,74 @@ public class ServiceKunde extends model.Service implements PersistentServiceKund
          return visitor.handleServiceKunde(this);
     }
     public int getLeafInfo() throws PersistenceException{
+        if (this.getProduktKatalog() != null) return 1;
         if (this.getEinkaufsManager() != null) return 1;
-        if (this.getArtikelManager() != null) return 1;
-        if (this.getWarenlager() != null) return 1;
+        if (this.getBestellManager() != null) return 1;
         return 0;
     }
     
     
+    public ProduktKatalog4Public artikel_Path_In_NeuePosition() 
+				throws model.UserException, PersistenceException{
+        	return getThis().getProduktKatalog();
+    }
+    public synchronized void deregister(final ObsInterface observee) 
+				throws PersistenceException{
+        SubjInterface subService = getThis().getSubService();
+		if (subService == null) {
+			subService = model.Subj.createSubj(this.isDelayed$Persistence());
+			getThis().setSubService(subService);
+		}
+		subService.deregister(observee);
+    }
+    public BestellManager4Public getBestellManager() 
+				throws PersistenceException{
+        if (this.bestellManager== null) return null;
+		return this.bestellManager.getObservee();
+    }
     public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
 				throws PersistenceException{
         this.setThis((PersistentServiceKunde)This);
 		if(this.isTheSameAs(This)){
 		}
     }
+    public LieferartManager4Public lieferart_Path_In_Bestellen() 
+				throws model.UserException, PersistenceException{
+        	return getThis().getLieferartManager();
+    }
+    public synchronized void register(final ObsInterface observee) 
+				throws PersistenceException{
+        SubjInterface subService = getThis().getSubService();
+		if (subService == null) {
+			subService = model.Subj.createSubj(this.isDelayed$Persistence());
+			getThis().setSubService(subService);
+		}
+		subService.register(observee);
+    }
     public String serviceKunde_Menu_Filter(final Anything anything) 
 				throws PersistenceException{
         String result = "+++";
+		if(anything instanceof PositionInBestellung4Public) {
+			if(this.filter_zuruecksenden((PositionInBestellung4Public)anything)) result = result + "zuruecksendenPRMTRPositionInBestellungPRMTR+++";
+		}
 		return result;
+    }
+    public void setBestellManager(final BestellManager4Public bestellManager) 
+				throws PersistenceException{
+        if (this.bestellManager == null) {
+			this.setBestellManager(model.ServiceKundeBestellManager.createServiceKundeBestellManager(this.isDelayed$Persistence()));
+			this.bestellManager.setObserver(getThis());
+		}
+		this.bestellManager.setObservee(bestellManager);
+    }
+    public synchronized void updateObservers(final model.meta.Mssgs event) 
+				throws PersistenceException{
+        SubjInterface subService = getThis().getSubService();
+		if (subService == null) {
+			subService = model.Subj.createSubj(this.isDelayed$Persistence());
+			getThis().setSubService(subService);
+		}
+		subService.updateObservers(event);
     }
     
     
@@ -266,9 +342,14 @@ public class ServiceKunde extends model.Service implements PersistentServiceKund
         position.aendereMenge(menge);
         getThis().signalChanged(true);
     }
-    public void bestellen(final EinkaufsManager4Public einkaufsManager) 
+    public void bestellManager_update(final model.meta.BestellManagerMssgs event) 
 				throws PersistenceException{
-        //TODO: implement method: bestellen
+        getThis().signalChanged(true);
+        
+    }
+    public void bestellen(final EinkaufsManager4Public einkaufsManager, final Lieferart4Public lieferart) 
+				throws PersistenceException{
+        einkaufsManager.bestellen(lieferart,getThis());
         getThis().signalChanged(true);
     }
     public void connected(final String user) 
@@ -286,9 +367,12 @@ public class ServiceKunde extends model.Service implements PersistentServiceKund
     public void initializeOnCreation() 
 				throws PersistenceException{
         super.initializeOnCreation();
-        getThis().setWarenlager(Warenlager.getTheWarenlager());
-		getThis().setEinkaufsManager(EinkaufsManager.createEinkaufsManager());
-        getThis().setArtikelManager(ArtikelManager.getTheArtikelManager());
+
+        getThis().setProduktKatalog(ProduktKatalog.getTheProduktKatalog());
+        getThis().setLieferartManager(LieferartManager.getTheLieferartManager());
+        BestellManager4Public temp = BestellManager.createBestellManager();
+        getThis().setBestellManager(temp);
+        getThis().setEinkaufsManager(EinkaufsManager.createEinkaufsManager(temp));
     }
     public void initializeOnInstantiation() 
 				throws PersistenceException{
@@ -299,14 +383,35 @@ public class ServiceKunde extends model.Service implements PersistentServiceKund
         getThis().getEinkaufsManager().neuePosition(artikel, menge);
         getThis().signalChanged(true);
     }
+    public void vorbestellen(final EinkaufsManager4Public einkaufsManager) 
+				throws PersistenceException{
+        //TODO: implement method: vorbestellen
+        
+    }
+    public void zuEinkaufswagenHinzufuegen(final Artikel4Public artikel, final long menge) 
+				throws PersistenceException{
+        artikel.zuEinkaufswHinz(menge,getThis().getEinkaufsManager(),getThis());
+        getThis().signalChanged(true);
+    }
+    public void zuruecksenden(final PositionInBestellung4Public position) 
+				throws PersistenceException{
+        //TODO: implement method: zuruecksenden
+        
+    }
     
     
     // Start of section that contains overridden operations only.
     
+    public void produktKatalog_update(final model.meta.ProduktKatalogMssgs event) 
+				throws PersistenceException{
+        getThis().signalChanged(true);
+    }
 
     /* Start of protected part that is not overridden by persistence generator */
-    
-    
+
+    private boolean filter_zuruecksenden(PositionInBestellung4Public anything) throws PersistenceException {
+       return anything.getBestellung().getBestellstatus().equals(Geliefert.getTheGeliefert());
+    }
     
     /* End of protected part that is not overridden by persistence generator */
     

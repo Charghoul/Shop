@@ -9,7 +9,7 @@ interface PositionDOWNMssgsVisitor  {
 }
 
 
-interface PositionUPMssgsVisitor  {
+interface PositionUPMssgsVisitor extends PositionAbstraktUPMssgsVisitor {
 
     
 }

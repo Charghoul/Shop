@@ -1218,6 +1218,9 @@ class DetailPanelFactory implements AnythingVisitor {
     public void handleServiceKunde(view.ServiceKundeView object){
         result = new ServiceKundeDefaultDetailPanel(handler, object);
     }
+    public void handleProduktKatalog(view.ProduktKatalogView object){
+        result = new ProduktKatalogDefaultDetailPanel(handler, object);
+    }
     public void handleArtikel(view.ArtikelView object){
         result = new ArtikelDefaultDetailPanel(handler, object);
     }
@@ -1245,17 +1248,14 @@ class DetailPanelFactory implements AnythingVisitor {
     public void handleWarenlager(view.WarenlagerView object){
         result = new WarenlagerDefaultDetailPanel(handler, object);
     }
-    public void handleTrueX(view.TrueXView object){
-        result = new TrueXDefaultDetailPanel(handler, object);
-    }
     public void handleVerkauf(view.VerkaufView object){
         result = new VerkaufDefaultDetailPanel(handler, object);
     }
     public void handleAuslauf(view.AuslaufView object){
         result = new AuslaufDefaultDetailPanel(handler, object);
     }
-    public void handleFalseX(view.FalseXView object){
-        result = new FalseXDefaultDetailPanel(handler, object);
+    public void handleVerarbeitung(view.VerarbeitungView object){
+        result = new VerarbeitungDefaultDetailPanel(handler, object);
     }
     public void handleBestellung(view.BestellungView object){
         result = new BestellungDefaultDetailPanel(handler, object);
@@ -1266,8 +1266,14 @@ class DetailPanelFactory implements AnythingVisitor {
     public void handleThreadOfControl(view.ThreadOfControlView object){
         result = new ThreadOfControlDefaultDetailPanel(handler, object);
     }
+    public void handleBestellManager(view.BestellManagerView object){
+        result = new BestellManagerDefaultDetailPanel(handler, object);
+    }
     public void handleZeitManager(view.ZeitManagerView object){
         result = new ZeitManagerDefaultDetailPanel(handler, object);
+    }
+    public void handlePositionInBestellung(view.PositionInBestellungView object){
+        result = new PositionInBestellungDefaultDetailPanel(handler, object);
     }
     public void handleVorbestellung(view.VorbestellungView object){
         result = new VorbestellungDefaultDetailPanel(handler, object);
@@ -1497,9 +1503,9 @@ class KndLieferungDefaultDetailPanel extends DefaultDetailPanel{
 
 class ServiceKundeDefaultDetailPanel extends DefaultDetailPanel{
     
+    protected static final String ServiceShop$$produktKatalog = "ServiceShop$$produktKatalog";
     protected static final String ServiceKunde$$einkaufsManager = "ServiceKunde$$einkaufsManager";
-    protected static final String ServiceKunde$$artikelManager = "ServiceKunde$$artikelManager";
-    protected static final String ServiceKunde$$warenlager = "ServiceKunde$$warenlager";
+    protected static final String ServiceKunde$$bestellManager = "ServiceKunde$$bestellManager";
     
     protected ServiceKundeDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
         super(exceptionHandler, anything);
@@ -1509,6 +1515,21 @@ class ServiceKundeDefaultDetailPanel extends DefaultDetailPanel{
     }
     protected view.ServiceKundeView getAnything(){
         return (view.ServiceKundeView)this.anything;
+    }
+}
+
+class ProduktKatalogDefaultDetailPanel extends DefaultDetailPanel{
+    
+    protected static final String ProduktKatalog$$produktgruppen = "ProduktKatalog$$produktgruppen";
+    
+    protected ProduktKatalogDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
+        super(exceptionHandler, anything);
+    }
+    protected void addFields(){
+        
+    }
+    protected view.ProduktKatalogView getAnything(){
+        return (view.ProduktKatalogView)this.anything;
     }
 }
 
@@ -1600,7 +1621,7 @@ class ProduktgruppeDefaultDetailPanel extends DefaultDetailPanel{
 
 class PositionDefaultDetailPanel extends DefaultDetailPanel{
     
-    protected static final String Position$$menge = "Position$$menge";
+    protected static final String PositionAbstrakt$$menge = "PositionAbstrakt$$menge";
     
     protected PositionDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
         super(exceptionHandler, anything);
@@ -1609,7 +1630,7 @@ class PositionDefaultDetailPanel extends DefaultDetailPanel{
         try{
             BaseTypePanel panel = new IntegerPanel(this, "menge", this.getAnything().getMenge());
             this.getScrollablePane().getChildren().add(panel);
-            this.panels.put(Position$$menge, panel);
+            this.panels.put(PositionAbstrakt$$menge, panel);
         }catch(ModelException e){
             this.getExceptionAndEventhandler().handleException(e);
         }
@@ -1622,10 +1643,12 @@ class PositionDefaultDetailPanel extends DefaultDetailPanel{
 
 class ServiceAdminDefaultDetailPanel extends DefaultDetailPanel{
     
+    protected static final String ServiceShop$$produktKatalog = "ServiceShop$$produktKatalog";
     protected static final String ServiceAdmin$$warenlager = "ServiceAdmin$$warenlager";
     protected static final String ServiceAdmin$$artikelManager = "ServiceAdmin$$artikelManager";
     protected static final String ServiceAdmin$$lieferartManager = "ServiceAdmin$$lieferartManager";
     protected static final String ServiceAdmin$$herstellerManager = "ServiceAdmin$$herstellerManager";
+    protected static final String ServiceAdmin$$zeitManager = "ServiceAdmin$$zeitManager";
     
     protected ServiceAdminDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
         super(exceptionHandler, anything);
@@ -1641,7 +1664,6 @@ class ServiceAdminDefaultDetailPanel extends DefaultDetailPanel{
 class ArtikelManagerDefaultDetailPanel extends DefaultDetailPanel{
     
     protected static final String ArtikelManager$$artikelListe = "ArtikelManager$$artikelListe";
-    protected static final String ArtikelManager$$produktgruppen = "ArtikelManager$$produktgruppen";
     
     protected ArtikelManagerDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
         super(exceptionHandler, anything);
@@ -1721,6 +1743,7 @@ class AngenommenDefaultDetailPanel extends DefaultDetailPanel{
 
 class WarenlagerDefaultDetailPanel extends DefaultDetailPanel{
     
+    protected static final String Warenlager$$newList = "Warenlager$$newList";
     protected static final String Warenlager$$templist = "Warenlager$$templist";
     protected static final String Warenlager$$warenListe = "Warenlager$$warenListe";
     
@@ -1732,19 +1755,6 @@ class WarenlagerDefaultDetailPanel extends DefaultDetailPanel{
     }
     protected view.WarenlagerView getAnything(){
         return (view.WarenlagerView)this.anything;
-    }
-}
-
-class TrueXDefaultDetailPanel extends DefaultDetailPanel{
-    
-    protected TrueXDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
-        super(exceptionHandler, anything);
-    }
-    protected void addFields(){
-        
-    }
-    protected view.TrueXView getAnything(){
-        return (view.TrueXView)this.anything;
     }
 }
 
@@ -1774,16 +1784,16 @@ class AuslaufDefaultDetailPanel extends DefaultDetailPanel{
     }
 }
 
-class FalseXDefaultDetailPanel extends DefaultDetailPanel{
+class VerarbeitungDefaultDetailPanel extends DefaultDetailPanel{
     
-    protected FalseXDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
+    protected VerarbeitungDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
         super(exceptionHandler, anything);
     }
     protected void addFields(){
         
     }
-    protected view.FalseXView getAnything(){
-        return (view.FalseXView)this.anything;
+    protected view.VerarbeitungView getAnything(){
+        return (view.VerarbeitungView)this.anything;
     }
 }
 
@@ -1791,14 +1801,13 @@ class BestellungDefaultDetailPanel extends DefaultDetailPanel{
     
     protected static final String Bestellung$$positionsListe = "Bestellung$$positionsListe";
     protected static final String Bestellung$$bestellID = "Bestellung$$bestellID";
-    protected static final String Bestellung$$bestellstatus = "Bestellung$$bestellstatus";
     
     protected BestellungDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
         super(exceptionHandler, anything);
     }
     protected void addFields(){
         try{
-            BaseTypePanel panel = new StringPanel(this, "bestellID", this.getAnything().getBestellID());
+            BaseTypePanel panel = new IntegerPanel(this, "bestellID", this.getAnything().getBestellID());
             this.getScrollablePane().getChildren().add(panel);
             this.panels.put(Bestellung$$bestellID, panel);
         }catch(ModelException e){
@@ -1837,6 +1846,21 @@ class ThreadOfControlDefaultDetailPanel extends DefaultDetailPanel{
     }
 }
 
+class BestellManagerDefaultDetailPanel extends DefaultDetailPanel{
+    
+    protected static final String BestellManager$$bestellListe = "BestellManager$$bestellListe";
+    
+    protected BestellManagerDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
+        super(exceptionHandler, anything);
+    }
+    protected void addFields(){
+        
+    }
+    protected view.BestellManagerView getAnything(){
+        return (view.BestellManagerView)this.anything;
+    }
+}
+
 class ZeitManagerDefaultDetailPanel extends DefaultDetailPanel{
     
     protected static final String ZeitManager$$zeitObjektListe = "ZeitManager$$zeitObjektListe";
@@ -1849,6 +1873,28 @@ class ZeitManagerDefaultDetailPanel extends DefaultDetailPanel{
     }
     protected view.ZeitManagerView getAnything(){
         return (view.ZeitManagerView)this.anything;
+    }
+}
+
+class PositionInBestellungDefaultDetailPanel extends DefaultDetailPanel{
+    
+    protected static final String PositionAbstrakt$$menge = "PositionAbstrakt$$menge";
+    
+    protected PositionInBestellungDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
+        super(exceptionHandler, anything);
+    }
+    protected void addFields(){
+        try{
+            BaseTypePanel panel = new IntegerPanel(this, "menge", this.getAnything().getMenge());
+            this.getScrollablePane().getChildren().add(panel);
+            this.panels.put(PositionAbstrakt$$menge, panel);
+        }catch(ModelException e){
+            this.getExceptionAndEventhandler().handleException(e);
+        }
+        
+    }
+    protected view.PositionInBestellungView getAnything(){
+        return (view.PositionInBestellungView)this.anything;
     }
 }
 

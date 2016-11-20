@@ -16,11 +16,11 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
         return (EinkaufsManager4Public)PersistentProxi.createProxi(objectId, classId);
     }
     
-    public static EinkaufsManager4Public createEinkaufsManager() throws PersistenceException{
-        return createEinkaufsManager(false);
+    public static EinkaufsManager4Public createEinkaufsManager(BestellManager4Public bestellManager) throws PersistenceException{
+        return createEinkaufsManager(bestellManager,false);
     }
     
-    public static EinkaufsManager4Public createEinkaufsManager(boolean delayed$Persistence) throws PersistenceException {
+    public static EinkaufsManager4Public createEinkaufsManager(BestellManager4Public bestellManager,boolean delayed$Persistence) throws PersistenceException {
         PersistentEinkaufsManager result = null;
         if(delayed$Persistence){
             result = ConnectionHandler.getTheConnectionHandler().theEinkaufsManagerFacade
@@ -31,12 +31,13 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
                 .newEinkaufsManager(-1);
         }
         java.util.HashMap<String,Object> final$$Fields = new java.util.HashMap<String,Object>();
+        final$$Fields.put("bestellManager", bestellManager);
         result.initialize(result, final$$Fields);
         result.initializeOnCreation();
         return result;
     }
     
-    public static EinkaufsManager4Public createEinkaufsManager(boolean delayed$Persistence,EinkaufsManager4Public This) throws PersistenceException {
+    public static EinkaufsManager4Public createEinkaufsManager(BestellManager4Public bestellManager,boolean delayed$Persistence,EinkaufsManager4Public This) throws PersistenceException {
         PersistentEinkaufsManager result = null;
         if(delayed$Persistence){
             result = ConnectionHandler.getTheConnectionHandler().theEinkaufsManagerFacade
@@ -47,6 +48,7 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
                 .newEinkaufsManager(-1);
         }
         java.util.HashMap<String,Object> final$$Fields = new java.util.HashMap<String,Object>();
+        final$$Fields.put("bestellManager", bestellManager);
         result.initialize(This, final$$Fields);
         result.initializeOnCreation();
         return result;
@@ -57,6 +59,15 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
         if (depth > 0 && essentialLevel <= common.RPCConstantsAndServices.EssentialDepth){
             result = super.toHashtable(allResults, depth, essentialLevel, forGUI, false, tdObserver);
             result.put("einkaufsListe", this.getEinkaufsListe().getVector(allResults, depth, essentialLevel, forGUI, tdObserver, false, true));
+            AbstractPersistentRoot bestellManager = (AbstractPersistentRoot)this.getBestellManager();
+            if (bestellManager != null) {
+                result.put("bestellManager", bestellManager.createProxiInformation(false, essentialLevel <= 1));
+                if(depth > 1) {
+                    bestellManager.toHashtable(allResults, depth - 1, essentialLevel, forGUI, true , tdObserver);
+                }else{
+                    if(forGUI && bestellManager.hasEssentialFields())bestellManager.toHashtable(allResults, depth, essentialLevel + 1, false, true, tdObserver);
+                }
+            }
             String uniqueKey = common.RPCConstantsAndServices.createHashtableKey(this.getClassId(), this.getId());
             if (leaf && !allResults.containsKey(uniqueKey)) allResults.put(uniqueKey, result);
         }
@@ -65,8 +76,11 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
     
     public EinkaufsManager provideCopy() throws PersistenceException{
         EinkaufsManager result = this;
-        result = new EinkaufsManager(this.This, 
+        result = new EinkaufsManager(this.bestellManager, 
+                                     this.subService, 
+                                     this.This, 
                                      this.getId());
+        result.einkaufsListe = this.einkaufsListe.copy(result);
         this.copyingPrivateUserAttributes(result);
         return result;
     }
@@ -75,12 +89,16 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
         return false;
     }
     protected EinkaufsManager_EinkaufsListeProxi einkaufsListe;
+    protected PersistentBestellManager bestellManager;
+    protected SubjInterface subService;
     protected PersistentEinkaufsManager This;
     
-    public EinkaufsManager(PersistentEinkaufsManager This,long id) throws PersistenceException {
+    public EinkaufsManager(PersistentBestellManager bestellManager,SubjInterface subService,PersistentEinkaufsManager This,long id) throws PersistenceException {
         /* Shall not be used by clients for object construction! Use static create operation instead! */
         super(id);
         this.einkaufsListe = new EinkaufsManager_EinkaufsListeProxi(this);
+        this.bestellManager = bestellManager;
+        this.subService = subService;
         if (This != null && !(this.isTheSameAs(This))) this.This = This;        
     }
     
@@ -98,6 +116,14 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
             .newEinkaufsManager(this.getId());
         super.store();
         this.getEinkaufsListe().store();
+        if(this.getBestellManager() != null){
+            this.getBestellManager().store();
+            ConnectionHandler.getTheConnectionHandler().theEinkaufsManagerFacade.bestellManagerSet(this.getId(), getBestellManager());
+        }
+        if(this.getSubService() != null){
+            this.getSubService().store();
+            ConnectionHandler.getTheConnectionHandler().theEinkaufsManagerFacade.subServiceSet(this.getId(), getSubService());
+        }
         if(!this.isTheSameAs(this.getThis())){
             this.getThis().store();
             ConnectionHandler.getTheConnectionHandler().theEinkaufsManagerFacade.ThisSet(this.getId(), getThis());
@@ -107,6 +133,34 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
     
     public EinkaufsManager_EinkaufsListeProxi getEinkaufsListe() throws PersistenceException {
         return this.einkaufsListe;
+    }
+    public BestellManager4Public getBestellManager() throws PersistenceException {
+        return this.bestellManager;
+    }
+    public void setBestellManager(BestellManager4Public newValue) throws PersistenceException {
+        if (newValue == null) throw new PersistenceException("Null values not allowed!", 0);
+        if(newValue.isTheSameAs(this.bestellManager)) return;
+        long objectId = newValue.getId();
+        long classId = newValue.getClassId();
+        this.bestellManager = (PersistentBestellManager)PersistentProxi.createProxi(objectId, classId);
+        if(!this.isDelayed$Persistence()){
+            newValue.store();
+            ConnectionHandler.getTheConnectionHandler().theEinkaufsManagerFacade.bestellManagerSet(this.getId(), newValue);
+        }
+    }
+    public SubjInterface getSubService() throws PersistenceException {
+        return this.subService;
+    }
+    public void setSubService(SubjInterface newValue) throws PersistenceException {
+        if (newValue == null) throw new PersistenceException("Null values not allowed!", 0);
+        if(newValue.isTheSameAs(this.subService)) return;
+        long objectId = newValue.getId();
+        long classId = newValue.getClassId();
+        this.subService = (SubjInterface)PersistentProxi.createProxi(objectId, classId);
+        if(!this.isDelayed$Persistence()){
+            newValue.store();
+            ConnectionHandler.getTheConnectionHandler().theEinkaufsManagerFacade.subServiceSet(this.getId(), newValue);
+        }
     }
     protected void setThis(PersistentEinkaufsManager newValue) throws PersistenceException {
         if (newValue == null) throw new PersistenceException("Null values not allowed!", 0);
@@ -143,16 +197,47 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
     public <R, E extends model.UserException> R accept(AnythingReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E {
          return visitor.handleEinkaufsManager(this);
     }
+    public void accept(SubjInterfaceVisitor visitor) throws PersistenceException {
+        visitor.handleEinkaufsManager(this);
+    }
+    public <R> R accept(SubjInterfaceReturnVisitor<R>  visitor) throws PersistenceException {
+         return visitor.handleEinkaufsManager(this);
+    }
+    public <E extends model.UserException>  void accept(SubjInterfaceExceptionVisitor<E> visitor) throws PersistenceException, E {
+         visitor.handleEinkaufsManager(this);
+    }
+    public <R, E extends model.UserException> R accept(SubjInterfaceReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E {
+         return visitor.handleEinkaufsManager(this);
+    }
     public int getLeafInfo() throws PersistenceException{
         if (this.getEinkaufsListe().getLength() > 0) return 1;
         return 0;
     }
     
     
+    public void bestellen(final Lieferart4Public lieferart, final Invoker invoker) 
+				throws PersistenceException{
+        java.sql.Date now = new java.sql.Date(new java.util.Date().getTime());
+		BestellenCommand4Public command = model.meta.BestellenCommand.createBestellenCommand(now, now);
+		command.setLieferart(lieferart);
+		command.setInvoker(invoker);
+		command.setCommandReceiver(getThis());
+		model.meta.CommandCoordinator.getTheCommandCoordinator().coordinate(command);
+    }
+    public synchronized void deregister(final ObsInterface observee) 
+				throws PersistenceException{
+        SubjInterface subService = getThis().getSubService();
+		if (subService == null) {
+			subService = model.Subj.createSubj(this.isDelayed$Persistence());
+			getThis().setSubService(subService);
+		}
+		subService.deregister(observee);
+    }
     public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
 				throws PersistenceException{
         this.setThis((PersistentEinkaufsManager)This);
 		if(this.isTheSameAs(This)){
+			this.setBestellManager((PersistentBestellManager)final$$Fields.get("bestellManager"));
 		}
     }
     public ServiceKunde4Public inverseGetEinkaufsManager() 
@@ -166,19 +251,54 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
 			return null;
 		}
     }
+    public synchronized void register(final ObsInterface observee) 
+				throws PersistenceException{
+        SubjInterface subService = getThis().getSubService();
+		if (subService == null) {
+			subService = model.Subj.createSubj(this.isDelayed$Persistence());
+			getThis().setSubService(subService);
+		}
+		subService.register(observee);
+    }
+    public synchronized void updateObservers(final model.meta.Mssgs event) 
+				throws PersistenceException{
+        SubjInterface subService = getThis().getSubService();
+		if (subService == null) {
+			subService = model.Subj.createSubj(this.isDelayed$Persistence());
+			getThis().setSubService(subService);
+		}
+		subService.updateObservers(event);
+    }
     
     
     // Start of section that contains operations that must be implemented.
     
-    public void aendereMenge(final Position4Public position, final long menge) 
-				throws model.ExcLagerbestandUnderZero, PersistenceException{
-        //TODO: implement method: aendereMenge
-        
-    }
-    public void bestellen() 
-				throws PersistenceException{
-        //TODO: implement method: bestellen
-        
+    public void bestellen(final Lieferart4Public lieferart) 
+				throws model.ExcLagerbestandUnderZero, model.ExcArtikelNichtVerfuegbar, PersistenceException{
+        //überprüfen ob alles auf lager ist
+        Position4Public temp = Warenlager.getTheWarenlager().nichtVerfPruefen(getThis().getEinkaufsListe().getList());
+        if(temp == null) {
+            Bestellung4Public bestellung = getThis().getBestellManager().neueBestellung(getThis().getEinkaufsListe().getList(), Verarbeitung.getTheVerarbeitung());
+            getThis().getEinkaufsListe().applyToAll(new Procdure<Position4Public>() {
+                @Override
+                public void doItTo(Position4Public argument) throws PersistenceException {
+                    try {
+                        Warenlager.getTheWarenlager().artikelEntnehmen(argument.getArtikel(), argument.getMenge());
+                    } catch (ExcLagerbestandUnderZero excLagerbestandUnderZero) {
+                        excLagerbestandUnderZero.printStackTrace();
+                    }
+                }
+            });
+            bestellung.aendereStatus(Hinversand.getTheHinversand());
+            ZeitManager.getTheZeitManager().neueKndLieferung(bestellung,lieferart);
+            //leert die Liste
+            getThis().getEinkaufsListe().filter(x -> {
+                return false;
+            });
+        }
+        else {
+            throw new ExcArtikelNichtVerfuegbar(temp.toString()+ ErrorMessages.ArtikelNichtVerfuegbar);
+        }
     }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{
@@ -194,16 +314,26 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
         
     }
     public void neuePosition(final Artikel4Public artikel, final long menge) 
-				throws model.ExcArtikelAlreadyExists, model.UserException, PersistenceException{
-        // TODO testen!
+				throws model.ExcArtikelAlreadyExists, model.UserException, model.ExcLagerbestandOverMax, PersistenceException{
+        //TODO: neueEinkaufswagenposition: auf Artikelstatus prüfen, ob verkauf oder neuanlage
+
         Position4Public temp = getThis().getEinkaufsListe().findFirst(new Predcate<Position4Public>() {
             @Override
             public boolean test(Position4Public argument) throws PersistenceException{
-                return argument.enthaeltArtikel(artikel) != null;
+                return argument.equals(artikel);
             }
         });
         if( temp != null) throw new ExcArtikelAlreadyExists(ErrorMessages.ArtikelAlreadyInBasket);
-        else getThis().getEinkaufsListe().add(Position.createPosition(artikel, menge));
+        else {
+            if(artikel.getMaxLagerbestand() < menge){
+                throw new ExcLagerbestandOverMax(ErrorMessages.LagerbestandOverMax);
+            }
+            else getThis().getEinkaufsListe().add(Position.createPosition(artikel, menge));
+        }
+    }
+    public void vorbestellen() 
+				throws PersistenceException{
+
     }
     
     

@@ -111,7 +111,8 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
     
     public Artikel provideCopy() throws PersistenceException{
         Artikel result = this;
-        result = new Artikel(this.This, 
+        result = new Artikel(this.subService, 
+                             this.This, 
                              this.artikelnummer, 
                              this.bezeichnung, 
                              this.preis, 
@@ -137,9 +138,9 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
     protected PersistentArtikelstatus artikelstatus;
     protected PersistentHersteller hersteller;
     
-    public Artikel(PersistentKomponente This,String artikelnummer,String bezeichnung,common.Fraction preis,long minLagerbestand,long maxLagerbestand,long hstLieferzeit,PersistentArtikelstatus artikelstatus,PersistentHersteller hersteller,long id) throws PersistenceException {
+    public Artikel(SubjInterface subService,PersistentKomponente This,String artikelnummer,String bezeichnung,common.Fraction preis,long minLagerbestand,long maxLagerbestand,long hstLieferzeit,PersistentArtikelstatus artikelstatus,PersistentHersteller hersteller,long id) throws PersistenceException {
         /* Shall not be used by clients for object construction! Use static create operation instead! */
-        super((PersistentKomponente)This,id);
+        super((SubjInterface)subService,(PersistentKomponente)This,id);
         this.artikelnummer = artikelnummer;
         this.bezeichnung = bezeichnung;
         this.preis = preis;
@@ -278,6 +279,18 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
     public <R, E extends model.UserException> R accept(AnythingReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E {
          return visitor.handleArtikel(this);
     }
+    public void accept(SubjInterfaceVisitor visitor) throws PersistenceException {
+        visitor.handleArtikel(this);
+    }
+    public <R> R accept(SubjInterfaceReturnVisitor<R>  visitor) throws PersistenceException {
+         return visitor.handleArtikel(this);
+    }
+    public <E extends model.UserException>  void accept(SubjInterfaceExceptionVisitor<E> visitor) throws PersistenceException, E {
+         visitor.handleArtikel(this);
+    }
+    public <R, E extends model.UserException> R accept(SubjInterfaceReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E {
+         return visitor.handleArtikel(this);
+    }
     public void accept(HierarchieHIERARCHYVisitor visitor) throws PersistenceException {
         visitor.handleArtikel(this);
     }
@@ -301,6 +314,15 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
         if(getThis().equals(part)) return true;
 		return false;
     }
+    public synchronized void deregister(final ObsInterface observee) 
+				throws PersistenceException{
+        SubjInterface subService = getThis().getSubService();
+		if (subService == null) {
+			subService = model.Subj.createSubj(this.isDelayed$Persistence());
+			getThis().setSubService(subService);
+		}
+		subService.deregister(observee);
+    }
     public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
 				throws PersistenceException{
         this.setThis((PersistentArtikel)This);
@@ -313,6 +335,15 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
 			this.setHstLieferzeit((Long)final$$Fields.get("hstLieferzeit"));
 			this.setArtikelstatus((PersistentArtikelstatus)final$$Fields.get("artikelstatus"));
 		}
+    }
+    public synchronized void register(final ObsInterface observee) 
+				throws PersistenceException{
+        SubjInterface subService = getThis().getSubService();
+		if (subService == null) {
+			subService = model.Subj.createSubj(this.isDelayed$Persistence());
+			getThis().setSubService(subService);
+		}
+		subService.register(observee);
     }
     public void statusAuslauf(final Invoker invoker) 
 				throws PersistenceException{
@@ -335,38 +366,40 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
         T result = strategy.Artikel$$finalize(getThis() );
 		return result;
     }
+    public synchronized void updateObservers(final model.meta.Mssgs event) 
+				throws PersistenceException{
+        SubjInterface subService = getThis().getSubService();
+		if (subService == null) {
+			subService = model.Subj.createSubj(this.isDelayed$Persistence());
+			getThis().setSubService(subService);
+		}
+		subService.updateObservers(event);
+    }
+    public void zuEinkaufswHinz(final long menge, final EinkaufsManager4Public einkaufsManager, final Invoker invoker) 
+				throws PersistenceException{
+        java.sql.Date now = new java.sql.Date(new java.util.Date().getTime());
+		ZuEinkaufswHinzCommand4Public command = model.meta.ZuEinkaufswHinzCommand.createZuEinkaufswHinzCommand(menge, now, now);
+		command.setEinkaufsManager(einkaufsManager);
+		command.setInvoker(invoker);
+		command.setCommandReceiver(getThis());
+		model.meta.CommandCoordinator.getTheCommandCoordinator().coordinate(command);
+    }
     
     
     // Start of section that contains operations that must be implemented.
     
-    public void aendereArtikel(final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
+    public void aendereArtikel(final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
 				throws model.ExcAlreadyExists, PersistenceException{
-        if(getThis().alreadyExists(bezeichnung).equals(TrueX.getTheTrueX())) throw new ExcAlreadyExists(ErrorMessages.ArtikelAlreadyExists);
-        else {
-            getThis().setBezeichnung(bezeichnung);
-            getThis().setPreis(preis);
-            getThis().setMinLagerbestand(minLagerbestand);
-            getThis().setMaxLagerbestand(maxLagerbestand);
-            getThis().setHstLieferzeit(hstLieferzeit);
-        }
-
-    }
-    public BooleanX4Public alreadyExists(final String bezeichung) 
-				throws PersistenceException{
-        if(Artikel.getArtikelByBezeichnung(bezeichung).iterator().hasNext()){
-            return TrueX.getTheTrueX();
-        }
-        else return FalseX.getTheFalseX();
+        getThis().setPreis(preis);
+        getThis().setMinLagerbestand(minLagerbestand);
+        getThis().setMinLagerbestand(maxLagerbestand);
+        getThis().setHstLieferzeit(hstLieferzeit);
+        
     }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{
         //TODO: implement method: copyingPrivateUserAttributes
         
-    }
-    public BooleanX4Public groesserMax(final long menge) 
-				throws PersistenceException{
-        if(getThis().getMaxLagerbestand() < menge) return TrueX.getTheTrueX();
-        else return FalseX.getTheFalseX();
     }
     public void herstellerHinzufuegen(final Hersteller4Public hersteller) 
 				throws PersistenceException{
@@ -420,6 +453,10 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
 
             }
         });
+    }
+    public void zuEinkaufswHinz(final long menge, final EinkaufsManager4Public einkaufsManager) 
+				throws model.UserException, PersistenceException{
+        einkaufsManager.neuePosition(getThis(), menge);
     }
     
     

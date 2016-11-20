@@ -5,7 +5,7 @@ import viewClient.*;
 
 import view.visitor.*;
 
-public class ServiceKundeProxi extends ServiceProxi implements ServiceKundeView{
+public class ServiceKundeProxi extends ServiceShopProxi implements ServiceKundeView{
     
     public ServiceKundeProxi(long objectId, long classId, ExceptionAndEventHandler connectionKey) {
         super(objectId, classId, connectionKey);
@@ -15,6 +15,13 @@ public class ServiceKundeProxi extends ServiceProxi implements ServiceKundeView{
     public ServiceKundeView getRemoteObject(java.util.HashMap<String,Object> resultTable, ExceptionAndEventHandler connectionKey) throws ModelException{
         java.util.Vector<String> errors_string = (java.util.Vector<String>)resultTable.get("errors");
         java.util.Vector<ErrorDisplayView> errors = ViewProxi.getProxiVector(errors_string, connectionKey);
+        ViewProxi produktKatalog = null;
+        String produktKatalog$String = (String)resultTable.get("produktKatalog");
+        if (produktKatalog$String != null) {
+            common.ProxiInformation produktKatalog$Info = common.RPCConstantsAndServices.createProxiInformation(produktKatalog$String);
+            produktKatalog = view.objects.ViewProxi.createProxi(produktKatalog$Info,connectionKey);
+            produktKatalog.setToString(produktKatalog$Info.getToString());
+        }
         ViewProxi einkaufsManager = null;
         String einkaufsManager$String = (String)resultTable.get("einkaufsManager");
         if (einkaufsManager$String != null) {
@@ -22,21 +29,21 @@ public class ServiceKundeProxi extends ServiceProxi implements ServiceKundeView{
             einkaufsManager = view.objects.ViewProxi.createProxi(einkaufsManager$Info,connectionKey);
             einkaufsManager.setToString(einkaufsManager$Info.getToString());
         }
-        ViewProxi artikelManager = null;
-        String artikelManager$String = (String)resultTable.get("artikelManager");
-        if (artikelManager$String != null) {
-            common.ProxiInformation artikelManager$Info = common.RPCConstantsAndServices.createProxiInformation(artikelManager$String);
-            artikelManager = view.objects.ViewProxi.createProxi(artikelManager$Info,connectionKey);
-            artikelManager.setToString(artikelManager$Info.getToString());
+        ViewProxi lieferartManager = null;
+        String lieferartManager$String = (String)resultTable.get("lieferartManager");
+        if (lieferartManager$String != null) {
+            common.ProxiInformation lieferartManager$Info = common.RPCConstantsAndServices.createProxiInformation(lieferartManager$String);
+            lieferartManager = view.objects.ViewProxi.createProxi(lieferartManager$Info,connectionKey);
+            lieferartManager.setToString(lieferartManager$Info.getToString());
         }
-        ViewProxi warenlager = null;
-        String warenlager$String = (String)resultTable.get("warenlager");
-        if (warenlager$String != null) {
-            common.ProxiInformation warenlager$Info = common.RPCConstantsAndServices.createProxiInformation(warenlager$String);
-            warenlager = view.objects.ViewProxi.createProxi(warenlager$Info,connectionKey);
-            warenlager.setToString(warenlager$Info.getToString());
+        ViewProxi bestellManager = null;
+        String bestellManager$String = (String)resultTable.get("bestellManager");
+        if (bestellManager$String != null) {
+            common.ProxiInformation bestellManager$Info = common.RPCConstantsAndServices.createProxiInformation(bestellManager$String);
+            bestellManager = view.objects.ViewProxi.createProxi(bestellManager$Info,connectionKey);
+            bestellManager.setToString(bestellManager$Info.getToString());
         }
-        ServiceKundeView result$$ = new ServiceKunde(errors,(EinkaufsManagerView)einkaufsManager,(ArtikelManagerView)artikelManager,(WarenlagerView)warenlager, this.getId(), this.getClassId());
+        ServiceKundeView result$$ = new ServiceKunde(errors,(ProduktKatalogView)produktKatalog,(EinkaufsManagerView)einkaufsManager,(LieferartManagerView)lieferartManager,(BestellManagerView)bestellManager, this.getId(), this.getClassId());
         ((ViewRoot)result$$).setToString((String) resultTable.get(common.RPCConstantsAndServices.RPCToStringFieldName));
         return result$$;
     }
@@ -46,35 +53,35 @@ public class ServiceKundeProxi extends ServiceProxi implements ServiceKundeView{
     }
     public ViewObjectInTree getChild(int originalIndex) throws ModelException{
         int index = originalIndex;
+        if(index == 0 && this.getProduktKatalog() != null) return new ProduktKatalogServiceShopWrapper(this, originalIndex, (ViewRoot)this.getProduktKatalog());
+        if(this.getProduktKatalog() != null) index = index - 1;
         if(index == 0 && this.getEinkaufsManager() != null) return new EinkaufsManagerServiceKundeWrapper(this, originalIndex, (ViewRoot)this.getEinkaufsManager());
         if(this.getEinkaufsManager() != null) index = index - 1;
-        if(index == 0 && this.getArtikelManager() != null) return new ArtikelManagerServiceKundeWrapper(this, originalIndex, (ViewRoot)this.getArtikelManager());
-        if(this.getArtikelManager() != null) index = index - 1;
-        if(index == 0 && this.getWarenlager() != null) return new WarenlagerServiceKundeWrapper(this, originalIndex, (ViewRoot)this.getWarenlager());
-        if(this.getWarenlager() != null) index = index - 1;
+        if(index == 0 && this.getBestellManager() != null) return new BestellManagerServiceKundeWrapper(this, originalIndex, (ViewRoot)this.getBestellManager());
+        if(this.getBestellManager() != null) index = index - 1;
         return null;
     }
     public int getChildCount() throws ModelException {
         return 0 
+            + (this.getProduktKatalog() == null ? 0 : 1)
             + (this.getEinkaufsManager() == null ? 0 : 1)
-            + (this.getArtikelManager() == null ? 0 : 1)
-            + (this.getWarenlager() == null ? 0 : 1);
+            + (this.getBestellManager() == null ? 0 : 1);
     }
     public boolean isLeaf() throws ModelException {
         if (this.object == null) return this.getLeafInfo() == 0;
         return true 
+            && (this.getProduktKatalog() == null ? true : false)
             && (this.getEinkaufsManager() == null ? true : false)
-            && (this.getArtikelManager() == null ? true : false)
-            && (this.getWarenlager() == null ? true : false);
+            && (this.getBestellManager() == null ? true : false);
     }
     public int getIndexOfChild(Object child) throws ModelException {
         int result = 0;
+        if(this.getProduktKatalog() != null && this.getProduktKatalog().equals(child)) return result;
+        if(this.getProduktKatalog() != null) result = result + 1;
         if(this.getEinkaufsManager() != null && this.getEinkaufsManager().equals(child)) return result;
         if(this.getEinkaufsManager() != null) result = result + 1;
-        if(this.getArtikelManager() != null && this.getArtikelManager().equals(child)) return result;
-        if(this.getArtikelManager() != null) result = result + 1;
-        if(this.getWarenlager() != null && this.getWarenlager().equals(child)) return result;
-        if(this.getWarenlager() != null) result = result + 1;
+        if(this.getBestellManager() != null && this.getBestellManager().equals(child)) return result;
+        if(this.getBestellManager() != null) result = result + 1;
         return -1;
     }
     
@@ -84,19 +91,31 @@ public class ServiceKundeProxi extends ServiceProxi implements ServiceKundeView{
     public void setEinkaufsManager(EinkaufsManagerView newValue) throws ModelException {
         ((ServiceKunde)this.getTheObject()).setEinkaufsManager(newValue);
     }
-    public ArtikelManagerView getArtikelManager()throws ModelException{
-        return ((ServiceKunde)this.getTheObject()).getArtikelManager();
+    public LieferartManagerView getLieferartManager()throws ModelException{
+        return ((ServiceKunde)this.getTheObject()).getLieferartManager();
     }
-    public void setArtikelManager(ArtikelManagerView newValue) throws ModelException {
-        ((ServiceKunde)this.getTheObject()).setArtikelManager(newValue);
+    public void setLieferartManager(LieferartManagerView newValue) throws ModelException {
+        ((ServiceKunde)this.getTheObject()).setLieferartManager(newValue);
     }
-    public WarenlagerView getWarenlager()throws ModelException{
-        return ((ServiceKunde)this.getTheObject()).getWarenlager();
+    public BestellManagerView getBestellManager()throws ModelException{
+        return ((ServiceKunde)this.getTheObject()).getBestellManager();
     }
-    public void setWarenlager(WarenlagerView newValue) throws ModelException {
-        ((ServiceKunde)this.getTheObject()).setWarenlager(newValue);
+    public void setBestellManager(BestellManagerView newValue) throws ModelException {
+        ((ServiceKunde)this.getTheObject()).setBestellManager(newValue);
     }
     
+    public void accept(ServiceShopVisitor visitor) throws ModelException {
+        visitor.handleServiceKunde(this);
+    }
+    public <R> R accept(ServiceShopReturnVisitor<R>  visitor) throws ModelException {
+         return visitor.handleServiceKunde(this);
+    }
+    public <E extends view.UserException>  void accept(ServiceShopExceptionVisitor<E> visitor) throws ModelException, E {
+         visitor.handleServiceKunde(this);
+    }
+    public <R, E extends view.UserException> R accept(ServiceShopReturnExceptionVisitor<R, E>  visitor) throws ModelException, E {
+         return visitor.handleServiceKunde(this);
+    }
     public void accept(ServiceVisitor visitor) throws ModelException {
         visitor.handleServiceKunde(this);
     }

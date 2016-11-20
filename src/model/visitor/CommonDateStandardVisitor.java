@@ -8,11 +8,17 @@ public abstract class CommonDateStandardVisitor implements CommonDateVisitor {
     public void handleArtikelEinlagernCommand(ArtikelEinlagernCommand4Public artikelEinlagernCommand) throws PersistenceException{
         this.standardHandling(artikelEinlagernCommand);
     }
-    public void handleProdGEntfernenCommand(ProdGEntfernenCommand4Public prodGEntfernenCommand) throws PersistenceException{
-        this.standardHandling(prodGEntfernenCommand);
-    }
     public void handleArtikelEntfernenCommand(ArtikelEntfernenCommand4Public artikelEntfernenCommand) throws PersistenceException{
         this.standardHandling(artikelEntfernenCommand);
+    }
+    public void handleBestellenCommand(BestellenCommand4Public bestellenCommand) throws PersistenceException{
+        this.standardHandling(bestellenCommand);
+    }
+    public void handleZuEinkaufswHinzCommand(ZuEinkaufswHinzCommand4Public zuEinkaufswHinzCommand) throws PersistenceException{
+        this.standardHandling(zuEinkaufswHinzCommand);
+    }
+    public void handleProduktgruppeEntfernenCommand(ProduktgruppeEntfernenCommand4Public produktgruppeEntfernenCommand) throws PersistenceException{
+        this.standardHandling(produktgruppeEntfernenCommand);
     }
     public void handleArtikelEntnehmenCommand(ArtikelEntnehmenCommand4Public artikelEntnehmenCommand) throws PersistenceException{
         this.standardHandling(artikelEntnehmenCommand);
@@ -25,9 +31,6 @@ public abstract class CommonDateStandardVisitor implements CommonDateVisitor {
     }
     public void handleRegisterCommand(RegisterCommand4Public registerCommand) throws PersistenceException{
         this.standardHandling(registerCommand);
-    }
-    public void handleAendereArtikelCommand(AendereArtikelCommand4Public aendereArtikelCommand) throws PersistenceException{
-        this.standardHandling(aendereArtikelCommand);
     }
     public void handleCommonDate(CommonDate4Public commonDate) throws PersistenceException{
         this.standardHandling(commonDate);

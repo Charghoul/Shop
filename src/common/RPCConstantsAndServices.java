@@ -5,13 +5,13 @@ public abstract class RPCConstantsAndServices {
 	public static final String Public = "Public";
 
 	public static final int CurrentVersion = 0;
-	public static final String VersionErrorText = "Bitte neue Version der Software von der üblichen Stelle laden!";
+	public static final String VersionErrorText = "Bitte neue Version der Software von der ï¿½blichen Stelle laden!";
 
 	public static boolean test = false;
 
 	public static int EssentialDepth = 3;	
 
-	private static final int RefreshInterval = 64000;
+	private static final int RefreshInterval = 4000;
 	public static final int NotUsedInterval = RefreshInterval * 3;
 
 	public static final int ServerPort = 8089;

@@ -16,6 +16,7 @@ import view.*;
 import view.objects.ViewObjectInTree;
 import view.objects.ViewRoot;
 import view.visitor.AnythingStandardVisitor;
+import view.visitor.ServiceStandardVisitor;
 import view.visitor.ServiceVisitor;
 
 import javax.swing.tree.TreeModel;

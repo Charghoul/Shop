@@ -14,9 +14,6 @@ public abstract class UserExceptionStandardVisitor implements UserExceptionVisit
     public void handleExcLieferartAlreadyExists(model.ExcLieferartAlreadyExists excLieferartAlreadyExists) throws PersistenceException{
         this.standardHandling(excLieferartAlreadyExists);
     }
-    public void handleExcAlreadyExists(model.ExcAlreadyExists excAlreadyExists) throws PersistenceException{
-        this.standardHandling(excAlreadyExists);
-    }
     public void handleExcStatusDidNotChange(model.ExcStatusDidNotChange excStatusDidNotChange) throws PersistenceException{
         this.standardHandling(excStatusDidNotChange);
     }
@@ -32,8 +29,17 @@ public abstract class UserExceptionStandardVisitor implements UserExceptionVisit
     public void handleCycleException(model.CycleException cycleException) throws PersistenceException{
         this.standardHandling(cycleException);
     }
+    public void handleExcArtikelNichtVerfuegbar(model.ExcArtikelNichtVerfuegbar excArtikelNichtVerfuegbar) throws PersistenceException{
+        this.standardHandling(excArtikelNichtVerfuegbar);
+    }
     public void handleExcArtikelAlreadyExists(model.ExcArtikelAlreadyExists excArtikelAlreadyExists) throws PersistenceException{
         this.standardHandling(excArtikelAlreadyExists);
+    }
+    public void handleExcEinkaufslisteNichtVerfuegbar(model.ExcEinkaufslisteNichtVerfuegbar excEinkaufslisteNichtVerfuegbar) throws PersistenceException{
+        this.standardHandling(excEinkaufslisteNichtVerfuegbar);
+    }
+    public void handleExcAlreadyExists(model.ExcAlreadyExists excAlreadyExists) throws PersistenceException{
+        this.standardHandling(excAlreadyExists);
     }
     public void handleRestrictionException(model.RestrictionException restrictionException) throws PersistenceException{
         this.standardHandling(restrictionException);

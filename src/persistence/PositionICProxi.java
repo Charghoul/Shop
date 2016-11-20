@@ -4,7 +4,7 @@ package persistence;
 
 import model.visitor.*;
 
-public class PositionICProxi extends PersistentInCacheProxiOptimistic implements PersistentPosition{
+public class PositionICProxi extends PositionAbstraktICProxi implements PersistentPosition{
     
     public PositionICProxi(long objectId) {
         super(objectId);
@@ -22,22 +22,22 @@ public class PositionICProxi extends PersistentInCacheProxiOptimistic implements
         return 144;
     }
     
-    public Artikel4Public getArtikel() throws PersistenceException {
-        return ((PersistentPosition)this.getTheObject()).getArtikel();
-    }
-    public void setArtikel(Artikel4Public newValue) throws PersistenceException {
-        ((PersistentPosition)this.getTheObject()).setArtikel(newValue);
-    }
-    public long getMenge() throws PersistenceException {
-        return ((PersistentPosition)this.getTheObject()).getMenge();
-    }
-    public void setMenge(long newValue) throws PersistenceException {
-        ((PersistentPosition)this.getTheObject()).setMenge(newValue);
-    }
     public PersistentPosition getThis() throws PersistenceException {
         return ((PersistentPosition)this.getTheObject()).getThis();
     }
     
+    public void accept(PositionAbstraktVisitor visitor) throws PersistenceException {
+        visitor.handlePosition(this);
+    }
+    public <R> R accept(PositionAbstraktReturnVisitor<R>  visitor) throws PersistenceException {
+         return visitor.handlePosition(this);
+    }
+    public <E extends model.UserException>  void accept(PositionAbstraktExceptionVisitor<E> visitor) throws PersistenceException, E {
+         visitor.handlePosition(this);
+    }
+    public <R, E extends model.UserException> R accept(PositionAbstraktReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E {
+         return visitor.handlePosition(this);
+    }
     public void accept(AnythingVisitor visitor) throws PersistenceException {
         visitor.handlePosition(this);
     }
@@ -50,11 +50,35 @@ public class PositionICProxi extends PersistentInCacheProxiOptimistic implements
     public <R, E extends model.UserException> R accept(AnythingReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E {
          return visitor.handlePosition(this);
     }
+    public void accept(SubjInterfaceVisitor visitor) throws PersistenceException {
+        visitor.handlePosition(this);
+    }
+    public <R> R accept(SubjInterfaceReturnVisitor<R>  visitor) throws PersistenceException {
+         return visitor.handlePosition(this);
+    }
+    public <E extends model.UserException>  void accept(SubjInterfaceExceptionVisitor<E> visitor) throws PersistenceException, E {
+         visitor.handlePosition(this);
+    }
+    public <R, E extends model.UserException> R accept(SubjInterfaceReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E {
+         return visitor.handlePosition(this);
+    }
     
     
+    public void deregister(final ObsInterface observee) 
+				throws PersistenceException{
+        ((PersistentPosition)this.getTheObject()).deregister(observee);
+    }
     public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
 				throws PersistenceException{
         ((PersistentPosition)this.getTheObject()).initialize(This, final$$Fields);
+    }
+    public void register(final ObsInterface observee) 
+				throws PersistenceException{
+        ((PersistentPosition)this.getTheObject()).register(observee);
+    }
+    public void updateObservers(final model.meta.Mssgs event) 
+				throws PersistenceException{
+        ((PersistentPosition)this.getTheObject()).updateObservers(event);
     }
     public void aendereMenge(final long menge) 
 				throws model.ExcLagerbestandUnderZero, model.ExcLagerbestandOverMax, PersistenceException{
@@ -63,10 +87,6 @@ public class PositionICProxi extends PersistentInCacheProxiOptimistic implements
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{
         ((PersistentPosition)this.getTheObject()).copyingPrivateUserAttributes(copy);
-    }
-    public Position4Public enthaeltArtikel(final Artikel4Public artikel) 
-				throws PersistenceException{
-        return ((PersistentPosition)this.getTheObject()).enthaeltArtikel(artikel);
     }
     public void erhoeheMenge(final long menge) 
 				throws model.ExcLagerbestandOverMax, PersistenceException{
