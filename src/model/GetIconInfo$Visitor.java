@@ -24,8 +24,25 @@ public class GetIconInfo$Visitor extends model.visitor.AnythingStandardVisitor {
 		result = 3;
 	}
 
+	@Override
+	public void handleArtikel(Artikel4Public artikel) throws PersistenceException {
+		result = 1;
+	}
 
+	@Override
+	public void handleKndLieferung(KndLieferung4Public kndLieferung) throws PersistenceException {
+		result = 4;
+	}
 
+	@Override
+	public void handleProduktKatalog(ProduktKatalog4Public produktKatalog) throws PersistenceException {
+		result = 6;
+	}
+
+	@Override
+	public void handleHerstellerManager(HerstellerManager4Public herstellerManager) throws PersistenceException {
+		result = 7;
+	}
 
 	public int getIconInfo(Anything anything) throws PersistenceException {
 		anything.accept(this);
