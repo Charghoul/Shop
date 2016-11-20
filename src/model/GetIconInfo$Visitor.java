@@ -30,7 +30,7 @@ public class GetIconInfo$Visitor extends model.visitor.AnythingStandardVisitor {
 	}
 
 	@Override
-	public void handleKndLieferung(KndLieferung4Public kndLieferung) throws PersistenceException {
+	public void handleBestellManager(BestellManager4Public bestellManager) throws PersistenceException {
 		result = 4;
 	}
 
@@ -43,6 +43,8 @@ public class GetIconInfo$Visitor extends model.visitor.AnythingStandardVisitor {
 	public void handleHerstellerManager(HerstellerManager4Public herstellerManager) throws PersistenceException {
 		result = 7;
 	}
+
+
 
 	public int getIconInfo(Anything anything) throws PersistenceException {
 		anything.accept(this);
