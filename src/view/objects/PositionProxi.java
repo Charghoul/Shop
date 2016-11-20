@@ -5,7 +5,7 @@ import viewClient.*;
 
 import view.visitor.*;
 
-public class PositionProxi extends ViewProxi implements PositionView{
+public class PositionProxi extends PositionAbstraktProxi implements PositionView{
     
     public PositionProxi(long objectId, long classId, ExceptionAndEventHandler connectionKey) {
         super(objectId, classId, connectionKey);
@@ -43,19 +43,19 @@ public class PositionProxi extends ViewProxi implements PositionView{
         return -1;
     }
     
-    public ArtikelView getArtikel()throws ModelException{
-        return ((Position)this.getTheObject()).getArtikel();
-    }
-    public void setArtikel(ArtikelView newValue) throws ModelException {
-        ((Position)this.getTheObject()).setArtikel(newValue);
-    }
-    public long getMenge()throws ModelException{
-        return ((Position)this.getTheObject()).getMenge();
-    }
-    public void setMenge(long newValue) throws ModelException {
-        ((Position)this.getTheObject()).setMenge(newValue);
-    }
     
+    public void accept(PositionAbstraktVisitor visitor) throws ModelException {
+        visitor.handlePosition(this);
+    }
+    public <R> R accept(PositionAbstraktReturnVisitor<R>  visitor) throws ModelException {
+         return visitor.handlePosition(this);
+    }
+    public <E extends view.UserException>  void accept(PositionAbstraktExceptionVisitor<E> visitor) throws ModelException, E {
+         visitor.handlePosition(this);
+    }
+    public <R, E extends view.UserException> R accept(PositionAbstraktReturnExceptionVisitor<R, E>  visitor) throws ModelException, E {
+         return visitor.handlePosition(this);
+    }
     public void accept(AnythingVisitor visitor) throws ModelException {
         visitor.handlePosition(this);
     }

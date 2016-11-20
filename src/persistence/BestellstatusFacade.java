@@ -2,45 +2,44 @@ package persistence;
 
 
 
-import java.sql.*;
-//import oracle.jdbc.*;
-
 public class BestellstatusFacade{
 
-	private String schemaName;
-	private Connection con;
+	static private Long sequencer = new Long(0);
 
-	public BestellstatusFacade(String schemaName, Connection con) {
-		this.schemaName = schemaName;
-		this.con = con;
+	static protected long getTheNextId(){
+		long result = -1;
+		synchronized (sequencer) { 
+			result = sequencer.longValue() + 1;
+			sequencer = new Long(result);
+		}
+		return result;
+	}
+
+	protected long getNextId(){
+		return getTheNextId();
+	}
+
+	
+
+	public BestellstatusFacade() {
 	}
 
     public long getClass(long objectId) throws PersistenceException{
-        try{
-            CallableStatement callable;
-            callable = this.con.prepareCall("Begin ? := " + this.schemaName + ".BstllsttsFacade.getClass(?); end;");
-            callable.registerOutParameter(1, oracle.jdbc.OracleTypes.NUMBER);
-            callable.setLong(2, objectId);
-            callable.execute();
-            long result = callable.getLong(1);
-            callable.close();
-            return result;
-        }catch(SQLException se) {
-            throw new PersistenceException(se.getMessage(), se.getErrorCode());
-        }
+        if(Cache.getTheCache().contains(objectId, 311)) return 311;
+        if(Cache.getTheCache().contains(objectId, 215)) return 215;
+        if(Cache.getTheCache().contains(objectId, 216)) return 216;
+        if(Cache.getTheCache().contains(objectId, 217)) return 217;
+        if(Cache.getTheCache().contains(objectId, 218)) return 218;
+        if(Cache.getTheCache().contains(objectId, 219)) return 219;
+        
+        throw new PersistenceException("No such object: " + new Long(objectId).toString(), 0);
+        
+    }
+    public void subServiceSet(long BestellstatusId, SubjInterface subServiceVal) throws PersistenceException {
+        
     }
     public void ThisSet(long BestellstatusId, Bestellstatus4Public ThisVal) throws PersistenceException {
-        try{
-            CallableStatement callable;
-            callable = this.con.prepareCall("Begin " + this.schemaName + ".BstllsttsFacade.ThisSet(?, ?, ?); end;");
-            callable.setLong(1, BestellstatusId);
-            callable.setLong(2, ThisVal.getId());
-            callable.setLong(3, ThisVal.getClassId());
-            callable.execute();
-            callable.close();
-        }catch(SQLException se) {
-            throw new PersistenceException(se.getMessage(), se.getErrorCode());
-        }
+        
     }
 
 }

@@ -1,10 +1,7 @@
 
 package view.objects;
 
-import view.BestellstatusView;
-import view.BestellungView;
-import view.ModelException;
-import view.PositionView;
+import view.*;
 import view.visitor.AnythingExceptionVisitor;
 import view.visitor.AnythingReturnExceptionVisitor;
 import view.visitor.AnythingReturnVisitor;
@@ -15,11 +12,11 @@ import view.visitor.AnythingVisitor;
 
 public class Bestellung extends ViewObject implements BestellungView{
     
-    protected java.util.Vector<PositionView> positionsListe;
-    protected String bestellID;
+    protected java.util.Vector<PositionInBestellungView> positionsListe;
+    protected long bestellID;
     protected BestellstatusView bestellstatus;
     
-    public Bestellung(java.util.Vector<PositionView> positionsListe,String bestellID,BestellstatusView bestellstatus,long id, long classId) {
+    public Bestellung(java.util.Vector<PositionInBestellungView> positionsListe,long bestellID,BestellstatusView bestellstatus,long id, long classId) {
         /* Shall not be used. Objects are created on the server only */
         super(id, classId);
         this.positionsListe = positionsListe;
@@ -35,16 +32,16 @@ public class Bestellung extends ViewObject implements BestellungView{
         return getTypeId();
     }
     
-    public java.util.Vector<PositionView> getPositionsListe()throws ModelException{
+    public java.util.Vector<PositionInBestellungView> getPositionsListe()throws ModelException{
         return this.positionsListe;
     }
-    public void setPositionsListe(java.util.Vector<PositionView> newValue) throws ModelException {
+    public void setPositionsListe(java.util.Vector<PositionInBestellungView> newValue) throws ModelException {
         this.positionsListe = newValue;
     }
-    public String getBestellID()throws ModelException{
+    public long getBestellID()throws ModelException{
         return this.bestellID;
     }
-    public void setBestellID(String newValue) throws ModelException {
+    public void setBestellID(long newValue) throws ModelException {
         this.bestellID = newValue;
     }
     public BestellstatusView getBestellstatus()throws ModelException{
@@ -85,19 +82,15 @@ public class Bestellung extends ViewObject implements BestellungView{
         int index = originalIndex;
         if(index < this.getPositionsListe().size()) return new PositionsListeBestellungWrapper(this, originalIndex, (ViewRoot)this.getPositionsListe().get(index));
         index = index - this.getPositionsListe().size();
-        if(index == 0 && this.getBestellstatus() != null) return new BestellstatusBestellungWrapper(this, originalIndex, (ViewRoot)this.getBestellstatus());
-        if(this.getBestellstatus() != null) index = index - 1;
         return null;
     }
     public int getChildCount() throws ModelException {
         return 0 
-            + (this.getPositionsListe().size())
-            + (this.getBestellstatus() == null ? 0 : 1);
+            + (this.getPositionsListe().size());
     }
     public boolean isLeaf() throws ModelException {
         return true 
-            && (this.getPositionsListe().size() == 0)
-            && (this.getBestellstatus() == null ? true : false);
+            && (this.getPositionsListe().size() == 0);
     }
     public int getIndexOfChild(Object child) throws ModelException {
         int result = 0;
@@ -106,8 +99,6 @@ public class Bestellung extends ViewObject implements BestellungView{
             if(getPositionsListeIterator.next().equals(child)) return result;
             result = result + 1;
         }
-        if(this.getBestellstatus() != null && this.getBestellstatus().equals(child)) return result;
-        if(this.getBestellstatus() != null) result = result + 1;
         return -1;
     }
     public int getBestellIDIndex() throws ModelException {
@@ -123,7 +114,7 @@ public class Bestellung extends ViewObject implements BestellungView{
                 if(rowIndex == 0) return "bestellID";
                 rowIndex = rowIndex - 1;
             } else {
-                if(rowIndex == 0) return this.getBestellID();
+                if(rowIndex == 0) return new Long(getBestellID());
                 rowIndex = rowIndex - 1;
             }
             throw new ModelException("Table index out of bounds!", -1);
@@ -137,7 +128,7 @@ public class Bestellung extends ViewObject implements BestellungView{
     }
     public void setValueAt(String newValue, int rowIndex) throws Exception {
         if(rowIndex == 0){
-            this.setBestellID(newValue);
+            this.setBestellID(Long.parseLong(newValue));
             return;
         }
         rowIndex = rowIndex - 1;

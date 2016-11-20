@@ -16,13 +16,11 @@ import view.visitor.AnythingVisitor;
 public class LieferartManager extends ViewObject implements LieferartManagerView{
     
     protected java.util.Vector<LieferartView> lieferartenListe;
-    protected ServiceAdminView myService;
     
-    public LieferartManager(java.util.Vector<LieferartView> lieferartenListe,ServiceAdminView myService,long id, long classId) {
+    public LieferartManager(java.util.Vector<LieferartView> lieferartenListe,long id, long classId) {
         /* Shall not be used. Objects are created on the server only */
         super(id, classId);
-        this.lieferartenListe = lieferartenListe;
-        this.myService = myService;        
+        this.lieferartenListe = lieferartenListe;        
     }
     
     static public long getTypeId() {
@@ -38,9 +36,6 @@ public class LieferartManager extends ViewObject implements LieferartManagerView
     }
     public void setLieferartenListe(java.util.Vector<LieferartView> newValue) throws ModelException {
         this.lieferartenListe = newValue;
-    }
-    public ServiceAdminView getMyService()throws ModelException{
-        return this.myService;
     }
     
     public void accept(AnythingVisitor visitor) throws ModelException {
@@ -60,10 +55,6 @@ public class LieferartManager extends ViewObject implements LieferartManagerView
         java.util.Vector<?> lieferartenListe = this.getLieferartenListe();
         if (lieferartenListe != null) {
             ViewObject.resolveVectorProxies(lieferartenListe, resultTable);
-        }
-        ServiceAdminView myService = this.getMyService();
-        if (myService != null) {
-            ((ViewProxi)myService).setObject((ViewObject)resultTable.get(common.RPCConstantsAndServices.createHashtableKey(myService.getClassId(), myService.getId())));
         }
         
     }

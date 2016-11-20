@@ -9,7 +9,7 @@ interface ServiceKundeDOWNMssgsVisitor  {
 }
 
 
-interface ServiceKundeUPMssgsVisitor extends ServiceUPMssgsVisitor {
+interface ServiceKundeUPMssgsVisitor extends ServiceShopUPMssgsVisitor {
 
     
 }

@@ -15,7 +15,14 @@ public class EinkaufsManagerProxi extends ViewProxi implements EinkaufsManagerVi
     public EinkaufsManagerView getRemoteObject(java.util.HashMap<String,Object> resultTable, ExceptionAndEventHandler connectionKey) throws ModelException{
         java.util.Vector<String> einkaufsListe_string = (java.util.Vector<String>)resultTable.get("einkaufsListe");
         java.util.Vector<PositionView> einkaufsListe = ViewProxi.getProxiVector(einkaufsListe_string, connectionKey);
-        EinkaufsManagerView result$$ = new EinkaufsManager(einkaufsListe, this.getId(), this.getClassId());
+        ViewProxi bestellManager = null;
+        String bestellManager$String = (String)resultTable.get("bestellManager");
+        if (bestellManager$String != null) {
+            common.ProxiInformation bestellManager$Info = common.RPCConstantsAndServices.createProxiInformation(bestellManager$String);
+            bestellManager = view.objects.ViewProxi.createProxi(bestellManager$Info,connectionKey);
+            bestellManager.setToString(bestellManager$Info.getToString());
+        }
+        EinkaufsManagerView result$$ = new EinkaufsManager(einkaufsListe,(BestellManagerView)bestellManager, this.getId(), this.getClassId());
         ((ViewRoot)result$$).setToString((String) resultTable.get(common.RPCConstantsAndServices.RPCToStringFieldName));
         return result$$;
     }
@@ -53,6 +60,12 @@ public class EinkaufsManagerProxi extends ViewProxi implements EinkaufsManagerVi
     }
     public void setEinkaufsListe(java.util.Vector<PositionView> newValue) throws ModelException {
         ((EinkaufsManager)this.getTheObject()).setEinkaufsListe(newValue);
+    }
+    public BestellManagerView getBestellManager()throws ModelException{
+        return ((EinkaufsManager)this.getTheObject()).getBestellManager();
+    }
+    public void setBestellManager(BestellManagerView newValue) throws ModelException {
+        ((EinkaufsManager)this.getTheObject()).setBestellManager(newValue);
     }
     
     public void accept(AnythingVisitor visitor) throws ModelException {

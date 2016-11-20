@@ -4,6 +4,8 @@ package model;
 import common.Fraction;
 import model.visitor.*;
 import persistence.*;
+import serverConstants.ErrorMessages;
+import serverConstants.ToStringConstants;
 
 import java.util.HashMap;
 
@@ -62,6 +64,7 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
     java.util.HashMap<String,Object> result = null;
         if (depth > 0 && essentialLevel <= common.RPCConstantsAndServices.EssentialDepth){
             result = super.toHashtable(allResults, depth, essentialLevel, forGUI, false, tdObserver);
+            result.put("newList", this.getNewList().getValues().getVector(allResults, depth, essentialLevel, forGUI, tdObserver, false, true));
             result.put("templist", this.getTemplist().getValues().getVector(allResults, depth, essentialLevel, forGUI, tdObserver, false, true));
             result.put("warenListe", this.getWarenListe().getVector(allResults, depth, essentialLevel, forGUI, tdObserver, false, true));
             String uniqueKey = common.RPCConstantsAndServices.createHashtableKey(this.getClassId(), this.getId());
@@ -72,8 +75,12 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
     
     public Warenlager provideCopy() throws PersistenceException{
         Warenlager result = this;
-        result = new Warenlager(this.This, 
+        result = new Warenlager(this.subService, 
+                                this.This, 
                                 this.getId());
+        result.newList = this.newList.copy(result);
+        result.templist = this.templist.copy(result);
+        result.warenListe = this.warenListe.copy(result);
         this.copyingPrivateUserAttributes(result);
         return result;
     }
@@ -81,15 +88,19 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
     public boolean hasEssentialFields() throws PersistenceException{
         return false;
     }
+    protected Warenlager_NewListProxi newList;
     protected Warenlager_TemplistProxi templist;
     protected Warenlager_WarenListeProxi warenListe;
+    protected SubjInterface subService;
     protected PersistentWarenlager This;
     
-    public Warenlager(PersistentWarenlager This,long id) throws PersistenceException {
+    public Warenlager(SubjInterface subService,PersistentWarenlager This,long id) throws PersistenceException {
         /* Shall not be used by clients for object construction! Use static create operation instead! */
         super(id);
+        this.newList = new Warenlager_NewListProxi(this);
         this.templist = new Warenlager_TemplistProxi(this);
         this.warenListe = new Warenlager_WarenListeProxi(this);
+        this.subService = subService;
         if (This != null && !(this.isTheSameAs(This))) this.This = This;        
     }
     
@@ -105,11 +116,28 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
         // Singletons cannot be delayed!
     }
     
+    public Warenlager_NewListProxi getNewList() throws PersistenceException {
+        return this.newList;
+    }
     public Warenlager_TemplistProxi getTemplist() throws PersistenceException {
         return this.templist;
     }
     public Warenlager_WarenListeProxi getWarenListe() throws PersistenceException {
         return this.warenListe;
+    }
+    public SubjInterface getSubService() throws PersistenceException {
+        return this.subService;
+    }
+    public void setSubService(SubjInterface newValue) throws PersistenceException {
+        if (newValue == null) throw new PersistenceException("Null values not allowed!", 0);
+        if(newValue.isTheSameAs(this.subService)) return;
+        long objectId = newValue.getId();
+        long classId = newValue.getClassId();
+        this.subService = (SubjInterface)PersistentProxi.createProxi(objectId, classId);
+        if(!this.isDelayed$Persistence()){
+            newValue.store();
+            ConnectionHandler.getTheConnectionHandler().theWarenlagerFacade.subServiceSet(this.getId(), newValue);
+        }
     }
     protected void setThis(PersistentWarenlager newValue) throws PersistenceException {
         if (newValue == null) throw new PersistenceException("Null values not allowed!", 0);
@@ -146,8 +174,21 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
     public <R, E extends model.UserException> R accept(AnythingReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E {
          return visitor.handleWarenlager(this);
     }
+    public void accept(SubjInterfaceVisitor visitor) throws PersistenceException {
+        visitor.handleWarenlager(this);
+    }
+    public <R> R accept(SubjInterfaceReturnVisitor<R>  visitor) throws PersistenceException {
+         return visitor.handleWarenlager(this);
+    }
+    public <E extends model.UserException>  void accept(SubjInterfaceExceptionVisitor<E> visitor) throws PersistenceException, E {
+         visitor.handleWarenlager(this);
+    }
+    public <R, E extends model.UserException> R accept(SubjInterfaceReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E {
+         return visitor.handleWarenlager(this);
+    }
     public int getLeafInfo() throws PersistenceException{
         if (this.getWarenListe().getLength() > 0) return 1;
+        if( this.getNewList().getValues().getLength() > 0) return 1;
         if( this.getTemplist().getValues().getLength() > 0) return 1;
         return 0;
     }
@@ -171,14 +212,23 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
 		command.setCommandReceiver(getThis());
 		model.meta.CommandCoordinator.getTheCommandCoordinator().coordinate(command);
     }
-    public void artikelEntnehmen(final Position4Public position, final long menge, final Invoker invoker) 
+    public void artikelEntnehmen(final Artikel4Public artikel, final long menge, final Invoker invoker) 
 				throws PersistenceException{
         java.sql.Date now = new java.sql.Date(new java.util.Date().getTime());
 		ArtikelEntnehmenCommand4Public command = model.meta.ArtikelEntnehmenCommand.createArtikelEntnehmenCommand(menge, now, now);
-		command.setPosition(position);
+		command.setArtikel(artikel);
 		command.setInvoker(invoker);
 		command.setCommandReceiver(getThis());
 		model.meta.CommandCoordinator.getTheCommandCoordinator().coordinate(command);
+    }
+    public synchronized void deregister(final ObsInterface observee) 
+				throws PersistenceException{
+        SubjInterface subService = getThis().getSubService();
+		if (subService == null) {
+			subService = model.Subj.createSubj(this.isDelayed$Persistence());
+			getThis().setSubService(subService);
+		}
+		subService.deregister(observee);
     }
     public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
 				throws PersistenceException{
@@ -186,18 +236,34 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
 		if(this.isTheSameAs(This)){
 		}
     }
+    public synchronized void register(final ObsInterface observee) 
+				throws PersistenceException{
+        SubjInterface subService = getThis().getSubService();
+		if (subService == null) {
+			subService = model.Subj.createSubj(this.isDelayed$Persistence());
+			getThis().setSubService(subService);
+		}
+		subService.register(observee);
+    }
+    public synchronized void updateObservers(final model.meta.Mssgs event) 
+				throws PersistenceException{
+        SubjInterface subService = getThis().getSubService();
+		if (subService == null) {
+			subService = model.Subj.createSubj(this.isDelayed$Persistence());
+			getThis().setSubService(subService);
+		}
+		subService.updateObservers(event);
+    }
     
     
     // Start of section that contains operations that must be implemented.
     
     public void artikelEinlagern(final Artikel4Public artikel, final long menge) 
 				throws model.ExcLagerbestandOverMax, PersistenceException{
-        // TODO: artikeleinlagern keine Doppelten Funktioniert noch nicht!
-
         Position4Public p4 = getThis().getWarenListe().findFirst(new Predcate<Position4Public>() {
             @Override
             public boolean test(Position4Public argument) throws PersistenceException {
-                return argument.enthaeltArtikel(artikel) != null;
+                return argument.getArtikel().equals(artikel);
                  }
         });
         if( p4 != null) {
@@ -205,25 +271,36 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
         }
         else getThis().getWarenListe().add(Position.createPosition(artikel, menge));
 
-        // Hashmap
-        PersistentIntegerWrapper temp = (PersistentIntegerWrapper) getThis().getTemplist().get(artikel);
+        // Hashmap integerwrapper
+        IntegerWrapper4Public temp = getThis().getTemplist().get(artikel);
         if (temp == null) {
-            temp = (PersistentIntegerWrapper) (IntegerWrapper.createIntegerWrapper(0));
+            temp = IntegerWrapper.createIntegerWrapper(0);
         }
         temp.add(menge);
         getThis().getTemplist().put(artikel, temp);
-
-
     }
     public void artikelEntfernen(final Position4Public position) 
 				throws PersistenceException{
         //TODO: CUSTOM artikelEntfernen überprüfung ob noch sachen auf lager und artikelstatus auslauf
         getThis().getWarenListe().removeAll(position);
     }
-    public void artikelEntnehmen(final Position4Public position, final long menge) 
+    public void artikelEntnehmen(final Artikel4Public artikel, final long menge) 
 				throws model.ExcLagerbestandUnderZero, PersistenceException{
-        position.verringereMenge(menge);
-        
+        Position4Public position = getThis().getWarenListe().findFirst(argument -> {
+            return argument.getArtikel().equals(artikel);
+        });
+        if(position != null) position.verringereMenge(menge);
+
+        //Hashmap
+
+        IntegerWrapper4Public akt = getThis().getTemplist().get(artikel);
+        if(akt.getTheInt() - menge < 0){
+            throw new ExcLagerbestandUnderZero(ErrorMessages.LagerbestandUnderZero);
+
+        }
+        akt.substract(menge);
+        getThis().getTemplist().put(artikel,akt);
+
     }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{
@@ -233,12 +310,20 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
     public void initializeOnCreation() 
 				throws PersistenceException{
 
-
     }
     public void initializeOnInstantiation() 
 				throws PersistenceException{
         //TODO: implement method: initializeOnInstantiation
         
+    }
+    public Position4Public nichtVerfPruefen(final PositionSearchList positionsListe) 
+				throws PersistenceException{
+        return positionsListe.findFirst(bestellungsposition -> {
+            Position4Public temp = getThis().getWarenListe().findFirst(warenposition -> {
+                return warenposition.getMenge() < bestellungsposition.getMenge();
+            });
+            return temp != null;
+        });
     }
     
     

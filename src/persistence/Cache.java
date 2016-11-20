@@ -56,24 +56,24 @@ public class Cache {
 				while (!garbageCollector.isInterrupted()){
 					synchronized(lock){try {lock.wait(GarbageCollectorReportInterval);} catch (InterruptedException e) {return;}}//Do nothing and terminate!
 					reporter.reportCurrentCacheSize(size, PersistentInCacheProxi.recycleCounter);
-					if (Cache.this.heapSpaceFree < HeapSpaceReserve | forced){
-						forced = false;
- 						System.out.println("Free heap space: " + Cache.this.heapSpaceFree);
-						Cache.this.heapSpaceFree = Long.MAX_VALUE;
-						Object[] classes = classMap.keySet().toArray();
-						for (int i = 0; i < classes.length; i++){
-							long currentKey = (Long) classes[i];
-							if (currentKey > 0){
-								Hashtable<Long, PersistentInCacheProxi> objectMap = classMap.get(classes[i]);
-								Object[] objects = objectMap.keySet().toArray();
-								for (int j = 0; j < objects.length; j++){
-									PersistentInCacheProxi current = objectMap.get(objects[j]);
-									if (current != null) current.tryBreak();
-								}
-							}
-						}
-						System.gc();
-					}
+//					if (Cache.this.heapSpaceFree < HeapSpaceReserve | forced){
+//						forced = false;
+// 						System.out.println("Free heap space: " + Cache.this.heapSpaceFree);
+//						Cache.this.heapSpaceFree = Long.MAX_VALUE;
+//						Object[] classes = classMap.keySet().toArray();
+//						for (int i = 0; i < classes.length; i++){
+//							long currentKey = (Long) classes[i];
+//							if (currentKey > 0){
+//								Hashtable<Long, PersistentInCacheProxi> objectMap = classMap.get(classes[i]);
+//								Object[] objects = objectMap.keySet().toArray();
+//								for (int j = 0; j < objects.length; j++){
+//									PersistentInCacheProxi current = objectMap.get(objects[j]);
+//									if (current != null) current.tryBreak();
+//								}
+//							}
+//						}
+//						System.gc();
+//					}
 				}
 			}
 		},"Cache Garbage Collector");
@@ -274,7 +274,6 @@ public class Cache {
 	
 	private void initializeNumber2NameMap() {
 		this.number2NameMap = new Hashtable<Integer,String>();
-		this.number2NameMap.put(256, "AendereArtikelCommand");
 		this.number2NameMap.put(219, "Angenommen");
 		this.number2NameMap.put(108, "Artikel");
 		this.number2NameMap.put(286, "ArtikelEinlagernCommand");
@@ -282,13 +281,14 @@ public class Cache {
 		this.number2NameMap.put(288, "ArtikelEntnehmenCommand");
 		this.number2NameMap.put(228, "ArtikelManager");
 		this.number2NameMap.put(213, "Auslauf");
+		this.number2NameMap.put(309, "BestellManager");
+		this.number2NameMap.put(307, "BestellenCommand");
 		this.number2NameMap.put(136, "Bestellung");
 		this.number2NameMap.put(-101, "CommandCoordinator");
 		this.number2NameMap.put(-110, "CommandExecuter");
 		this.number2NameMap.put(109, "CommonDate");
 		this.number2NameMap.put(191, "EinkaufsManager");
 		this.number2NameMap.put(-104, "ErrorDisplay");
-		this.number2NameMap.put(249, "FalseX");
 		this.number2NameMap.put(215, "Geliefert");
 		this.number2NameMap.put(270, "Hersteller");
 		this.number2NameMap.put(272, "HerstellerManager");
@@ -303,22 +303,29 @@ public class Cache {
 		this.number2NameMap.put(214, "Neuanlage");
 		this.number2NameMap.put(264, "NeuerArtikelCommand");
 		this.number2NameMap.put(144, "Position");
-		this.number2NameMap.put(285, "ProdGEntfernenCommand");
+		this.number2NameMap.put(331, "PositionInBestellung");
+		this.number2NameMap.put(301, "ProduktKatalog");
 		this.number2NameMap.put(267, "Produktgruppe");
+		this.number2NameMap.put(329, "ProduktgruppeEntfernenCommand");
 		this.number2NameMap.put(200, "RegisterCommand");
 		this.number2NameMap.put(217, "Rueckversand");
 		this.number2NameMap.put(-103, "Server");
 		this.number2NameMap.put(-182, "ServiceAdmin");
+		this.number2NameMap.put(334, "ServiceAdminZeitManager");
 		this.number2NameMap.put(-181, "ServiceKunde");
+		this.number2NameMap.put(336, "ServiceKundeBestellManager");
 		this.number2NameMap.put(-189, "ServiceRegister");
+		this.number2NameMap.put(327, "ServiceShopProduktKatalog");
 		this.number2NameMap.put(261, "StatusAuslaufCommand");
 		this.number2NameMap.put(260, "StatusVerkaufCommand");
+		this.number2NameMap.put(315, "Subj");
 		this.number2NameMap.put(289, "ThreadOfControl");
-		this.number2NameMap.put(251, "TrueX");
+		this.number2NameMap.put(311, "Verarbeitung");
 		this.number2NameMap.put(212, "Verkauf");
 		this.number2NameMap.put(216, "Vorbestellung");
 		this.number2NameMap.put(193, "Warenlager");
-		this.number2NameMap.put(291, "ZeitManager");	
+		this.number2NameMap.put(291, "ZeitManager");
+		this.number2NameMap.put(303, "ZuEinkaufswHinzCommand");	
 	}
 	
 }

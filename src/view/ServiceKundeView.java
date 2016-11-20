@@ -4,15 +4,19 @@ import viewClient.*;
 
 import view.visitor.*;
 
-public interface ServiceKundeView extends ServiceView {
+public interface ServiceKundeView extends ServiceShopView {
     
     public EinkaufsManagerView getEinkaufsManager()throws ModelException;
     public void setEinkaufsManager(EinkaufsManagerView newValue) throws ModelException ;
-    public ArtikelManagerView getArtikelManager()throws ModelException;
-    public void setArtikelManager(ArtikelManagerView newValue) throws ModelException ;
-    public WarenlagerView getWarenlager()throws ModelException;
-    public void setWarenlager(WarenlagerView newValue) throws ModelException ;
+    public LieferartManagerView getLieferartManager()throws ModelException;
+    public void setLieferartManager(LieferartManagerView newValue) throws ModelException ;
+    public BestellManagerView getBestellManager()throws ModelException;
+    public void setBestellManager(BestellManagerView newValue) throws ModelException ;
     
+    public void accept(ServiceShopVisitor visitor) throws ModelException;
+    public <R> R accept(ServiceShopReturnVisitor<R>  visitor) throws ModelException;
+    public <E extends view.UserException>  void accept(ServiceShopExceptionVisitor<E> visitor) throws ModelException, E;
+    public <R, E extends view.UserException> R accept(ServiceShopReturnExceptionVisitor<R, E>  visitor) throws ModelException, E;
     public void accept(ServiceVisitor visitor) throws ModelException;
     public <R> R accept(ServiceReturnVisitor<R>  visitor) throws ModelException;
     public <E extends view.UserException>  void accept(ServiceExceptionVisitor<E> visitor) throws ModelException, E;

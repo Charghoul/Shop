@@ -4,7 +4,7 @@ package modelServer;
 
 import persistence.*;
 
-public  class RemoteServiceKunde extends RemoteService {
+public  class RemoteServiceKunde extends RemoteServiceShop {
 
 	
 	public RemoteServiceKunde(String connectionName, String userName, PersistentServiceKunde server){
@@ -14,6 +14,28 @@ public  class RemoteServiceKunde extends RemoteService {
 	
  
 
+    public synchronized java.util.HashMap<?,?> artikel_Path_In_NeuePosition(){
+        try {
+            ProduktKatalog4Public result = ((PersistentServiceKunde)this.server).artikel_Path_In_NeuePosition();
+            return createOKResult(result, 1, this);
+        }catch(PersistenceException pe){
+            return createExceptionResult(pe);
+        }catch(model.UserException e0){
+            return createExceptionResult(e0, this);
+        }
+    }
+    
+    public synchronized java.util.HashMap<?,?> lieferart_Path_In_Bestellen(){
+        try {
+            LieferartManager4Public result = ((PersistentServiceKunde)this.server).lieferart_Path_In_Bestellen();
+            return createOKResult(result, 1, this);
+        }catch(PersistenceException pe){
+            return createExceptionResult(pe);
+        }catch(model.UserException e0){
+            return createExceptionResult(e0, this);
+        }
+    }
+    
     public synchronized java.util.HashMap<?,?> serviceKunde_Menu_Filter(String anythingProxiString){
         try {
             Anything anything = (Anything)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(anythingProxiString));
@@ -39,10 +61,11 @@ public  class RemoteServiceKunde extends RemoteService {
         }
     }
     
-    public synchronized java.util.HashMap<?,?> bestellen(String einkaufsManagerProxiString){
+    public synchronized java.util.HashMap<?,?> bestellen(String einkaufsManagerProxiString, String lieferartProxiString){
         try {
             PersistentEinkaufsManager einkaufsManager = (PersistentEinkaufsManager)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(einkaufsManagerProxiString));
-            ((PersistentServiceKunde)this.server).bestellen(einkaufsManager);
+            PersistentLieferart lieferart = (PersistentLieferart)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(lieferartProxiString));
+            ((PersistentServiceKunde)this.server).bestellen(einkaufsManager, lieferart);
             return createOKResult();
         }catch(PersistenceException pe){
             return createExceptionResult(pe);
@@ -60,6 +83,37 @@ public  class RemoteServiceKunde extends RemoteService {
             return createExceptionResult(pe);
         }catch(model.UserException e0){
             return createExceptionResult(e0, this);
+        }
+    }
+    
+    public synchronized java.util.HashMap<?,?> vorbestellen(String einkaufsManagerProxiString){
+        try {
+            PersistentEinkaufsManager einkaufsManager = (PersistentEinkaufsManager)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(einkaufsManagerProxiString));
+            ((PersistentServiceKunde)this.server).vorbestellen(einkaufsManager);
+            return createOKResult();
+        }catch(PersistenceException pe){
+            return createExceptionResult(pe);
+        }
+    }
+    
+    public synchronized java.util.HashMap<?,?> zuEinkaufswagenHinzufuegen(String artikelProxiString, String mengeAsString){
+        try {
+            PersistentArtikel artikel = (PersistentArtikel)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(artikelProxiString));
+            long menge = new Long(mengeAsString).longValue();
+            ((PersistentServiceKunde)this.server).zuEinkaufswagenHinzufuegen(artikel, menge);
+            return createOKResult();
+        }catch(PersistenceException pe){
+            return createExceptionResult(pe);
+        }
+    }
+    
+    public synchronized java.util.HashMap<?,?> zuruecksenden(String positionProxiString){
+        try {
+            PersistentPositionInBestellung position = (PersistentPositionInBestellung)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(positionProxiString));
+            ((PersistentServiceKunde)this.server).zuruecksenden(position);
+            return createOKResult();
+        }catch(PersistenceException pe){
+            return createExceptionResult(pe);
         }
     }
     

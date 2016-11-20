@@ -7,15 +7,27 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     
     public abstract void handleServer(Server4Public server) throws PersistenceException;
     
+    public abstract void handlePositionAbstrakt(PositionAbstrakt4Public positionAbstrakt) throws PersistenceException;
+    
+    public void handlePositionInBestellung(PositionInBestellung4Public positionInBestellung) throws PersistenceException{
+        this.handlePositionAbstrakt(positionInBestellung);
+    }
+    public void handlePosition(Position4Public position) throws PersistenceException{
+        this.handlePositionAbstrakt(position);
+    }
     public abstract void handleEinkaufsManager(EinkaufsManager4Public einkaufsManager) throws PersistenceException;
     
     public abstract void handleErrorDisplay(ErrorDisplay4Public errorDisplay) throws PersistenceException;
+    
+    public abstract void handleServiceAdminZeitManager(ServiceAdminZeitManager4Public serviceAdminZeitManager) throws PersistenceException;
     
     public abstract void handleBestellung(Bestellung4Public bestellung) throws PersistenceException;
     
     public abstract void handleHerstellerManager(HerstellerManager4Public herstellerManager) throws PersistenceException;
     
     public abstract void handleLieferart(Lieferart4Public lieferart) throws PersistenceException;
+    
+    public abstract void handleServiceKundeBestellManager(ServiceKundeBestellManager4Public serviceKundeBestellManager) throws PersistenceException;
     
     public abstract void handleCommandCoordinator(CommandCoordinator4Public commandCoordinator) throws PersistenceException;
     
@@ -28,6 +40,8 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
         this.handleKomponente(produktgruppe);
     }
     public abstract void handleThreadOfControl(ThreadOfControl4Public threadOfControl) throws PersistenceException;
+    
+    public abstract void handleProduktKatalog(ProduktKatalog4Public produktKatalog) throws PersistenceException;
     
     public abstract void handleBestellstatus(Bestellstatus4Public bestellstatus) throws PersistenceException;
     
@@ -46,7 +60,10 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     public void handleAngenommen(Angenommen4Public angenommen) throws PersistenceException{
         this.handleBestellstatus(angenommen);
     }
-    public abstract void handlePosition(Position4Public position) throws PersistenceException;
+    public void handleVerarbeitung(Verarbeitung4Public verarbeitung) throws PersistenceException{
+        this.handleBestellstatus(verarbeitung);
+    }
+    public abstract void handleServiceShopProduktKatalog(ServiceShopProduktKatalog4Public serviceShopProduktKatalog) throws PersistenceException;
     
     public abstract void handleZeitObjekt(ZeitObjekt4Public zeitObjekt) throws PersistenceException;
     
@@ -69,7 +86,11 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     public void handleServiceAdmin(ServiceAdmin4Public serviceAdmin) throws PersistenceException{
         this.handleService(serviceAdmin);
     }
+    public abstract void handleBestellManager(BestellManager4Public bestellManager) throws PersistenceException;
+    
     public abstract void handleZeitManager(ZeitManager4Public zeitManager) throws PersistenceException;
+    
+    public abstract void handleSubj(Subj4Public subj) throws PersistenceException;
     
     public abstract void handleKonto(Konto4Public konto) throws PersistenceException;
     
@@ -79,14 +100,6 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     
     public abstract void handleLieferartManager(LieferartManager4Public lieferartManager) throws PersistenceException;
     
-    public abstract void handleBooleanX(BooleanX4Public booleanX) throws PersistenceException;
-    
-    public void handleFalseX(FalseX4Public falseX) throws PersistenceException{
-        this.handleBooleanX(falseX);
-    }
-    public void handleTrueX(TrueX4Public trueX) throws PersistenceException{
-        this.handleBooleanX(trueX);
-    }
     public abstract void handleIntegerWrapper(IntegerWrapper4Public integerWrapper) throws PersistenceException;
     
     public abstract void handleWarenlager(Warenlager4Public warenlager) throws PersistenceException;
@@ -96,11 +109,17 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     public void handleArtikelEinlagernCommand(ArtikelEinlagernCommand4Public artikelEinlagernCommand) throws PersistenceException{
         this.handleCommonDate(artikelEinlagernCommand);
     }
-    public void handleProdGEntfernenCommand(ProdGEntfernenCommand4Public prodGEntfernenCommand) throws PersistenceException{
-        this.handleCommonDate(prodGEntfernenCommand);
-    }
     public void handleArtikelEntfernenCommand(ArtikelEntfernenCommand4Public artikelEntfernenCommand) throws PersistenceException{
         this.handleCommonDate(artikelEntfernenCommand);
+    }
+    public void handleBestellenCommand(BestellenCommand4Public bestellenCommand) throws PersistenceException{
+        this.handleCommonDate(bestellenCommand);
+    }
+    public void handleZuEinkaufswHinzCommand(ZuEinkaufswHinzCommand4Public zuEinkaufswHinzCommand) throws PersistenceException{
+        this.handleCommonDate(zuEinkaufswHinzCommand);
+    }
+    public void handleProduktgruppeEntfernenCommand(ProduktgruppeEntfernenCommand4Public produktgruppeEntfernenCommand) throws PersistenceException{
+        this.handleCommonDate(produktgruppeEntfernenCommand);
     }
     public void handleArtikelEntnehmenCommand(ArtikelEntnehmenCommand4Public artikelEntnehmenCommand) throws PersistenceException{
         this.handleCommonDate(artikelEntnehmenCommand);
@@ -113,9 +132,6 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     }
     public void handleRegisterCommand(RegisterCommand4Public registerCommand) throws PersistenceException{
         this.handleCommonDate(registerCommand);
-    }
-    public void handleAendereArtikelCommand(AendereArtikelCommand4Public aendereArtikelCommand) throws PersistenceException{
-        this.handleCommonDate(aendereArtikelCommand);
     }
     public void handleStatusVerkaufCommand(StatusVerkaufCommand4Public statusVerkaufCommand) throws PersistenceException{
         this.handleCommonDate(statusVerkaufCommand);

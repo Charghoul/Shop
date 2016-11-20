@@ -5,26 +5,14 @@ import view.*;
 
 public abstract class AnythingStandardVisitor implements AnythingVisitor {
     
-    public void handleVerkauf(VerkaufView verkauf) throws ModelException{
-        this.standardHandling(verkauf);
-    }
     public void handleServer(ServerView server) throws ModelException{
         this.standardHandling(server);
     }
     public void handleEinkaufsManager(EinkaufsManagerView einkaufsManager) throws ModelException{
         this.standardHandling(einkaufsManager);
     }
-    public void handleAuslauf(AuslaufView auslauf) throws ModelException{
-        this.standardHandling(auslauf);
-    }
     public void handleErrorDisplay(ErrorDisplayView errorDisplay) throws ModelException{
         this.standardHandling(errorDisplay);
-    }
-    public void handleFalseX(FalseXView falseX) throws ModelException{
-        this.standardHandling(falseX);
-    }
-    public void handleBestellung(BestellungView bestellung) throws ModelException{
-        this.standardHandling(bestellung);
     }
     public void handleHerstellerManager(HerstellerManagerView herstellerManager) throws ModelException{
         this.standardHandling(herstellerManager);
@@ -41,17 +29,14 @@ public abstract class AnythingStandardVisitor implements AnythingVisitor {
     public void handleHstLieferung(HstLieferungView hstLieferung) throws ModelException{
         this.standardHandling(hstLieferung);
     }
-    public void handleGeliefert(GeliefertView geliefert) throws ModelException{
-        this.standardHandling(geliefert);
-    }
     public void handleKndLieferung(KndLieferungView kndLieferung) throws ModelException{
         this.standardHandling(kndLieferung);
     }
     public void handleServiceKunde(ServiceKundeView serviceKunde) throws ModelException{
         this.standardHandling(serviceKunde);
     }
-    public void handleThreadOfControl(ThreadOfControlView threadOfControl) throws ModelException{
-        this.standardHandling(threadOfControl);
+    public void handleProduktKatalog(ProduktKatalogView produktKatalog) throws ModelException{
+        this.standardHandling(produktKatalog);
     }
     public void handleArtikel(ArtikelView artikel) throws ModelException{
         this.standardHandling(artikel);
@@ -68,20 +53,50 @@ public abstract class AnythingStandardVisitor implements AnythingVisitor {
     public void handleServiceAdmin(ServiceAdminView serviceAdmin) throws ModelException{
         this.standardHandling(serviceAdmin);
     }
-    public void handleZeitManager(ZeitManagerView zeitManager) throws ModelException{
-        this.standardHandling(zeitManager);
-    }
     public void handleKonto(KontoView konto) throws ModelException{
         this.standardHandling(konto);
+    }
+    public void handleHersteller(HerstellerView hersteller) throws ModelException{
+        this.standardHandling(hersteller);
+    }
+    public void handleAngenommen(AngenommenView angenommen) throws ModelException{
+        this.standardHandling(angenommen);
+    }
+    public void handleWarenlager(WarenlagerView warenlager) throws ModelException{
+        this.standardHandling(warenlager);
+    }
+    public void handleVerkauf(VerkaufView verkauf) throws ModelException{
+        this.standardHandling(verkauf);
+    }
+    public void handleVerarbeitung(VerarbeitungView verarbeitung) throws ModelException{
+        this.standardHandling(verarbeitung);
+    }
+    public void handleAuslauf(AuslaufView auslauf) throws ModelException{
+        this.standardHandling(auslauf);
+    }
+    public void handleBestellung(BestellungView bestellung) throws ModelException{
+        this.standardHandling(bestellung);
+    }
+    public void handleGeliefert(GeliefertView geliefert) throws ModelException{
+        this.standardHandling(geliefert);
+    }
+    public void handleThreadOfControl(ThreadOfControlView threadOfControl) throws ModelException{
+        this.standardHandling(threadOfControl);
+    }
+    public void handleBestellManager(BestellManagerView bestellManager) throws ModelException{
+        this.standardHandling(bestellManager);
+    }
+    public void handleZeitManager(ZeitManagerView zeitManager) throws ModelException{
+        this.standardHandling(zeitManager);
     }
     public void handleVorbestellung(VorbestellungView vorbestellung) throws ModelException{
         this.standardHandling(vorbestellung);
     }
+    public void handlePositionInBestellung(PositionInBestellungView positionInBestellung) throws ModelException{
+        this.standardHandling(positionInBestellung);
+    }
     public void handleRueckversand(RueckversandView rueckversand) throws ModelException{
         this.standardHandling(rueckversand);
-    }
-    public void handleHersteller(HerstellerView hersteller) throws ModelException{
-        this.standardHandling(hersteller);
     }
     public void handleKunde(KundeView kunde) throws ModelException{
         this.standardHandling(kunde);
@@ -92,17 +107,8 @@ public abstract class AnythingStandardVisitor implements AnythingVisitor {
     public void handleHinversand(HinversandView hinversand) throws ModelException{
         this.standardHandling(hinversand);
     }
-    public void handleAngenommen(AngenommenView angenommen) throws ModelException{
-        this.standardHandling(angenommen);
-    }
     public void handleIntegerWrapper(IntegerWrapperView integerWrapper) throws ModelException{
         this.standardHandling(integerWrapper);
-    }
-    public void handleWarenlager(WarenlagerView warenlager) throws ModelException{
-        this.standardHandling(warenlager);
-    }
-    public void handleTrueX(TrueXView trueX) throws ModelException{
-        this.standardHandling(trueX);
     }
     protected abstract void standardHandling(Anything anything) throws ModelException;
 }

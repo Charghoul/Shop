@@ -15,9 +15,7 @@ public class ArtikelManagerProxi extends ViewProxi implements ArtikelManagerView
     public ArtikelManagerView getRemoteObject(java.util.HashMap<String,Object> resultTable, ExceptionAndEventHandler connectionKey) throws ModelException{
         java.util.Vector<String> artikelListe_string = (java.util.Vector<String>)resultTable.get("artikelListe");
         java.util.Vector<ArtikelView> artikelListe = ViewProxi.getProxiVector(artikelListe_string, connectionKey);
-        java.util.Vector<String> produktgruppen_string = (java.util.Vector<String>)resultTable.get("produktgruppen");
-        java.util.Vector<ProduktgruppeView> produktgruppen = ViewProxi.getProxiVector(produktgruppen_string, connectionKey);
-        ArtikelManagerView result$$ = new ArtikelManager(artikelListe,produktgruppen, this.getId(), this.getClassId());
+        ArtikelManagerView result$$ = new ArtikelManager(artikelListe, this.getId(), this.getClassId());
         ((ViewRoot)result$$).setToString((String) resultTable.get(common.RPCConstantsAndServices.RPCToStringFieldName));
         return result$$;
     }
@@ -29,31 +27,22 @@ public class ArtikelManagerProxi extends ViewProxi implements ArtikelManagerView
         int index = originalIndex;
         if(index < this.getArtikelListe().size()) return new ArtikelListeArtikelManagerWrapper(this, originalIndex, (ViewRoot)this.getArtikelListe().get(index));
         index = index - this.getArtikelListe().size();
-        if(index < this.getProduktgruppen().size()) return new ProduktgruppenArtikelManagerWrapper(this, originalIndex, (ViewRoot)this.getProduktgruppen().get(index));
-        index = index - this.getProduktgruppen().size();
         return null;
     }
     public int getChildCount() throws ModelException {
         return 0 
-            + (this.getArtikelListe().size())
-            + (this.getProduktgruppen().size());
+            + (this.getArtikelListe().size());
     }
     public boolean isLeaf() throws ModelException {
         if (this.object == null) return this.getLeafInfo() == 0;
         return true 
-            && (this.getArtikelListe().size() == 0)
-            && (this.getProduktgruppen().size() == 0);
+            && (this.getArtikelListe().size() == 0);
     }
     public int getIndexOfChild(Object child) throws ModelException {
         int result = 0;
         java.util.Iterator<?> getArtikelListeIterator = this.getArtikelListe().iterator();
         while(getArtikelListeIterator.hasNext()){
             if(getArtikelListeIterator.next().equals(child)) return result;
-            result = result + 1;
-        }
-        java.util.Iterator<?> getProduktgruppenIterator = this.getProduktgruppen().iterator();
-        while(getProduktgruppenIterator.hasNext()){
-            if(getProduktgruppenIterator.next().equals(child)) return result;
             result = result + 1;
         }
         return -1;
@@ -64,12 +53,6 @@ public class ArtikelManagerProxi extends ViewProxi implements ArtikelManagerView
     }
     public void setArtikelListe(java.util.Vector<ArtikelView> newValue) throws ModelException {
         ((ArtikelManager)this.getTheObject()).setArtikelListe(newValue);
-    }
-    public java.util.Vector<ProduktgruppeView> getProduktgruppen()throws ModelException{
-        return ((ArtikelManager)this.getTheObject()).getProduktgruppen();
-    }
-    public void setProduktgruppen(java.util.Vector<ProduktgruppeView> newValue) throws ModelException {
-        ((ArtikelManager)this.getTheObject()).setProduktgruppen(newValue);
     }
     
     public void accept(AnythingVisitor visitor) throws ModelException {

@@ -40,6 +40,12 @@ public class LieferartICProxi extends PersistentInCacheProxiOptimistic implement
     public void setPreis(common.Fraction newValue) throws PersistenceException {
         ((PersistentLieferart)this.getTheObject()).setPreis(newValue);
     }
+    public SubjInterface getSubService() throws PersistenceException {
+        return ((PersistentLieferart)this.getTheObject()).getSubService();
+    }
+    public void setSubService(SubjInterface newValue) throws PersistenceException {
+        ((PersistentLieferart)this.getTheObject()).setSubService(newValue);
+    }
     public PersistentLieferart getThis() throws PersistenceException {
         return ((PersistentLieferart)this.getTheObject()).getThis();
     }
@@ -56,19 +62,39 @@ public class LieferartICProxi extends PersistentInCacheProxiOptimistic implement
     public <R, E extends model.UserException> R accept(AnythingReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E {
          return visitor.handleLieferart(this);
     }
+    public void accept(SubjInterfaceVisitor visitor) throws PersistenceException {
+        visitor.handleLieferart(this);
+    }
+    public <R> R accept(SubjInterfaceReturnVisitor<R>  visitor) throws PersistenceException {
+         return visitor.handleLieferart(this);
+    }
+    public <E extends model.UserException>  void accept(SubjInterfaceExceptionVisitor<E> visitor) throws PersistenceException, E {
+         visitor.handleLieferart(this);
+    }
+    public <R, E extends model.UserException> R accept(SubjInterfaceReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E {
+         return visitor.handleLieferart(this);
+    }
     
     
+    public void deregister(final ObsInterface observee) 
+				throws PersistenceException{
+        ((PersistentLieferart)this.getTheObject()).deregister(observee);
+    }
     public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
 				throws PersistenceException{
         ((PersistentLieferart)this.getTheObject()).initialize(This, final$$Fields);
     }
-    public void aendereLieferart(final String name, final long lieferzeit, final common.Fraction preis) 
-				throws model.ExcAlreadyExists, PersistenceException{
-        ((PersistentLieferart)this.getTheObject()).aendereLieferart(name, lieferzeit, preis);
-    }
-    public BooleanX4Public alreadyExists(final String name) 
+    public void register(final ObsInterface observee) 
 				throws PersistenceException{
-        return ((PersistentLieferart)this.getTheObject()).alreadyExists(name);
+        ((PersistentLieferart)this.getTheObject()).register(observee);
+    }
+    public void updateObservers(final model.meta.Mssgs event) 
+				throws PersistenceException{
+        ((PersistentLieferart)this.getTheObject()).updateObservers(event);
+    }
+    public void aendereLieferart(final long lieferzeit, final common.Fraction preis) 
+				throws model.ExcAlreadyExists, PersistenceException{
+        ((PersistentLieferart)this.getTheObject()).aendereLieferart(lieferzeit, preis);
     }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{

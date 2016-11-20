@@ -7,74 +7,99 @@ server Server {
 
 abstract server Service {
 }
-server ServiceKunde extends Service {
-	one-to-one EinkaufsManager einkaufsManager;
-	ArtikelManager artikelManager;
-	Warenlager warenlager;
-	void neuePosition(EinkaufsManager einkaufsManager, Artikel artikel, Integer menge) throws UserException;
-	void bestellen(EinkaufsManager einkaufsManager);
-	void aendereMenge(Position position, Integer menge) throws ExcLagerbestandUnderZero, ExcLagerbestandOverMax;
+abstract server ServiceShop extends Service{
+
+	observe ProduktKatalog produktKatalog;
 }
-server ServiceAdmin extends Service {
+server ServiceKunde extends ServiceShop {
+	one-to-one EinkaufsManager einkaufsManager;
+	no-view LieferartManager lieferartManager;
+	observe BestellManager  bestellManager;
+	void neuePosition(EinkaufsManager einkaufsManager, Artikel artikel {produktKatalog}, Integer menge) throws UserException;
+	void vorbestellen(EinkaufsManager einkaufsManager);
+	void bestellen(EinkaufsManager einkaufsManager, Lieferart lieferart {lieferartManager});
+	void aendereMenge(Position position, Integer menge) throws ExcLagerbestandUnderZero, ExcLagerbestandOverMax;
+	void zuEinkaufswagenHinzufuegen(Artikel artikel, Integer menge);
+	void zuruecksenden(PositionInBestellung position checked);
+}
+server ServiceAdmin extends ServiceShop {
 	Warenlager warenlager;
 	ArtikelManager artikelManager;
-	one-to-one (no-view myService) LieferartManager lieferartManager;
-	one-to-one HerstellerManager herstellerManager;
+	LieferartManager lieferartManager;
+	one-to-one (no-view myServiceAdmin) HerstellerManager herstellerManager;
+	observe ZeitManager zeitManager;
+	void aendereHstLieferzeit(Artikel artikel, Integer hstLieferzeit);
 	void neuerArtikel(ArtikelManager artikelManager, String artikelnummer, String bezeichnung, Fraction preis, Integer minLagerbestand, 		Integer maxLagerbestand, Integer hstLieferzeit);
 	void produktgruppeHinzufuegen(Produktgruppe produktgruppe, String name)  throws ExcAlreadyExists, CycleException;
 	void produktgruppeEntfernen(Produktgruppe produktgruppe);
-	void artikelAnhaengen(Produktgruppe produktgruppe, Artikel artikel)  throws ExcAlreadyExists, CycleException;
+	void artikelAnhaengen( Produktgruppe produktgruppe, Artikel artikel {artikelManager})  throws ExcAlreadyExists, CycleException;
 	void artikelAbhaengen(Produktgruppe produktgruppe, Artikel artikel);
-	void statusVerkauf(Artikel artikel);
-	void statusAuslauf(Artikel artikel);
+	void statusVerkauf@@freigeben(Artikel artikel checked);
+	void statusAuslauf@@einstellen(Artikel artikel checked);
 	void neueLieferArt(LieferartManager lieferartManager, String name, Integer lieferzeit, Fraction preis) throws ExcAlreadyExists;
 	void aendereLieferart(Lieferart lieferart, String name, Integer lieferzeit, Fraction preis) throws ExcAlreadyExists;
-	void artikelEinlagern(Warenlager warenlager, Artikel artikel, Integer menge);
-	void artikelEntnehmen(Warenlager warenlager, Position position, Integer menge);
-	void artikelEntfernen(Warenlager warenlager, Position position);
+	void artikelEinlagern(Warenlager warenlager, Artikel artikel {artikelManager}, Integer menge);
+	void artikelEntnehmen(Warenlager warenlager, Artikel artikel {artikelManager}, Integer menge);
+	void artikelEntfernen(Warenlager warenlager, Position position {warenlager});
 	void verringereMenge(Position position, Integer menge) throws ExcLagerbestandUnderZero;
 	void aendereMenge(Position position, Integer menge) throws ExcLagerbestandUnderZero, ExcLagerbestandOverMax;
 	void erhoeheMenge(Position position, Integer menge) throws ExcLagerbestandOverMax;
-	void aendereArtikel(Artikel artikel, String bezeichnung, Fraction preis, Integer minLagerbestand, Integer maxLagerbestand, Integer hstLieferzeit) throws ExcAlreadyExists;
+	void aendereArtikel(Artikel artikel, Fraction preis, Integer minLagerbestand, Integer maxLagerbestand, Integer hstLieferzeit) throws ExcAlreadyExists;
 	void neuerHersteller(HerstellerManager herstellerManager, String name) throws ExcAlreadyExists;
 	void aendereHersteller(Hersteller hersteller, String name) throws ExcAlreadyExists;
-	void herstellerHinzufuegen(Artikel artikel, Hersteller hersteller);
+	void herstellerHinzufuegen(Artikel artikel, Hersteller hersteller {herstellerManager});
 }
 server ServiceRegister extends Service {
 	active void register(String username, String passwort) throws ExcUserAlreadyExists;
 }
 singleton ArtikelManager{
 	Artikel ** artikelListe;
-	Produktgruppe ** produktgruppen;
 	active void neuerArtikel(String artikelnummer, String bezeichnung, Fraction preis, Integer minLagerbestand, 		Integer maxLagerbestand, Integer hstLieferzeit) throws UserException;
-	active void aendereArtikel(Artikel artikel, String bezeichnung, Fraction preis, Integer minLagerbestand, Integer maxLagerbestand, Integer hstLieferzeit) throws ExcAlreadyExists;
 	void herstellerHinzufuegen(Artikel artikel, Hersteller hersteller);
 }
 
+class BestellManager{
+	public Bestellung ** bestellListe;
+	Bestellung neueBestellung(Position ** positionsListe, Bestellstatus bestellstatus);
+	event void benachrichtige();
+}
+
+singleton ProduktKatalog{
+	public Produktgruppe produktgruppen;
+	event void produktgruppeHinzufuegen(Produktgruppe produktgruppe, String name)  throws ExcAlreadyExists, CycleException;
+	event active void produktgruppeEntfernen##prodEntf(Produktgruppe produktgruppe) throws ExcHasNoParent;
+	event void artikelAnhaengen( Produktgruppe produktgruppe, Artikel artikel )  throws ExcAlreadyExists, CycleException;
+	event void artikelAbhaengen(Produktgruppe produktgruppe, Artikel artikel);
+}
+
 class IntegerWrapper {
-	prior Integer theInt;
+	public prior Integer theInt;
 	void add(Integer addend);
+	void substract(Integer subtrahend);
 }
 
 singleton Warenlager{
+	Artikel ** Integer ** newList;
 	IntegerWrapper ** Artikel ** templist;
 	Position ** warenListe;
-	active void artikelEntnehmen##artEntf(Position position, Integer menge) throws ExcLagerbestandUnderZero;
+	active void artikelEntnehmen##artEntf(Artikel artikel, Integer menge) throws ExcLagerbestandUnderZero;
 	active void artikelEinlagern(Artikel artikel, Integer menge) throws ExcLagerbestandOverMax;
 	active void artikelEntfernen##artEntn(Position position);
+	Position nichtVerfPruefen(Position ** positionsListe);
 }
 
 singleton ZeitManager {
 	ZeitObjekt ** zeitObjektListe;
 	void handleTimeUnitElapsed();
-	void neueHstLieferung(Artikel artikel, Integer menge, Integer lieferzeit);
-	void neueKndLieferung(Bestellung bestellung, Lieferart lieferart, Integer lieferzeit);
+	event void neueHstLieferung(Artikel artikel, Integer menge);
+	event void neueKndLieferung(Bestellung bestellung, Lieferart lieferart);
 }
 
 abstract class ZeitObjekt{
-	prior Integer remainingTime;
+	public prior Integer remainingTime;
 	void reduceTime();
 	void handleTimeElapsed();
+	void zeitAbgelaufen();
 }
 
 class HerstellerManager{
@@ -83,12 +108,13 @@ class HerstellerManager{
 }
 class EinkaufsManager{
 	Position ** einkaufsListe;
-	void bestellen();
-	void neuePosition(Artikel artikel, Integer menge) throws ExcArtikelAlreadyExists, UserException;
-	void aendereMenge(Position position, Integer menge) throws ExcLagerbestandUnderZero;
+	prior no-view BestellManager bestellManager;
+	active void bestellen(Lieferart lieferart) throws ExcArtikelNichtVerfuegbar, ExcLagerbestandUnderZero;
+	void vorbestellen();
+	void neuePosition(Artikel artikel, Integer menge) throws ExcArtikelAlreadyExists, UserException, ExcLagerbestandOverMax;
 }
-class LieferartManager{
-	Lieferart ** lieferartenListe;
+singleton LieferartManager{
+	public Lieferart ** lieferartenListe;
 	void neueLieferart(String name, Integer lieferzeit, Fraction preis) throws ExcAlreadyExists;
 	void aendereLieferart(Lieferart lieferart, String name, Integer lieferzeit, Fraction preis) throws ExcAlreadyExists;
 }
@@ -111,22 +137,21 @@ class Artikel extends Komponente{
 	prior indexed String bezeichnung;
 	prior Fraction preis;
 	prior Integer minLagerbestand;
-	prior Integer maxLagerbestand;
-	prior Integer hstLieferzeit;
-	prior skip-view Artikelstatus artikelstatus;
+	public prior Integer maxLagerbestand;
+	public-write prior Integer hstLieferzeit;
+	public prior skip-view Artikelstatus artikelstatus;
 	no-view Hersteller hersteller;
-	void aendereArtikel(String bezeichnung, Fraction preis, Integer minLagerbestand, Integer maxLagerbestand, Integer hstLieferzeit) throws ExcAlreadyExists;
+	void aendereArtikel(Fraction preis, Integer minLagerbestand, Integer maxLagerbestand, Integer hstLieferzeit) throws ExcAlreadyExists;
 	active void statusVerkauf() throws ExcInconsistentStatusChange;
 	active void statusAuslauf() throws ExcInconsistentStatusChange;
-	BooleanX groesserMax(Integer menge);
-	BooleanX alreadyExists(String bezeichung);
+	active void zuEinkaufswHinz(Integer menge, EinkaufsManager einkaufsManager) throws UserException;
 	void herstellerHinzufuegen(Hersteller hersteller);
 }
 class Produktgruppe extends Komponente{
 	symmetric Komponente**komponentenListe hierarchy Hierarchie;
 	prior indexed String name;
 	void produktgruppeHinzufuegen(String name) throws ExcAlreadyExists, CycleException;
-	active void prodGEntfernen() throws ExcHasChildren, ExcHasNoParent;
+	void prodGEntfernen() throws ExcHasNoParent;
 	void removeChild(Produktgruppe child);
 	void artikelAnhaengen(Artikel artikel) throws ExcAlreadyExists, CycleException;
 	void artikelAbhaengen(Artikel artikel);
@@ -134,41 +159,48 @@ class Produktgruppe extends Komponente{
 class Hersteller{
 	prior indexed String name;
 	void aendereHersteller(String name) throws ExcAlreadyExists;
-	BooleanX alreadyExists(String name);
 }
 class Bestellung{
-	Position ** positionsListe;
-	prior indexed String bestellID;
-	Bestellstatus bestellstatus;
+	PositionInBestellung ** positionsListe;
+	prior public server-only BestellManager bestellManager;
+	prior indexed Integer bestellID;
+	public no-view Bestellstatus bestellstatus;
+	void listeHinzufuegen(Position ** positionsListe);
+	void aendereStatus(Bestellstatus bestellstatus);
 }
-abstract class Lieferung extends ZeitObjekt{
 
-}
-class KndLieferung extends Lieferung{
+class KndLieferung extends ZeitObjekt{
 	prior Bestellung bestellung;
 	prior Lieferart lieferart;
 	Integer lieferversuche;
+
+	void erhoeheLieferversuche();
 }
 
-class HstLieferung extends Lieferung{
+class HstLieferung extends ZeitObjekt{
 	prior Artikel artikel;
 	prior Integer menge;
 }
-class Position{
-	no-view prior Artikel artikel;
-	prior Integer menge;
+abstract class PositionAbstrakt {
+	public no-view prior Artikel artikel;
+	public prior Integer menge;
+}
+class Position extends PositionAbstrakt{
 	void verringereMenge(Integer menge) throws ExcLagerbestandUnderZero;
 	void aendereMenge(Integer menge) throws ExcLagerbestandUnderZero, ExcLagerbestandOverMax;
 	void erhoeheMenge(Integer menge) throws ExcLagerbestandOverMax;
-	Position enthaeltArtikel(Artikel artikel);
+}
+
+class PositionInBestellung##posInBest extends PositionAbstrakt{
+	public prior server-only Bestellung bestellung;
+	void zuruecksenden();
 }
 
 class Lieferart{
 	indexed prior String name;
 	prior Integer lieferzeit;
 	prior Fraction preis;
-	void aendereLieferart(String name, Integer lieferzeit, Fraction preis) throws ExcAlreadyExists;
-	BooleanX alreadyExists(String name);
+	void aendereLieferart(Integer lieferzeit, Fraction preis) throws ExcAlreadyExists;
 }
 
 class ThreadOfControl{
@@ -182,17 +214,15 @@ singleton Verkauf extends Artikelstatus{}
 singleton Auslauf extends Artikelstatus{}
 
 abstract class Bestellstatus{}
-class Vorbestellung extends Bestellstatus{}
-class Hinversand extends Bestellstatus{}
-class Geliefert extends Bestellstatus{}
-class Angenommen extends Bestellstatus{}
-class Rueckversand extends Bestellstatus{}
+singleton Vorbestellung extends Bestellstatus{}
+singleton Verarbeitung extends Bestellstatus{}
+singleton Hinversand extends Bestellstatus{}
+singleton Geliefert extends Bestellstatus{}
+singleton Angenommen extends Bestellstatus{}
+singleton Rueckversand extends Bestellstatus{}
 
-
-abstract class BooleanX{}
-singleton TrueX extends BooleanX{}
-singleton FalseX extends BooleanX{}
-
+exception ExcArtikelNichtVerfuegbar{}
+exception ExcEinkaufslisteNichtVerfuegbar{}
 exception ExcHasNoParent{}
 exception ExcHasChildren{}
 exception ExcInconsistentStatusChange{}

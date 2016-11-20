@@ -21,8 +21,11 @@ public class ArtikelManagerProxi extends PersistentProxi implements PersistentAr
     public ArtikelManager_ArtikelListeProxi getArtikelListe() throws PersistenceException {
         return ((PersistentArtikelManager)this.getTheObject()).getArtikelListe();
     }
-    public ArtikelManager_ProduktgruppenProxi getProduktgruppen() throws PersistenceException {
-        return ((PersistentArtikelManager)this.getTheObject()).getProduktgruppen();
+    public SubjInterface getSubService() throws PersistenceException {
+        return ((PersistentArtikelManager)this.getTheObject()).getSubService();
+    }
+    public void setSubService(SubjInterface newValue) throws PersistenceException {
+        ((PersistentArtikelManager)this.getTheObject()).setSubService(newValue);
     }
     public PersistentArtikelManager getThis() throws PersistenceException {
         return ((PersistentArtikelManager)this.getTheObject()).getThis();
@@ -40,11 +43,23 @@ public class ArtikelManagerProxi extends PersistentProxi implements PersistentAr
     public <R, E extends model.UserException> R accept(AnythingReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E {
          return visitor.handleArtikelManager(this);
     }
+    public void accept(SubjInterfaceVisitor visitor) throws PersistenceException {
+        visitor.handleArtikelManager(this);
+    }
+    public <R> R accept(SubjInterfaceReturnVisitor<R>  visitor) throws PersistenceException {
+         return visitor.handleArtikelManager(this);
+    }
+    public <E extends model.UserException>  void accept(SubjInterfaceExceptionVisitor<E> visitor) throws PersistenceException, E {
+         visitor.handleArtikelManager(this);
+    }
+    public <R, E extends model.UserException> R accept(SubjInterfaceReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E {
+         return visitor.handleArtikelManager(this);
+    }
     
     
-    public void aendereArtikel(final Artikel4Public artikel, final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit, final Invoker invoker) 
+    public void deregister(final ObsInterface observee) 
 				throws PersistenceException{
-        ((PersistentArtikelManager)this.getTheObject()).aendereArtikel(artikel, bezeichnung, preis, minLagerbestand, maxLagerbestand, hstLieferzeit, invoker);
+        ((PersistentArtikelManager)this.getTheObject()).deregister(observee);
     }
     public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
 				throws PersistenceException{
@@ -54,9 +69,13 @@ public class ArtikelManagerProxi extends PersistentProxi implements PersistentAr
 				throws PersistenceException{
         ((PersistentArtikelManager)this.getTheObject()).neuerArtikel(artikelnummer, bezeichnung, preis, minLagerbestand, maxLagerbestand, hstLieferzeit, invoker);
     }
-    public void aendereArtikel(final Artikel4Public artikel, final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
-				throws model.ExcAlreadyExists, PersistenceException{
-        ((PersistentArtikelManager)this.getTheObject()).aendereArtikel(artikel, bezeichnung, preis, minLagerbestand, maxLagerbestand, hstLieferzeit);
+    public void register(final ObsInterface observee) 
+				throws PersistenceException{
+        ((PersistentArtikelManager)this.getTheObject()).register(observee);
+    }
+    public void updateObservers(final model.meta.Mssgs event) 
+				throws PersistenceException{
+        ((PersistentArtikelManager)this.getTheObject()).updateObservers(event);
     }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{

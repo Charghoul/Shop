@@ -2,206 +2,87 @@ package persistence;
 
 import model.*;
 
-import java.sql.*;
-//import oracle.jdbc.*;
-
 public class BestellungFacade{
 
-	private String schemaName;
-	private Connection con;
+	static private Long sequencer = new Long(0);
 
-	public BestellungFacade(String schemaName, Connection con) {
-		this.schemaName = schemaName;
-		this.con = con;
+	static protected long getTheNextId(){
+		long result = -1;
+		synchronized (sequencer) { 
+			result = sequencer.longValue() + 1;
+			sequencer = new Long(result);
+		}
+		return result;
+	}
+
+	protected long getNextId(){
+		return getTheNextId();
+	}
+
+	
+
+	public BestellungFacade() {
 	}
 
     /* If idCreateIfLessZero is negative, a new id is generated. */
-    public PersistentBestellung newBestellung(String bestellID,long idCreateIfLessZero) throws PersistenceException {
-        oracle.jdbc.OracleCallableStatement callable;
-        try{
-            callable = (oracle.jdbc.OracleCallableStatement)this.con.prepareCall("Begin ? := " + this.schemaName + ".BstllngFacade.newBstllng(?,?); end;");
-            callable.registerOutParameter(1, oracle.jdbc.OracleTypes.NUMBER);
-            callable.setString(2, bestellID);
-            callable.setLong(3, idCreateIfLessZero);
-            callable.execute();
-            long id = callable.getLong(1);
-            callable.close();
-            Bestellung result = new Bestellung(bestellID,null,null,id);
-            if (idCreateIfLessZero < 0)Cache.getTheCache().put(result);
-            return (PersistentBestellung)PersistentProxi.createProxi(id, 136);
-        }catch(SQLException se) {
-            throw new PersistenceException(se.getMessage(), se.getErrorCode());
-        }
+    public PersistentBestellung newBestellung(long bestellID,long idCreateIfLessZero) throws PersistenceException {
+        if(idCreateIfLessZero > 0) return (PersistentBestellung)PersistentProxi.createProxi(idCreateIfLessZero, 136);
+        long id = ConnectionHandler.getTheConnectionHandler().theBestellungFacade.getNextId();
+        Bestellung result = new Bestellung(null,bestellID,null,null,null,id);
+        Cache.getTheCache().put(result);
+        return (PersistentBestellung)PersistentProxi.createProxi(id, 136);
     }
     
-    public PersistentBestellung newDelayedBestellung(String bestellID) throws PersistenceException {
-        oracle.jdbc.OracleCallableStatement callable;
-        try{
-            callable = (oracle.jdbc.OracleCallableStatement)this.con.prepareCall("Begin ? := " + this.schemaName + ".BstllngFacade.newDelayedBstllng(); end;");
-            callable.registerOutParameter(1, oracle.jdbc.OracleTypes.NUMBER);
-            callable.execute();
-            long id = callable.getLong(1);
-            callable.close();
-            Bestellung result = new Bestellung(bestellID,null,null,id);
-            Cache.getTheCache().put(result);
-            return (PersistentBestellung)PersistentProxi.createProxi(id, 136);
-        }catch(SQLException se) {
-            throw new PersistenceException(se.getMessage(), se.getErrorCode());
-        }
+    public PersistentBestellung newDelayedBestellung(long bestellID) throws PersistenceException {
+        long id = ConnectionHandler.getTheConnectionHandler().theBestellungFacade.getNextId();
+        Bestellung result = new Bestellung(null,bestellID,null,null,null,id);
+        Cache.getTheCache().put(result);
+        return (PersistentBestellung)PersistentProxi.createProxi(id, 136);
     }
     
     public Bestellung getBestellung(long BestellungId) throws PersistenceException{
-        try{
-            CallableStatement callable;
-            callable = this.con.prepareCall("Begin ? := " + this.schemaName + ".BstllngFacade.getBstllng(?); end;");
-            callable.registerOutParameter(1, oracle.jdbc.OracleTypes.CURSOR);
-            callable.setLong(2, BestellungId);
-            callable.execute();
-            ResultSet obj = ((oracle.jdbc.OracleCallableStatement)callable).getCursor(1);
-            if (!obj.next()) {
-                obj.close();
-                callable.close();
-                return null;
-            }
-            PersistentBestellstatus bestellstatus = null;
-            if (obj.getLong(3) != 0)
-                bestellstatus = (PersistentBestellstatus)PersistentProxi.createProxi(obj.getLong(3), obj.getLong(4));
-            PersistentBestellung This = null;
-            if (obj.getLong(5) != 0)
-                This = (PersistentBestellung)PersistentProxi.createProxi(obj.getLong(5), obj.getLong(6));
-            Bestellung result = new Bestellung(obj.getString(2) == null ? "" : obj.getString(2) /* In Oracle "" = null !!! */,
-                                               bestellstatus,
-                                               This,
-                                               BestellungId);
-            obj.close();
-            callable.close();
-            BestellungICProxi inCache = (BestellungICProxi)Cache.getTheCache().put(result);
-            Bestellung objectInCache = (Bestellung)inCache.getTheObject();
-            if (objectInCache == result)result.initializeOnInstantiation();
-            return objectInCache;
-        }catch(SQLException se) {
-            throw new PersistenceException(se.getMessage(), se.getErrorCode());
-        }
+        return null; //All data is in the cache!
     }
     public long getClass(long objectId) throws PersistenceException{
-        try{
-            CallableStatement callable;
-            callable = this.con.prepareCall("Begin ? := " + this.schemaName + ".BstllngFacade.getClass(?); end;");
-            callable.registerOutParameter(1, oracle.jdbc.OracleTypes.NUMBER);
-            callable.setLong(2, objectId);
-            callable.execute();
-            long result = callable.getLong(1);
-            callable.close();
-            return result;
-        }catch(SQLException se) {
-            throw new PersistenceException(se.getMessage(), se.getErrorCode());
-        }
+        if(Cache.getTheCache().contains(objectId, 136)) return 136;
+        
+        throw new PersistenceException("No such object: " + new Long(objectId).toString(), 0);
+        
     }
-    public BestellungSearchList getBestellungByBestellID(String bestellID) throws PersistenceException {
-        try{
-            CallableStatement callable;
-            callable = this.con.prepareCall("Begin ? := " + this.schemaName + ".BstllngFacade.getBstllngByBstllID(?); end;");
-            callable.registerOutParameter(1, oracle.jdbc.OracleTypes.CURSOR);
-            callable.setString(2, bestellID);
-            callable.execute();
-            ResultSet list = ((oracle.jdbc.OracleCallableStatement)callable).getCursor(1);
-            BestellungSearchList result = new BestellungSearchList();
-            while (list.next()) {
-                long classId = list.getLong(2);
-                long objectId = list.getLong(1);
-                PersistentBestellung proxi = (PersistentBestellung)PersistentProxi.createProxi(objectId, classId);
-                result.add(proxi);
-            }
-            list.close();
-            callable.close();
-            return result;
-        }catch(SQLException se) {
-            throw new PersistenceException(se.getMessage(), se.getErrorCode());
+    public BestellungSearchList getBestellungByBestellID(long bestellID) throws PersistenceException {
+        BestellungSearchList result = new BestellungSearchList();
+        java.util.Iterator<?> candidates;
+        candidates = Cache.getTheCache().iterator(136);
+        while (candidates.hasNext()){
+            PersistentBestellung current = (PersistentBestellung)((PersistentRoot)candidates.next()).getTheObject();
+            if (current != null && !current.isDltd() && !current.isDelayed$Persistence() && current.getBestellID() == bestellID)
+                result.add((PersistentBestellung)PersistentProxi.createProxi(current.getId(), current.getClassId()));
         }
+        return result;
     }
-    public long positionsListeAdd(long BestellungId, Position4Public positionsListeVal) throws PersistenceException {
-        try{
-            CallableStatement callable;
-            callable = this.con.prepareCall("Begin ? := " + this.schemaName + ".BstllngFacade.pstnsLstAdd(?, ?, ?); end;");
-            callable.registerOutParameter(1, oracle.jdbc.OracleTypes.NUMBER);
-            callable.setLong(2, BestellungId);
-            callable.setLong(3, positionsListeVal.getId());
-            callable.setLong(4, positionsListeVal.getClassId());
-            callable.execute();
-            long result = callable.getLong(1);
-            callable.close();
-            return result;
-        }catch(SQLException se) {
-            throw new PersistenceException(se.getMessage(), se.getErrorCode());
-        }
+    public long positionsListeAdd(long BestellungId, PositionInBestellung4Public positionsListeVal) throws PersistenceException {
+        return 0;
     }
     public void positionsListeRem(long positionsListeId) throws PersistenceException {
-        try{
-            CallableStatement callable;
-            callable = this.con.prepareCall("Begin " + this.schemaName + ".BstllngFacade.pstnsLstRem(?); end;");
-            callable.setLong(1, positionsListeId);
-            callable.execute();
-            callable.close();
-        }catch(SQLException se) {
-            throw new PersistenceException(se.getMessage(), se.getErrorCode());
-        }
+        
     }
-    public PositionList positionsListeGet(long BestellungId) throws PersistenceException {
-        try{
-            CallableStatement callable;
-            callable = this.con.prepareCall("Begin ? := " + this.schemaName + ".BstllngFacade.pstnsLstGet(?); end;");
-            callable.registerOutParameter(1, oracle.jdbc.OracleTypes.CURSOR);
-            callable.setLong(2, BestellungId);
-            callable.execute();
-            ResultSet list = ((oracle.jdbc.OracleCallableStatement)callable).getCursor(1);
-            PositionList result = new PositionList();
-            while (list.next()) {
-                result.add((PersistentPosition)PersistentProxi.createListEntryProxi(list.getLong(1), list.getLong(2), list.getLong(3)));
-            }
-            list.close();
-            callable.close();
-            return result;
-        }catch(SQLException se) {
-            throw new PersistenceException(se.getMessage(), se.getErrorCode());
-        }
+    public PositionInBestellungList positionsListeGet(long BestellungId) throws PersistenceException {
+        return new PositionInBestellungList(); // remote access for initialization only!
     }
-    public void bestellIDSet(long BestellungId, String bestellIDVal) throws PersistenceException {
-        try{
-            CallableStatement callable;
-            callable = this.con.prepareCall("Begin " + this.schemaName + ".BstllngFacade.bstllIDSet(?, ?); end;");
-            callable.setLong(1, BestellungId);
-            callable.setString(2, bestellIDVal);
-            callable.execute();
-            callable.close();
-        }catch(SQLException se) {
-            throw new PersistenceException(se.getMessage(), se.getErrorCode());
-        }
+    public void bestellManagerSet(long BestellungId, BestellManager4Public bestellManagerVal) throws PersistenceException {
+        
+    }
+    public void bestellIDSet(long BestellungId, long bestellIDVal) throws PersistenceException {
+        
     }
     public void bestellstatusSet(long BestellungId, Bestellstatus4Public bestellstatusVal) throws PersistenceException {
-        try{
-            CallableStatement callable;
-            callable = this.con.prepareCall("Begin " + this.schemaName + ".BstllngFacade.bstllsttsSet(?, ?, ?); end;");
-            callable.setLong(1, BestellungId);
-            callable.setLong(2, bestellstatusVal.getId());
-            callable.setLong(3, bestellstatusVal.getClassId());
-            callable.execute();
-            callable.close();
-        }catch(SQLException se) {
-            throw new PersistenceException(se.getMessage(), se.getErrorCode());
-        }
+        
+    }
+    public void subServiceSet(long BestellungId, SubjInterface subServiceVal) throws PersistenceException {
+        
     }
     public void ThisSet(long BestellungId, Bestellung4Public ThisVal) throws PersistenceException {
-        try{
-            CallableStatement callable;
-            callable = this.con.prepareCall("Begin " + this.schemaName + ".BstllngFacade.ThisSet(?, ?, ?); end;");
-            callable.setLong(1, BestellungId);
-            callable.setLong(2, ThisVal.getId());
-            callable.setLong(3, ThisVal.getClassId());
-            callable.execute();
-            callable.close();
-        }catch(SQLException se) {
-            throw new PersistenceException(se.getMessage(), se.getErrorCode());
-        }
+        
     }
 
 }

@@ -25,6 +25,12 @@ public class LieferartManagerICProxi extends PersistentInCacheProxiOptimistic im
     public LieferartManager_LieferartenListeProxi getLieferartenListe() throws PersistenceException {
         return ((PersistentLieferartManager)this.getTheObject()).getLieferartenListe();
     }
+    public SubjInterface getSubService() throws PersistenceException {
+        return ((PersistentLieferartManager)this.getTheObject()).getSubService();
+    }
+    public void setSubService(SubjInterface newValue) throws PersistenceException {
+        ((PersistentLieferartManager)this.getTheObject()).setSubService(newValue);
+    }
     public PersistentLieferartManager getThis() throws PersistenceException {
         return ((PersistentLieferartManager)this.getTheObject()).getThis();
     }
@@ -41,15 +47,35 @@ public class LieferartManagerICProxi extends PersistentInCacheProxiOptimistic im
     public <R, E extends model.UserException> R accept(AnythingReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E {
          return visitor.handleLieferartManager(this);
     }
+    public void accept(SubjInterfaceVisitor visitor) throws PersistenceException {
+        visitor.handleLieferartManager(this);
+    }
+    public <R> R accept(SubjInterfaceReturnVisitor<R>  visitor) throws PersistenceException {
+         return visitor.handleLieferartManager(this);
+    }
+    public <E extends model.UserException>  void accept(SubjInterfaceExceptionVisitor<E> visitor) throws PersistenceException, E {
+         visitor.handleLieferartManager(this);
+    }
+    public <R, E extends model.UserException> R accept(SubjInterfaceReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E {
+         return visitor.handleLieferartManager(this);
+    }
     
     
-    public ServiceAdmin4Public getMyService() 
+    public void deregister(final ObsInterface observee) 
 				throws PersistenceException{
-        return ((PersistentLieferartManager)this.getTheObject()).getMyService();
+        ((PersistentLieferartManager)this.getTheObject()).deregister(observee);
     }
     public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
 				throws PersistenceException{
         ((PersistentLieferartManager)this.getTheObject()).initialize(This, final$$Fields);
+    }
+    public void register(final ObsInterface observee) 
+				throws PersistenceException{
+        ((PersistentLieferartManager)this.getTheObject()).register(observee);
+    }
+    public void updateObservers(final model.meta.Mssgs event) 
+				throws PersistenceException{
+        ((PersistentLieferartManager)this.getTheObject()).updateObservers(event);
     }
     public void aendereLieferart(final Lieferart4Public lieferart, final String name, final long lieferzeit, final common.Fraction preis) 
 				throws model.ExcAlreadyExists, PersistenceException{

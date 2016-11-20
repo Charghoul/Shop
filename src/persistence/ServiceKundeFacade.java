@@ -2,152 +2,55 @@ package persistence;
 
 import model.*;
 
-import java.sql.*;
-//import oracle.jdbc.*;
-
 public class ServiceKundeFacade{
 
-	private String schemaName;
-	private Connection con;
 
-	public ServiceKundeFacade(String schemaName, Connection con) {
-		this.schemaName = schemaName;
-		this.con = con;
+
+	public ServiceKundeFacade() {
 	}
 
     /* If idCreateIfLessZero is negative, a new id is generated. */
     public PersistentServiceKunde newServiceKunde(long idCreateIfLessZero) throws PersistenceException {
-        oracle.jdbc.OracleCallableStatement callable;
-        try{
-            callable = (oracle.jdbc.OracleCallableStatement)this.con.prepareCall("Begin ? := " + this.schemaName + ".SrvcKndFacade.newSrvcKnd(?); end;");
-            callable.registerOutParameter(1, oracle.jdbc.OracleTypes.NUMBER);
-            callable.setLong(2, idCreateIfLessZero);
-            callable.execute();
-            long id = callable.getLong(1);
-            callable.close();
-            ServiceKunde result = new ServiceKunde(null,null,null,null,id);
-            if (idCreateIfLessZero < 0)Cache.getTheCache().put(result);
-            return (PersistentServiceKunde)PersistentProxi.createProxi(id, -181);
-        }catch(SQLException se) {
-            throw new PersistenceException(se.getMessage(), se.getErrorCode());
-        }
+        if(idCreateIfLessZero > 0) return (PersistentServiceKunde)PersistentProxi.createProxi(idCreateIfLessZero, -181);
+        long id = ConnectionHandler.getTheConnectionHandler().theServiceFacade.getNextId();
+        ServiceKunde result = new ServiceKunde(null,null,null,null,null,null,id);
+        Cache.getTheCache().put(result);
+        return (PersistentServiceKunde)PersistentProxi.createProxi(id, -181);
     }
     
     public PersistentServiceKunde newDelayedServiceKunde() throws PersistenceException {
-        oracle.jdbc.OracleCallableStatement callable;
-        try{
-            callable = (oracle.jdbc.OracleCallableStatement)this.con.prepareCall("Begin ? := " + this.schemaName + ".SrvcKndFacade.newDelayedSrvcKnd(); end;");
-            callable.registerOutParameter(1, oracle.jdbc.OracleTypes.NUMBER);
-            callable.execute();
-            long id = callable.getLong(1);
-            callable.close();
-            ServiceKunde result = new ServiceKunde(null,null,null,null,id);
-            Cache.getTheCache().put(result);
-            return (PersistentServiceKunde)PersistentProxi.createProxi(id, -181);
-        }catch(SQLException se) {
-            throw new PersistenceException(se.getMessage(), se.getErrorCode());
-        }
+        long id = ConnectionHandler.getTheConnectionHandler().theServiceFacade.getNextId();
+        ServiceKunde result = new ServiceKunde(null,null,null,null,null,null,id);
+        Cache.getTheCache().put(result);
+        return (PersistentServiceKunde)PersistentProxi.createProxi(id, -181);
     }
     
     public ServiceKunde getServiceKunde(long ServiceKundeId) throws PersistenceException{
-        try{
-            CallableStatement callable;
-            callable = this.con.prepareCall("Begin ? := " + this.schemaName + ".SrvcKndFacade.getSrvcKnd(?); end;");
-            callable.registerOutParameter(1, oracle.jdbc.OracleTypes.CURSOR);
-            callable.setLong(2, ServiceKundeId);
-            callable.execute();
-            ResultSet obj = ((oracle.jdbc.OracleCallableStatement)callable).getCursor(1);
-            if (!obj.next()) {
-                obj.close();
-                callable.close();
-                return null;
-            }
-            PersistentService This = null;
-            if (obj.getLong(2) != 0)
-                This = (PersistentService)PersistentProxi.createProxi(obj.getLong(2), obj.getLong(3));
-            PersistentEinkaufsManager einkaufsManager = null;
-            if (obj.getLong(4) != 0)
-                einkaufsManager = (PersistentEinkaufsManager)PersistentProxi.createProxi(obj.getLong(4), obj.getLong(5));
-            PersistentArtikelManager artikelManager = null;
-            if (obj.getLong(6) != 0)
-                artikelManager = (PersistentArtikelManager)PersistentProxi.createProxi(obj.getLong(6), obj.getLong(7));
-            PersistentWarenlager warenlager = null;
-            if (obj.getLong(8) != 0)
-                warenlager = (PersistentWarenlager)PersistentProxi.createProxi(obj.getLong(8), obj.getLong(9));
-            ServiceKunde result = new ServiceKunde(This,
-                                                   einkaufsManager,
-                                                   artikelManager,
-                                                   warenlager,
-                                                   ServiceKundeId);
-            obj.close();
-            callable.close();
-            ServiceKundeICProxi inCache = (ServiceKundeICProxi)Cache.getTheCache().put(result);
-            ServiceKunde objectInCache = (ServiceKunde)inCache.getTheObject();
-            if (objectInCache == result)result.initializeOnInstantiation();
-            return objectInCache;
-        }catch(SQLException se) {
-            throw new PersistenceException(se.getMessage(), se.getErrorCode());
-        }
+        return null; //All data is in the cache!
     }
     public void einkaufsManagerSet(long ServiceKundeId, EinkaufsManager4Public einkaufsManagerVal) throws PersistenceException {
-        try{
-            CallableStatement callable;
-            callable = this.con.prepareCall("Begin " + this.schemaName + ".SrvcKndFacade.enkfsMngrSet(?, ?, ?); end;");
-            callable.setLong(1, ServiceKundeId);
-            callable.setLong(2, einkaufsManagerVal.getId());
-            callable.setLong(3, einkaufsManagerVal.getClassId());
-            callable.execute();
-            callable.close();
-        }catch(SQLException se) {
-            throw new PersistenceException(se.getMessage(), se.getErrorCode());
-        }
+        
     }
-    public void artikelManagerSet(long ServiceKundeId, ArtikelManager4Public artikelManagerVal) throws PersistenceException {
-        try{
-            CallableStatement callable;
-            callable = this.con.prepareCall("Begin " + this.schemaName + ".SrvcKndFacade.artklMngrSet(?, ?, ?); end;");
-            callable.setLong(1, ServiceKundeId);
-            callable.setLong(2, artikelManagerVal.getId());
-            callable.setLong(3, artikelManagerVal.getClassId());
-            callable.execute();
-            callable.close();
-        }catch(SQLException se) {
-            throw new PersistenceException(se.getMessage(), se.getErrorCode());
-        }
+    public void lieferartManagerSet(long ServiceKundeId, LieferartManager4Public lieferartManagerVal) throws PersistenceException {
+        
     }
-    public void warenlagerSet(long ServiceKundeId, Warenlager4Public warenlagerVal) throws PersistenceException {
-        try{
-            CallableStatement callable;
-            callable = this.con.prepareCall("Begin " + this.schemaName + ".SrvcKndFacade.wrnlgrSet(?, ?, ?); end;");
-            callable.setLong(1, ServiceKundeId);
-            callable.setLong(2, warenlagerVal.getId());
-            callable.setLong(3, warenlagerVal.getClassId());
-            callable.execute();
-            callable.close();
-        }catch(SQLException se) {
-            throw new PersistenceException(se.getMessage(), se.getErrorCode());
-        }
+    public void bestellManagerSet(long ServiceKundeId, ServiceKundeBestellManager4Public bestellManagerVal) throws PersistenceException {
+        
     }
     public ServiceKundeSearchList inverseGetEinkaufsManager(long objectId, long classId)throws PersistenceException{
-        try{
-            CallableStatement callable;
-            callable = this.con.prepareCall("Begin ? := " + this.schemaName + ".SrvcKndFacade.iGetEnkfsMngr(?, ?); end;");
-            callable.registerOutParameter(1, oracle.jdbc.OracleTypes.CURSOR);
-            callable.setLong(2, objectId);
-            callable.setLong(3, classId);
-            callable.execute();
-            ResultSet list = ((oracle.jdbc.OracleCallableStatement)callable).getCursor(1);
-            ServiceKundeSearchList result = new ServiceKundeSearchList();
-            while (list.next()) {
-                if (list.getLong(3) != 0) result.add((PersistentServiceKunde)PersistentProxi.createProxi(list.getLong(3), list.getLong(4)));
-                else result.add((PersistentServiceKunde)PersistentProxi.createProxi(list.getLong(1), list.getLong(2)));
+        ServiceKundeSearchList result = new ServiceKundeSearchList();
+        java.util.Iterator<PersistentInCacheProxi> candidates;
+        candidates = Cache.getTheCache().iterator(-181);
+        while (candidates.hasNext()){
+            PersistentServiceKunde current = (PersistentServiceKunde)((PersistentRoot)candidates.next()).getTheObject();
+            if (current != null && !current.isDltd() && !current.isDelayed$Persistence() && current.getEinkaufsManager() != null){
+                if (current.getEinkaufsManager().getClassId() == classId && current.getEinkaufsManager().getId() == objectId) {
+                    PersistentServiceKunde proxi = (PersistentServiceKunde)PersistentProxi.createProxi(current.getId(), current.getClassId());
+                    result.add((PersistentServiceKunde)proxi.getThis());
+                }
             }
-            list.close();
-            callable.close();
-            return result;
-        }catch(SQLException se) {
-            throw new PersistenceException(se.getMessage(), se.getErrorCode());
         }
+        return result;
     }
 
 }

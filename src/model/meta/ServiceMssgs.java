@@ -5,4 +5,4 @@ public interface ServiceMssgs {
 }
 
 interface ServiceDOWNMssgs extends Mssgs, ServiceMssgs{}
-interface ServiceUPMssgs extends ServiceRegisterUPMssgs, ServiceKundeUPMssgs, ServiceAdminUPMssgs, ServiceMssgs{}
+interface ServiceUPMssgs extends ServiceRegisterUPMssgs, ServiceShopUPMssgs, ServiceMssgs{}

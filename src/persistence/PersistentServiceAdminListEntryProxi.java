@@ -1,5 +1,5 @@
 package persistence;
 
-public interface PersistentServiceAdminListEntryProxi extends PersistentServiceListEntryProxi {
+public interface PersistentServiceAdminListEntryProxi extends PersistentServiceShopListEntryProxi {
 
 }

@@ -61,8 +61,10 @@ public class ServiceRegister extends model.Service implements PersistentServiceR
     
     public ServiceRegister provideCopy() throws PersistenceException{
         ServiceRegister result = this;
-        result = new ServiceRegister(this.This, 
+        result = new ServiceRegister(this.subService, 
+                                     this.This, 
                                      this.getId());
+        result.errors = this.errors.copy(result);
         result.errors = this.errors.copy(result);
         this.copyingPrivateUserAttributes(result);
         return result;
@@ -72,9 +74,9 @@ public class ServiceRegister extends model.Service implements PersistentServiceR
         return false;
     }
     
-    public ServiceRegister(PersistentService This,long id) throws PersistenceException {
+    public ServiceRegister(SubjInterface subService,PersistentService This,long id) throws PersistenceException {
         /* Shall not be used by clients for object construction! Use static create operation instead! */
-        super((PersistentService)This,id);        
+        super((SubjInterface)subService,(PersistentService)This,id);        
     }
     
     static public long getTypeId() {
@@ -137,6 +139,18 @@ public class ServiceRegister extends model.Service implements PersistentServiceR
     public <R, E extends model.UserException> R accept(AnythingReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E {
          return visitor.handleServiceRegister(this);
     }
+    public void accept(SubjInterfaceVisitor visitor) throws PersistenceException {
+        visitor.handleServiceRegister(this);
+    }
+    public <R> R accept(SubjInterfaceReturnVisitor<R>  visitor) throws PersistenceException {
+         return visitor.handleServiceRegister(this);
+    }
+    public <E extends model.UserException>  void accept(SubjInterfaceExceptionVisitor<E> visitor) throws PersistenceException, E {
+         visitor.handleServiceRegister(this);
+    }
+    public <R, E extends model.UserException> R accept(SubjInterfaceReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E {
+         return visitor.handleServiceRegister(this);
+    }
     public void accept(RemoteVisitor visitor) throws PersistenceException {
         visitor.handleServiceRegister(this);
     }
@@ -154,11 +168,29 @@ public class ServiceRegister extends model.Service implements PersistentServiceR
     }
     
     
+    public synchronized void deregister(final ObsInterface observee) 
+				throws PersistenceException{
+        SubjInterface subService = getThis().getSubService();
+		if (subService == null) {
+			subService = model.Subj.createSubj(this.isDelayed$Persistence());
+			getThis().setSubService(subService);
+		}
+		subService.deregister(observee);
+    }
     public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
 				throws PersistenceException{
         this.setThis((PersistentServiceRegister)This);
 		if(this.isTheSameAs(This)){
 		}
+    }
+    public synchronized void register(final ObsInterface observee) 
+				throws PersistenceException{
+        SubjInterface subService = getThis().getSubService();
+		if (subService == null) {
+			subService = model.Subj.createSubj(this.isDelayed$Persistence());
+			getThis().setSubService(subService);
+		}
+		subService.register(observee);
     }
     public void register(final String username, final String passwort, final Invoker invoker) 
 				throws PersistenceException{
@@ -172,6 +204,15 @@ public class ServiceRegister extends model.Service implements PersistentServiceR
 				throws PersistenceException{
         String result = "+++";
 		return result;
+    }
+    public synchronized void updateObservers(final model.meta.Mssgs event) 
+				throws PersistenceException{
+        SubjInterface subService = getThis().getSubService();
+		if (subService == null) {
+			subService = model.Subj.createSubj(this.isDelayed$Persistence());
+			getThis().setSubService(subService);
+		}
+		subService.updateObservers(event);
     }
     
     
@@ -206,7 +247,7 @@ public class ServiceRegister extends model.Service implements PersistentServiceR
 				throws model.ExcUserAlreadyExists, PersistenceException{
         KundeSearchList kundeSearchList = Kunde.getKundeByBenutzername(username);
         if( kundeSearchList.iterator().hasNext() ) {
-            throw new ExcUserAlreadyExists(ErrorMessages.AccountNotFoundMessage);
+            throw new ExcUserAlreadyExists(ErrorMessages.DoubleDefinitionMessage);
         }
         Kunde.createKunde(username, passwort);
         Server.createServer(passwort,username, 3, new Timestamp(0));

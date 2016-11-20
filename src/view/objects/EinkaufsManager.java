@@ -1,6 +1,7 @@
 
 package view.objects;
 
+import view.BestellManagerView;
 import view.EinkaufsManagerView;
 import view.ModelException;
 import view.PositionView;
@@ -15,11 +16,13 @@ import view.visitor.AnythingVisitor;
 public class EinkaufsManager extends ViewObject implements EinkaufsManagerView{
     
     protected java.util.Vector<PositionView> einkaufsListe;
+    protected BestellManagerView bestellManager;
     
-    public EinkaufsManager(java.util.Vector<PositionView> einkaufsListe,long id, long classId) {
+    public EinkaufsManager(java.util.Vector<PositionView> einkaufsListe,BestellManagerView bestellManager,long id, long classId) {
         /* Shall not be used. Objects are created on the server only */
         super(id, classId);
-        this.einkaufsListe = einkaufsListe;        
+        this.einkaufsListe = einkaufsListe;
+        this.bestellManager = bestellManager;        
     }
     
     static public long getTypeId() {
@@ -35,6 +38,12 @@ public class EinkaufsManager extends ViewObject implements EinkaufsManagerView{
     }
     public void setEinkaufsListe(java.util.Vector<PositionView> newValue) throws ModelException {
         this.einkaufsListe = newValue;
+    }
+    public BestellManagerView getBestellManager()throws ModelException{
+        return this.bestellManager;
+    }
+    public void setBestellManager(BestellManagerView newValue) throws ModelException {
+        this.bestellManager = newValue;
     }
     
     public void accept(AnythingVisitor visitor) throws ModelException {
@@ -54,6 +63,10 @@ public class EinkaufsManager extends ViewObject implements EinkaufsManagerView{
         java.util.Vector<?> einkaufsListe = this.getEinkaufsListe();
         if (einkaufsListe != null) {
             ViewObject.resolveVectorProxies(einkaufsListe, resultTable);
+        }
+        BestellManagerView bestellManager = this.getBestellManager();
+        if (bestellManager != null) {
+            ((ViewProxi)bestellManager).setObject((ViewObject)resultTable.get(common.RPCConstantsAndServices.createHashtableKey(bestellManager.getClassId(), bestellManager.getId())));
         }
         
     }

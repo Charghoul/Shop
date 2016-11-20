@@ -4,18 +4,18 @@ import model.*;
 
 import java.util.Iterator;
 
-public class Bestellung_PositionsListeProxi extends PersistentListProxi<Position4Public> {
+public class Bestellung_PositionsListeProxi extends PersistentListProxi<PositionInBestellung4Public> {
 
-  	private PositionList list;
+  	private PositionInBestellungList list;
   	private Bestellung owner;
 
   	public Bestellung_PositionsListeProxi(Bestellung owner) {
     	this.owner = owner;
   	}
-  	public PositionList getList() throws PersistenceException{
+  	public PositionInBestellungList getList() throws PersistenceException{
     	if (this.list == null) {
       		if (this.owner.isDelayed$Persistence()) {
-        		this.list = new PositionList();
+        		this.list = new PositionInBestellungList();
       		} else {
         		this.list = ConnectionHandler
                 		    .getTheConnectionHandler()
@@ -25,22 +25,22 @@ public class Bestellung_PositionsListeProxi extends PersistentListProxi<Position
     	}
     	return this.list;
   	}
-  	public Iterator<Position4Public> iterator() throws PersistenceException{
+  	public Iterator<PositionInBestellung4Public> iterator() throws PersistenceException{
     	return this.getList().iterator(this);
   	}
   	public long getLength() throws PersistenceException{
 	  	return this.getList().getLength();
   	}
-  	public void add(Position4Public entry) throws PersistenceException {
+  	public void add(PositionInBestellung4Public entry) throws PersistenceException {
     	if (entry != null) {
-      		PositionList list = this.getList();
+      		PositionInBestellungList list = this.getList();
       		long entryId = 0;
       		if (!this.owner.isDelayed$Persistence()) {
         		entry.store();  	
         		entryId = ConnectionHandler.getTheConnectionHandler().theBestellungFacade
         	               	.positionsListeAdd(owner.getId(), entry);
       		}
-      		list.add((Position4Public)PersistentProxi.createListEntryProxi(entry.getId(),
+      		list.add((PositionInBestellung4Public)PersistentProxi.createListEntryProxi(entry.getId(),
             		                   entry.getClassId(),
         	    	                   entryId));
       		
@@ -58,9 +58,9 @@ public class Bestellung_PositionsListeProxi extends PersistentListProxi<Position
   		return result;
   	}	 
   	public void store() throws PersistenceException {
-  		java.util.Iterator<Position4Public> entries = (this.list == null ? new java.util.Vector<Position4Public>().iterator() : this.list.iterator(this));
+  		java.util.Iterator<PositionInBestellung4Public> entries = (this.list == null ? new java.util.Vector<PositionInBestellung4Public>().iterator() : this.list.iterator(this));
   		while (entries.hasNext()){
-  			Position4Public current = entries.next();
+  			PositionInBestellung4Public current = entries.next();
   			current.store();
       		long entryId = ConnectionHandler.getTheConnectionHandler().theBestellungFacade
             	           .positionsListeAdd(owner.getId(), current);

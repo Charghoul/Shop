@@ -3,9 +3,13 @@ package persistence;
 
 import model.visitor.*;
 
-public interface ServiceAdmin4Public extends Service4Public {
+public interface ServiceAdmin4Public extends ServiceShop4Public {
     
     
+    public void accept(ServiceShopVisitor visitor) throws PersistenceException;
+    public <R> R accept(ServiceShopReturnVisitor<R>  visitor) throws PersistenceException;
+    public <E extends model.UserException>  void accept(ServiceShopExceptionVisitor<E> visitor) throws PersistenceException, E;
+    public <R, E extends model.UserException> R accept(ServiceShopReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E;
     public void accept(ServiceVisitor visitor) throws PersistenceException;
     public <R> R accept(ServiceReturnVisitor<R>  visitor) throws PersistenceException;
     public <E extends model.UserException>  void accept(ServiceExceptionVisitor<E> visitor) throws PersistenceException, E;
@@ -18,19 +22,35 @@ public interface ServiceAdmin4Public extends Service4Public {
     public <R> R accept(AnythingReturnVisitor<R>  visitor) throws PersistenceException;
     public <E extends model.UserException>  void accept(AnythingExceptionVisitor<E> visitor) throws PersistenceException, E;
     public <R, E extends model.UserException> R accept(AnythingReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E;
+    public void accept(SubjInterfaceVisitor visitor) throws PersistenceException;
+    public <R> R accept(SubjInterfaceReturnVisitor<R>  visitor) throws PersistenceException;
+    public <E extends model.UserException>  void accept(SubjInterfaceExceptionVisitor<E> visitor) throws PersistenceException, E;
+    public <R, E extends model.UserException> R accept(SubjInterfaceReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E;
     public void accept(RemoteVisitor visitor) throws PersistenceException;
     public <R> R accept(RemoteReturnVisitor<R>  visitor) throws PersistenceException;
     public <E extends model.UserException>  void accept(RemoteExceptionVisitor<E> visitor) throws PersistenceException, E;
     public <R, E extends model.UserException> R accept(RemoteReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E;
     
+    public ArtikelManager4Public artikel_Path_In_ArtikelAnhaengen() 
+				throws model.UserException, PersistenceException;
+    public ArtikelManager4Public artikel_Path_In_ArtikelEinlagern() 
+				throws model.UserException, PersistenceException;
+    public ArtikelManager4Public artikel_Path_In_ArtikelEntnehmen() 
+				throws model.UserException, PersistenceException;
+    public HerstellerManager4Public hersteller_Path_In_HerstellerHinzufuegen() 
+				throws model.UserException, PersistenceException;
     public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
 				throws PersistenceException;
+    public Warenlager4Public position_Path_In_ArtikelEntfernen() 
+				throws model.UserException, PersistenceException;
     public String serviceAdmin_Menu_Filter(final Anything anything) 
 				throws PersistenceException;
-    public void aendereArtikel(final Artikel4Public artikel, final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
+    public void aendereArtikel(final Artikel4Public artikel, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
 				throws model.ExcAlreadyExists, PersistenceException;
     public void aendereHersteller(final Hersteller4Public hersteller, final String name) 
 				throws model.ExcAlreadyExists, PersistenceException;
+    public void aendereHstLieferzeit(final Artikel4Public artikel, final long hstLieferzeit) 
+				throws PersistenceException;
     public void aendereLieferart(final Lieferart4Public lieferart, final String name, final long lieferzeit, final common.Fraction preis) 
 				throws model.ExcAlreadyExists, PersistenceException;
     public void aendereMenge(final Position4Public position, final long menge) 
@@ -43,7 +63,7 @@ public interface ServiceAdmin4Public extends Service4Public {
 				throws PersistenceException;
     public void artikelEntfernen(final Warenlager4Public warenlager, final Position4Public position) 
 				throws PersistenceException;
-    public void artikelEntnehmen(final Warenlager4Public warenlager, final Position4Public position, final long menge) 
+    public void artikelEntnehmen(final Warenlager4Public warenlager, final Artikel4Public artikel, final long menge) 
 				throws PersistenceException;
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException;

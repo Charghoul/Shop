@@ -1,5 +1,5 @@
 package persistence;
 
-public interface PersistentPositionListEntryProxi extends PersistentListEntryProxi {
+public interface PersistentPositionListEntryProxi extends PersistentPositionAbstraktListEntryProxi {
 
 }

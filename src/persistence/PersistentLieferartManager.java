@@ -1,14 +1,13 @@
 package persistence;
 
 
-public interface PersistentLieferartManager extends Anything, AbstractPersistentProxi, LieferartManager4Public {
+public interface PersistentLieferartManager extends Anything, SubjInterface, AbstractPersistentProxi, LieferartManager4Public {
     
-    public LieferartManager_LieferartenListeProxi getLieferartenListe() throws PersistenceException ;
+    public SubjInterface getSubService() throws PersistenceException ;
+    public void setSubService(SubjInterface newValue) throws PersistenceException ;
     public PersistentLieferartManager getThis() throws PersistenceException ;
     
     
-    public ServiceAdmin4Public getMyService() 
-				throws PersistenceException;
 
 }
 
