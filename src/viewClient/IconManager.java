@@ -8,12 +8,13 @@ public class IconManager {
 
 	public static Image getImage(int iconInfo) {
 		switch (iconInfo) {
-			case 1: return new Image("/viewResources/Icons/database.png");
-			case 2: return new Image("/viewResources/Icons/folder-24.png");
+			case 1: return new Image("/viewResources/Icons/standard.png");
+			case 2: return new Image("/viewResources/Icons/folder.png");
+			case 3: return new Image("/viewResources/Icons/einkaufswagen.png");
 
 		// TODO provide images for icon info numbers!
 			default:
-			return new Image("/viewResources/Icons/database.png");
+			return new Image("/viewResources/Icons/standard.png");
 		}
 
 	}
