@@ -39,6 +39,8 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     public void handleProduktgruppe(Produktgruppe4Public produktgruppe) throws PersistenceException{
         this.handleKomponente(produktgruppe);
     }
+    public abstract void handleZeitManagerZeitObjektListe(ZeitManagerZeitObjektListe4Public zeitManagerZeitObjektListe) throws PersistenceException;
+    
     public abstract void handleProduktKatalog(ProduktKatalog4Public produktKatalog) throws PersistenceException;
     
     public abstract void handleBestellstatus(Bestellstatus4Public bestellstatus) throws PersistenceException;
@@ -117,6 +119,9 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     }
     public void handleArtikelEntfernenCommand(ArtikelEntfernenCommand4Public artikelEntfernenCommand) throws PersistenceException{
         this.handleCommonDate(artikelEntfernenCommand);
+    }
+    public void handleZuruecksendenCommand(ZuruecksendenCommand4Public zuruecksendenCommand) throws PersistenceException{
+        this.handleCommonDate(zuruecksendenCommand);
     }
     public void handleBestellenCommand(BestellenCommand4Public bestellenCommand) throws PersistenceException{
         this.handleCommonDate(bestellenCommand);

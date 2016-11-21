@@ -219,7 +219,6 @@ public class LieferartManager extends PersistentObject implements PersistentLief
     }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{
-        //TODO: implement method: copyingPrivateUserAttributes
         
     }
     public void initializeOnCreation() 
@@ -229,7 +228,6 @@ public class LieferartManager extends PersistentObject implements PersistentLief
     }
     public void initializeOnInstantiation() 
 				throws PersistenceException{
-        //TODO: implement method: initializeOnInstantiation
         
     }
     public void neueLieferart(final String name, final long lieferzeit, final common.Fraction preis) 

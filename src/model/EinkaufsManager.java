@@ -277,6 +277,7 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
 				throws model.ExcArtikelNichtVerfuegbar, PersistenceException{
         //überprüfen ob alles auf lager ist
         Position4Public temp = Warenlager.getTheWarenlager().nichtVerfPruefen(getThis().getEinkaufsListe().getList());
+        //TODO: überprüfung ob artikel vorhanden ist funktioniert noch nicht!
         if(temp == null) {
             Bestellung4Public bestellung = getThis().getBestellManager().neueBestellung(getThis().getEinkaufsListe().getList(), Verarbeitung.getTheVerarbeitung());
             getThis().getEinkaufsListe().applyToAll(new Procdure<Position4Public>() {
@@ -315,7 +316,6 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
     }
     public void initializeOnCreation() 
 				throws PersistenceException{
-        //TODO: implement method: initializeOnCreation
         
     }
     public void initializeOnInstantiation() 
@@ -346,7 +346,7 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
     }
     public void vorbestellen() 
 				throws PersistenceException{
-
+        //TODO: vorbestellen implementieren - Vorbestellungsliste und abarbeitung etc
     }
     
     
