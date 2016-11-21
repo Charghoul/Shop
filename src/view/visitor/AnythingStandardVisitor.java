@@ -20,6 +20,9 @@ public abstract class AnythingStandardVisitor implements AnythingVisitor {
     public void handleLieferart(LieferartView lieferart) throws ModelException{
         this.standardHandling(lieferart);
     }
+    public void handledeactivated(deactivatedView deactivated) throws ModelException{
+        this.standardHandling(deactivated);
+    }
     public void handleNeuanlage(NeuanlageView neuanlage) throws ModelException{
         this.standardHandling(neuanlage);
     }
@@ -80,9 +83,6 @@ public abstract class AnythingStandardVisitor implements AnythingVisitor {
     public void handleGeliefert(GeliefertView geliefert) throws ModelException{
         this.standardHandling(geliefert);
     }
-    public void handleThreadOfControl(ThreadOfControlView threadOfControl) throws ModelException{
-        this.standardHandling(threadOfControl);
-    }
     public void handleBestellManager(BestellManagerView bestellManager) throws ModelException{
         this.standardHandling(bestellManager);
     }
@@ -109,6 +109,9 @@ public abstract class AnythingStandardVisitor implements AnythingVisitor {
     }
     public void handleIntegerWrapper(IntegerWrapperView integerWrapper) throws ModelException{
         this.standardHandling(integerWrapper);
+    }
+    public void handleactivated(activatedView activated) throws ModelException{
+        this.standardHandling(activated);
     }
     protected abstract void standardHandling(Anything anything) throws ModelException;
 }

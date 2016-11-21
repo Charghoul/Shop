@@ -25,6 +25,8 @@ public interface Position4Public extends PositionAbstrakt4Public {
 				throws model.ExcLagerbestandUnderZero, model.ExcLagerbestandOverMax, PersistenceException;
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException;
+    public void entfernePosition(final EinkaufsManager4Public einkaufsManager) 
+				throws PersistenceException;
     public void erhoeheMenge(final long menge) 
 				throws model.ExcLagerbestandOverMax, PersistenceException;
     public void initializeOnCreation() 

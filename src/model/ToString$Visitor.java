@@ -61,6 +61,11 @@ public class ToString$Visitor extends model.visitor.ToString$Visitor {
 		result = integerWrapper.getTheInt() + "";
 	}
 
+	@Override
+	public void handleactivated(activated4Public activated) throws PersistenceException {
+		result = ToStringConstants.activated;
+	}
+
 
 	@Override
 	public void handleWarenlager(Warenlager4Public warenlager) throws PersistenceException {
@@ -110,6 +115,11 @@ public class ToString$Visitor extends model.visitor.ToString$Visitor {
 	}
 
 	@Override
+	public void handledeactivated(deactivated4Public deactivated) throws PersistenceException {
+		result = ToStringConstants.deactived;
+	}
+
+	@Override
 	public void handleNeuanlage(Neuanlage4Public neuanlage) throws PersistenceException {
 		result = ToStringConstants.Artikelstatus + ToStringConstants.Neuanlage;
 	}
@@ -122,7 +132,7 @@ public class ToString$Visitor extends model.visitor.ToString$Visitor {
 
 	@Override
 	public void handleHstLieferung(HstLieferung4Public hstLieferung) throws PersistenceException {
-
+		result = ToStringConstants.HstLieferung + " "+hstLieferung.getId() +" | "+ hstLieferung.getStatus();
 	}
 
 	@Override
@@ -132,17 +142,14 @@ public class ToString$Visitor extends model.visitor.ToString$Visitor {
 
 	@Override
 	public void handleKndLieferung(KndLieferung4Public kndLieferung) throws PersistenceException {
-
+		PersistentKndLieferung persKnd = (PersistentKndLieferung) kndLieferung;
+		result =  persKnd.getLieferart().toString() + persKnd.getLieferversuche();
 	}
 
 	@Override
 	public void handleServiceKunde(ServiceKunde4Public serviceKunde) throws PersistenceException {
 	}
 
-	@Override
-	public void handleThreadOfControl(ThreadOfControl4Public threadOfControl) throws PersistenceException {
-
-	}
 
 	@Override
 	public void handleBestellManager(BestellManager4Public bestellManager) throws PersistenceException {
@@ -178,14 +185,16 @@ public class ToString$Visitor extends model.visitor.ToString$Visitor {
 	@Override
 	public void handleArtikel(Artikel4Public artikel) throws PersistenceException {
 		PersistentArtikel persistentArtikel = (PersistentArtikel) artikel;
-		String temp = ToStringConstants.Artikel + persistentArtikel.getArtikelnummer() + " | " + persistentArtikel.getBezeichnung()
+		String temp = "("+persistentArtikel.getArtikelnummer() + ") " + persistentArtikel.getBezeichnung()
 				+" | " + persistentArtikel.getArtikelstatus();
 		if(persistentArtikel.getHersteller()!=null){
 			temp = temp +" | " + persistentArtikel.getHersteller();
 		}
-		IntegerWrapper4Public bestand = ((PersistentWarenlager) Warenlager.getTheWarenlager()).getTemplist().get(artikel);
+		Position4Public bestand = Warenlager.getTheWarenlager().getWarenListe().findFirst(x -> {
+			return x.getArtikel().equals(artikel);
+		});
 		if(bestand != null) {
-			temp = temp + " | Bestand: " + bestand.getTheInt();
+			temp = temp + " | Bestand: " + bestand.getMenge();
 		}
 		result = temp;
 	}

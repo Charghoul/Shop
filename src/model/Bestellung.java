@@ -297,6 +297,11 @@ public class Bestellung extends PersistentObject implements PersistentBestellung
         getThis().setBestellstatus(bestellstatus);
         
     }
+    public void annehmen() 
+				throws PersistenceException{
+        getThis().setBestellstatus(Angenommen.getTheAngenommen());
+        //TODO KndLieferung mit Bestellung entfernen!
+    }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{
         //TODO: implement method: copyingPrivateUserAttributes

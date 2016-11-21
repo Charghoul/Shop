@@ -70,6 +70,7 @@ public class ConnectionHandler {
     public HerstellerManagerFacade theHerstellerManagerFacade;
     public LieferartFacade theLieferartFacade;
     public RegisterCommandFacade theRegisterCommandFacade;
+    public deactivatedFacade thedeactivatedFacade;
     public NeuanlageFacade theNeuanlageFacade;
     public ServiceRegisterFacade theServiceRegisterFacade;
     public CommandCoordinatorFacade theCommandCoordinatorFacade;
@@ -82,6 +83,7 @@ public class ConnectionHandler {
     public ServiceShopProduktKatalogFacade theServiceShopProduktKatalogFacade;
     public ArtikelFacade theArtikelFacade;
     public ProduktgruppeFacade theProduktgruppeFacade;
+    public StatusFacade theStatusFacade;
     public PositionFacade thePositionFacade;
     public ServiceAdminFacade theServiceAdminFacade;
     public ArtikelManagerFacade theArtikelManagerFacade;
@@ -103,7 +105,6 @@ public class ConnectionHandler {
     public ServiceShopFacade theServiceShopFacade;
     public ArtikelEinlagernCommandFacade theArtikelEinlagernCommandFacade;
     public GeliefertFacade theGeliefertFacade;
-    public ThreadOfControlFacade theThreadOfControlFacade;
     public ZeitObjektFacade theZeitObjektFacade;
     public ServiceFacade theServiceFacade;
     public BestellManagerFacade theBestellManagerFacade;
@@ -120,6 +121,7 @@ public class ConnectionHandler {
     public IntegerWrapperFacade theIntegerWrapperFacade;
     public ArtikelstatusFacade theArtikelstatusFacade;
     public CommandExecuterFacade theCommandExecuterFacade;
+    public activatedFacade theactivatedFacade;
 
 	protected ConnectionHandler() throws PersistenceException {
 	}
@@ -133,6 +135,7 @@ public class ConnectionHandler {
             this.theHerstellerManagerFacade= new HerstellerManagerFacade();
             this.theLieferartFacade= new LieferartFacade();
             this.theRegisterCommandFacade= new RegisterCommandFacade();
+            this.thedeactivatedFacade= new deactivatedFacade();
             this.theNeuanlageFacade= new NeuanlageFacade();
             this.theServiceRegisterFacade= new ServiceRegisterFacade();
             this.theCommandCoordinatorFacade= new CommandCoordinatorFacade();
@@ -145,6 +148,7 @@ public class ConnectionHandler {
             this.theServiceShopProduktKatalogFacade= new ServiceShopProduktKatalogFacade();
             this.theArtikelFacade= new ArtikelFacade();
             this.theProduktgruppeFacade= new ProduktgruppeFacade();
+            this.theStatusFacade= new StatusFacade();
             this.thePositionFacade= new PositionFacade();
             this.theServiceAdminFacade= new ServiceAdminFacade();
             this.theArtikelManagerFacade= new ArtikelManagerFacade();
@@ -166,7 +170,6 @@ public class ConnectionHandler {
             this.theServiceShopFacade= new ServiceShopFacade();
             this.theArtikelEinlagernCommandFacade= new ArtikelEinlagernCommandFacade();
             this.theGeliefertFacade= new GeliefertFacade();
-            this.theThreadOfControlFacade= new ThreadOfControlFacade();
             this.theZeitObjektFacade= new ZeitObjektFacade();
             this.theServiceFacade= new ServiceFacade();
             this.theBestellManagerFacade= new BestellManagerFacade();
@@ -183,6 +186,7 @@ public class ConnectionHandler {
             this.theIntegerWrapperFacade= new IntegerWrapperFacade();
             this.theArtikelstatusFacade= new ArtikelstatusFacade();
             this.theCommandExecuterFacade= new CommandExecuterFacade();
+            this.theactivatedFacade= new activatedFacade();
 	}
 	public static void initializeMapsForMappedFields() throws PersistenceException {
 		

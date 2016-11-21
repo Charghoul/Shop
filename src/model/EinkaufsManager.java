@@ -274,7 +274,7 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
     // Start of section that contains operations that must be implemented.
     
     public void bestellen(final Lieferart4Public lieferart) 
-				throws model.ExcLagerbestandUnderZero, model.ExcArtikelNichtVerfuegbar, PersistenceException{
+				throws model.ExcArtikelNichtVerfuegbar, PersistenceException{
         //überprüfen ob alles auf lager ist
         Position4Public temp = Warenlager.getTheWarenlager().nichtVerfPruefen(getThis().getEinkaufsListe().getList());
         if(temp == null) {
@@ -282,11 +282,15 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
             getThis().getEinkaufsListe().applyToAll(new Procdure<Position4Public>() {
                 @Override
                 public void doItTo(Position4Public argument) throws PersistenceException {
+
                     try {
                         Warenlager.getTheWarenlager().artikelEntnehmen(argument.getArtikel(), argument.getMenge());
+                    } catch (ExcArtikelHatKeinenHersteller excArtikelHatKeinenHersteller) {
+                        excArtikelHatKeinenHersteller.printStackTrace();
                     } catch (ExcLagerbestandUnderZero excLagerbestandUnderZero) {
                         excLagerbestandUnderZero.printStackTrace();
                     }
+
                 }
             });
             bestellung.aendereStatus(Hinversand.getTheHinversand());
@@ -304,6 +308,11 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
 				throws PersistenceException{
 
     }
+    public void entfernePosition(final Position4Public position) 
+				throws PersistenceException{
+        getThis().getEinkaufsListe().removeFirst(position);
+        
+    }
     public void initializeOnCreation() 
 				throws PersistenceException{
         //TODO: implement method: initializeOnCreation
@@ -315,14 +324,18 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
     }
     public void neuePosition(final Artikel4Public artikel, final long menge) 
 				throws model.ExcArtikelAlreadyExists, model.UserException, model.ExcLagerbestandOverMax, PersistenceException{
-        //TODO: neueEinkaufswagenposition: auf Artikelstatus prüfen, ob verkauf oder neuanlage
-
+        //prüft ob Artikel schon im Verkauf ist
+        if(artikel.getArtikelstatus().equals(Neuanlage.getTheNeuanlage())){
+            throw new ExcArtikelNochNichtVerfuegbar(ErrorMessages.ArtikelNochNichtVerfuegbar);
+        }
+        //prüft ob der Artikel schon in der Einkaufsliste ist
         Position4Public temp = getThis().getEinkaufsListe().findFirst(new Predcate<Position4Public>() {
             @Override
             public boolean test(Position4Public argument) throws PersistenceException{
                 return argument.equals(artikel);
             }
         });
+        //wenn der Artikel nicht in der Einkaufsliste gefunden wurde
         if( temp != null) throw new ExcArtikelAlreadyExists(ErrorMessages.ArtikelAlreadyInBasket);
         else {
             if(artikel.getMaxLagerbestand() < menge){

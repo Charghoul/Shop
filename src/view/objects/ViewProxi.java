@@ -55,7 +55,7 @@ public abstract class ViewProxi extends ViewRoot {
 	
   private static ProxiFactory [] getTheProxiFactories(){
 	if (proxiFactories == null){
-		proxiFactories = new ProxiFactory [237];
+		proxiFactories = new ProxiFactory [245];
         proxiFactories[2] = new ProxiFactory(){
             ViewProxi create(long objectId, long classId, ExceptionAndEventHandler connectionKey){
                 return new ServerProxi(objectId, classId, connectionKey);
@@ -79,6 +79,11 @@ public abstract class ViewProxi extends ViewRoot {
         proxiFactories[37] = new ProxiFactory(){
             ViewProxi create(long objectId, long classId, ExceptionAndEventHandler connectionKey){
                 return new LieferartProxi(objectId, classId, connectionKey);
+            }
+        };
+        proxiFactories[239] = new ProxiFactory(){
+            ViewProxi create(long objectId, long classId, ExceptionAndEventHandler connectionKey){
+                return new deactivatedProxi(objectId, classId, connectionKey);
             }
         };
         proxiFactories[113] = new ProxiFactory(){
@@ -181,11 +186,6 @@ public abstract class ViewProxi extends ViewRoot {
                 return new GeliefertProxi(objectId, classId, connectionKey);
             }
         };
-        proxiFactories[188] = new ProxiFactory(){
-            ViewProxi create(long objectId, long classId, ExceptionAndEventHandler connectionKey){
-                return new ThreadOfControlProxi(objectId, classId, connectionKey);
-            }
-        };
         proxiFactories[208] = new ProxiFactory(){
             ViewProxi create(long objectId, long classId, ExceptionAndEventHandler connectionKey){
                 return new BestellManagerProxi(objectId, classId, connectionKey);
@@ -229,6 +229,11 @@ public abstract class ViewProxi extends ViewRoot {
         proxiFactories[192] = new ProxiFactory(){
             ViewProxi create(long objectId, long classId, ExceptionAndEventHandler connectionKey){
                 return new IntegerWrapperProxi(objectId, classId, connectionKey);
+            }
+        };
+        proxiFactories[241] = new ProxiFactory(){
+            ViewProxi create(long objectId, long classId, ExceptionAndEventHandler connectionKey){
+                return new activatedProxi(objectId, classId, connectionKey);
             }
         };
 	}

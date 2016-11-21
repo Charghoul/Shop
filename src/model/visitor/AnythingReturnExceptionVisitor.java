@@ -3,7 +3,7 @@ package model.visitor;
 
 import persistence.*;
 
-public interface AnythingReturnExceptionVisitor<R, E extends model.UserException> extends ArtikelstatusReturnExceptionVisitor<R, E> ,BestellstatusReturnExceptionVisitor<R, E> ,CommonDateReturnExceptionVisitor<R, E> ,KomponenteReturnExceptionVisitor<R, E> ,PositionAbstraktReturnExceptionVisitor<R, E> ,ServiceReturnExceptionVisitor<R, E> ,ZeitObjektReturnExceptionVisitor<R, E> {
+public interface AnythingReturnExceptionVisitor<R, E extends model.UserException> extends ArtikelstatusReturnExceptionVisitor<R, E> ,BestellstatusReturnExceptionVisitor<R, E> ,CommonDateReturnExceptionVisitor<R, E> ,KomponenteReturnExceptionVisitor<R, E> ,PositionAbstraktReturnExceptionVisitor<R, E> ,ServiceReturnExceptionVisitor<R, E> ,StatusReturnExceptionVisitor<R, E> ,ZeitObjektReturnExceptionVisitor<R, E> {
     
     public R handleArtikelEinlagernCommand(ArtikelEinlagernCommand4Public artikelEinlagernCommand) throws PersistenceException, E;
     public R handleArtikelEntfernenCommand(ArtikelEntfernenCommand4Public artikelEntfernenCommand) throws PersistenceException, E;
@@ -35,7 +35,6 @@ public interface AnythingReturnExceptionVisitor<R, E extends model.UserException
     public R handleStatusAuslaufCommand(StatusAuslaufCommand4Public statusAuslaufCommand) throws PersistenceException, E;
     public R handleStatusVerkaufCommand(StatusVerkaufCommand4Public statusVerkaufCommand) throws PersistenceException, E;
     public R handleSubj(Subj4Public subj) throws PersistenceException, E;
-    public R handleThreadOfControl(ThreadOfControl4Public threadOfControl) throws PersistenceException, E;
     public R handleWarenlager(Warenlager4Public warenlager) throws PersistenceException, E;
     public R handleZeitManager(ZeitManager4Public zeitManager) throws PersistenceException, E;
     public R handleZuEinkaufswHinzCommand(ZuEinkaufswHinzCommand4Public zuEinkaufswHinzCommand) throws PersistenceException, E;

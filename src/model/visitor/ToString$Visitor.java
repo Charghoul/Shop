@@ -9,6 +9,7 @@ public abstract class ToString$Visitor extends AnythingStandardVisitor{
     public abstract void handleEinkaufsManager(EinkaufsManager4Public einkaufsManager) throws PersistenceException;
     public abstract void handleHerstellerManager(HerstellerManager4Public herstellerManager) throws PersistenceException;
     public abstract void handleLieferart(Lieferart4Public lieferart) throws PersistenceException;
+    public abstract void handledeactivated(deactivated4Public deactivated) throws PersistenceException;
     public abstract void handleNeuanlage(Neuanlage4Public neuanlage) throws PersistenceException;
     public abstract void handleServiceRegister(ServiceRegister4Public serviceRegister) throws PersistenceException;
     public abstract void handleHstLieferung(HstLieferung4Public hstLieferung) throws PersistenceException;
@@ -29,7 +30,6 @@ public abstract class ToString$Visitor extends AnythingStandardVisitor{
     public abstract void handleAuslauf(Auslauf4Public auslauf) throws PersistenceException;
     public abstract void handleBestellung(Bestellung4Public bestellung) throws PersistenceException;
     public abstract void handleGeliefert(Geliefert4Public geliefert) throws PersistenceException;
-    public abstract void handleThreadOfControl(ThreadOfControl4Public threadOfControl) throws PersistenceException;
     public abstract void handleBestellManager(BestellManager4Public bestellManager) throws PersistenceException;
     public abstract void handleZeitManager(ZeitManager4Public zeitManager) throws PersistenceException;
     public abstract void handleVorbestellung(Vorbestellung4Public vorbestellung) throws PersistenceException;
@@ -39,5 +39,6 @@ public abstract class ToString$Visitor extends AnythingStandardVisitor{
     public abstract void handleLieferartManager(LieferartManager4Public lieferartManager) throws PersistenceException;
     public abstract void handleHinversand(Hinversand4Public hinversand) throws PersistenceException;
     public abstract void handleIntegerWrapper(IntegerWrapper4Public integerWrapper) throws PersistenceException;
+    public abstract void handleactivated(activated4Public activated) throws PersistenceException;
     
 }

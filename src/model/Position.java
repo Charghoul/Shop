@@ -200,6 +200,11 @@ public class Position extends model.PositionAbstrakt implements PersistentPositi
         //TODO: implement method: copyingPrivateUserAttributes
         
     }
+    public void entfernePosition(final EinkaufsManager4Public einkaufsManager) 
+				throws PersistenceException{
+        einkaufsManager.entfernePosition(getThis());
+        
+    }
     public void erhoeheMenge(final long menge) 
 				throws model.ExcLagerbestandOverMax, PersistenceException{
         long newMenge = getThis().getMenge() + menge;

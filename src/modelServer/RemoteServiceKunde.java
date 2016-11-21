@@ -61,11 +61,31 @@ public  class RemoteServiceKunde extends RemoteServiceShop {
         }
     }
     
+    public synchronized java.util.HashMap<?,?> annehmen(String bestellungProxiString){
+        try {
+            PersistentBestellung bestellung = (PersistentBestellung)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(bestellungProxiString));
+            ((PersistentServiceKunde)this.server).annehmen(bestellung);
+            return createOKResult();
+        }catch(PersistenceException pe){
+            return createExceptionResult(pe);
+        }
+    }
+    
     public synchronized java.util.HashMap<?,?> bestellen(String einkaufsManagerProxiString, String lieferartProxiString){
         try {
             PersistentEinkaufsManager einkaufsManager = (PersistentEinkaufsManager)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(einkaufsManagerProxiString));
             PersistentLieferart lieferart = (PersistentLieferart)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(lieferartProxiString));
             ((PersistentServiceKunde)this.server).bestellen(einkaufsManager, lieferart);
+            return createOKResult();
+        }catch(PersistenceException pe){
+            return createExceptionResult(pe);
+        }
+    }
+    
+    public synchronized java.util.HashMap<?,?> entfernePosition(String positionProxiString){
+        try {
+            PersistentPosition position = (PersistentPosition)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(positionProxiString));
+            ((PersistentServiceKunde)this.server).entfernePosition(position);
             return createOKResult();
         }catch(PersistenceException pe){
             return createExceptionResult(pe);

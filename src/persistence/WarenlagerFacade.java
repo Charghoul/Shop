@@ -40,30 +40,6 @@ public class WarenlagerFacade{
         throw new PersistenceException("No such object: " + new Long(objectId).toString(), 0);
         
     }
-    public long newListAdd(long WarenlagerId, long indxxVal, Artikel4Public newListVal) throws PersistenceException {
-        return 0;
-    }
-    public void newListRem(long WarenlagerId, long indxxVal) throws PersistenceException {
-        
-    }
-    public PersistentArtikel newListGet(long WarenlagerId, long indxxVal) throws PersistenceException {
-        throw new Error("Map proxy shall not call map getter in fake facade!");
-    }
-    public ArtikelSearchList newListGetValues(long WarenlagerId) throws PersistenceException {
-        return new ArtikelSearchList(); // remote access for initialization only!
-    }
-    public long templistAdd(long WarenlagerId, Artikel4Public indxxVal, IntegerWrapper4Public templistVal) throws PersistenceException {
-        return 0;
-    }
-    public void templistRem(long WarenlagerId, Artikel4Public indxxVal) throws PersistenceException {
-        
-    }
-    public PersistentIntegerWrapper templistGet(long WarenlagerId, Artikel4Public indxxVal) throws PersistenceException {
-        throw new Error("Map proxy shall not call map getter in fake facade!");
-    }
-    public IntegerWrapperSearchList templistGetValues(long WarenlagerId) throws PersistenceException {
-        return new IntegerWrapperSearchList(); // remote access for initialization only!
-    }
     public long warenListeAdd(long WarenlagerId, Position4Public warenListeVal) throws PersistenceException {
         return 0;
     }

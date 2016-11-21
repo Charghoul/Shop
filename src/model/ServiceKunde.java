@@ -314,6 +314,9 @@ public class ServiceKunde extends model.ServiceShop implements PersistentService
 		if(anything instanceof PositionInBestellung4Public) {
 			if(this.filter_zuruecksenden((PositionInBestellung4Public)anything)) result = result + "zuruecksendenPRMTRPositionInBestellungPRMTR+++";
 		}
+		if(anything instanceof Bestellung4Public) {
+			if(this.filter_annehmen((Bestellung4Public)anything)) result = result + "annehmenPRMTRBestellungPRMTR+++";
+		}
 		return result;
     }
     public void setBestellManager(final BestellManager4Public bestellManager) 
@@ -342,10 +345,14 @@ public class ServiceKunde extends model.ServiceShop implements PersistentService
         position.aendereMenge(menge);
         getThis().signalChanged(true);
     }
+    public void annehmen(final Bestellung4Public bestellung) 
+				throws PersistenceException{
+        bestellung.annehmen();
+        getThis().signalChanged(true);
+    }
     public void bestellManager_update(final model.meta.BestellManagerMssgs event) 
 				throws PersistenceException{
         getThis().signalChanged(true);
-        
     }
     public void bestellen(final EinkaufsManager4Public einkaufsManager, final Lieferart4Public lieferart) 
 				throws PersistenceException{
@@ -363,6 +370,11 @@ public class ServiceKunde extends model.ServiceShop implements PersistentService
     public void disconnected() 
 				throws PersistenceException{
 
+    }
+    public void entfernePosition(final Position4Public position) 
+				throws PersistenceException{
+        position.entfernePosition(getThis().getEinkaufsManager());
+        
     }
     public void initializeOnCreation() 
 				throws PersistenceException{
@@ -395,7 +407,8 @@ public class ServiceKunde extends model.ServiceShop implements PersistentService
     }
     public void zuruecksenden(final PositionInBestellung4Public position) 
 				throws PersistenceException{
-        //TODO: implement method: zuruecksenden
+        position.zuruecksenden();
+        getThis().signalChanged(true);
         
     }
     
@@ -411,6 +424,10 @@ public class ServiceKunde extends model.ServiceShop implements PersistentService
 
     private boolean filter_zuruecksenden(PositionInBestellung4Public anything) throws PersistenceException {
        return anything.getBestellung().getBestellstatus().equals(Geliefert.getTheGeliefert());
+    }
+
+    private boolean filter_annehmen(Bestellung4Public anything) throws PersistenceException {
+        return anything.getBestellstatus().equals(Geliefert.getTheGeliefert());
     }
     
     /* End of protected part that is not overridden by persistence generator */

@@ -319,13 +319,14 @@ public class Cache {
 		this.number2NameMap.put(261, "StatusAuslaufCommand");
 		this.number2NameMap.put(260, "StatusVerkaufCommand");
 		this.number2NameMap.put(315, "Subj");
-		this.number2NameMap.put(289, "ThreadOfControl");
 		this.number2NameMap.put(311, "Verarbeitung");
 		this.number2NameMap.put(212, "Verkauf");
 		this.number2NameMap.put(216, "Vorbestellung");
 		this.number2NameMap.put(193, "Warenlager");
 		this.number2NameMap.put(291, "ZeitManager");
-		this.number2NameMap.put(303, "ZuEinkaufswHinzCommand");	
+		this.number2NameMap.put(303, "ZuEinkaufswHinzCommand");
+		this.number2NameMap.put(342, "activated");
+		this.number2NameMap.put(340, "deactivated");	
 	}
 	
 }

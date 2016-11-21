@@ -3,7 +3,7 @@ package view.visitor;
 
 import view.*;
 
-public interface AnythingReturnVisitor<R> extends ArtikelstatusReturnVisitor<R> ,BestellstatusReturnVisitor<R> ,KomponenteReturnVisitor<R> ,PositionAbstraktReturnVisitor<R> ,ServiceReturnVisitor<R> ,ZeitObjektReturnVisitor<R> {
+public interface AnythingReturnVisitor<R> extends ArtikelstatusReturnVisitor<R> ,BestellstatusReturnVisitor<R> ,KomponenteReturnVisitor<R> ,PositionAbstraktReturnVisitor<R> ,ServiceReturnVisitor<R> ,StatusReturnVisitor<R> ,ZeitObjektReturnVisitor<R> {
     
     public R handleArtikelManager(ArtikelManagerView artikelManager) throws ModelException;
     public R handleBestellManager(BestellManagerView bestellManager) throws ModelException;
@@ -19,7 +19,6 @@ public interface AnythingReturnVisitor<R> extends ArtikelstatusReturnVisitor<R> 
     public R handleLieferartManager(LieferartManagerView lieferartManager) throws ModelException;
     public R handleProduktKatalog(ProduktKatalogView produktKatalog) throws ModelException;
     public R handleServer(ServerView server) throws ModelException;
-    public R handleThreadOfControl(ThreadOfControlView threadOfControl) throws ModelException;
     public R handleWarenlager(WarenlagerView warenlager) throws ModelException;
     public R handleZeitManager(ZeitManagerView zeitManager) throws ModelException;
     

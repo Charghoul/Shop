@@ -88,6 +88,10 @@ public class PositionICProxi extends PositionAbstraktICProxi implements Persiste
 				throws PersistenceException{
         ((PersistentPosition)this.getTheObject()).copyingPrivateUserAttributes(copy);
     }
+    public void entfernePosition(final EinkaufsManager4Public einkaufsManager) 
+				throws PersistenceException{
+        ((PersistentPosition)this.getTheObject()).entfernePosition(einkaufsManager);
+    }
     public void erhoeheMenge(final long menge) 
 				throws model.ExcLagerbestandOverMax, PersistenceException{
         ((PersistentPosition)this.getTheObject()).erhoeheMenge(menge);
