@@ -234,19 +234,18 @@ public class Konto extends PersistentObject implements PersistentKonto{
     
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{
-        //TODO: implement method: copyingPrivateUserAttributes
         
     }
     public void initializeOnCreation() 
 				throws PersistenceException{
-        //TODO: implement method: initializeOnCreation
         
     }
     public void initializeOnInstantiation() 
 				throws PersistenceException{
-        //TODO: implement method: initializeOnInstantiation
         
     }
+
+    //TODO: Konto insgesamt implementieren!! prüfung des geldes auf kundenseite
     
     
     // Start of section that contains overridden operations only.

@@ -280,7 +280,7 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
     }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{
-        //TODO: implement method: copyingPrivateUserAttributes
+
         
     }
     public void initializeOnCreation() 
@@ -289,7 +289,7 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
     }
     public void initializeOnInstantiation() 
 				throws PersistenceException{
-        //TODO: implement method: initializeOnInstantiation
+
         
     }
     public void nachbestellen(final Artikel4Public artikel, final long menge) 

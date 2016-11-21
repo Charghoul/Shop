@@ -37,6 +37,8 @@ public interface AnythingVisitor extends ArtikelstatusVisitor,BestellstatusVisit
     public void handleSubj(Subj4Public subj) throws PersistenceException;
     public void handleWarenlager(Warenlager4Public warenlager) throws PersistenceException;
     public void handleZeitManager(ZeitManager4Public zeitManager) throws PersistenceException;
+    public void handleZeitManagerZeitObjektListe(ZeitManagerZeitObjektListe4Public zeitManagerZeitObjektListe) throws PersistenceException;
     public void handleZuEinkaufswHinzCommand(ZuEinkaufswHinzCommand4Public zuEinkaufswHinzCommand) throws PersistenceException;
+    public void handleZuruecksendenCommand(ZuruecksendenCommand4Public zuruecksendenCommand) throws PersistenceException;
     
 }

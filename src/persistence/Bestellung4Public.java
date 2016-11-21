@@ -5,6 +5,7 @@ import model.visitor.*;
 
 public interface Bestellung4Public extends Anything, SubjInterface, AbstractPersistentProxi {
     
+    public Bestellung_PositionsListeProxi getPositionsListe() throws PersistenceException ;
     public BestellManager4Public getBestellManager() throws PersistenceException ;
     public Bestellstatus4Public getBestellstatus() throws PersistenceException ;
     

@@ -92,6 +92,7 @@ public class ConnectionHandler {
     public KontoFacade theKontoFacade;
     public HerstellerFacade theHerstellerFacade;
     public AngenommenFacade theAngenommenFacade;
+    public ZuruecksendenCommandFacade theZuruecksendenCommandFacade;
     public BestellenCommandFacade theBestellenCommandFacade;
     public WarenlagerFacade theWarenlagerFacade;
     public CommonDateFacade theCommonDateFacade;
@@ -103,6 +104,7 @@ public class ConnectionHandler {
     public ServiceKundeBestellManagerFacade theServiceKundeBestellManagerFacade;
     public KomponenteFacade theKomponenteFacade;
     public ServiceShopFacade theServiceShopFacade;
+    public ZeitManagerZeitObjektListeFacade theZeitManagerZeitObjektListeFacade;
     public ArtikelEinlagernCommandFacade theArtikelEinlagernCommandFacade;
     public GeliefertFacade theGeliefertFacade;
     public ZeitObjektFacade theZeitObjektFacade;
@@ -157,6 +159,7 @@ public class ConnectionHandler {
             this.theKontoFacade= new KontoFacade();
             this.theHerstellerFacade= new HerstellerFacade();
             this.theAngenommenFacade= new AngenommenFacade();
+            this.theZuruecksendenCommandFacade= new ZuruecksendenCommandFacade();
             this.theBestellenCommandFacade= new BestellenCommandFacade();
             this.theWarenlagerFacade= new WarenlagerFacade();
             this.theCommonDateFacade= new CommonDateFacade();
@@ -168,6 +171,7 @@ public class ConnectionHandler {
             this.theServiceKundeBestellManagerFacade= new ServiceKundeBestellManagerFacade();
             this.theKomponenteFacade= new KomponenteFacade();
             this.theServiceShopFacade= new ServiceShopFacade();
+            this.theZeitManagerZeitObjektListeFacade= new ZeitManagerZeitObjektListeFacade();
             this.theArtikelEinlagernCommandFacade= new ArtikelEinlagernCommandFacade();
             this.theGeliefertFacade= new GeliefertFacade();
             this.theZeitObjektFacade= new ZeitObjektFacade();

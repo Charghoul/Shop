@@ -92,6 +92,9 @@ public abstract class AnythingStandardVisitor implements AnythingVisitor {
     public void handleAngenommen(Angenommen4Public angenommen) throws PersistenceException{
         this.standardHandling(angenommen);
     }
+    public void handleZuruecksendenCommand(ZuruecksendenCommand4Public zuruecksendenCommand) throws PersistenceException{
+        this.standardHandling(zuruecksendenCommand);
+    }
     public void handleBestellenCommand(BestellenCommand4Public bestellenCommand) throws PersistenceException{
         this.standardHandling(bestellenCommand);
     }
@@ -118,6 +121,9 @@ public abstract class AnythingStandardVisitor implements AnythingVisitor {
     }
     public void handleArtikelEinlagernCommand(ArtikelEinlagernCommand4Public artikelEinlagernCommand) throws PersistenceException{
         this.standardHandling(artikelEinlagernCommand);
+    }
+    public void handleZeitManagerZeitObjektListe(ZeitManagerZeitObjektListe4Public zeitManagerZeitObjektListe) throws PersistenceException{
+        this.standardHandling(zeitManagerZeitObjektListe);
     }
     public void handleGeliefert(Geliefert4Public geliefert) throws PersistenceException{
         this.standardHandling(geliefert);

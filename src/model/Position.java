@@ -197,7 +197,6 @@ public class Position extends model.PositionAbstrakt implements PersistentPositi
     }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{
-        //TODO: implement method: copyingPrivateUserAttributes
         
     }
     public void entfernePosition(final EinkaufsManager4Public einkaufsManager) 
@@ -216,12 +215,10 @@ public class Position extends model.PositionAbstrakt implements PersistentPositi
     }
     public void initializeOnCreation() 
 				throws PersistenceException{
-        //TODO: implement method: initializeOnCreation
         
     }
     public void initializeOnInstantiation() 
 				throws PersistenceException{
-        //TODO: implement method: initializeOnInstantiation
         
     }
     public void verringereMenge(final long menge) 

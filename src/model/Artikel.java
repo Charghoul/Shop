@@ -398,7 +398,6 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
     }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{
-        //TODO: implement method: copyingPrivateUserAttributes
         
     }
     public void herstellerHinzufuegen(final Hersteller4Public hersteller) 
@@ -407,12 +406,10 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
     }
     public void initializeOnCreation() 
 				throws PersistenceException{
-        //TODO: implement method: initializeOnCreation
         
     }
     public void initializeOnInstantiation() 
 				throws PersistenceException{
-        //TODO: implement method: initializeOnInstantiation
         
     }
     public void statusAuslauf() 

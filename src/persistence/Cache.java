@@ -324,7 +324,9 @@ public class Cache {
 		this.number2NameMap.put(216, "Vorbestellung");
 		this.number2NameMap.put(193, "Warenlager");
 		this.number2NameMap.put(291, "ZeitManager");
+		this.number2NameMap.put(346, "ZeitManagerZeitObjektListe");
 		this.number2NameMap.put(303, "ZuEinkaufswHinzCommand");
+		this.number2NameMap.put(348, "ZuruecksendenCommand");
 		this.number2NameMap.put(342, "activated");
 		this.number2NameMap.put(340, "deactivated");	
 	}

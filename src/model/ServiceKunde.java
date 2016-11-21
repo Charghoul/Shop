@@ -407,7 +407,7 @@ public class ServiceKunde extends model.ServiceShop implements PersistentService
     }
     public void zuruecksenden(final PositionInBestellung4Public position) 
 				throws PersistenceException{
-        position.zuruecksenden();
+        position.zuruecksenden(getThis());
         getThis().signalChanged(true);
         
     }

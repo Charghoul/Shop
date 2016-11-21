@@ -28,7 +28,7 @@ server ServiceAdmin extends ServiceShop {
 	Warenlager warenlager;
 	ArtikelManager artikelManager;
 	LieferartManager lieferartManager;
-	one-to-one (no-view myServiceAdmin) HerstellerManager herstellerManager;
+	one-to-one HerstellerManager herstellerManager;
 	observe ZeitManager zeitManager;
 	void aendereHstLieferzeit(Artikel artikel, Integer hstLieferzeit);
 	void neuerArtikel(ArtikelManager artikelManager, String artikelnummer, String bezeichnung, Fraction preis, Integer minLagerbestand, 		Integer maxLagerbestand, Integer hstLieferzeit);
@@ -90,7 +90,7 @@ singleton Warenlager{
 }
 
 singleton ZeitManager {
-	ZeitObjekt ** zeitObjektListe;
+	observe ZeitObjekt ** zeitObjektListe;
 	void handleTimeUnitElapsed() ;
 	event void neueHstLieferung(Artikel artikel, Integer menge);
 	event void neueKndLieferung(Bestellung bestellung, Lieferart lieferart);
@@ -100,9 +100,9 @@ singleton ZeitManager {
 abstract class ZeitObjekt{
 	public prior Integer remainingTime;
 	server-only public prior Status status;
-	void reduceTime();
+	event void reduceTime();
 	void handleTimeElapsed();
-	void zeitAbgelaufen();
+	event void zeitAbgelaufen();
 }
 
 class HerstellerManager{
@@ -165,7 +165,7 @@ class Hersteller{
 	void aendereHersteller(String name) throws ExcAlreadyExists;
 }
 class Bestellung{
-	PositionInBestellung ** positionsListe;
+	public PositionInBestellung ** positionsListe;
 	prior public server-only BestellManager bestellManager;
 	prior indexed Integer bestellID;
 	public no-view Bestellstatus bestellstatus;
@@ -197,7 +197,7 @@ class Position extends PositionAbstrakt{
 
 class PositionInBestellung##posInBest extends PositionAbstrakt{
 	public prior server-only Bestellung bestellung;
-	void zuruecksenden();
+	active void zuruecksenden() throws ExcLagerbestandOverMax;
 }
 
 class Lieferart{

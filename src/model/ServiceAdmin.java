@@ -472,17 +472,14 @@ public class ServiceAdmin extends model.ServiceShop implements PersistentService
     }
     public void connected(final String user) 
 				throws PersistenceException{
-        //TODO: implement method: connected
         
     }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{
-        //TODO: implement method: copyingPrivateUserAttributes
         
     }
     public void disconnected() 
 				throws PersistenceException{
-        //TODO: implement method: disconnected
         
     }
     public void erhoeheMenge(final Position4Public position, final long menge) 
@@ -535,7 +532,6 @@ public class ServiceAdmin extends model.ServiceShop implements PersistentService
     public void initializeOnInstantiation() 
 				throws PersistenceException{
         super.initializeOnInstantiation();
-		//TODO: implement method: initializeOnInstantiation
     }
     public void neueLieferArt(final LieferartManager4Public lieferartManager, final String name, final long lieferzeit, final common.Fraction preis) 
 				throws model.ExcAlreadyExists, PersistenceException{

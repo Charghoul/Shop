@@ -225,7 +225,6 @@ public class ArtikelManager extends PersistentObject implements PersistentArtike
     
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{
-        //TODO: implement method: copyingPrivateUserAttributes
         
     }
     public void herstellerHinzufuegen(final Artikel4Public artikel, final Hersteller4Public hersteller) 
@@ -238,7 +237,6 @@ public class ArtikelManager extends PersistentObject implements PersistentArtike
     }
     public void initializeOnInstantiation() 
 				throws PersistenceException{
-        //TODO: implement method: initializeOnInstantiation
         
     }
     public void neuerArtikel(final String artikelnummer, final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
