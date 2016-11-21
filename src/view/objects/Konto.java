@@ -13,10 +13,10 @@ import view.visitor.AnythingVisitor;
 
 public class Konto extends ViewObject implements KontoView{
     
-    protected common.Fraction kontostand;
-    protected common.Fraction limit;
+    protected long kontostand;
+    protected long limit;
     
-    public Konto(common.Fraction kontostand,common.Fraction limit,long id, long classId) {
+    public Konto(long kontostand,long limit,long id, long classId) {
         /* Shall not be used. Objects are created on the server only */
         super(id, classId);
         this.kontostand = kontostand;
@@ -31,16 +31,16 @@ public class Konto extends ViewObject implements KontoView{
         return getTypeId();
     }
     
-    public common.Fraction getKontostand()throws ModelException{
+    public long getKontostand()throws ModelException{
         return this.kontostand;
     }
-    public void setKontostand(common.Fraction newValue) throws ModelException {
+    public void setKontostand(long newValue) throws ModelException {
         this.kontostand = newValue;
     }
-    public common.Fraction getLimit()throws ModelException{
+    public long getLimit()throws ModelException{
         return this.limit;
     }
-    public void setLimit(common.Fraction newValue) throws ModelException {
+    public void setLimit(long newValue) throws ModelException {
         this.limit = newValue;
     }
     
@@ -96,9 +96,9 @@ public class Konto extends ViewObject implements KontoView{
                 if(rowIndex == 0) return "limit";
                 rowIndex = rowIndex - 1;
             } else {
-                if(rowIndex == 0) return this.getKontostand();
+                if(rowIndex == 0) return new Long(getKontostand());
                 rowIndex = rowIndex - 1;
-                if(rowIndex == 0) return this.getLimit();
+                if(rowIndex == 0) return new Long(getLimit());
                 rowIndex = rowIndex - 1;
             }
             throw new ModelException("Table index out of bounds!", -1);
@@ -112,12 +112,12 @@ public class Konto extends ViewObject implements KontoView{
     }
     public void setValueAt(String newValue, int rowIndex) throws Exception {
         if(rowIndex == 0){
-            this.setKontostand(common.Fraction.parse(newValue));
+            this.setKontostand(Long.parseLong(newValue));
             return;
         }
         rowIndex = rowIndex - 1;
         if(rowIndex == 0){
-            this.setLimit(common.Fraction.parse(newValue));
+            this.setLimit(Long.parseLong(newValue));
             return;
         }
         rowIndex = rowIndex - 1;

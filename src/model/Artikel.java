@@ -11,11 +11,11 @@ import serverConstants.ErrorMessages;
 public class Artikel extends model.Komponente implements PersistentArtikel{
     
     
-    public static Artikel4Public createArtikel(String artikelnummer,String bezeichnung,common.Fraction preis,long minLagerbestand,long maxLagerbestand,long hstLieferzeit,Artikelstatus4Public artikelstatus) throws PersistenceException{
+    public static Artikel4Public createArtikel(String artikelnummer,String bezeichnung,long preis,long minLagerbestand,long maxLagerbestand,long hstLieferzeit,Artikelstatus4Public artikelstatus) throws PersistenceException{
         return createArtikel(artikelnummer,bezeichnung,preis,minLagerbestand,maxLagerbestand,hstLieferzeit,artikelstatus,false);
     }
     
-    public static Artikel4Public createArtikel(String artikelnummer,String bezeichnung,common.Fraction preis,long minLagerbestand,long maxLagerbestand,long hstLieferzeit,Artikelstatus4Public artikelstatus,boolean delayed$Persistence) throws PersistenceException {
+    public static Artikel4Public createArtikel(String artikelnummer,String bezeichnung,long preis,long minLagerbestand,long maxLagerbestand,long hstLieferzeit,Artikelstatus4Public artikelstatus,boolean delayed$Persistence) throws PersistenceException {
         if (artikelnummer == null) throw new PersistenceException("Null not allowed for persistent strings, since null = \"\" in Oracle!", 0);
         if (bezeichnung == null) throw new PersistenceException("Null not allowed for persistent strings, since null = \"\" in Oracle!", 0);
         PersistentArtikel result = null;
@@ -40,7 +40,7 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
         return result;
     }
     
-    public static Artikel4Public createArtikel(String artikelnummer,String bezeichnung,common.Fraction preis,long minLagerbestand,long maxLagerbestand,long hstLieferzeit,Artikelstatus4Public artikelstatus,boolean delayed$Persistence,Artikel4Public This) throws PersistenceException {
+    public static Artikel4Public createArtikel(String artikelnummer,String bezeichnung,long preis,long minLagerbestand,long maxLagerbestand,long hstLieferzeit,Artikelstatus4Public artikelstatus,boolean delayed$Persistence,Artikel4Public This) throws PersistenceException {
         if (artikelnummer == null) throw new PersistenceException("Null not allowed for persistent strings, since null = \"\" in Oracle!", 0);
         if (bezeichnung == null) throw new PersistenceException("Null not allowed for persistent strings, since null = \"\" in Oracle!", 0);
         PersistentArtikel result = null;
@@ -71,7 +71,7 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
             result = super.toHashtable(allResults, depth, essentialLevel, forGUI, false, tdObserver);
             result.put("artikelnummer", this.getArtikelnummer());
             result.put("bezeichnung", this.getBezeichnung());
-            result.put("preis", this.getPreis().toString());
+            result.put("preis", new Long(this.getPreis()).toString());
             result.put("minLagerbestand", new Long(this.getMinLagerbestand()).toString());
             result.put("maxLagerbestand", new Long(this.getMaxLagerbestand()).toString());
             result.put("hstLieferzeit", new Long(this.getHstLieferzeit()).toString());
@@ -131,14 +131,14 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
     }
     protected String artikelnummer;
     protected String bezeichnung;
-    protected common.Fraction preis;
+    protected long preis;
     protected long minLagerbestand;
     protected long maxLagerbestand;
     protected long hstLieferzeit;
     protected PersistentArtikelstatus artikelstatus;
     protected PersistentHersteller hersteller;
     
-    public Artikel(SubjInterface subService,PersistentKomponente This,String artikelnummer,String bezeichnung,common.Fraction preis,long minLagerbestand,long maxLagerbestand,long hstLieferzeit,PersistentArtikelstatus artikelstatus,PersistentHersteller hersteller,long id) throws PersistenceException {
+    public Artikel(SubjInterface subService,PersistentKomponente This,String artikelnummer,String bezeichnung,long preis,long minLagerbestand,long maxLagerbestand,long hstLieferzeit,PersistentArtikelstatus artikelstatus,PersistentHersteller hersteller,long id) throws PersistenceException {
         /* Shall not be used by clients for object construction! Use static create operation instead! */
         super((SubjInterface)subService,(PersistentKomponente)This,id);
         this.artikelnummer = artikelnummer;
@@ -191,10 +191,10 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
         if(!this.isDelayed$Persistence()) ConnectionHandler.getTheConnectionHandler().theArtikelFacade.bezeichnungSet(this.getId(), newValue);
         this.bezeichnung = newValue;
     }
-    public common.Fraction getPreis() throws PersistenceException {
+    public long getPreis() throws PersistenceException {
         return this.preis;
     }
-    public void setPreis(common.Fraction newValue) throws PersistenceException {
+    public void setPreis(long newValue) throws PersistenceException {
         if(!this.isDelayed$Persistence()) ConnectionHandler.getTheConnectionHandler().theArtikelFacade.preisSet(this.getId(), newValue);
         this.preis = newValue;
     }
@@ -329,7 +329,7 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
 		if(this.isTheSameAs(This)){
 			this.setArtikelnummer((String)final$$Fields.get("artikelnummer"));
 			this.setBezeichnung((String)final$$Fields.get("bezeichnung"));
-			this.setPreis((common.Fraction)final$$Fields.get("preis"));
+			this.setPreis((Long)final$$Fields.get("preis"));
 			this.setMinLagerbestand((Long)final$$Fields.get("minLagerbestand"));
 			this.setMaxLagerbestand((Long)final$$Fields.get("maxLagerbestand"));
 			this.setHstLieferzeit((Long)final$$Fields.get("hstLieferzeit"));
@@ -388,7 +388,7 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
     
     // Start of section that contains operations that must be implemented.
     
-    public void aendereArtikel(final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
+    public void aendereArtikel(final long preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
 				throws model.ExcAlreadyExists, PersistenceException{
         getThis().setPreis(preis);
         getThis().setMinLagerbestand(minLagerbestand);

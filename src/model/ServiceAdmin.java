@@ -109,6 +109,7 @@ public class ServiceAdmin extends model.ServiceShop implements PersistentService
         ServiceAdmin result = this;
         result = new ServiceAdmin(this.subService, 
                                   this.This, 
+                                  this.konto, 
                                   this.produktKatalog, 
                                   this.warenlager, 
                                   this.artikelManager, 
@@ -131,9 +132,9 @@ public class ServiceAdmin extends model.ServiceShop implements PersistentService
     protected PersistentHerstellerManager herstellerManager;
     protected PersistentServiceAdminZeitManager zeitManager;
     
-    public ServiceAdmin(SubjInterface subService,PersistentService This,PersistentServiceShopProduktKatalog produktKatalog,PersistentWarenlager warenlager,PersistentArtikelManager artikelManager,PersistentLieferartManager lieferartManager,PersistentHerstellerManager herstellerManager,PersistentServiceAdminZeitManager zeitManager,long id) throws PersistenceException {
+    public ServiceAdmin(SubjInterface subService,PersistentService This,PersistentKonto konto,PersistentServiceShopProduktKatalog produktKatalog,PersistentWarenlager warenlager,PersistentArtikelManager artikelManager,PersistentLieferartManager lieferartManager,PersistentHerstellerManager herstellerManager,PersistentServiceAdminZeitManager zeitManager,long id) throws PersistenceException {
         /* Shall not be used by clients for object construction! Use static create operation instead! */
-        super((SubjInterface)subService,(PersistentService)This,(PersistentServiceShopProduktKatalog)produktKatalog,id);
+        super((SubjInterface)subService,(PersistentService)This,(PersistentKonto)konto,(PersistentServiceShopProduktKatalog)produktKatalog,id);
         this.warenlager = warenlager;
         this.artikelManager = artikelManager;
         this.lieferartManager = lieferartManager;
@@ -325,6 +326,7 @@ public class ServiceAdmin extends model.ServiceShop implements PersistentService
          return visitor.handleServiceAdmin(this);
     }
     public int getLeafInfo() throws PersistenceException{
+        if (this.getKonto() != null) return 1;
         if (this.getProduktKatalog() != null) return 1;
         if (this.getWarenlager() != null) return 1;
         if (this.getArtikelManager() != null) return 1;
@@ -414,7 +416,7 @@ public class ServiceAdmin extends model.ServiceShop implements PersistentService
     
     // Start of section that contains operations that must be implemented.
     
-    public void aendereArtikel(final Artikel4Public artikel, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
+    public void aendereArtikel(final Artikel4Public artikel, final long preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
 				throws model.ExcAlreadyExists, PersistenceException{
         artikel.aendereArtikel(preis, minLagerbestand, maxLagerbestand, hstLieferzeit);
         getThis().signalChanged(true);
@@ -505,8 +507,8 @@ public class ServiceAdmin extends model.ServiceShop implements PersistentService
         getThis().setZeitManager(ZeitManager.getTheZeitManager());
 
         //Test Daten
-        Artikel4Public art1 = Artikel.createArtikel("1234","test", Fraction.parse("5"),10,100,3, Neuanlage.getTheNeuanlage());
-        Artikel4Public art2 = Artikel.createArtikel("31415626","Raspberry", Fraction.parse("4"),5,200,4, Neuanlage.getTheNeuanlage());
+        Artikel4Public art1 = Artikel.createArtikel("1234","test", 999,10,100,3, Neuanlage.getTheNeuanlage());
+        Artikel4Public art2 = Artikel.createArtikel("31415626","Raspberry", 1999,5,200,4, Neuanlage.getTheNeuanlage());
 
         //Listen
         ((PersistentArtikelManager)getThis().getArtikelManager()).getArtikelListe().add(art1);
@@ -539,7 +541,7 @@ public class ServiceAdmin extends model.ServiceShop implements PersistentService
             getThis().signalChanged(true);
         
     }
-    public void neuerArtikel(final ArtikelManager4Public artikelManager, final String artikelnummer, final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
+    public void neuerArtikel(final ArtikelManager4Public artikelManager, final String artikelnummer, final String bezeichnung, final long preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
 				throws PersistenceException{
         artikelManager.neuerArtikel(artikelnummer, bezeichnung, preis, minLagerbestand, maxLagerbestand, hstLieferzeit, getThis());
         getThis().signalChanged(true);

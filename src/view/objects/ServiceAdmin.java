@@ -19,9 +19,9 @@ public class ServiceAdmin extends view.objects.ServiceShop implements ServiceAdm
     protected HerstellerManagerView herstellerManager;
     protected ZeitManagerView zeitManager;
     
-    public ServiceAdmin(java.util.Vector<ErrorDisplayView> errors,ProduktKatalogView produktKatalog,WarenlagerView warenlager,ArtikelManagerView artikelManager,LieferartManagerView lieferartManager,HerstellerManagerView herstellerManager,ZeitManagerView zeitManager,long id, long classId) {
+    public ServiceAdmin(java.util.Vector<ErrorDisplayView> errors,KontoView konto,ProduktKatalogView produktKatalog,WarenlagerView warenlager,ArtikelManagerView artikelManager,LieferartManagerView lieferartManager,HerstellerManagerView herstellerManager,ZeitManagerView zeitManager,long id, long classId) {
         /* Shall not be used. Objects are created on the server only */
-        super(errors,(ProduktKatalogView)produktKatalog,id, classId);
+        super(errors,(KontoView)konto,(ProduktKatalogView)produktKatalog,id, classId);
         this.warenlager = warenlager;
         this.artikelManager = artikelManager;
         this.lieferartManager = lieferartManager;
@@ -122,6 +122,10 @@ public class ServiceAdmin extends view.objects.ServiceShop implements ServiceAdm
         if (errors != null) {
             ViewObject.resolveVectorProxies(errors, resultTable);
         }
+        KontoView konto = this.getKonto();
+        if (konto != null) {
+            ((ViewProxi)konto).setObject((ViewObject)resultTable.get(common.RPCConstantsAndServices.createHashtableKey(konto.getClassId(), konto.getId())));
+        }
         ProduktKatalogView produktKatalog = this.getProduktKatalog();
         if (produktKatalog != null) {
             ((ViewProxi)produktKatalog).setObject((ViewObject)resultTable.get(common.RPCConstantsAndServices.createHashtableKey(produktKatalog.getClassId(), produktKatalog.getId())));
@@ -153,6 +157,8 @@ public class ServiceAdmin extends view.objects.ServiceShop implements ServiceAdm
     }
     public ViewObjectInTree getChild(int originalIndex) throws ModelException{
         int index = originalIndex;
+        if(index == 0 && this.getKonto() != null) return new KontoServiceShopWrapper(this, originalIndex, (ViewRoot)this.getKonto());
+        if(this.getKonto() != null) index = index - 1;
         if(index == 0 && this.getProduktKatalog() != null) return new ProduktKatalogServiceShopWrapper(this, originalIndex, (ViewRoot)this.getProduktKatalog());
         if(this.getProduktKatalog() != null) index = index - 1;
         if(index == 0 && this.getWarenlager() != null) return new WarenlagerServiceAdminWrapper(this, originalIndex, (ViewRoot)this.getWarenlager());
@@ -169,6 +175,7 @@ public class ServiceAdmin extends view.objects.ServiceShop implements ServiceAdm
     }
     public int getChildCount() throws ModelException {
         return 0 
+            + (this.getKonto() == null ? 0 : 1)
             + (this.getProduktKatalog() == null ? 0 : 1)
             + (this.getWarenlager() == null ? 0 : 1)
             + (this.getArtikelManager() == null ? 0 : 1)
@@ -178,6 +185,7 @@ public class ServiceAdmin extends view.objects.ServiceShop implements ServiceAdm
     }
     public boolean isLeaf() throws ModelException {
         return true 
+            && (this.getKonto() == null ? true : false)
             && (this.getProduktKatalog() == null ? true : false)
             && (this.getWarenlager() == null ? true : false)
             && (this.getArtikelManager() == null ? true : false)
@@ -187,6 +195,8 @@ public class ServiceAdmin extends view.objects.ServiceShop implements ServiceAdm
     }
     public int getIndexOfChild(Object child) throws ModelException {
         int result = 0;
+        if(this.getKonto() != null && this.getKonto().equals(child)) return result;
+        if(this.getKonto() != null) result = result + 1;
         if(this.getProduktKatalog() != null && this.getProduktKatalog().equals(child)) return result;
         if(this.getProduktKatalog() != null) result = result + 1;
         if(this.getWarenlager() != null && this.getWarenlager().equals(child)) return result;

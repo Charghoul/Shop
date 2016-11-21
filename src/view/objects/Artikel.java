@@ -14,14 +14,14 @@ public class Artikel extends view.objects.Komponente implements ArtikelView{
     
     protected String artikelnummer;
     protected String bezeichnung;
-    protected common.Fraction preis;
+    protected long preis;
     protected long minLagerbestand;
     protected long maxLagerbestand;
     protected long hstLieferzeit;
     protected ArtikelstatusView artikelstatus;
     protected HerstellerView hersteller;
     
-    public Artikel(String artikelnummer,String bezeichnung,common.Fraction preis,long minLagerbestand,long maxLagerbestand,long hstLieferzeit,ArtikelstatusView artikelstatus,HerstellerView hersteller,long id, long classId) {
+    public Artikel(String artikelnummer,String bezeichnung,long preis,long minLagerbestand,long maxLagerbestand,long hstLieferzeit,ArtikelstatusView artikelstatus,HerstellerView hersteller,long id, long classId) {
         /* Shall not be used. Objects are created on the server only */
         super(id, classId);
         this.artikelnummer = artikelnummer;
@@ -54,10 +54,10 @@ public class Artikel extends view.objects.Komponente implements ArtikelView{
     public void setBezeichnung(String newValue) throws ModelException {
         this.bezeichnung = newValue;
     }
-    public common.Fraction getPreis()throws ModelException{
+    public long getPreis()throws ModelException{
         return this.preis;
     }
-    public void setPreis(common.Fraction newValue) throws ModelException {
+    public void setPreis(long newValue) throws ModelException {
         this.preis = newValue;
     }
     public long getMinLagerbestand()throws ModelException{
@@ -198,7 +198,7 @@ public class Artikel extends view.objects.Komponente implements ArtikelView{
                 rowIndex = rowIndex - 1;
                 if(rowIndex == 0) return this.getBezeichnung();
                 rowIndex = rowIndex - 1;
-                if(rowIndex == 0) return this.getPreis();
+                if(rowIndex == 0) return new Long(getPreis());
                 rowIndex = rowIndex - 1;
                 if(rowIndex == 0) return new Long(getMinLagerbestand());
                 rowIndex = rowIndex - 1;
@@ -228,7 +228,7 @@ public class Artikel extends view.objects.Komponente implements ArtikelView{
         }
         rowIndex = rowIndex - 1;
         if(rowIndex == 0){
-            this.setPreis(common.Fraction.parse(newValue));
+            this.setPreis(Long.parseLong(newValue));
             return;
         }
         rowIndex = rowIndex - 1;

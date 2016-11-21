@@ -193,7 +193,7 @@ public class ArtikelManager extends PersistentObject implements PersistentArtike
 		if(this.isTheSameAs(This)){
 		}
     }
-    public void neuerArtikel(final String artikelnummer, final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit, final Invoker invoker) 
+    public void neuerArtikel(final String artikelnummer, final String bezeichnung, final long preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit, final Invoker invoker) 
 				throws PersistenceException{
         java.sql.Date now = new java.sql.Date(new java.util.Date().getTime());
 		NeuerArtikelCommand4Public command = model.meta.NeuerArtikelCommand.createNeuerArtikelCommand(artikelnummer, bezeichnung, preis, minLagerbestand, maxLagerbestand, hstLieferzeit, now, now);
@@ -239,7 +239,7 @@ public class ArtikelManager extends PersistentObject implements PersistentArtike
 				throws PersistenceException{
         
     }
-    public void neuerArtikel(final String artikelnummer, final String bezeichnung, final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
+    public void neuerArtikel(final String artikelnummer, final String bezeichnung, final long preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
 				throws model.UserException, PersistenceException{
         ArtikelSearchList artikelSearchList = Artikel.getArtikelByArtikelnummer(artikelnummer);
         if( artikelSearchList.iterator().hasNext()){

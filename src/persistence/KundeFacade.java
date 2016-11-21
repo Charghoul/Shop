@@ -26,25 +26,25 @@ public class KundeFacade{
 
     /* If idCreateIfLessZero is negative, a new id is generated. */
     public PersistentKunde newKunde(String benutzername,String passwort,long idCreateIfLessZero) throws PersistenceException {
-        if(idCreateIfLessZero > 0) return (PersistentKunde)PersistentProxi.createProxi(idCreateIfLessZero, 102);
+        if(idCreateIfLessZero > 0) return (PersistentKunde)PersistentProxi.createProxi(idCreateIfLessZero, 349);
         long id = ConnectionHandler.getTheConnectionHandler().theKundeFacade.getNextId();
         Kunde result = new Kunde(benutzername,passwort,null,null,null,id);
         Cache.getTheCache().put(result);
-        return (PersistentKunde)PersistentProxi.createProxi(id, 102);
+        return (PersistentKunde)PersistentProxi.createProxi(id, 349);
     }
     
     public PersistentKunde newDelayedKunde(String benutzername,String passwort) throws PersistenceException {
         long id = ConnectionHandler.getTheConnectionHandler().theKundeFacade.getNextId();
         Kunde result = new Kunde(benutzername,passwort,null,null,null,id);
         Cache.getTheCache().put(result);
-        return (PersistentKunde)PersistentProxi.createProxi(id, 102);
+        return (PersistentKunde)PersistentProxi.createProxi(id, 349);
     }
     
     public Kunde getKunde(long KundeId) throws PersistenceException{
         return null; //All data is in the cache!
     }
     public long getClass(long objectId) throws PersistenceException{
-        if(Cache.getTheCache().contains(objectId, 102)) return 102;
+        if(Cache.getTheCache().contains(objectId, 349)) return 349;
         
         throw new PersistenceException("No such object: " + new Long(objectId).toString(), 0);
         
@@ -54,7 +54,7 @@ public class KundeFacade{
         benutzername = benutzername.replaceAll("_", ".");
         KundeSearchList result = new KundeSearchList();
         java.util.Iterator<?> candidates;
-        candidates = Cache.getTheCache().iterator(102);
+        candidates = Cache.getTheCache().iterator(349);
         while (candidates.hasNext()){
             PersistentKunde current = (PersistentKunde)((PersistentRoot)candidates.next()).getTheObject();
             if (current != null && !current.isDltd() && !current.isDelayed$Persistence() && current.getBenutzername().matches(benutzername))

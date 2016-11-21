@@ -25,7 +25,7 @@ public class KontoFacade{
 	}
 
     /* If idCreateIfLessZero is negative, a new id is generated. */
-    public PersistentKonto newKonto(common.Fraction kontostand,common.Fraction limit,long idCreateIfLessZero) throws PersistenceException {
+    public PersistentKonto newKonto(long kontostand,long limit,long idCreateIfLessZero) throws PersistenceException {
         if(idCreateIfLessZero > 0) return (PersistentKonto)PersistentProxi.createProxi(idCreateIfLessZero, 146);
         long id = ConnectionHandler.getTheConnectionHandler().theKontoFacade.getNextId();
         Konto result = new Konto(kontostand,limit,null,null,id);
@@ -33,7 +33,7 @@ public class KontoFacade{
         return (PersistentKonto)PersistentProxi.createProxi(id, 146);
     }
     
-    public PersistentKonto newDelayedKonto(common.Fraction kontostand,common.Fraction limit) throws PersistenceException {
+    public PersistentKonto newDelayedKonto(long kontostand,long limit) throws PersistenceException {
         long id = ConnectionHandler.getTheConnectionHandler().theKontoFacade.getNextId();
         Konto result = new Konto(kontostand,limit,null,null,id);
         Cache.getTheCache().put(result);
@@ -49,10 +49,10 @@ public class KontoFacade{
         throw new PersistenceException("No such object: " + new Long(objectId).toString(), 0);
         
     }
-    public void kontostandSet(long KontoId, common.Fraction kontostandVal) throws PersistenceException {
+    public void kontostandSet(long KontoId, long kontostandVal) throws PersistenceException {
         
     }
-    public void limitSet(long KontoId, common.Fraction limitVal) throws PersistenceException {
+    public void limitSet(long KontoId, long limitVal) throws PersistenceException {
         
     }
     public void subServiceSet(long KontoId, SubjInterface subServiceVal) throws PersistenceException {

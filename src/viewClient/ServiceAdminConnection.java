@@ -337,7 +337,7 @@ public class ServiceAdminConnection extends ServiceShopConnection {
     }
     
     @SuppressWarnings("unchecked")
-    public synchronized void aendereArtikel(ArtikelView artikel, common.Fraction preis, long minLagerbestand, long maxLagerbestand, long hstLieferzeit) throws ModelException, ExcAlreadyExists{
+    public synchronized void aendereArtikel(ArtikelView artikel, long preis, long minLagerbestand, long maxLagerbestand, long hstLieferzeit) throws ModelException, ExcAlreadyExists{
         try {
             Vector<Object> parameters = new Vector<Object>();
             if (artikel == null){
@@ -345,7 +345,7 @@ public class ServiceAdminConnection extends ServiceShopConnection {
             } else {
                 parameters.add(((view.objects.ViewProxi)artikel).createProxiInformation());
             }
-            parameters.add(preis.toString());
+            parameters.add(new Long(preis).toString());
             parameters.add(new Long(minLagerbestand).toString());
             parameters.add(new Long(maxLagerbestand).toString());
             parameters.add(new Long(hstLieferzeit).toString());
@@ -693,7 +693,7 @@ public class ServiceAdminConnection extends ServiceShopConnection {
         
     }
     
-    public synchronized void neuerArtikel(ArtikelManagerView artikelManager, String artikelnummer, String bezeichnung, common.Fraction preis, long minLagerbestand, long maxLagerbestand, long hstLieferzeit) throws ModelException{
+    public synchronized void neuerArtikel(ArtikelManagerView artikelManager, String artikelnummer, String bezeichnung, long preis, long minLagerbestand, long maxLagerbestand, long hstLieferzeit) throws ModelException{
         try {
             Vector<Object> parameters = new Vector<Object>();
             if (artikelManager == null){
@@ -703,7 +703,7 @@ public class ServiceAdminConnection extends ServiceShopConnection {
             }
             parameters.add(artikelnummer);
             parameters.add(bezeichnung);
-            parameters.add(preis.toString());
+            parameters.add(new Long(preis).toString());
             parameters.add(new Long(minLagerbestand).toString());
             parameters.add(new Long(maxLagerbestand).toString());
             parameters.add(new Long(hstLieferzeit).toString());

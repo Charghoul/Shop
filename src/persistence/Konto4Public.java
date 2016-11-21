@@ -5,6 +5,8 @@ import model.visitor.*;
 
 public interface Konto4Public extends Anything, SubjInterface, AbstractPersistentProxi {
     
+    public long getKontostand() throws PersistenceException ;
+    public long getLimit() throws PersistenceException ;
     
     public void accept(AnythingVisitor visitor) throws PersistenceException;
     public <R> R accept(AnythingReturnVisitor<R>  visitor) throws PersistenceException;
@@ -17,7 +19,11 @@ public interface Konto4Public extends Anything, SubjInterface, AbstractPersisten
     
     public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
 				throws PersistenceException;
+    public void abbuchen(final common.Fraction betrag) 
+				throws PersistenceException;
     public void copyingPrivateUserAttributes(final Anything copy) 
+				throws PersistenceException;
+    public void einzahlen(final common.Fraction betrag) 
 				throws PersistenceException;
     public void initializeOnCreation() 
 				throws PersistenceException;

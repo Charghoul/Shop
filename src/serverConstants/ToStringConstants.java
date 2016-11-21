@@ -30,6 +30,7 @@ public class ToStringConstants {
     public static final String deactived = "inactive";
     public static final String activated = "active";
     public static final String HstLieferung = "Herstellerlieferung";
+    public static final String Konto = "Konto";
 
 
     private ToStringConstants(){}

@@ -8,7 +8,7 @@ server Server {
 abstract server Service {
 }
 abstract server ServiceShop extends Service{
-
+	one-to-one Konto konto;
 	observe ProduktKatalog produktKatalog;
 }
 server ServiceKunde extends ServiceShop {
@@ -31,7 +31,7 @@ server ServiceAdmin extends ServiceShop {
 	one-to-one HerstellerManager herstellerManager;
 	observe ZeitManager zeitManager;
 	void aendereHstLieferzeit(Artikel artikel, Integer hstLieferzeit);
-	void neuerArtikel(ArtikelManager artikelManager, String artikelnummer, String bezeichnung, Fraction preis, Integer minLagerbestand, 		Integer maxLagerbestand, Integer hstLieferzeit);
+	void neuerArtikel(ArtikelManager artikelManager, String artikelnummer, String bezeichnung, Integer preis, Integer minLagerbestand, 		Integer maxLagerbestand, Integer hstLieferzeit);
 	void produktgruppeHinzufuegen(Produktgruppe produktgruppe, String name)  throws ExcAlreadyExists, CycleException;
 	void produktgruppeEntfernen(Produktgruppe produktgruppe);
 	void artikelAnhaengen( Produktgruppe produktgruppe, Artikel artikel {artikelManager})  throws ExcAlreadyExists, CycleException;
@@ -46,7 +46,7 @@ server ServiceAdmin extends ServiceShop {
 	void verringereMenge(Position position, Integer menge) throws ExcLagerbestandUnderZero;
 	void aendereMenge(Position position, Integer menge) throws ExcLagerbestandUnderZero, ExcLagerbestandOverMax;
 	void erhoeheMenge(Position position, Integer menge) throws ExcLagerbestandOverMax;
-	void aendereArtikel(Artikel artikel, Fraction preis, Integer minLagerbestand, Integer maxLagerbestand, Integer hstLieferzeit) throws ExcAlreadyExists;
+	void aendereArtikel(Artikel artikel, Integer preis, Integer minLagerbestand, Integer maxLagerbestand, Integer hstLieferzeit) throws ExcAlreadyExists;
 	void neuerHersteller(HerstellerManager herstellerManager, String name) throws ExcAlreadyExists;
 	void aendereHersteller(Hersteller hersteller, String name) throws ExcAlreadyExists;
 	void herstellerHinzufuegen(Artikel artikel, Hersteller hersteller {herstellerManager});
@@ -56,7 +56,7 @@ server ServiceRegister extends Service {
 }
 singleton ArtikelManager{
 	Artikel ** artikelListe;
-	active void neuerArtikel(String artikelnummer, String bezeichnung, Fraction preis, Integer minLagerbestand, 		Integer maxLagerbestand, Integer hstLieferzeit) throws UserException;
+	active void neuerArtikel(String artikelnummer, String bezeichnung, Integer preis, Integer minLagerbestand, 		Integer maxLagerbestand, Integer hstLieferzeit) throws UserException;
 	void herstellerHinzufuegen(Artikel artikel, Hersteller hersteller);
 }
 
@@ -130,8 +130,10 @@ class Kunde{
 }
 
 class Konto{
-	Fraction kontostand;
-	Fraction limit;
+	public prior Integer kontostand;
+	public prior Integer limit;
+	void abbuchen(Fraction betrag);
+	void einzahlen(Fraction betrag);
 }
 hierarchy Hierarchie;
 abstract class Komponente {
@@ -139,13 +141,13 @@ abstract class Komponente {
 class Artikel extends Komponente{
 	prior indexed String artikelnummer;
 	prior indexed String bezeichnung;
-	prior Fraction preis;
+	prior Integer preis;
 	public prior Integer minLagerbestand;
 	public prior Integer maxLagerbestand;
 	public-write prior Integer hstLieferzeit;
 	public prior skip-view Artikelstatus artikelstatus;
 	public no-view Hersteller hersteller;
-	void aendereArtikel(Fraction preis, Integer minLagerbestand, Integer maxLagerbestand, Integer hstLieferzeit) throws ExcAlreadyExists;
+	void aendereArtikel(Integer preis, Integer minLagerbestand, Integer maxLagerbestand, Integer hstLieferzeit) throws ExcAlreadyExists;
 	active void statusVerkauf() throws ExcInconsistentStatusChange;
 	active void statusAuslauf() throws ExcInconsistentStatusChange;
 	active void zuEinkaufswHinz(Integer menge, EinkaufsManager einkaufsManager) throws UserException;
