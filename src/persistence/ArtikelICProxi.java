@@ -34,10 +34,10 @@ public class ArtikelICProxi extends KomponenteICProxi implements PersistentArtik
     public void setBezeichnung(String newValue) throws PersistenceException {
         ((PersistentArtikel)this.getTheObject()).setBezeichnung(newValue);
     }
-    public common.Fraction getPreis() throws PersistenceException {
+    public long getPreis() throws PersistenceException {
         return ((PersistentArtikel)this.getTheObject()).getPreis();
     }
-    public void setPreis(common.Fraction newValue) throws PersistenceException {
+    public void setPreis(long newValue) throws PersistenceException {
         ((PersistentArtikel)this.getTheObject()).setPreis(newValue);
     }
     public long getMinLagerbestand() throws PersistenceException {
@@ -164,7 +164,7 @@ public class ArtikelICProxi extends KomponenteICProxi implements PersistentArtik
 				throws PersistenceException{
         ((PersistentArtikel)this.getTheObject()).zuEinkaufswHinz(menge, einkaufsManager, invoker);
     }
-    public void aendereArtikel(final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
+    public void aendereArtikel(final long preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
 				throws model.ExcAlreadyExists, PersistenceException{
         ((PersistentArtikel)this.getTheObject()).aendereArtikel(preis, minLagerbestand, maxLagerbestand, hstLieferzeit);
     }

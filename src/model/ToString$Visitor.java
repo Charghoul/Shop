@@ -32,10 +32,6 @@ public class ToString$Visitor extends model.visitor.ToString$Visitor {
 	}
 
 	@Override
-	public void handleKunde(Kunde4Public kunde) throws PersistenceException {
-	}
-
-	@Override
 	public void handleHersteller(Hersteller4Public hersteller) throws PersistenceException {
 		result = ToStringConstants.Hersteller + ((PersistentHersteller) hersteller).getName();
 	}
@@ -164,7 +160,7 @@ public class ToString$Visitor extends model.visitor.ToString$Visitor {
 
 	@Override
 	public void handleKonto(Konto4Public konto) throws PersistenceException {
-
+		result = ToStringConstants.Konto + " - " + konto.getKontostand()/100 + "." + konto.getKontostand()%100 +" Euro ";
 	}
 
 	@Override
@@ -183,10 +179,15 @@ public class ToString$Visitor extends model.visitor.ToString$Visitor {
 	}
 
 	@Override
+	public void handleKunde(Kunde4Public kunde) throws PersistenceException {
+
+	}
+
+	@Override
 	public void handleArtikel(Artikel4Public artikel) throws PersistenceException {
 		PersistentArtikel persistentArtikel = (PersistentArtikel) artikel;
 		String temp = "("+persistentArtikel.getArtikelnummer() + ") " + persistentArtikel.getBezeichnung()
-				+" | " + persistentArtikel.getArtikelstatus();
+				+" | " + persistentArtikel.getArtikelstatus() + " " + persistentArtikel.getPreis()/100 + "."+persistentArtikel.getPreis()%100 + " Euro";
 		if(persistentArtikel.getHersteller()!=null){
 			temp = temp +" | " + persistentArtikel.getHersteller();
 		}

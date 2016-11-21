@@ -14,7 +14,7 @@ public class ArtikelProxi extends KomponenteProxi implements ArtikelView{
     public ArtikelView getRemoteObject(java.util.HashMap<String,Object> resultTable, ExceptionAndEventHandler connectionKey) throws ModelException{
         String artikelnummer = (String)resultTable.get("artikelnummer");
         String bezeichnung = (String)resultTable.get("bezeichnung");
-        common.Fraction preis = common.Fraction.parse((String)resultTable.get("preis"));
+        long preis = new Long((String)resultTable.get("preis")).longValue();
         long minLagerbestand = new Long((String)resultTable.get("minLagerbestand")).longValue();
         long maxLagerbestand = new Long((String)resultTable.get("maxLagerbestand")).longValue();
         long hstLieferzeit = new Long((String)resultTable.get("hstLieferzeit")).longValue();
@@ -32,7 +32,7 @@ public class ArtikelProxi extends KomponenteProxi implements ArtikelView{
             hersteller = view.objects.ViewProxi.createProxi(hersteller$Info,connectionKey);
             hersteller.setToString(hersteller$Info.getToString());
         }
-        ArtikelView result$$ = new Artikel((String)artikelnummer,(String)bezeichnung,(common.Fraction)preis,(long)minLagerbestand,(long)maxLagerbestand,(long)hstLieferzeit,(ArtikelstatusView)artikelstatus,(HerstellerView)hersteller, this.getId(), this.getClassId());
+        ArtikelView result$$ = new Artikel((String)artikelnummer,(String)bezeichnung,(long)preis,(long)minLagerbestand,(long)maxLagerbestand,(long)hstLieferzeit,(ArtikelstatusView)artikelstatus,(HerstellerView)hersteller, this.getId(), this.getClassId());
         ((ViewRoot)result$$).setToString((String) resultTable.get(common.RPCConstantsAndServices.RPCToStringFieldName));
         return result$$;
     }
@@ -75,10 +75,10 @@ public class ArtikelProxi extends KomponenteProxi implements ArtikelView{
     public void setBezeichnung(String newValue) throws ModelException {
         ((Artikel)this.getTheObject()).setBezeichnung(newValue);
     }
-    public common.Fraction getPreis()throws ModelException{
+    public long getPreis()throws ModelException{
         return ((Artikel)this.getTheObject()).getPreis();
     }
-    public void setPreis(common.Fraction newValue) throws ModelException {
+    public void setPreis(long newValue) throws ModelException {
         ((Artikel)this.getTheObject()).setPreis(newValue);
     }
     public long getMinLagerbestand()throws ModelException{

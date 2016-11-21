@@ -15,37 +15,41 @@ public class Konto extends PersistentObject implements PersistentKonto{
         return (Konto4Public)PersistentProxi.createProxi(objectId, classId);
     }
     
-    public static Konto4Public createKonto() throws PersistenceException{
-        return createKonto(false);
+    public static Konto4Public createKonto(long kontostand,long limit) throws PersistenceException{
+        return createKonto(kontostand,limit,false);
     }
     
-    public static Konto4Public createKonto(boolean delayed$Persistence) throws PersistenceException {
+    public static Konto4Public createKonto(long kontostand,long limit,boolean delayed$Persistence) throws PersistenceException {
         PersistentKonto result = null;
         if(delayed$Persistence){
             result = ConnectionHandler.getTheConnectionHandler().theKontoFacade
-                .newDelayedKonto(common.Fraction.Null,common.Fraction.Null);
+                .newDelayedKonto(kontostand,limit);
             result.setDelayed$Persistence(true);
         }else{
             result = ConnectionHandler.getTheConnectionHandler().theKontoFacade
-                .newKonto(common.Fraction.Null,common.Fraction.Null,-1);
+                .newKonto(kontostand,limit,-1);
         }
         java.util.HashMap<String,Object> final$$Fields = new java.util.HashMap<String,Object>();
+        final$$Fields.put("kontostand", kontostand);
+        final$$Fields.put("limit", limit);
         result.initialize(result, final$$Fields);
         result.initializeOnCreation();
         return result;
     }
     
-    public static Konto4Public createKonto(boolean delayed$Persistence,Konto4Public This) throws PersistenceException {
+    public static Konto4Public createKonto(long kontostand,long limit,boolean delayed$Persistence,Konto4Public This) throws PersistenceException {
         PersistentKonto result = null;
         if(delayed$Persistence){
             result = ConnectionHandler.getTheConnectionHandler().theKontoFacade
-                .newDelayedKonto(common.Fraction.Null,common.Fraction.Null);
+                .newDelayedKonto(kontostand,limit);
             result.setDelayed$Persistence(true);
         }else{
             result = ConnectionHandler.getTheConnectionHandler().theKontoFacade
-                .newKonto(common.Fraction.Null,common.Fraction.Null,-1);
+                .newKonto(kontostand,limit,-1);
         }
         java.util.HashMap<String,Object> final$$Fields = new java.util.HashMap<String,Object>();
+        final$$Fields.put("kontostand", kontostand);
+        final$$Fields.put("limit", limit);
         result.initialize(This, final$$Fields);
         result.initializeOnCreation();
         return result;
@@ -55,8 +59,8 @@ public class Konto extends PersistentObject implements PersistentKonto{
     java.util.HashMap<String,Object> result = null;
         if (depth > 0 && essentialLevel <= common.RPCConstantsAndServices.EssentialDepth){
             result = super.toHashtable(allResults, depth, essentialLevel, forGUI, false, tdObserver);
-            result.put("kontostand", this.getKontostand().toString());
-            result.put("limit", this.getLimit().toString());
+            result.put("kontostand", new Long(this.getKontostand()).toString());
+            result.put("limit", new Long(this.getLimit()).toString());
             String uniqueKey = common.RPCConstantsAndServices.createHashtableKey(this.getClassId(), this.getId());
             if (leaf && !allResults.containsKey(uniqueKey)) allResults.put(uniqueKey, result);
         }
@@ -77,12 +81,12 @@ public class Konto extends PersistentObject implements PersistentKonto{
     public boolean hasEssentialFields() throws PersistenceException{
         return false;
     }
-    protected common.Fraction kontostand;
-    protected common.Fraction limit;
+    protected long kontostand;
+    protected long limit;
     protected SubjInterface subService;
     protected PersistentKonto This;
     
-    public Konto(common.Fraction kontostand,common.Fraction limit,SubjInterface subService,PersistentKonto This,long id) throws PersistenceException {
+    public Konto(long kontostand,long limit,SubjInterface subService,PersistentKonto This,long id) throws PersistenceException {
         /* Shall not be used by clients for object construction! Use static create operation instead! */
         super(id);
         this.kontostand = kontostand;
@@ -115,17 +119,17 @@ public class Konto extends PersistentObject implements PersistentKonto{
         
     }
     
-    public common.Fraction getKontostand() throws PersistenceException {
+    public long getKontostand() throws PersistenceException {
         return this.kontostand;
     }
-    public void setKontostand(common.Fraction newValue) throws PersistenceException {
+    public void setKontostand(long newValue) throws PersistenceException {
         if(!this.isDelayed$Persistence()) ConnectionHandler.getTheConnectionHandler().theKontoFacade.kontostandSet(this.getId(), newValue);
         this.kontostand = newValue;
     }
-    public common.Fraction getLimit() throws PersistenceException {
+    public long getLimit() throws PersistenceException {
         return this.limit;
     }
-    public void setLimit(common.Fraction newValue) throws PersistenceException {
+    public void setLimit(long newValue) throws PersistenceException {
         if(!this.isDelayed$Persistence()) ConnectionHandler.getTheConnectionHandler().theKontoFacade.limitSet(this.getId(), newValue);
         this.limit = newValue;
     }
@@ -208,6 +212,19 @@ public class Konto extends PersistentObject implements PersistentKonto{
 				throws PersistenceException{
         this.setThis((PersistentKonto)This);
 		if(this.isTheSameAs(This)){
+			this.setKontostand((Long)final$$Fields.get("kontostand"));
+			this.setLimit((Long)final$$Fields.get("limit"));
+		}
+    }
+    public ServiceShop4Public inverseGetKonto() 
+				throws PersistenceException{
+        ServiceShopSearchList result = null;
+		if (result == null) result = ConnectionHandler.getTheConnectionHandler().theServiceShopFacade
+										.inverseGetKonto(getThis().getId(), getThis().getClassId());
+		try {
+			return result.iterator().next();
+		} catch (java.util.NoSuchElementException nsee){
+			return null;
 		}
     }
     public synchronized void register(final ObsInterface observee) 
@@ -232,8 +249,18 @@ public class Konto extends PersistentObject implements PersistentKonto{
     
     // Start of section that contains operations that must be implemented.
     
+    public void abbuchen(final common.Fraction betrag) 
+				throws PersistenceException{
+        //TODO: implement method: abbuchen
+        
+    }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{
+        
+    }
+    public void einzahlen(final common.Fraction betrag) 
+				throws PersistenceException{
+        //TODO: implement method: einzahlen
         
     }
     public void initializeOnCreation() 
@@ -244,8 +271,6 @@ public class Konto extends PersistentObject implements PersistentKonto{
 				throws PersistenceException{
         
     }
-
-    //TODO: Konto insgesamt implementieren!! prüfung des geldes auf kundenseite
     
     
     // Start of section that contains overridden operations only.

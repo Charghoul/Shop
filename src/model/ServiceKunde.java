@@ -1,6 +1,7 @@
 
 package model;
 
+import common.Fraction;
 import model.meta.ProduktKatalogMssgs;
 import model.visitor.*;
 import persistence.*;
@@ -90,6 +91,7 @@ public class ServiceKunde extends model.ServiceShop implements PersistentService
         ServiceKunde result = this;
         result = new ServiceKunde(this.subService, 
                                   this.This, 
+                                  this.konto, 
                                   this.produktKatalog, 
                                   this.einkaufsManager, 
                                   this.lieferartManager, 
@@ -108,9 +110,9 @@ public class ServiceKunde extends model.ServiceShop implements PersistentService
     protected PersistentLieferartManager lieferartManager;
     protected PersistentServiceKundeBestellManager bestellManager;
     
-    public ServiceKunde(SubjInterface subService,PersistentService This,PersistentServiceShopProduktKatalog produktKatalog,PersistentEinkaufsManager einkaufsManager,PersistentLieferartManager lieferartManager,PersistentServiceKundeBestellManager bestellManager,long id) throws PersistenceException {
+    public ServiceKunde(SubjInterface subService,PersistentService This,PersistentKonto konto,PersistentServiceShopProduktKatalog produktKatalog,PersistentEinkaufsManager einkaufsManager,PersistentLieferartManager lieferartManager,PersistentServiceKundeBestellManager bestellManager,long id) throws PersistenceException {
         /* Shall not be used by clients for object construction! Use static create operation instead! */
-        super((SubjInterface)subService,(PersistentService)This,(PersistentServiceShopProduktKatalog)produktKatalog,id);
+        super((SubjInterface)subService,(PersistentService)This,(PersistentKonto)konto,(PersistentServiceShopProduktKatalog)produktKatalog,id);
         this.einkaufsManager = einkaufsManager;
         this.lieferartManager = lieferartManager;
         this.bestellManager = bestellManager;        
@@ -264,6 +266,7 @@ public class ServiceKunde extends model.ServiceShop implements PersistentService
          return visitor.handleServiceKunde(this);
     }
     public int getLeafInfo() throws PersistenceException{
+        if (this.getKonto() != null) return 1;
         if (this.getProduktKatalog() != null) return 1;
         if (this.getEinkaufsManager() != null) return 1;
         if (this.getBestellManager() != null) return 1;
@@ -385,6 +388,7 @@ public class ServiceKunde extends model.ServiceShop implements PersistentService
         BestellManager4Public temp = BestellManager.createBestellManager();
         getThis().setBestellManager(temp);
         getThis().setEinkaufsManager(EinkaufsManager.createEinkaufsManager(temp));
+        getThis().setKonto(Konto.createKonto(4999,0));
     }
     public void initializeOnInstantiation() 
 				throws PersistenceException{

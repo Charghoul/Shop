@@ -1519,6 +1519,7 @@ class KndLieferungDefaultDetailPanel extends DefaultDetailPanel{
 
 class ServiceKundeDefaultDetailPanel extends DefaultDetailPanel{
     
+    protected static final String ServiceShop$$konto = "ServiceShop$$konto";
     protected static final String ServiceShop$$produktKatalog = "ServiceShop$$produktKatalog";
     protected static final String ServiceKunde$$einkaufsManager = "ServiceKunde$$einkaufsManager";
     protected static final String ServiceKunde$$bestellManager = "ServiceKunde$$bestellManager";
@@ -1578,7 +1579,7 @@ class ArtikelDefaultDetailPanel extends DefaultDetailPanel{
             this.getExceptionAndEventhandler().handleException(e);
         }
         try{
-            BaseTypePanel panel = new FractionPanel(this, "preis", this.getAnything().getPreis());
+            BaseTypePanel panel = new IntegerPanel(this, "preis", this.getAnything().getPreis());
             this.getScrollablePane().getChildren().add(panel);
             this.panels.put(Artikel$$preis, panel);
         }catch(ModelException e){
@@ -1659,6 +1660,7 @@ class PositionDefaultDetailPanel extends DefaultDetailPanel{
 
 class ServiceAdminDefaultDetailPanel extends DefaultDetailPanel{
     
+    protected static final String ServiceShop$$konto = "ServiceShop$$konto";
     protected static final String ServiceShop$$produktKatalog = "ServiceShop$$produktKatalog";
     protected static final String ServiceAdmin$$warenlager = "ServiceAdmin$$warenlager";
     protected static final String ServiceAdmin$$artikelManager = "ServiceAdmin$$artikelManager";
@@ -1702,14 +1704,14 @@ class KontoDefaultDetailPanel extends DefaultDetailPanel{
     }
     protected void addFields(){
         try{
-            BaseTypePanel panel = new FractionPanel(this, "kontostand", this.getAnything().getKontostand());
+            BaseTypePanel panel = new IntegerPanel(this, "kontostand", this.getAnything().getKontostand());
             this.getScrollablePane().getChildren().add(panel);
             this.panels.put(Konto$$kontostand, panel);
         }catch(ModelException e){
             this.getExceptionAndEventhandler().handleException(e);
         }
         try{
-            BaseTypePanel panel = new FractionPanel(this, "limit", this.getAnything().getLimit());
+            BaseTypePanel panel = new IntegerPanel(this, "limit", this.getAnything().getLimit());
             this.getScrollablePane().getChildren().add(panel);
             this.panels.put(Konto$$limit, panel);
         }catch(ModelException e){

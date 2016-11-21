@@ -297,7 +297,7 @@ public class Cache {
 		this.number2NameMap.put(293, "IntegerWrapper");
 		this.number2NameMap.put(298, "KndLieferung");
 		this.number2NameMap.put(146, "Konto");
-		this.number2NameMap.put(102, "Kunde");
+		this.number2NameMap.put(349, "Kunde");
 		this.number2NameMap.put(138, "Lieferart");
 		this.number2NameMap.put(198, "LieferartManager");
 		this.number2NameMap.put(214, "Neuanlage");

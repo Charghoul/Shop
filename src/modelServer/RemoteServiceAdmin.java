@@ -82,7 +82,7 @@ public  class RemoteServiceAdmin extends RemoteServiceShop {
     public synchronized java.util.HashMap<?,?> aendereArtikel(String artikelProxiString, String preisAsString, String minLagerbestandAsString, String maxLagerbestandAsString, String hstLieferzeitAsString){
         try {
             PersistentArtikel artikel = (PersistentArtikel)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(artikelProxiString));
-            common.Fraction preis = common.Fraction.parse(preisAsString);
+            long preis = new Long(preisAsString).longValue();
             long minLagerbestand = new Long(minLagerbestandAsString).longValue();
             long maxLagerbestand = new Long(maxLagerbestandAsString).longValue();
             long hstLieferzeit = new Long(hstLieferzeitAsString).longValue();
@@ -249,7 +249,7 @@ public  class RemoteServiceAdmin extends RemoteServiceShop {
     public synchronized java.util.HashMap<?,?> neuerArtikel(String artikelManagerProxiString, String artikelnummer, String bezeichnung, String preisAsString, String minLagerbestandAsString, String maxLagerbestandAsString, String hstLieferzeitAsString){
         try {
             PersistentArtikelManager artikelManager = (PersistentArtikelManager)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(artikelManagerProxiString));
-            common.Fraction preis = common.Fraction.parse(preisAsString);
+            long preis = new Long(preisAsString).longValue();
             long minLagerbestand = new Long(minLagerbestandAsString).longValue();
             long maxLagerbestand = new Long(maxLagerbestandAsString).longValue();
             long hstLieferzeit = new Long(hstLieferzeitAsString).longValue();

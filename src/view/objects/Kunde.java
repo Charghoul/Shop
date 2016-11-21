@@ -1,13 +1,8 @@
 
 package view.objects;
 
-import view.KontoView;
-import view.KundeView;
-import view.ModelException;
-import view.visitor.AnythingExceptionVisitor;
-import view.visitor.AnythingReturnExceptionVisitor;
-import view.visitor.AnythingReturnVisitor;
-import view.visitor.AnythingVisitor;
+import view.*;
+import view.visitor.*;
 
 
 /* Additional import section end */
@@ -27,7 +22,7 @@ public class Kunde extends ViewObject implements KundeView{
     }
     
     static public long getTypeId() {
-        return 102;
+        return 349;
     }
     
     public long getClassId() {

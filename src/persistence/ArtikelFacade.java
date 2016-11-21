@@ -10,7 +10,7 @@ public class ArtikelFacade{
 	}
 
     /* If idCreateIfLessZero is negative, a new id is generated. */
-    public PersistentArtikel newArtikel(String artikelnummer,String bezeichnung,common.Fraction preis,long minLagerbestand,long maxLagerbestand,long hstLieferzeit,long idCreateIfLessZero) throws PersistenceException {
+    public PersistentArtikel newArtikel(String artikelnummer,String bezeichnung,long preis,long minLagerbestand,long maxLagerbestand,long hstLieferzeit,long idCreateIfLessZero) throws PersistenceException {
         if(idCreateIfLessZero > 0) return (PersistentArtikel)PersistentProxi.createProxi(idCreateIfLessZero, 108);
         long id = ConnectionHandler.getTheConnectionHandler().theKomponenteFacade.getNextId();
         Artikel result = new Artikel(null,null,artikelnummer,bezeichnung,preis,minLagerbestand,maxLagerbestand,hstLieferzeit,null,null,id);
@@ -18,7 +18,7 @@ public class ArtikelFacade{
         return (PersistentArtikel)PersistentProxi.createProxi(id, 108);
     }
     
-    public PersistentArtikel newDelayedArtikel(String artikelnummer,String bezeichnung,common.Fraction preis,long minLagerbestand,long maxLagerbestand,long hstLieferzeit) throws PersistenceException {
+    public PersistentArtikel newDelayedArtikel(String artikelnummer,String bezeichnung,long preis,long minLagerbestand,long maxLagerbestand,long hstLieferzeit) throws PersistenceException {
         long id = ConnectionHandler.getTheConnectionHandler().theKomponenteFacade.getNextId();
         Artikel result = new Artikel(null,null,artikelnummer,bezeichnung,preis,minLagerbestand,maxLagerbestand,hstLieferzeit,null,null,id);
         Cache.getTheCache().put(result);
@@ -60,7 +60,7 @@ public class ArtikelFacade{
     public void bezeichnungSet(long ArtikelId, String bezeichnungVal) throws PersistenceException {
         
     }
-    public void preisSet(long ArtikelId, common.Fraction preisVal) throws PersistenceException {
+    public void preisSet(long ArtikelId, long preisVal) throws PersistenceException {
         
     }
     public void minLagerbestandSet(long ArtikelId, long minLagerbestandVal) throws PersistenceException {

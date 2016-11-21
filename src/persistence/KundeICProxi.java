@@ -19,7 +19,7 @@ public class KundeICProxi extends PersistentInCacheProxiOptimistic implements Pe
     }
     
     public long getClassId() {
-        return 102;
+        return 349;
     }
     
     public String getBenutzername() throws PersistenceException {

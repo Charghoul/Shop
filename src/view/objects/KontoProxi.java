@@ -12,9 +12,9 @@ public class KontoProxi extends ViewProxi implements KontoView{
     }
     
     public KontoView getRemoteObject(java.util.HashMap<String,Object> resultTable, ExceptionAndEventHandler connectionKey) throws ModelException{
-        common.Fraction kontostand = common.Fraction.parse((String)resultTable.get("kontostand"));
-        common.Fraction limit = common.Fraction.parse((String)resultTable.get("limit"));
-        KontoView result$$ = new Konto((common.Fraction)kontostand,(common.Fraction)limit, this.getId(), this.getClassId());
+        long kontostand = new Long((String)resultTable.get("kontostand")).longValue();
+        long limit = new Long((String)resultTable.get("limit")).longValue();
+        KontoView result$$ = new Konto((long)kontostand,(long)limit, this.getId(), this.getClassId());
         ((ViewRoot)result$$).setToString((String) resultTable.get(common.RPCConstantsAndServices.RPCToStringFieldName));
         return result$$;
     }
@@ -37,16 +37,16 @@ public class KontoProxi extends ViewProxi implements KontoView{
         return -1;
     }
     
-    public common.Fraction getKontostand()throws ModelException{
+    public long getKontostand()throws ModelException{
         return ((Konto)this.getTheObject()).getKontostand();
     }
-    public void setKontostand(common.Fraction newValue) throws ModelException {
+    public void setKontostand(long newValue) throws ModelException {
         ((Konto)this.getTheObject()).setKontostand(newValue);
     }
-    public common.Fraction getLimit()throws ModelException{
+    public long getLimit()throws ModelException{
         return ((Konto)this.getTheObject()).getLimit();
     }
-    public void setLimit(common.Fraction newValue) throws ModelException {
+    public void setLimit(long newValue) throws ModelException {
         ((Konto)this.getTheObject()).setLimit(newValue);
     }
     

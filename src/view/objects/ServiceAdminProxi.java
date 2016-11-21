@@ -15,6 +15,13 @@ public class ServiceAdminProxi extends ServiceShopProxi implements ServiceAdminV
     public ServiceAdminView getRemoteObject(java.util.HashMap<String,Object> resultTable, ExceptionAndEventHandler connectionKey) throws ModelException{
         java.util.Vector<String> errors_string = (java.util.Vector<String>)resultTable.get("errors");
         java.util.Vector<ErrorDisplayView> errors = ViewProxi.getProxiVector(errors_string, connectionKey);
+        ViewProxi konto = null;
+        String konto$String = (String)resultTable.get("konto");
+        if (konto$String != null) {
+            common.ProxiInformation konto$Info = common.RPCConstantsAndServices.createProxiInformation(konto$String);
+            konto = view.objects.ViewProxi.createProxi(konto$Info,connectionKey);
+            konto.setToString(konto$Info.getToString());
+        }
         ViewProxi produktKatalog = null;
         String produktKatalog$String = (String)resultTable.get("produktKatalog");
         if (produktKatalog$String != null) {
@@ -57,7 +64,7 @@ public class ServiceAdminProxi extends ServiceShopProxi implements ServiceAdminV
             zeitManager = view.objects.ViewProxi.createProxi(zeitManager$Info,connectionKey);
             zeitManager.setToString(zeitManager$Info.getToString());
         }
-        ServiceAdminView result$$ = new ServiceAdmin(errors,(ProduktKatalogView)produktKatalog,(WarenlagerView)warenlager,(ArtikelManagerView)artikelManager,(LieferartManagerView)lieferartManager,(HerstellerManagerView)herstellerManager,(ZeitManagerView)zeitManager, this.getId(), this.getClassId());
+        ServiceAdminView result$$ = new ServiceAdmin(errors,(KontoView)konto,(ProduktKatalogView)produktKatalog,(WarenlagerView)warenlager,(ArtikelManagerView)artikelManager,(LieferartManagerView)lieferartManager,(HerstellerManagerView)herstellerManager,(ZeitManagerView)zeitManager, this.getId(), this.getClassId());
         ((ViewRoot)result$$).setToString((String) resultTable.get(common.RPCConstantsAndServices.RPCToStringFieldName));
         return result$$;
     }
@@ -67,6 +74,8 @@ public class ServiceAdminProxi extends ServiceShopProxi implements ServiceAdminV
     }
     public ViewObjectInTree getChild(int originalIndex) throws ModelException{
         int index = originalIndex;
+        if(index == 0 && this.getKonto() != null) return new KontoServiceShopWrapper(this, originalIndex, (ViewRoot)this.getKonto());
+        if(this.getKonto() != null) index = index - 1;
         if(index == 0 && this.getProduktKatalog() != null) return new ProduktKatalogServiceShopWrapper(this, originalIndex, (ViewRoot)this.getProduktKatalog());
         if(this.getProduktKatalog() != null) index = index - 1;
         if(index == 0 && this.getWarenlager() != null) return new WarenlagerServiceAdminWrapper(this, originalIndex, (ViewRoot)this.getWarenlager());
@@ -83,6 +92,7 @@ public class ServiceAdminProxi extends ServiceShopProxi implements ServiceAdminV
     }
     public int getChildCount() throws ModelException {
         return 0 
+            + (this.getKonto() == null ? 0 : 1)
             + (this.getProduktKatalog() == null ? 0 : 1)
             + (this.getWarenlager() == null ? 0 : 1)
             + (this.getArtikelManager() == null ? 0 : 1)
@@ -93,6 +103,7 @@ public class ServiceAdminProxi extends ServiceShopProxi implements ServiceAdminV
     public boolean isLeaf() throws ModelException {
         if (this.object == null) return this.getLeafInfo() == 0;
         return true 
+            && (this.getKonto() == null ? true : false)
             && (this.getProduktKatalog() == null ? true : false)
             && (this.getWarenlager() == null ? true : false)
             && (this.getArtikelManager() == null ? true : false)
@@ -102,6 +113,8 @@ public class ServiceAdminProxi extends ServiceShopProxi implements ServiceAdminV
     }
     public int getIndexOfChild(Object child) throws ModelException {
         int result = 0;
+        if(this.getKonto() != null && this.getKonto().equals(child)) return result;
+        if(this.getKonto() != null) result = result + 1;
         if(this.getProduktKatalog() != null && this.getProduktKatalog().equals(child)) return result;
         if(this.getProduktKatalog() != null) result = result + 1;
         if(this.getWarenlager() != null && this.getWarenlager().equals(child)) return result;

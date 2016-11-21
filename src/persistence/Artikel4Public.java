@@ -41,7 +41,7 @@ public interface Artikel4Public extends Komponente4Public {
 				throws PersistenceException;
     public void zuEinkaufswHinz(final long menge, final EinkaufsManager4Public einkaufsManager, final Invoker invoker) 
 				throws PersistenceException;
-    public void aendereArtikel(final common.Fraction preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
+    public void aendereArtikel(final long preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
 				throws model.ExcAlreadyExists, PersistenceException;
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException;

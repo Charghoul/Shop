@@ -278,6 +278,7 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
         //überprüfen ob alles auf lager ist
         Position4Public temp = Warenlager.getTheWarenlager().nichtVerfPruefen(getThis().getEinkaufsListe().getList());
         //TODO: überprüfung ob artikel vorhanden ist funktioniert noch nicht!
+        //TODO: prüfen ob Warenwert unter Kontostand liegt, inkl. Vorbestellungen
         if(temp == null) {
             Bestellung4Public bestellung = getThis().getBestellManager().neueBestellung(getThis().getEinkaufsListe().getList(), Verarbeitung.getTheVerarbeitung());
             getThis().getEinkaufsListe().applyToAll(new Procdure<Position4Public>() {
@@ -346,7 +347,7 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
     }
     public void vorbestellen() 
 				throws PersistenceException{
-        //TODO: vorbestellen implementieren - Vorbestellungsliste und abarbeitung etc
+        //TODO: vorbestellen implementieren - Vorbestellungsliste und abarbeitung etc, prüfen ob warenkorb zu konto passt vom preis her
     }
     
     

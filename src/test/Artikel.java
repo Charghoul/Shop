@@ -30,7 +30,7 @@ public class Artikel {
     @Test
     public void neuerArtikel() throws PersistenceException, UserException {
 
-        ArtikelManager.getTheArtikelManager().neuerArtikel("1234", "test", Fraction.parse("5"), 5, 100, 3);
+        ArtikelManager.getTheArtikelManager().neuerArtikel("1234", "test", 999, 5, 100, 3);
         Artikel4Public temp = ((PersistentArtikelManager) ArtikelManager.getTheArtikelManager()).getArtikelListe().findFirst(x -> {
             return ((PersistentArtikel)x).getBezeichnung().equals("test");
         });

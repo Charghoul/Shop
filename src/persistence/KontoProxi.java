@@ -18,16 +18,16 @@ public class KontoProxi extends PersistentProxi implements PersistentKonto{
         return 146;
     }
     
-    public common.Fraction getKontostand() throws PersistenceException {
+    public long getKontostand() throws PersistenceException {
         return ((PersistentKonto)this.getTheObject()).getKontostand();
     }
-    public void setKontostand(common.Fraction newValue) throws PersistenceException {
+    public void setKontostand(long newValue) throws PersistenceException {
         ((PersistentKonto)this.getTheObject()).setKontostand(newValue);
     }
-    public common.Fraction getLimit() throws PersistenceException {
+    public long getLimit() throws PersistenceException {
         return ((PersistentKonto)this.getTheObject()).getLimit();
     }
-    public void setLimit(common.Fraction newValue) throws PersistenceException {
+    public void setLimit(long newValue) throws PersistenceException {
         ((PersistentKonto)this.getTheObject()).setLimit(newValue);
     }
     public SubjInterface getSubService() throws PersistenceException {
@@ -74,6 +74,10 @@ public class KontoProxi extends PersistentProxi implements PersistentKonto{
 				throws PersistenceException{
         ((PersistentKonto)this.getTheObject()).initialize(This, final$$Fields);
     }
+    public ServiceShop4Public inverseGetKonto() 
+				throws PersistenceException{
+        return ((PersistentKonto)this.getTheObject()).inverseGetKonto();
+    }
     public void register(final ObsInterface observee) 
 				throws PersistenceException{
         ((PersistentKonto)this.getTheObject()).register(observee);
@@ -82,9 +86,17 @@ public class KontoProxi extends PersistentProxi implements PersistentKonto{
 				throws PersistenceException{
         ((PersistentKonto)this.getTheObject()).updateObservers(event);
     }
+    public void abbuchen(final common.Fraction betrag) 
+				throws PersistenceException{
+        ((PersistentKonto)this.getTheObject()).abbuchen(betrag);
+    }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{
         ((PersistentKonto)this.getTheObject()).copyingPrivateUserAttributes(copy);
+    }
+    public void einzahlen(final common.Fraction betrag) 
+				throws PersistenceException{
+        ((PersistentKonto)this.getTheObject()).einzahlen(betrag);
     }
     public void initializeOnCreation() 
 				throws PersistenceException{

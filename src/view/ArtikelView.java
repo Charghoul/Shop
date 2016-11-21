@@ -8,8 +8,8 @@ public interface ArtikelView extends KomponenteView {
     public void setArtikelnummer(String newValue) throws ModelException ;
     public String getBezeichnung()throws ModelException;
     public void setBezeichnung(String newValue) throws ModelException ;
-    public common.Fraction getPreis()throws ModelException;
-    public void setPreis(common.Fraction newValue) throws ModelException ;
+    public long getPreis()throws ModelException;
+    public void setPreis(long newValue) throws ModelException ;
     public long getMinLagerbestand()throws ModelException;
     public void setMinLagerbestand(long newValue) throws ModelException ;
     public long getMaxLagerbestand()throws ModelException;

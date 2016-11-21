@@ -1,8 +1,8 @@
 
 package model;
 
-import model.visitor.*;
 import persistence.*;
+import model.visitor.*;
 
 
 /* Additional import section end */
@@ -117,7 +117,7 @@ public class Kunde extends PersistentObject implements PersistentKunde{
     }
     
     static public long getTypeId() {
-        return 102;
+        return 349;
     }
     
     public long getClassId() {
@@ -126,7 +126,7 @@ public class Kunde extends PersistentObject implements PersistentKunde{
     
     public void store() throws PersistenceException {
         if(!this.isDelayed$Persistence()) return;
-        if (this.getClassId() == 102) ConnectionHandler.getTheConnectionHandler().theKundeFacade
+        if (this.getClassId() == 349) ConnectionHandler.getTheConnectionHandler().theKundeFacade
             .newKunde(benutzername,passwort,this.getId());
         super.store();
         if(this.getKonto() != null){
@@ -282,16 +282,18 @@ public class Kunde extends PersistentObject implements PersistentKunde{
     
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{
+        //TODO: implement method: copyingPrivateUserAttributes
         
     }
     public void initializeOnCreation() 
 				throws PersistenceException{
-
-        getThis().setKonto(Konto.createKonto());
+        //TODO: implement method: initializeOnCreation
+        
     }
     public void initializeOnInstantiation() 
 				throws PersistenceException{
-
+        //TODO: implement method: initializeOnInstantiation
+        
     }
     
     
@@ -299,8 +301,6 @@ public class Kunde extends PersistentObject implements PersistentKunde{
     
 
     /* Start of protected part that is not overridden by persistence generator */
-    
-    
     
     /* End of protected part that is not overridden by persistence generator */
     
