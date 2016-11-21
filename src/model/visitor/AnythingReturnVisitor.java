@@ -3,7 +3,7 @@ package model.visitor;
 
 import persistence.*;
 
-public interface AnythingReturnVisitor<R> extends ArtikelstatusReturnVisitor<R> ,BestellstatusReturnVisitor<R> ,CommonDateReturnVisitor<R> ,KomponenteReturnVisitor<R> ,PositionAbstraktReturnVisitor<R> ,ServiceReturnVisitor<R> ,ZeitObjektReturnVisitor<R> {
+public interface AnythingReturnVisitor<R> extends ArtikelstatusReturnVisitor<R> ,BestellstatusReturnVisitor<R> ,CommonDateReturnVisitor<R> ,KomponenteReturnVisitor<R> ,PositionAbstraktReturnVisitor<R> ,ServiceReturnVisitor<R> ,StatusReturnVisitor<R> ,ZeitObjektReturnVisitor<R> {
     
     public R handleArtikelEinlagernCommand(ArtikelEinlagernCommand4Public artikelEinlagernCommand) throws PersistenceException;
     public R handleArtikelEntfernenCommand(ArtikelEntfernenCommand4Public artikelEntfernenCommand) throws PersistenceException;
@@ -35,7 +35,6 @@ public interface AnythingReturnVisitor<R> extends ArtikelstatusReturnVisitor<R> 
     public R handleStatusAuslaufCommand(StatusAuslaufCommand4Public statusAuslaufCommand) throws PersistenceException;
     public R handleStatusVerkaufCommand(StatusVerkaufCommand4Public statusVerkaufCommand) throws PersistenceException;
     public R handleSubj(Subj4Public subj) throws PersistenceException;
-    public R handleThreadOfControl(ThreadOfControl4Public threadOfControl) throws PersistenceException;
     public R handleWarenlager(Warenlager4Public warenlager) throws PersistenceException;
     public R handleZeitManager(ZeitManager4Public zeitManager) throws PersistenceException;
     public R handleZuEinkaufswHinzCommand(ZuEinkaufswHinzCommand4Public zuEinkaufswHinzCommand) throws PersistenceException;

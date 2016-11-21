@@ -32,6 +32,9 @@ public abstract class AnythingStandardVisitor implements AnythingVisitor {
     public void handleRegisterCommand(RegisterCommand4Public registerCommand) throws PersistenceException{
         this.standardHandling(registerCommand);
     }
+    public void handledeactivated(deactivated4Public deactivated) throws PersistenceException{
+        this.standardHandling(deactivated);
+    }
     public void handleNeuanlage(Neuanlage4Public neuanlage) throws PersistenceException{
         this.standardHandling(neuanlage);
     }
@@ -119,9 +122,6 @@ public abstract class AnythingStandardVisitor implements AnythingVisitor {
     public void handleGeliefert(Geliefert4Public geliefert) throws PersistenceException{
         this.standardHandling(geliefert);
     }
-    public void handleThreadOfControl(ThreadOfControl4Public threadOfControl) throws PersistenceException{
-        this.standardHandling(threadOfControl);
-    }
     public void handleBestellManager(BestellManager4Public bestellManager) throws PersistenceException{
         this.standardHandling(bestellManager);
     }
@@ -160,6 +160,9 @@ public abstract class AnythingStandardVisitor implements AnythingVisitor {
     }
     public void handleCommandExecuter(CommandExecuter4Public commandExecuter) throws PersistenceException{
         this.standardHandling(commandExecuter);
+    }
+    public void handleactivated(activated4Public activated) throws PersistenceException{
+        this.standardHandling(activated);
     }
     protected abstract void standardHandling(Anything anything) throws PersistenceException;
 }

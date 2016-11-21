@@ -22,12 +22,6 @@ public class WarenlagerICProxi extends PersistentInCacheProxiOptimistic implemen
         return 193;
     }
     
-    public Warenlager_NewListProxi getNewList() throws PersistenceException {
-        return ((PersistentWarenlager)this.getTheObject()).getNewList();
-    }
-    public Warenlager_TemplistProxi getTemplist() throws PersistenceException {
-        return ((PersistentWarenlager)this.getTheObject()).getTemplist();
-    }
     public Warenlager_WarenListeProxi getWarenListe() throws PersistenceException {
         return ((PersistentWarenlager)this.getTheObject()).getWarenListe();
     }
@@ -104,7 +98,7 @@ public class WarenlagerICProxi extends PersistentInCacheProxiOptimistic implemen
         ((PersistentWarenlager)this.getTheObject()).artikelEntfernen(position);
     }
     public void artikelEntnehmen(final Artikel4Public artikel, final long menge) 
-				throws model.ExcLagerbestandUnderZero, PersistenceException{
+				throws model.ExcArtikelHatKeinenHersteller, model.ExcLagerbestandUnderZero, PersistenceException{
         ((PersistentWarenlager)this.getTheObject()).artikelEntnehmen(artikel, menge);
     }
     public void copyingPrivateUserAttributes(final Anything copy) 
@@ -118,6 +112,10 @@ public class WarenlagerICProxi extends PersistentInCacheProxiOptimistic implemen
     public void initializeOnInstantiation() 
 				throws PersistenceException{
         ((PersistentWarenlager)this.getTheObject()).initializeOnInstantiation();
+    }
+    public void nachbestellen(final Artikel4Public artikel, final long menge) 
+				throws PersistenceException{
+        ((PersistentWarenlager)this.getTheObject()).nachbestellen(artikel, menge);
     }
     public Position4Public nichtVerfPruefen(final PositionSearchList positionsListe) 
 				throws PersistenceException{

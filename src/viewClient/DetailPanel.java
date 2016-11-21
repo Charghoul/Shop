@@ -1203,6 +1203,9 @@ class DetailPanelFactory implements AnythingVisitor {
     public void handleLieferart(view.LieferartView object){
         result = new LieferartDefaultDetailPanel(handler, object);
     }
+    public void handledeactivated(view.deactivatedView object){
+        result = new deactivatedDefaultDetailPanel(handler, object);
+    }
     public void handleNeuanlage(view.NeuanlageView object){
         result = new NeuanlageDefaultDetailPanel(handler, object);
     }
@@ -1263,9 +1266,6 @@ class DetailPanelFactory implements AnythingVisitor {
     public void handleGeliefert(view.GeliefertView object){
         result = new GeliefertDefaultDetailPanel(handler, object);
     }
-    public void handleThreadOfControl(view.ThreadOfControlView object){
-        result = new ThreadOfControlDefaultDetailPanel(handler, object);
-    }
     public void handleBestellManager(view.BestellManagerView object){
         result = new BestellManagerDefaultDetailPanel(handler, object);
     }
@@ -1292,6 +1292,9 @@ class DetailPanelFactory implements AnythingVisitor {
     }
     public void handleIntegerWrapper(view.IntegerWrapperView object){
         result = new IntegerWrapperDefaultDetailPanel(handler, object);
+    }
+    public void handleactivated(view.activatedView object){
+        result = new activatedDefaultDetailPanel(handler, object);
     }
 
 }
@@ -1409,6 +1412,19 @@ class LieferartDefaultDetailPanel extends DefaultDetailPanel{
     }
     protected view.LieferartView getAnything(){
         return (view.LieferartView)this.anything;
+    }
+}
+
+class deactivatedDefaultDetailPanel extends DefaultDetailPanel{
+    
+    protected deactivatedDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
+        super(exceptionHandler, anything);
+    }
+    protected void addFields(){
+        
+    }
+    protected view.deactivatedView getAnything(){
+        return (view.deactivatedView)this.anything;
     }
 }
 
@@ -1743,8 +1759,6 @@ class AngenommenDefaultDetailPanel extends DefaultDetailPanel{
 
 class WarenlagerDefaultDetailPanel extends DefaultDetailPanel{
     
-    protected static final String Warenlager$$newList = "Warenlager$$newList";
-    protected static final String Warenlager$$templist = "Warenlager$$templist";
     protected static final String Warenlager$$warenListe = "Warenlager$$warenListe";
     
     protected WarenlagerDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
@@ -1830,19 +1844,6 @@ class GeliefertDefaultDetailPanel extends DefaultDetailPanel{
     }
     protected view.GeliefertView getAnything(){
         return (view.GeliefertView)this.anything;
-    }
-}
-
-class ThreadOfControlDefaultDetailPanel extends DefaultDetailPanel{
-    
-    protected ThreadOfControlDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
-        super(exceptionHandler, anything);
-    }
-    protected void addFields(){
-        
-    }
-    protected view.ThreadOfControlView getAnything(){
-        return (view.ThreadOfControlView)this.anything;
     }
 }
 
@@ -2002,5 +2003,18 @@ class IntegerWrapperDefaultDetailPanel extends DefaultDetailPanel{
     }
     protected view.IntegerWrapperView getAnything(){
         return (view.IntegerWrapperView)this.anything;
+    }
+}
+
+class activatedDefaultDetailPanel extends DefaultDetailPanel{
+    
+    protected activatedDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
+        super(exceptionHandler, anything);
+    }
+    protected void addFields(){
+        
+    }
+    protected view.activatedView getAnything(){
+        return (view.activatedView)this.anything;
     }
 }

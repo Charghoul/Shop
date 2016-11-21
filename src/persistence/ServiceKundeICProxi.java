@@ -167,6 +167,10 @@ public class ServiceKundeICProxi extends ServiceShopICProxi implements Persisten
 				throws model.ExcLagerbestandUnderZero, model.ExcLagerbestandOverMax, PersistenceException{
         ((PersistentServiceKunde)this.getTheObject()).aendereMenge(position, menge);
     }
+    public void annehmen(final Bestellung4Public bestellung) 
+				throws PersistenceException{
+        ((PersistentServiceKunde)this.getTheObject()).annehmen(bestellung);
+    }
     public void bestellManager_update(final model.meta.BestellManagerMssgs event) 
 				throws PersistenceException{
         ((PersistentServiceKunde)this.getTheObject()).bestellManager_update(event);
@@ -186,6 +190,10 @@ public class ServiceKundeICProxi extends ServiceShopICProxi implements Persisten
     public void disconnected() 
 				throws PersistenceException{
         ((PersistentServiceKunde)this.getTheObject()).disconnected();
+    }
+    public void entfernePosition(final Position4Public position) 
+				throws PersistenceException{
+        ((PersistentServiceKunde)this.getTheObject()).entfernePosition(position);
     }
     public void handleException(final Command command, final PersistenceException exception) 
 				throws PersistenceException{

@@ -99,6 +99,10 @@ public class BestellungICProxi extends PersistentInCacheProxiOptimistic implemen
 				throws PersistenceException{
         ((PersistentBestellung)this.getTheObject()).aendereStatus(bestellstatus);
     }
+    public void annehmen() 
+				throws PersistenceException{
+        ((PersistentBestellung)this.getTheObject()).annehmen();
+    }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{
         ((PersistentBestellung)this.getTheObject()).copyingPrivateUserAttributes(copy);

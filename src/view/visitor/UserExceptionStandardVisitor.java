@@ -17,6 +17,9 @@ public abstract class UserExceptionStandardVisitor implements UserExceptionVisit
     public void handleExcStatusDidNotChange(ExcStatusDidNotChange excStatusDidNotChange) throws ModelException{
         this.standardHandling(excStatusDidNotChange);
     }
+    public void handleExcArtikelHatKeinenHersteller(ExcArtikelHatKeinenHersteller excArtikelHatKeinenHersteller) throws ModelException{
+        this.standardHandling(excArtikelHatKeinenHersteller);
+    }
     public void handleExcHasChildren(ExcHasChildren excHasChildren) throws ModelException{
         this.standardHandling(excHasChildren);
     }
@@ -28,6 +31,9 @@ public abstract class UserExceptionStandardVisitor implements UserExceptionVisit
     }
     public void handleCycleException(CycleException cycleException) throws ModelException{
         this.standardHandling(cycleException);
+    }
+    public void handleExcArtikelNochNichtVerfuegbar(ExcArtikelNochNichtVerfuegbar excArtikelNochNichtVerfuegbar) throws ModelException{
+        this.standardHandling(excArtikelNochNichtVerfuegbar);
     }
     public void handleExcArtikelNichtVerfuegbar(ExcArtikelNichtVerfuegbar excArtikelNichtVerfuegbar) throws ModelException{
         this.standardHandling(excArtikelNichtVerfuegbar);

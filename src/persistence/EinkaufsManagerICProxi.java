@@ -92,12 +92,16 @@ public class EinkaufsManagerICProxi extends PersistentInCacheProxiOptimistic imp
         ((PersistentEinkaufsManager)this.getTheObject()).updateObservers(event);
     }
     public void bestellen(final Lieferart4Public lieferart) 
-				throws model.ExcLagerbestandUnderZero, model.ExcArtikelNichtVerfuegbar, PersistenceException{
+				throws model.ExcArtikelNichtVerfuegbar, PersistenceException{
         ((PersistentEinkaufsManager)this.getTheObject()).bestellen(lieferart);
     }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{
         ((PersistentEinkaufsManager)this.getTheObject()).copyingPrivateUserAttributes(copy);
+    }
+    public void entfernePosition(final Position4Public position) 
+				throws PersistenceException{
+        ((PersistentEinkaufsManager)this.getTheObject()).entfernePosition(position);
     }
     public void initializeOnCreation() 
 				throws PersistenceException{

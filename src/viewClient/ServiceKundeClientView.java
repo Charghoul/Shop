@@ -303,7 +303,9 @@ public class ServiceKundeClientView extends BorderPane implements ExceptionAndEv
 
     interface MenuItemVisitor{
         ImageView handle(AendereMengePRMTRPositionPRMTRIntegerPRMTRMenuItem menuItem);
+        ImageView handle(AnnehmenPRMTRBestellungPRMTRMenuItem menuItem);
         ImageView handle(BestellenPRMTREinkaufsManagerPRMTRLieferartPRMTRMenuItem menuItem);
+        ImageView handle(EntfernePositionPRMTRPositionPRMTRMenuItem menuItem);
         ImageView handle(NeuePositionPRMTREinkaufsManagerPRMTRArtikelPRMTRIntegerPRMTRMenuItem menuItem);
         ImageView handle(VorbestellenPRMTREinkaufsManagerPRMTRMenuItem menuItem);
         ImageView handle(ZuEinkaufswagenHinzufuegenPRMTRArtikelPRMTRIntegerPRMTRMenuItem menuItem);
@@ -320,7 +322,17 @@ public class ServiceKundeClientView extends BorderPane implements ExceptionAndEv
             return visitor.handle(this);
         }
     }
+    private class AnnehmenPRMTRBestellungPRMTRMenuItem extends ServiceKundeMenuItem{
+        protected ImageView accept(MenuItemVisitor visitor){
+            return visitor.handle(this);
+        }
+    }
     private class BestellenPRMTREinkaufsManagerPRMTRLieferartPRMTRMenuItem extends ServiceKundeMenuItem{
+        protected ImageView accept(MenuItemVisitor visitor){
+            return visitor.handle(this);
+        }
+    }
+    private class EntfernePositionPRMTRPositionPRMTRMenuItem extends ServiceKundeMenuItem{
         protected ImageView accept(MenuItemVisitor visitor){
             return visitor.handle(this);
         }
@@ -396,6 +408,27 @@ public class ServiceKundeClientView extends BorderPane implements ExceptionAndEv
                     }
                 });
                 result.getItems().add(item);
+                item = new EntfernePositionPRMTRPositionPRMTRMenuItem();
+                item.setText("entfernePosition");
+                item.setOnAction(new EventHandler<ActionEvent>(){
+                    public void handle(javafx.event.ActionEvent e) {
+                        Alert confirm = new Alert(AlertType.CONFIRMATION);
+                        confirm.setTitle(GUIConstants.ConfirmButtonText);
+                        confirm.setHeaderText(null);
+                        confirm.setContentText("entfernePosition" + GUIConstants.ConfirmQuestionMark);
+                        Optional<ButtonType> buttonResult = confirm.showAndWait();
+                        if (buttonResult.get() == ButtonType.OK) {
+                            try {
+                                getConnection().entfernePosition((PositionView)selected);
+                                getConnection().setEagerRefresh();
+                                
+                            }catch(ModelException me){
+                                handleException(me);
+                            }
+                        }
+                    }
+                });
+                result.getItems().add(item);
             }
             if (selected instanceof EinkaufsManagerView){
                 item = new BestellenPRMTREinkaufsManagerPRMTRLieferartPRMTRMenuItem();
@@ -442,6 +475,31 @@ public class ServiceKundeClientView extends BorderPane implements ExceptionAndEv
                 });
                 result.getItems().add(item);
             }
+            if (selected instanceof BestellungView){
+                if (filter_annehmen((BestellungView) selected)) {
+                    item = new AnnehmenPRMTRBestellungPRMTRMenuItem();
+                    item.setText("annehmen");
+                    item.setOnAction(new EventHandler<ActionEvent>(){
+                        public void handle(javafx.event.ActionEvent e) {
+                            Alert confirm = new Alert(AlertType.CONFIRMATION);
+                            confirm.setTitle(GUIConstants.ConfirmButtonText);
+                            confirm.setHeaderText(null);
+                            confirm.setContentText("annehmen" + GUIConstants.ConfirmQuestionMark);
+                            Optional<ButtonType> buttonResult = confirm.showAndWait();
+                            if (buttonResult.get() == ButtonType.OK) {
+                                try {
+                                    getConnection().annehmen((BestellungView)selected);
+                                    getConnection().setEagerRefresh();
+                                    
+                                }catch(ModelException me){
+                                    handleException(me);
+                                }
+                            }
+                        }
+                    });
+                    result.getItems().add(item);
+                }
+            }
             if (selected instanceof ArtikelView){
                 item = new ZuEinkaufswagenHinzufuegenPRMTRArtikelPRMTRIntegerPRMTRMenuItem();
                 item.setText("zuEinkaufswagenHinzufuegen ... ");
@@ -466,6 +524,9 @@ public class ServiceKundeClientView extends BorderPane implements ExceptionAndEv
     }
     private void setPreCalculatedFilters(String switchOff) {
         this.preCalculatedFilters = switchOff;
+    }
+    private boolean filter_annehmen(BestellungView argument){
+        return this.getPreCalculatedFilters().contains("+++annehmenPRMTRBestellungPRMTR");
     }
     private boolean filter_zuruecksenden(PositionInBestellungView argument){
         return this.getPreCalculatedFilters().contains("+++zuruecksendenPRMTRPositionInBestellungPRMTR");

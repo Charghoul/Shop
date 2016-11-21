@@ -21,6 +21,8 @@ server ServiceKunde extends ServiceShop {
 	void aendereMenge(Position position, Integer menge) throws ExcLagerbestandUnderZero, ExcLagerbestandOverMax;
 	void zuEinkaufswagenHinzufuegen(Artikel artikel, Integer menge);
 	void zuruecksenden(PositionInBestellung position checked);
+	void annehmen(Bestellung bestellung checked);
+	void entfernePosition(Position position);
 }
 server ServiceAdmin extends ServiceShop {
 	Warenlager warenlager;
@@ -79,24 +81,25 @@ class IntegerWrapper {
 }
 
 singleton Warenlager{
-	Artikel ** Integer ** newList;
-	IntegerWrapper ** Artikel ** templist;
-	Position ** warenListe;
-	active void artikelEntnehmen##artEntf(Artikel artikel, Integer menge) throws ExcLagerbestandUnderZero;
+	public Position ** warenListe;
+	active void artikelEntnehmen##artEntf(Artikel artikel, Integer menge) throws ExcLagerbestandUnderZero, ExcArtikelHatKeinenHersteller;
 	active void artikelEinlagern(Artikel artikel, Integer menge) throws ExcLagerbestandOverMax;
 	active void artikelEntfernen##artEntn(Position position);
 	Position nichtVerfPruefen(Position ** positionsListe);
+	void nachbestellen(Artikel artikel, Integer menge);
 }
 
 singleton ZeitManager {
 	ZeitObjekt ** zeitObjektListe;
-	void handleTimeUnitElapsed();
+	void handleTimeUnitElapsed() ;
 	event void neueHstLieferung(Artikel artikel, Integer menge);
 	event void neueKndLieferung(Bestellung bestellung, Lieferart lieferart);
+	void removeZeitObjekt(ZeitObjekt zeitObjekt);
 }
 
 abstract class ZeitObjekt{
 	public prior Integer remainingTime;
+	server-only public prior Status status;
 	void reduceTime();
 	void handleTimeElapsed();
 	void zeitAbgelaufen();
@@ -109,9 +112,10 @@ class HerstellerManager{
 class EinkaufsManager{
 	Position ** einkaufsListe;
 	prior no-view BestellManager bestellManager;
-	active void bestellen(Lieferart lieferart) throws ExcArtikelNichtVerfuegbar, ExcLagerbestandUnderZero;
+	active void bestellen(Lieferart lieferart) throws ExcArtikelNichtVerfuegbar;
 	void vorbestellen();
 	void neuePosition(Artikel artikel, Integer menge) throws ExcArtikelAlreadyExists, UserException, ExcLagerbestandOverMax;
+	void entfernePosition(Position position);
 }
 singleton LieferartManager{
 	public Lieferart ** lieferartenListe;
@@ -136,11 +140,11 @@ class Artikel extends Komponente{
 	prior indexed String artikelnummer;
 	prior indexed String bezeichnung;
 	prior Fraction preis;
-	prior Integer minLagerbestand;
+	public prior Integer minLagerbestand;
 	public prior Integer maxLagerbestand;
 	public-write prior Integer hstLieferzeit;
 	public prior skip-view Artikelstatus artikelstatus;
-	no-view Hersteller hersteller;
+	public no-view Hersteller hersteller;
 	void aendereArtikel(Fraction preis, Integer minLagerbestand, Integer maxLagerbestand, Integer hstLieferzeit) throws ExcAlreadyExists;
 	active void statusVerkauf() throws ExcInconsistentStatusChange;
 	active void statusAuslauf() throws ExcInconsistentStatusChange;
@@ -167,14 +171,13 @@ class Bestellung{
 	public no-view Bestellstatus bestellstatus;
 	void listeHinzufuegen(Position ** positionsListe);
 	void aendereStatus(Bestellstatus bestellstatus);
+	void annehmen();
 }
 
 class KndLieferung extends ZeitObjekt{
 	prior Bestellung bestellung;
 	prior Lieferart lieferart;
 	Integer lieferversuche;
-
-	void erhoeheLieferversuche();
 }
 
 class HstLieferung extends ZeitObjekt{
@@ -189,6 +192,7 @@ class Position extends PositionAbstrakt{
 	void verringereMenge(Integer menge) throws ExcLagerbestandUnderZero;
 	void aendereMenge(Integer menge) throws ExcLagerbestandUnderZero, ExcLagerbestandOverMax;
 	void erhoeheMenge(Integer menge) throws ExcLagerbestandOverMax;
+	void entfernePosition(EinkaufsManager einkaufsManager);
 }
 
 class PositionInBestellung##posInBest extends PositionAbstrakt{
@@ -203,10 +207,9 @@ class Lieferart{
 	void aendereLieferart(Integer lieferzeit, Fraction preis) throws ExcAlreadyExists;
 }
 
-class ThreadOfControl{
-	void registerNew(String name, Integer seconds);
-	void run();
-}
+abstract class Status {}
+singleton activated extends Status{}
+singleton deactivated extends Status{}
 
 abstract class Artikelstatus{}
 singleton Neuanlage extends Artikelstatus{}
@@ -221,6 +224,8 @@ singleton Geliefert extends Bestellstatus{}
 singleton Angenommen extends Bestellstatus{}
 singleton Rueckversand extends Bestellstatus{}
 
+exception ExcArtikelNochNichtVerfuegbar{}
+exception ExcArtikelHatKeinenHersteller{}
 exception ExcArtikelNichtVerfuegbar{}
 exception ExcEinkaufslisteNichtVerfuegbar{}
 exception ExcHasNoParent{}

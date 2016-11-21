@@ -9,11 +9,9 @@ public interface PersistentArtikel extends PersistentKomponente, Artikel4Public 
     public void setBezeichnung(String newValue) throws PersistenceException ;
     public common.Fraction getPreis() throws PersistenceException ;
     public void setPreis(common.Fraction newValue) throws PersistenceException ;
-    public long getMinLagerbestand() throws PersistenceException ;
     public void setMinLagerbestand(long newValue) throws PersistenceException ;
     public void setMaxLagerbestand(long newValue) throws PersistenceException ;
     public void setArtikelstatus(Artikelstatus4Public newValue) throws PersistenceException ;
-    public Hersteller4Public getHersteller() throws PersistenceException ;
     public void setHersteller(Hersteller4Public newValue) throws PersistenceException ;
     public PersistentArtikel getThis() throws PersistenceException ;
     

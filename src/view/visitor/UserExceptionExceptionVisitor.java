@@ -8,7 +8,9 @@ public interface UserExceptionExceptionVisitor<E extends view.UserException> {
     public void handleCycleException(CycleException cycleException) throws ModelException, E;
     public void handleExcAlreadyExists(ExcAlreadyExists excAlreadyExists) throws ModelException, E;
     public void handleExcArtikelAlreadyExists(ExcArtikelAlreadyExists excArtikelAlreadyExists) throws ModelException, E;
+    public void handleExcArtikelHatKeinenHersteller(ExcArtikelHatKeinenHersteller excArtikelHatKeinenHersteller) throws ModelException, E;
     public void handleExcArtikelNichtVerfuegbar(ExcArtikelNichtVerfuegbar excArtikelNichtVerfuegbar) throws ModelException, E;
+    public void handleExcArtikelNochNichtVerfuegbar(ExcArtikelNochNichtVerfuegbar excArtikelNochNichtVerfuegbar) throws ModelException, E;
     public void handleExcEinkaufslisteNichtVerfuegbar(ExcEinkaufslisteNichtVerfuegbar excEinkaufslisteNichtVerfuegbar) throws ModelException, E;
     public void handleExcHasChildren(ExcHasChildren excHasChildren) throws ModelException, E;
     public void handleExcHasNoParent(ExcHasNoParent excHasNoParent) throws ModelException, E;

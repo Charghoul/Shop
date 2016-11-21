@@ -33,6 +33,8 @@ public class ServiceKundeConnection extends ServiceShopConnection {
                     throw ExcLieferartAlreadyExists.fromHashtableToExcLieferartAlreadyExists((java.util.HashMap<String,Object>)success.get(common.RPCConstantsAndServices.ResultFieldName), this.getHandler());
                 if(((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == -234)
                     throw ExcStatusDidNotChange.fromHashtableToExcStatusDidNotChange((java.util.HashMap<String,Object>)success.get(common.RPCConstantsAndServices.ResultFieldName), this.getHandler());
+                if(((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == -338)
+                    throw ExcArtikelHatKeinenHersteller.fromHashtableToExcArtikelHatKeinenHersteller((java.util.HashMap<String,Object>)success.get(common.RPCConstantsAndServices.ResultFieldName), this.getHandler());
                 if(((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == -283)
                     throw ExcHasChildren.fromHashtableToExcHasChildren((java.util.HashMap<String,Object>)success.get(common.RPCConstantsAndServices.ResultFieldName), this.getHandler());
                 if(((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == -195)
@@ -41,6 +43,8 @@ public class ServiceKundeConnection extends ServiceShopConnection {
                     throw ExcInconsistentStatusChange.fromHashtableToExcInconsistentStatusChange((java.util.HashMap<String,Object>)success.get(common.RPCConstantsAndServices.ResultFieldName), this.getHandler());
                 if(((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == -128)
                     throw CycleException.fromHashtableToCycleException((java.util.HashMap<String,Object>)success.get(common.RPCConstantsAndServices.ResultFieldName), this.getHandler());
+                if(((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == -339)
+                    throw ExcArtikelNochNichtVerfuegbar.fromHashtableToExcArtikelNochNichtVerfuegbar((java.util.HashMap<String,Object>)success.get(common.RPCConstantsAndServices.ResultFieldName), this.getHandler());
                 if(((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == -308)
                     throw ExcArtikelNichtVerfuegbar.fromHashtableToExcArtikelNichtVerfuegbar((java.util.HashMap<String,Object>)success.get(common.RPCConstantsAndServices.ResultFieldName), this.getHandler());
                 if(((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == -230)
@@ -88,6 +92,8 @@ public class ServiceKundeConnection extends ServiceShopConnection {
                     throw ExcLieferartAlreadyExists.fromHashtableToExcLieferartAlreadyExists((java.util.HashMap<String,Object>)success.get(common.RPCConstantsAndServices.ResultFieldName), this.getHandler());
                 if(((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == -234)
                     throw ExcStatusDidNotChange.fromHashtableToExcStatusDidNotChange((java.util.HashMap<String,Object>)success.get(common.RPCConstantsAndServices.ResultFieldName), this.getHandler());
+                if(((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == -338)
+                    throw ExcArtikelHatKeinenHersteller.fromHashtableToExcArtikelHatKeinenHersteller((java.util.HashMap<String,Object>)success.get(common.RPCConstantsAndServices.ResultFieldName), this.getHandler());
                 if(((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == -283)
                     throw ExcHasChildren.fromHashtableToExcHasChildren((java.util.HashMap<String,Object>)success.get(common.RPCConstantsAndServices.ResultFieldName), this.getHandler());
                 if(((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == -195)
@@ -96,6 +102,8 @@ public class ServiceKundeConnection extends ServiceShopConnection {
                     throw ExcInconsistentStatusChange.fromHashtableToExcInconsistentStatusChange((java.util.HashMap<String,Object>)success.get(common.RPCConstantsAndServices.ResultFieldName), this.getHandler());
                 if(((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == -128)
                     throw CycleException.fromHashtableToCycleException((java.util.HashMap<String,Object>)success.get(common.RPCConstantsAndServices.ResultFieldName), this.getHandler());
+                if(((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == -339)
+                    throw ExcArtikelNochNichtVerfuegbar.fromHashtableToExcArtikelNochNichtVerfuegbar((java.util.HashMap<String,Object>)success.get(common.RPCConstantsAndServices.ResultFieldName), this.getHandler());
                 if(((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == -308)
                     throw ExcArtikelNichtVerfuegbar.fromHashtableToExcArtikelNichtVerfuegbar((java.util.HashMap<String,Object>)success.get(common.RPCConstantsAndServices.ResultFieldName), this.getHandler());
                 if(((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == -230)
@@ -179,6 +187,28 @@ public class ServiceKundeConnection extends ServiceShopConnection {
         
     }
     
+    public synchronized void annehmen(BestellungView bestellung) throws ModelException{
+        try {
+            Vector<Object> parameters = new Vector<Object>();
+            if (bestellung == null){
+                parameters.add(common.RPCConstantsAndServices.createFromClientNullProxiRepresentation());
+            } else {
+                parameters.add(((view.objects.ViewProxi)bestellung).createProxiInformation());
+            }
+            java.util.HashMap<?,?> success = (java.util.HashMap<?,?>)this.execute(this.connectionName, "annehmen", parameters);
+            if(!((Boolean)success.get(common.RPCConstantsAndServices.OKOrNotOKResultFieldName)).booleanValue()){
+                if (((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == 0)
+                    throw new ModelException((String)success.get(common.RPCConstantsAndServices.ExceptionMessageFieldName), ((Integer)success.get(common.RPCConstantsAndServices.ExceptionNumberFieldName)).intValue());
+                throw new ModelException ("Fatal error (unknown exception code:" + (Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName) + ")",0);
+            }
+        }catch(IOException ioe){
+            throw new ModelException(ioe.getMessage(),0);
+        }catch(XmlRpcException xre){
+            throw new ModelException(xre.getMessage(),0);
+        }
+        
+    }
+    
     public synchronized void bestellen(EinkaufsManagerView einkaufsManager, LieferartView lieferart) throws ModelException{
         try {
             Vector<Object> parameters = new Vector<Object>();
@@ -193,6 +223,28 @@ public class ServiceKundeConnection extends ServiceShopConnection {
                 parameters.add(((view.objects.ViewProxi)lieferart).createProxiInformation());
             }
             java.util.HashMap<?,?> success = (java.util.HashMap<?,?>)this.execute(this.connectionName, "bestellen", parameters);
+            if(!((Boolean)success.get(common.RPCConstantsAndServices.OKOrNotOKResultFieldName)).booleanValue()){
+                if (((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == 0)
+                    throw new ModelException((String)success.get(common.RPCConstantsAndServices.ExceptionMessageFieldName), ((Integer)success.get(common.RPCConstantsAndServices.ExceptionNumberFieldName)).intValue());
+                throw new ModelException ("Fatal error (unknown exception code:" + (Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName) + ")",0);
+            }
+        }catch(IOException ioe){
+            throw new ModelException(ioe.getMessage(),0);
+        }catch(XmlRpcException xre){
+            throw new ModelException(xre.getMessage(),0);
+        }
+        
+    }
+    
+    public synchronized void entfernePosition(PositionView position) throws ModelException{
+        try {
+            Vector<Object> parameters = new Vector<Object>();
+            if (position == null){
+                parameters.add(common.RPCConstantsAndServices.createFromClientNullProxiRepresentation());
+            } else {
+                parameters.add(((view.objects.ViewProxi)position).createProxiInformation());
+            }
+            java.util.HashMap<?,?> success = (java.util.HashMap<?,?>)this.execute(this.connectionName, "entfernePosition", parameters);
             if(!((Boolean)success.get(common.RPCConstantsAndServices.OKOrNotOKResultFieldName)).booleanValue()){
                 if (((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == 0)
                     throw new ModelException((String)success.get(common.RPCConstantsAndServices.ExceptionMessageFieldName), ((Integer)success.get(common.RPCConstantsAndServices.ExceptionNumberFieldName)).intValue());
@@ -233,6 +285,8 @@ public class ServiceKundeConnection extends ServiceShopConnection {
                     throw ExcLieferartAlreadyExists.fromHashtableToExcLieferartAlreadyExists((java.util.HashMap<String,Object>)success.get(common.RPCConstantsAndServices.ResultFieldName), this.getHandler());
                 if(((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == -234)
                     throw ExcStatusDidNotChange.fromHashtableToExcStatusDidNotChange((java.util.HashMap<String,Object>)success.get(common.RPCConstantsAndServices.ResultFieldName), this.getHandler());
+                if(((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == -338)
+                    throw ExcArtikelHatKeinenHersteller.fromHashtableToExcArtikelHatKeinenHersteller((java.util.HashMap<String,Object>)success.get(common.RPCConstantsAndServices.ResultFieldName), this.getHandler());
                 if(((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == -283)
                     throw ExcHasChildren.fromHashtableToExcHasChildren((java.util.HashMap<String,Object>)success.get(common.RPCConstantsAndServices.ResultFieldName), this.getHandler());
                 if(((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == -195)
@@ -241,6 +295,8 @@ public class ServiceKundeConnection extends ServiceShopConnection {
                     throw ExcInconsistentStatusChange.fromHashtableToExcInconsistentStatusChange((java.util.HashMap<String,Object>)success.get(common.RPCConstantsAndServices.ResultFieldName), this.getHandler());
                 if(((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == -128)
                     throw CycleException.fromHashtableToCycleException((java.util.HashMap<String,Object>)success.get(common.RPCConstantsAndServices.ResultFieldName), this.getHandler());
+                if(((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == -339)
+                    throw ExcArtikelNochNichtVerfuegbar.fromHashtableToExcArtikelNochNichtVerfuegbar((java.util.HashMap<String,Object>)success.get(common.RPCConstantsAndServices.ResultFieldName), this.getHandler());
                 if(((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == -308)
                     throw ExcArtikelNichtVerfuegbar.fromHashtableToExcArtikelNichtVerfuegbar((java.util.HashMap<String,Object>)success.get(common.RPCConstantsAndServices.ResultFieldName), this.getHandler());
                 if(((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == -230)

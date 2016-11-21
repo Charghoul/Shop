@@ -3,7 +3,7 @@ package model.visitor;
 
 import persistence.*;
 
-public interface AnythingExceptionVisitor<E extends model.UserException> extends ArtikelstatusExceptionVisitor<E>,BestellstatusExceptionVisitor<E>,CommonDateExceptionVisitor<E>,KomponenteExceptionVisitor<E>,PositionAbstraktExceptionVisitor<E>,ServiceExceptionVisitor<E>,ZeitObjektExceptionVisitor<E>{
+public interface AnythingExceptionVisitor<E extends model.UserException> extends ArtikelstatusExceptionVisitor<E>,BestellstatusExceptionVisitor<E>,CommonDateExceptionVisitor<E>,KomponenteExceptionVisitor<E>,PositionAbstraktExceptionVisitor<E>,ServiceExceptionVisitor<E>,StatusExceptionVisitor<E>,ZeitObjektExceptionVisitor<E>{
     
     public void handleArtikelEinlagernCommand(ArtikelEinlagernCommand4Public artikelEinlagernCommand) throws PersistenceException, E;
     public void handleArtikelEntfernenCommand(ArtikelEntfernenCommand4Public artikelEntfernenCommand) throws PersistenceException, E;
@@ -35,7 +35,6 @@ public interface AnythingExceptionVisitor<E extends model.UserException> extends
     public void handleStatusAuslaufCommand(StatusAuslaufCommand4Public statusAuslaufCommand) throws PersistenceException, E;
     public void handleStatusVerkaufCommand(StatusVerkaufCommand4Public statusVerkaufCommand) throws PersistenceException, E;
     public void handleSubj(Subj4Public subj) throws PersistenceException, E;
-    public void handleThreadOfControl(ThreadOfControl4Public threadOfControl) throws PersistenceException, E;
     public void handleWarenlager(Warenlager4Public warenlager) throws PersistenceException, E;
     public void handleZeitManager(ZeitManager4Public zeitManager) throws PersistenceException, E;
     public void handleZuEinkaufswHinzCommand(ZuEinkaufswHinzCommand4Public zuEinkaufswHinzCommand) throws PersistenceException, E;

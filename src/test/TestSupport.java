@@ -17,6 +17,7 @@ public class TestSupport {
 	private TestSupport(){}	
 	
 	public static void prepareSingletons(){
+        model.deactivated.reset$For$Test = true;
         model.Neuanlage.reset$For$Test = true;
         model.meta.CommandCoordinator.reset$For$Test = true;
         model.ProduktKatalog.reset$For$Test = true;
@@ -32,6 +33,7 @@ public class TestSupport {
         model.Rueckversand.reset$For$Test = true;
         model.LieferartManager.reset$For$Test = true;
         model.Hinversand.reset$For$Test = true;
+        model.activated.reset$For$Test = true;
 
 	}
 

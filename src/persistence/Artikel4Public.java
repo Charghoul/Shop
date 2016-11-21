@@ -5,10 +5,12 @@ import model.visitor.*;
 
 public interface Artikel4Public extends Komponente4Public {
     
+    public long getMinLagerbestand() throws PersistenceException ;
     public long getMaxLagerbestand() throws PersistenceException ;
     public long getHstLieferzeit() throws PersistenceException ;
     public void setHstLieferzeit(long newValue) throws PersistenceException ;
     public Artikelstatus4Public getArtikelstatus() throws PersistenceException ;
+    public Hersteller4Public getHersteller() throws PersistenceException ;
     
     public void accept(KomponenteVisitor visitor) throws PersistenceException;
     public <R> R accept(KomponenteReturnVisitor<R>  visitor) throws PersistenceException;

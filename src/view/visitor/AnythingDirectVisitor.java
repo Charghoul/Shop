@@ -33,8 +33,6 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     public void handleProduktgruppe(ProduktgruppeView produktgruppe) throws ModelException{
         this.handleKomponente(produktgruppe);
     }
-    public abstract void handleThreadOfControl(ThreadOfControlView threadOfControl) throws ModelException;
-    
     public abstract void handleProduktKatalog(ProduktKatalogView produktKatalog) throws ModelException;
     
     public abstract void handleBestellstatus(BestellstatusView bestellstatus) throws ModelException;
@@ -56,6 +54,14 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     }
     public void handleVerarbeitung(VerarbeitungView verarbeitung) throws ModelException{
         this.handleBestellstatus(verarbeitung);
+    }
+    public abstract void handleStatus(StatusView status) throws ModelException;
+    
+    public void handledeactivated(deactivatedView deactivated) throws ModelException{
+        this.handleStatus(deactivated);
+    }
+    public void handleactivated(activatedView activated) throws ModelException{
+        this.handleStatus(activated);
     }
     public abstract void handleZeitObjekt(ZeitObjektView zeitObjekt) throws ModelException;
     

@@ -19,7 +19,7 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
 	
   private static ListProxiFactory [] getTheListProxiFactories(){
 	if (listProxiFactories == null){
-		listProxiFactories = new ListProxiFactory[237];
+		listProxiFactories = new ListProxiFactory[245];
         listProxiFactories[2] = new ListProxiFactory(){
             AbstractPersistentRoot create(long objectId, long entryId){
                 return new ServerListEntryProxi(objectId, entryId);
@@ -63,6 +63,11 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
         listProxiFactories[99] = new ListProxiFactory(){
             AbstractPersistentRoot create(long objectId, long entryId){
                 return new RegisterCommandListEntryProxi(objectId, entryId);
+            }
+        };
+        listProxiFactories[239] = new ListProxiFactory(){
+            AbstractPersistentRoot create(long objectId, long entryId){
+                return new deactivatedListEntryProxi(objectId, entryId);
             }
         };
         listProxiFactories[113] = new ListProxiFactory(){
@@ -210,11 +215,6 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
                 return new GeliefertListEntryProxi(objectId, entryId);
             }
         };
-        listProxiFactories[188] = new ListProxiFactory(){
-            AbstractPersistentRoot create(long objectId, long entryId){
-                return new ThreadOfControlListEntryProxi(objectId, entryId);
-            }
-        };
         listProxiFactories[208] = new ListProxiFactory(){
             AbstractPersistentRoot create(long objectId, long entryId){
                 return new BestellManagerListEntryProxi(objectId, entryId);
@@ -280,12 +280,17 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
                 return new CommandExecuterListEntryProxi(objectId, entryId);
             }
         };
+        listProxiFactories[241] = new ListProxiFactory(){
+            AbstractPersistentRoot create(long objectId, long entryId){
+                return new activatedListEntryProxi(objectId, entryId);
+            }
+        };
 	}
 	return listProxiFactories;
   }
   private static ProxiFactory [] getTheProxiFactories(){
 	if (proxiFactories == null){
-		proxiFactories = new ProxiFactory [237];
+		proxiFactories = new ProxiFactory [245];
         proxiFactories[2] = new ProxiFactory(){
             AbstractPersistentRoot create(long objectId){
                 return new ServerProxi(objectId);
@@ -329,6 +334,11 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
         proxiFactories[99] = new ProxiFactory(){
             AbstractPersistentRoot create(long objectId){
                 return new RegisterCommandProxi(objectId);
+            }
+        };
+        proxiFactories[239] = new ProxiFactory(){
+            AbstractPersistentRoot create(long objectId){
+                return new deactivatedProxi(objectId);
             }
         };
         proxiFactories[113] = new ProxiFactory(){
@@ -476,11 +486,6 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
                 return new GeliefertProxi(objectId);
             }
         };
-        proxiFactories[188] = new ProxiFactory(){
-            AbstractPersistentRoot create(long objectId){
-                return new ThreadOfControlProxi(objectId);
-            }
-        };
         proxiFactories[208] = new ProxiFactory(){
             AbstractPersistentRoot create(long objectId){
                 return new BestellManagerProxi(objectId);
@@ -544,6 +549,11 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
         proxiFactories[9] = new ProxiFactory(){
             AbstractPersistentRoot create(long objectId){
                 return new CommandExecuterProxi(objectId);
+            }
+        };
+        proxiFactories[241] = new ProxiFactory(){
+            AbstractPersistentRoot create(long objectId){
+                return new activatedProxi(objectId);
             }
         };
 	}
