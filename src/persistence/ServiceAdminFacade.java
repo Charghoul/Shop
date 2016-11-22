@@ -13,14 +13,14 @@ public class ServiceAdminFacade{
     public PersistentServiceAdmin newServiceAdmin(long idCreateIfLessZero) throws PersistenceException {
         if(idCreateIfLessZero > 0) return (PersistentServiceAdmin)PersistentProxi.createProxi(idCreateIfLessZero, -182);
         long id = ConnectionHandler.getTheConnectionHandler().theServiceFacade.getNextId();
-        ServiceAdmin result = new ServiceAdmin(null,null,null,null,null,null,null,null,null,id);
+        ServiceAdmin result = new ServiceAdmin(null,null,null,null,null,null,null,null,id);
         Cache.getTheCache().put(result);
         return (PersistentServiceAdmin)PersistentProxi.createProxi(id, -182);
     }
     
     public PersistentServiceAdmin newDelayedServiceAdmin() throws PersistenceException {
         long id = ConnectionHandler.getTheConnectionHandler().theServiceFacade.getNextId();
-        ServiceAdmin result = new ServiceAdmin(null,null,null,null,null,null,null,null,null,id);
+        ServiceAdmin result = new ServiceAdmin(null,null,null,null,null,null,null,null,id);
         Cache.getTheCache().put(result);
         return (PersistentServiceAdmin)PersistentProxi.createProxi(id, -182);
     }

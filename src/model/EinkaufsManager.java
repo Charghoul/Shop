@@ -68,6 +68,15 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
                     if(forGUI && bestellManager.hasEssentialFields())bestellManager.toHashtable(allResults, depth, essentialLevel + 1, false, true, tdObserver);
                 }
             }
+            AbstractPersistentRoot myServiceKunde = (AbstractPersistentRoot)this.getMyServiceKunde();
+            if (myServiceKunde != null) {
+                result.put("myServiceKunde", myServiceKunde.createProxiInformation(false, essentialLevel <= 1));
+                if(depth > 1) {
+                    myServiceKunde.toHashtable(allResults, depth - 1, essentialLevel, forGUI, true , tdObserver);
+                }else{
+                    if(forGUI && myServiceKunde.hasEssentialFields())myServiceKunde.toHashtable(allResults, depth, essentialLevel + 1, false, true, tdObserver);
+                }
+            }
             String uniqueKey = common.RPCConstantsAndServices.createHashtableKey(this.getClassId(), this.getId());
             if (leaf && !allResults.containsKey(uniqueKey)) allResults.put(uniqueKey, result);
         }
@@ -233,14 +242,7 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
 		}
 		subService.deregister(observee);
     }
-    public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
-				throws PersistenceException{
-        this.setThis((PersistentEinkaufsManager)This);
-		if(this.isTheSameAs(This)){
-			this.setBestellManager((PersistentBestellManager)final$$Fields.get("bestellManager"));
-		}
-    }
-    public ServiceKunde4Public inverseGetEinkaufsManager() 
+    public ServiceKunde4Public getMyServiceKunde() 
 				throws PersistenceException{
         ServiceKundeSearchList result = null;
 		if (result == null) result = ConnectionHandler.getTheConnectionHandler().theServiceKundeFacade
@@ -249,6 +251,13 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
 			return result.iterator().next();
 		} catch (java.util.NoSuchElementException nsee){
 			return null;
+		}
+    }
+    public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
+				throws PersistenceException{
+        this.setThis((PersistentEinkaufsManager)This);
+		if(this.isTheSameAs(This)){
+			this.setBestellManager((PersistentBestellManager)final$$Fields.get("bestellManager"));
 		}
     }
     public synchronized void register(final ObsInterface observee) 
@@ -274,7 +283,12 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
     // Start of section that contains operations that must be implemented.
     
     public void bestellen(final Lieferart4Public lieferart) 
-				throws model.ExcArtikelNichtVerfuegbar, PersistenceException{
+				throws model.ExcWarenwertUeberKontoguthaben, model.ExcArtikelNichtVerfuegbar, PersistenceException{
+        //überprüfen ob warenmenge kontoguthaben übersteigt
+        if(getThis().gibGesamtPreis() > getThis().getMyServiceKunde().getKonto().getKontostand()) {
+            throw new ExcWarenwertUeberKontoguthaben(ErrorMessages.WarenwertUeberKontoguthaben);
+        }
+
         //überprüfen ob alles auf lager ist
         Position4Public temp = Warenlager.getTheWarenlager().nichtVerfPruefen(getThis().getEinkaufsListe().getList());
         //TODO: überprüfung ob artikel vorhanden ist funktioniert noch nicht!
@@ -315,6 +329,23 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
         getThis().getEinkaufsListe().removeFirst(position);
         
     }
+    public long gibGesamtPreis() 
+				throws PersistenceException{
+         return getThis().getEinkaufsListe().aggregate(new Aggregtion<Position4Public, Long>() {
+
+            @Override
+            public Long neutral() throws PersistenceException {
+                return (long) 0;
+            }
+
+            @Override
+            public Long compose(Long result, Position4Public position4Public) throws PersistenceException {
+                return result + position4Public.getMenge();
+            }
+
+        });
+        
+    }
     public void initializeOnCreation() 
 				throws PersistenceException{
         
@@ -330,6 +361,7 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
             throw new ExcArtikelNochNichtVerfuegbar(ErrorMessages.ArtikelNochNichtVerfuegbar);
         }
         //prüft ob der Artikel schon in der Einkaufsliste ist
+        //TODO: überprüfung ob artikel schon im einkaufswagen ist funktioniert nicht!
         Position4Public temp = getThis().getEinkaufsListe().findFirst(new Predcate<Position4Public>() {
             @Override
             public boolean test(Position4Public argument) throws PersistenceException{
@@ -348,6 +380,11 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
     public void vorbestellen() 
 				throws PersistenceException{
         //TODO: vorbestellen implementieren - Vorbestellungsliste und abarbeitung etc, prüfen ob warenkorb zu konto passt vom preis her
+        System.out.println("gesamtpreis: " +getThis().gibGesamtPreis());
+
+
+        // getThis().getBestellManager().neueBestellung(getThis().getEinkaufsListe().getList(),Vorbestellung.getTheVorbestellung());
+
     }
     
     

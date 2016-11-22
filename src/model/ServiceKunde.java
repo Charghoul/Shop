@@ -54,6 +54,15 @@ public class ServiceKunde extends model.ServiceShop implements PersistentService
     java.util.HashMap<String,Object> result = null;
         if (depth > 0 && essentialLevel <= common.RPCConstantsAndServices.EssentialDepth){
             result = super.toHashtable(allResults, depth, essentialLevel, forGUI, false, tdObserver);
+            AbstractPersistentRoot konto = (AbstractPersistentRoot)this.getKonto();
+            if (konto != null) {
+                result.put("konto", konto.createProxiInformation(false, essentialLevel <= 1));
+                if(depth > 1) {
+                    konto.toHashtable(allResults, depth - 1, essentialLevel, forGUI, true , tdObserver);
+                }else{
+                    if(forGUI && konto.hasEssentialFields())konto.toHashtable(allResults, depth, essentialLevel + 1, false, true, tdObserver);
+                }
+            }
             AbstractPersistentRoot einkaufsManager = (AbstractPersistentRoot)this.getEinkaufsManager();
             if (einkaufsManager != null) {
                 result.put("einkaufsManager", einkaufsManager.createProxiInformation(false, essentialLevel <= 1));
@@ -91,8 +100,8 @@ public class ServiceKunde extends model.ServiceShop implements PersistentService
         ServiceKunde result = this;
         result = new ServiceKunde(this.subService, 
                                   this.This, 
-                                  this.konto, 
                                   this.produktKatalog, 
+                                  this.konto, 
                                   this.einkaufsManager, 
                                   this.lieferartManager, 
                                   this.bestellManager, 
@@ -106,13 +115,15 @@ public class ServiceKunde extends model.ServiceShop implements PersistentService
     public boolean hasEssentialFields() throws PersistenceException{
         return false;
     }
+    protected PersistentKonto konto;
     protected PersistentEinkaufsManager einkaufsManager;
     protected PersistentLieferartManager lieferartManager;
     protected PersistentServiceKundeBestellManager bestellManager;
     
-    public ServiceKunde(SubjInterface subService,PersistentService This,PersistentKonto konto,PersistentServiceShopProduktKatalog produktKatalog,PersistentEinkaufsManager einkaufsManager,PersistentLieferartManager lieferartManager,PersistentServiceKundeBestellManager bestellManager,long id) throws PersistenceException {
+    public ServiceKunde(SubjInterface subService,PersistentService This,PersistentServiceShopProduktKatalog produktKatalog,PersistentKonto konto,PersistentEinkaufsManager einkaufsManager,PersistentLieferartManager lieferartManager,PersistentServiceKundeBestellManager bestellManager,long id) throws PersistenceException {
         /* Shall not be used by clients for object construction! Use static create operation instead! */
-        super((SubjInterface)subService,(PersistentService)This,(PersistentKonto)konto,(PersistentServiceShopProduktKatalog)produktKatalog,id);
+        super((SubjInterface)subService,(PersistentService)This,(PersistentServiceShopProduktKatalog)produktKatalog,id);
+        this.konto = konto;
         this.einkaufsManager = einkaufsManager;
         this.lieferartManager = lieferartManager;
         this.bestellManager = bestellManager;        
@@ -131,6 +142,10 @@ public class ServiceKunde extends model.ServiceShop implements PersistentService
         if (this.getClassId() == -181) ConnectionHandler.getTheConnectionHandler().theServiceKundeFacade
             .newServiceKunde(this.getId());
         super.store();
+        if(this.getKonto() != null){
+            this.getKonto().store();
+            ConnectionHandler.getTheConnectionHandler().theServiceKundeFacade.kontoSet(this.getId(), getKonto());
+        }
         if(this.getEinkaufsManager() != null){
             this.getEinkaufsManager().store();
             ConnectionHandler.getTheConnectionHandler().theServiceKundeFacade.einkaufsManagerSet(this.getId(), getEinkaufsManager());
@@ -146,6 +161,20 @@ public class ServiceKunde extends model.ServiceShop implements PersistentService
         
     }
     
+    public Konto4Public getKonto() throws PersistenceException {
+        return this.konto;
+    }
+    public void setKonto(Konto4Public newValue) throws PersistenceException {
+        if (newValue == null) throw new PersistenceException("Null values not allowed!", 0);
+        if(newValue.isTheSameAs(this.konto)) return;
+        long objectId = newValue.getId();
+        long classId = newValue.getClassId();
+        this.konto = (PersistentKonto)PersistentProxi.createProxi(objectId, classId);
+        if(!this.isDelayed$Persistence()){
+            newValue.store();
+            ConnectionHandler.getTheConnectionHandler().theServiceKundeFacade.kontoSet(this.getId(), newValue);
+        }
+    }
     public EinkaufsManager4Public getEinkaufsManager() throws PersistenceException {
         return this.einkaufsManager;
     }
@@ -266,8 +295,8 @@ public class ServiceKunde extends model.ServiceShop implements PersistentService
          return visitor.handleServiceKunde(this);
     }
     public int getLeafInfo() throws PersistenceException{
-        if (this.getKonto() != null) return 1;
         if (this.getProduktKatalog() != null) return 1;
+        if (this.getKonto() != null) return 1;
         if (this.getEinkaufsManager() != null) return 1;
         if (this.getBestellManager() != null) return 1;
         return 0;
@@ -401,8 +430,7 @@ public class ServiceKunde extends model.ServiceShop implements PersistentService
     }
     public void vorbestellen(final EinkaufsManager4Public einkaufsManager) 
 				throws PersistenceException{
-        //TODO: implement method: vorbestellen
-        
+       einkaufsManager.vorbestellen();
     }
     public void zuEinkaufswagenHinzufuegen(final Artikel4Public artikel, final long menge) 
 				throws PersistenceException{

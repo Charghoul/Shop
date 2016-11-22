@@ -109,7 +109,6 @@ public class ServiceAdmin extends model.ServiceShop implements PersistentService
         ServiceAdmin result = this;
         result = new ServiceAdmin(this.subService, 
                                   this.This, 
-                                  this.konto, 
                                   this.produktKatalog, 
                                   this.warenlager, 
                                   this.artikelManager, 
@@ -132,9 +131,9 @@ public class ServiceAdmin extends model.ServiceShop implements PersistentService
     protected PersistentHerstellerManager herstellerManager;
     protected PersistentServiceAdminZeitManager zeitManager;
     
-    public ServiceAdmin(SubjInterface subService,PersistentService This,PersistentKonto konto,PersistentServiceShopProduktKatalog produktKatalog,PersistentWarenlager warenlager,PersistentArtikelManager artikelManager,PersistentLieferartManager lieferartManager,PersistentHerstellerManager herstellerManager,PersistentServiceAdminZeitManager zeitManager,long id) throws PersistenceException {
+    public ServiceAdmin(SubjInterface subService,PersistentService This,PersistentServiceShopProduktKatalog produktKatalog,PersistentWarenlager warenlager,PersistentArtikelManager artikelManager,PersistentLieferartManager lieferartManager,PersistentHerstellerManager herstellerManager,PersistentServiceAdminZeitManager zeitManager,long id) throws PersistenceException {
         /* Shall not be used by clients for object construction! Use static create operation instead! */
-        super((SubjInterface)subService,(PersistentService)This,(PersistentKonto)konto,(PersistentServiceShopProduktKatalog)produktKatalog,id);
+        super((SubjInterface)subService,(PersistentService)This,(PersistentServiceShopProduktKatalog)produktKatalog,id);
         this.warenlager = warenlager;
         this.artikelManager = artikelManager;
         this.lieferartManager = lieferartManager;
@@ -326,7 +325,6 @@ public class ServiceAdmin extends model.ServiceShop implements PersistentService
          return visitor.handleServiceAdmin(this);
     }
     public int getLeafInfo() throws PersistenceException{
-        if (this.getKonto() != null) return 1;
         if (this.getProduktKatalog() != null) return 1;
         if (this.getWarenlager() != null) return 1;
         if (this.getArtikelManager() != null) return 1;
@@ -507,18 +505,23 @@ public class ServiceAdmin extends model.ServiceShop implements PersistentService
         getThis().setZeitManager(ZeitManager.getTheZeitManager());
 
         //Test Daten
-        Artikel4Public art1 = Artikel.createArtikel("1234","test", 999,10,100,3, Neuanlage.getTheNeuanlage());
+        Artikel4Public art1 = Artikel.createArtikel("1234","test", 999,10,100,3, Verkauf.getTheVerkauf());
         Artikel4Public art2 = Artikel.createArtikel("31415626","Raspberry", 1999,5,200,4, Neuanlage.getTheNeuanlage());
+        Artikel4Public art3 = Artikel.createArtikel("666","Teufel's Dreizack", 6666,2,100,3,Verkauf.getTheVerkauf());
 
         //Listen
         ((PersistentArtikelManager)getThis().getArtikelManager()).getArtikelListe().add(art1);
         ((PersistentArtikelManager)getThis().getArtikelManager()).getArtikelListe().add(art2);
+        ((PersistentArtikelManager)getThis().getArtikelManager()).getArtikelListe().add(art3);
         getThis().getLieferartManager().getLieferartenListe().add(Lieferart.createLieferart("Standard", 3, Fraction.parse("2/1")));
         ((PersistentHerstellerManager)getThis().getHerstellerManager()).getHerstellerListe().add(Hersteller.createHersteller("Nintendo"));
         Server.createServer("test","test",0,new Timestamp(new Date().getTime()));
         try {
-            ProduktKatalog.getTheProduktKatalog().produktgruppeHinzufuegen(ProduktKatalog.getTheProduktKatalog().getProduktgruppen(), "test");
+            ProduktKatalog.getTheProduktKatalog().produktgruppeHinzufuegen(ProduktKatalog.getTheProduktKatalog().getProduktgruppen(), "Langweiliges");
+            ProduktKatalog.getTheProduktKatalog().produktgruppeHinzufuegen(ProduktKatalog.getTheProduktKatalog().getProduktgruppen(), "Interessantes");
             ProduktKatalog.getTheProduktKatalog().artikelAnhaengen(ProduktKatalog.getTheProduktKatalog().getProduktgruppen(),art1);
+            ProduktKatalog.getTheProduktKatalog().artikelAnhaengen(ProduktKatalog.getTheProduktKatalog().getProduktgruppen(),art3);
+            ProduktKatalog.getTheProduktKatalog().artikelAnhaengen(ProduktKatalog.getTheProduktKatalog().getProduktgruppen(),art2);
         } catch (ExcAlreadyExists excAlreadyExists) {
             excAlreadyExists.printStackTrace();
         } catch (CycleException e) {
@@ -527,6 +530,7 @@ public class ServiceAdmin extends model.ServiceShop implements PersistentService
         try {
             getThis().getWarenlager().artikelEinlagern(art1, 50);
             getThis().getWarenlager().artikelEinlagern(art2, 17);
+            getThis().getWarenlager().artikelEinlagern(art3,66);
         } catch (ExcLagerbestandOverMax excLagerbestandOverMax) {
             excLagerbestandOverMax.printStackTrace();
         }

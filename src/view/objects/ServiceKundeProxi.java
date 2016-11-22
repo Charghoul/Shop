@@ -15,19 +15,19 @@ public class ServiceKundeProxi extends ServiceShopProxi implements ServiceKundeV
     public ServiceKundeView getRemoteObject(java.util.HashMap<String,Object> resultTable, ExceptionAndEventHandler connectionKey) throws ModelException{
         java.util.Vector<String> errors_string = (java.util.Vector<String>)resultTable.get("errors");
         java.util.Vector<ErrorDisplayView> errors = ViewProxi.getProxiVector(errors_string, connectionKey);
-        ViewProxi konto = null;
-        String konto$String = (String)resultTable.get("konto");
-        if (konto$String != null) {
-            common.ProxiInformation konto$Info = common.RPCConstantsAndServices.createProxiInformation(konto$String);
-            konto = view.objects.ViewProxi.createProxi(konto$Info,connectionKey);
-            konto.setToString(konto$Info.getToString());
-        }
         ViewProxi produktKatalog = null;
         String produktKatalog$String = (String)resultTable.get("produktKatalog");
         if (produktKatalog$String != null) {
             common.ProxiInformation produktKatalog$Info = common.RPCConstantsAndServices.createProxiInformation(produktKatalog$String);
             produktKatalog = view.objects.ViewProxi.createProxi(produktKatalog$Info,connectionKey);
             produktKatalog.setToString(produktKatalog$Info.getToString());
+        }
+        ViewProxi konto = null;
+        String konto$String = (String)resultTable.get("konto");
+        if (konto$String != null) {
+            common.ProxiInformation konto$Info = common.RPCConstantsAndServices.createProxiInformation(konto$String);
+            konto = view.objects.ViewProxi.createProxi(konto$Info,connectionKey);
+            konto.setToString(konto$Info.getToString());
         }
         ViewProxi einkaufsManager = null;
         String einkaufsManager$String = (String)resultTable.get("einkaufsManager");
@@ -50,7 +50,7 @@ public class ServiceKundeProxi extends ServiceShopProxi implements ServiceKundeV
             bestellManager = view.objects.ViewProxi.createProxi(bestellManager$Info,connectionKey);
             bestellManager.setToString(bestellManager$Info.getToString());
         }
-        ServiceKundeView result$$ = new ServiceKunde(errors,(KontoView)konto,(ProduktKatalogView)produktKatalog,(EinkaufsManagerView)einkaufsManager,(LieferartManagerView)lieferartManager,(BestellManagerView)bestellManager, this.getId(), this.getClassId());
+        ServiceKundeView result$$ = new ServiceKunde(errors,(ProduktKatalogView)produktKatalog,(KontoView)konto,(EinkaufsManagerView)einkaufsManager,(LieferartManagerView)lieferartManager,(BestellManagerView)bestellManager, this.getId(), this.getClassId());
         ((ViewRoot)result$$).setToString((String) resultTable.get(common.RPCConstantsAndServices.RPCToStringFieldName));
         return result$$;
     }
@@ -60,10 +60,10 @@ public class ServiceKundeProxi extends ServiceShopProxi implements ServiceKundeV
     }
     public ViewObjectInTree getChild(int originalIndex) throws ModelException{
         int index = originalIndex;
-        if(index == 0 && this.getKonto() != null) return new KontoServiceShopWrapper(this, originalIndex, (ViewRoot)this.getKonto());
-        if(this.getKonto() != null) index = index - 1;
         if(index == 0 && this.getProduktKatalog() != null) return new ProduktKatalogServiceShopWrapper(this, originalIndex, (ViewRoot)this.getProduktKatalog());
         if(this.getProduktKatalog() != null) index = index - 1;
+        if(index == 0 && this.getKonto() != null) return new KontoServiceKundeWrapper(this, originalIndex, (ViewRoot)this.getKonto());
+        if(this.getKonto() != null) index = index - 1;
         if(index == 0 && this.getEinkaufsManager() != null) return new EinkaufsManagerServiceKundeWrapper(this, originalIndex, (ViewRoot)this.getEinkaufsManager());
         if(this.getEinkaufsManager() != null) index = index - 1;
         if(index == 0 && this.getBestellManager() != null) return new BestellManagerServiceKundeWrapper(this, originalIndex, (ViewRoot)this.getBestellManager());
@@ -72,25 +72,25 @@ public class ServiceKundeProxi extends ServiceShopProxi implements ServiceKundeV
     }
     public int getChildCount() throws ModelException {
         return 0 
-            + (this.getKonto() == null ? 0 : 1)
             + (this.getProduktKatalog() == null ? 0 : 1)
+            + (this.getKonto() == null ? 0 : 1)
             + (this.getEinkaufsManager() == null ? 0 : 1)
             + (this.getBestellManager() == null ? 0 : 1);
     }
     public boolean isLeaf() throws ModelException {
         if (this.object == null) return this.getLeafInfo() == 0;
         return true 
-            && (this.getKonto() == null ? true : false)
             && (this.getProduktKatalog() == null ? true : false)
+            && (this.getKonto() == null ? true : false)
             && (this.getEinkaufsManager() == null ? true : false)
             && (this.getBestellManager() == null ? true : false);
     }
     public int getIndexOfChild(Object child) throws ModelException {
         int result = 0;
-        if(this.getKonto() != null && this.getKonto().equals(child)) return result;
-        if(this.getKonto() != null) result = result + 1;
         if(this.getProduktKatalog() != null && this.getProduktKatalog().equals(child)) return result;
         if(this.getProduktKatalog() != null) result = result + 1;
+        if(this.getKonto() != null && this.getKonto().equals(child)) return result;
+        if(this.getKonto() != null) result = result + 1;
         if(this.getEinkaufsManager() != null && this.getEinkaufsManager().equals(child)) return result;
         if(this.getEinkaufsManager() != null) result = result + 1;
         if(this.getBestellManager() != null && this.getBestellManager().equals(child)) return result;
@@ -98,6 +98,12 @@ public class ServiceKundeProxi extends ServiceShopProxi implements ServiceKundeV
         return -1;
     }
     
+    public KontoView getKonto()throws ModelException{
+        return ((ServiceKunde)this.getTheObject()).getKonto();
+    }
+    public void setKonto(KontoView newValue) throws ModelException {
+        ((ServiceKunde)this.getTheObject()).setKonto(newValue);
+    }
     public EinkaufsManagerView getEinkaufsManager()throws ModelException{
         return ((ServiceKunde)this.getTheObject()).getEinkaufsManager();
     }

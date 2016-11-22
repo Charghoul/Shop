@@ -216,10 +216,10 @@ public class Konto extends PersistentObject implements PersistentKonto{
 			this.setLimit((Long)final$$Fields.get("limit"));
 		}
     }
-    public ServiceShop4Public inverseGetKonto() 
+    public ServiceKunde4Public inverseGetKonto() 
 				throws PersistenceException{
-        ServiceShopSearchList result = null;
-		if (result == null) result = ConnectionHandler.getTheConnectionHandler().theServiceShopFacade
+        ServiceKundeSearchList result = null;
+		if (result == null) result = ConnectionHandler.getTheConnectionHandler().theServiceKundeFacade
 										.inverseGetKonto(getThis().getId(), getThis().getClassId());
 		try {
 			return result.iterator().next();

@@ -28,6 +28,9 @@ public class ServiceKundeFacade{
     public ServiceKunde getServiceKunde(long ServiceKundeId) throws PersistenceException{
         return null; //All data is in the cache!
     }
+    public void kontoSet(long ServiceKundeId, Konto4Public kontoVal) throws PersistenceException {
+        
+    }
     public void einkaufsManagerSet(long ServiceKundeId, EinkaufsManager4Public einkaufsManagerVal) throws PersistenceException {
         
     }
@@ -36,6 +39,21 @@ public class ServiceKundeFacade{
     }
     public void bestellManagerSet(long ServiceKundeId, ServiceKundeBestellManager4Public bestellManagerVal) throws PersistenceException {
         
+    }
+    public ServiceKundeSearchList inverseGetKonto(long objectId, long classId)throws PersistenceException{
+        ServiceKundeSearchList result = new ServiceKundeSearchList();
+        java.util.Iterator<PersistentInCacheProxi> candidates;
+        candidates = Cache.getTheCache().iterator(-181);
+        while (candidates.hasNext()){
+            PersistentServiceKunde current = (PersistentServiceKunde)((PersistentRoot)candidates.next()).getTheObject();
+            if (current != null && !current.isDltd() && !current.isDelayed$Persistence() && current.getKonto() != null){
+                if (current.getKonto().getClassId() == classId && current.getKonto().getId() == objectId) {
+                    PersistentServiceKunde proxi = (PersistentServiceKunde)PersistentProxi.createProxi(current.getId(), current.getClassId());
+                    result.add((PersistentServiceKunde)proxi.getThis());
+                }
+            }
+        }
+        return result;
     }
     public ServiceKundeSearchList inverseGetEinkaufsManager(long objectId, long classId)throws PersistenceException{
         ServiceKundeSearchList result = new ServiceKundeSearchList();

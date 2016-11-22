@@ -8,11 +8,11 @@ server Server {
 abstract server Service {
 }
 abstract server ServiceShop extends Service{
-	one-to-one Konto konto;
 	observe ProduktKatalog produktKatalog;
 }
 server ServiceKunde extends ServiceShop {
-	one-to-one EinkaufsManager einkaufsManager;
+	public one-to-one Konto konto;
+	one-to-one (no-view myServiceKunde) EinkaufsManager einkaufsManager;
 	no-view LieferartManager lieferartManager;
 	observe BestellManager  bestellManager;
 	void neuePosition(EinkaufsManager einkaufsManager, Artikel artikel {produktKatalog}, Integer menge) throws UserException;
@@ -63,7 +63,7 @@ singleton ArtikelManager{
 class BestellManager{
 	public Bestellung ** bestellListe;
 	Bestellung neueBestellung(Position ** positionsListe, Bestellstatus bestellstatus);
-	event void benachrichtige();
+	event void benachrichtige();	
 }
 
 singleton ProduktKatalog{
@@ -112,10 +112,11 @@ class HerstellerManager{
 class EinkaufsManager{
 	Position ** einkaufsListe;
 	prior no-view BestellManager bestellManager;
-	active void bestellen(Lieferart lieferart) throws ExcArtikelNichtVerfuegbar;
+	active void bestellen(Lieferart lieferart) throws ExcArtikelNichtVerfuegbar, ExcWarenwertUeberKontoguthaben;
 	void vorbestellen();
 	void neuePosition(Artikel artikel, Integer menge) throws ExcArtikelAlreadyExists, UserException, ExcLagerbestandOverMax;
 	void entfernePosition(Position position);
+	Integer gibGesamtPreis();
 }
 singleton LieferartManager{
 	public Lieferart ** lieferartenListe;
@@ -226,6 +227,7 @@ singleton Geliefert extends Bestellstatus{}
 singleton Angenommen extends Bestellstatus{}
 singleton Rueckversand extends Bestellstatus{}
 
+exception ExcWarenwertUeberKontoguthaben{}
 exception ExcArtikelNochNichtVerfuegbar{}
 exception ExcArtikelHatKeinenHersteller{}
 exception ExcArtikelNichtVerfuegbar{}

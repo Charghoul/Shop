@@ -20,6 +20,7 @@ public interface UserExceptionReturnExceptionVisitor<R, E extends model.UserExce
     public R handleExcLieferartAlreadyExists(model.ExcLieferartAlreadyExists excLieferartAlreadyExists) throws PersistenceException, E;
     public R handleExcStatusDidNotChange(model.ExcStatusDidNotChange excStatusDidNotChange) throws PersistenceException, E;
     public R handleExcUserAlreadyExists(model.ExcUserAlreadyExists excUserAlreadyExists) throws PersistenceException, E;
+    public R handleExcWarenwertUeberKontoguthaben(model.ExcWarenwertUeberKontoguthaben excWarenwertUeberKontoguthaben) throws PersistenceException, E;
     public R handleRestrictionException(model.RestrictionException restrictionException) throws PersistenceException, E;
     
 }

@@ -1,10 +1,7 @@
 
 package view.objects;
 
-import view.BestellManagerView;
-import view.EinkaufsManagerView;
-import view.ModelException;
-import view.PositionView;
+import view.*;
 import view.visitor.AnythingExceptionVisitor;
 import view.visitor.AnythingReturnExceptionVisitor;
 import view.visitor.AnythingReturnVisitor;
@@ -17,12 +14,14 @@ public class EinkaufsManager extends ViewObject implements EinkaufsManagerView{
     
     protected java.util.Vector<PositionView> einkaufsListe;
     protected BestellManagerView bestellManager;
+    protected ServiceKundeView myServiceKunde;
     
-    public EinkaufsManager(java.util.Vector<PositionView> einkaufsListe,BestellManagerView bestellManager,long id, long classId) {
+    public EinkaufsManager(java.util.Vector<PositionView> einkaufsListe,BestellManagerView bestellManager,ServiceKundeView myServiceKunde,long id, long classId) {
         /* Shall not be used. Objects are created on the server only */
         super(id, classId);
         this.einkaufsListe = einkaufsListe;
-        this.bestellManager = bestellManager;        
+        this.bestellManager = bestellManager;
+        this.myServiceKunde = myServiceKunde;        
     }
     
     static public long getTypeId() {
@@ -44,6 +43,9 @@ public class EinkaufsManager extends ViewObject implements EinkaufsManagerView{
     }
     public void setBestellManager(BestellManagerView newValue) throws ModelException {
         this.bestellManager = newValue;
+    }
+    public ServiceKundeView getMyServiceKunde()throws ModelException{
+        return this.myServiceKunde;
     }
     
     public void accept(AnythingVisitor visitor) throws ModelException {
@@ -67,6 +69,10 @@ public class EinkaufsManager extends ViewObject implements EinkaufsManagerView{
         BestellManagerView bestellManager = this.getBestellManager();
         if (bestellManager != null) {
             ((ViewProxi)bestellManager).setObject((ViewObject)resultTable.get(common.RPCConstantsAndServices.createHashtableKey(bestellManager.getClassId(), bestellManager.getId())));
+        }
+        ServiceKundeView myServiceKunde = this.getMyServiceKunde();
+        if (myServiceKunde != null) {
+            ((ViewProxi)myServiceKunde).setObject((ViewObject)resultTable.get(common.RPCConstantsAndServices.createHashtableKey(myServiceKunde.getClassId(), myServiceKunde.getId())));
         }
         
     }

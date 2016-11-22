@@ -1519,8 +1519,8 @@ class KndLieferungDefaultDetailPanel extends DefaultDetailPanel{
 
 class ServiceKundeDefaultDetailPanel extends DefaultDetailPanel{
     
-    protected static final String ServiceShop$$konto = "ServiceShop$$konto";
     protected static final String ServiceShop$$produktKatalog = "ServiceShop$$produktKatalog";
+    protected static final String ServiceKunde$$konto = "ServiceKunde$$konto";
     protected static final String ServiceKunde$$einkaufsManager = "ServiceKunde$$einkaufsManager";
     protected static final String ServiceKunde$$bestellManager = "ServiceKunde$$bestellManager";
     
@@ -1660,7 +1660,6 @@ class PositionDefaultDetailPanel extends DefaultDetailPanel{
 
 class ServiceAdminDefaultDetailPanel extends DefaultDetailPanel{
     
-    protected static final String ServiceShop$$konto = "ServiceShop$$konto";
     protected static final String ServiceShop$$produktKatalog = "ServiceShop$$produktKatalog";
     protected static final String ServiceAdmin$$warenlager = "ServiceAdmin$$warenlager";
     protected static final String ServiceAdmin$$artikelManager = "ServiceAdmin$$artikelManager";
