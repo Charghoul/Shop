@@ -301,6 +301,8 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
         //überprüfen ob alles auf lager ist
         Position4Public temp = Warenlager.getTheWarenlager().nichtVerfPruefen(getThis().getEinkaufsListe().getList());
         //TODO: überprüfung ob artikel vorhanden ist funktioniert noch nicht!
+
+        //TODO: bestellungswert implementation ändern (methode in bestellung selbst)
         if(temp == null) {
             Bestellung4Public bestellung = getThis().getBestellManager().neueBestellung(getThis().getEinkaufsListe().getList(), Verarbeitung.getTheVerarbeitung(), bestellungswert);
             getThis().getEinkaufsListe().applyToAll(new Procdure<Position4Public>() {
@@ -388,6 +390,8 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
     public void vorbestellen() 
 				throws model.ExcWarenwertUeberKontoguthaben, PersistenceException{
         //TODO: vorbestellen implementieren - Vorbestellungsliste und abarbeitung etc
+
+        //TODO: bestellungswert implementatio ändern
         long bestellungswert = getThis().gibGesamtPreis();
        if(bestellungswert + getThis().getBestellManager().getWarenwert() > getThis().getMyServiceKunde().getKonto().getKontostand()){
            throw new ExcWarenwertUeberKontoguthaben(ErrorMessages.WarenwertUeberKontoguthaben);
