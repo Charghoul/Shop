@@ -96,6 +96,7 @@ public class ConnectionHandler {
     public BestellenCommandFacade theBestellenCommandFacade;
     public WarenlagerFacade theWarenlagerFacade;
     public CommonDateFacade theCommonDateFacade;
+    public VorbestellenCommandFacade theVorbestellenCommandFacade;
     public VerkaufFacade theVerkaufFacade;
     public PositionAbstraktFacade thePositionAbstraktFacade;
     public AuslaufFacade theAuslaufFacade;
@@ -163,6 +164,7 @@ public class ConnectionHandler {
             this.theBestellenCommandFacade= new BestellenCommandFacade();
             this.theWarenlagerFacade= new WarenlagerFacade();
             this.theCommonDateFacade= new CommonDateFacade();
+            this.theVorbestellenCommandFacade= new VorbestellenCommandFacade();
             this.theVerkaufFacade= new VerkaufFacade();
             this.thePositionAbstraktFacade= new PositionAbstraktFacade();
             this.theAuslaufFacade= new AuslaufFacade();

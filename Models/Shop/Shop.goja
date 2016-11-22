@@ -62,8 +62,10 @@ singleton ArtikelManager{
 
 class BestellManager{
 	public Bestellung ** bestellListe;
-	Bestellung neueBestellung(Position ** positionsListe, Bestellstatus bestellstatus);
+	public Integer warenwert;
+	Bestellung neueBestellung(Position ** positionsListe, Bestellstatus bestellstatus, Integer warenwert);
 	event void benachrichtige();	
+	void verringereWarenwert(Integer subtrahend);
 }
 
 singleton ProduktKatalog{
@@ -114,7 +116,7 @@ class EinkaufsManager{
 	Position ** einkaufsListe;
 	prior no-view BestellManager bestellManager;
 	active void bestellen(Lieferart lieferart) throws ExcArtikelNichtVerfuegbar, ExcWarenwertUeberKontoguthaben;
-	void vorbestellen();
+	active void vorbestellen() throws ExcWarenwertUeberKontoguthaben;
 	void neuePosition(Artikel artikel, Integer menge) throws ExcArtikelAlreadyExists, UserException, ExcLagerbestandOverMax;
 	void entfernePosition(Position position);
 	Integer gibGesamtPreis();
@@ -143,7 +145,7 @@ abstract class Komponente {
 class Artikel extends Komponente{
 	prior indexed String artikelnummer;
 	prior indexed String bezeichnung;
-	prior Integer preis;
+	public prior Integer preis;
 	public prior Integer minLagerbestand;
 	public prior Integer maxLagerbestand;
 	public-write prior Integer hstLieferzeit;
@@ -172,6 +174,7 @@ class Bestellung{
 	public PositionInBestellung ** positionsListe;
 	prior public server-only BestellManager bestellManager;
 	prior indexed Integer bestellID;
+	public prior Integer warenwert;
 	public no-view Bestellstatus bestellstatus;
 	void listeHinzufuegen(Position ** positionsListe);
 	void aendereStatus(Bestellstatus bestellstatus);

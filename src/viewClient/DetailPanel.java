@@ -1816,6 +1816,7 @@ class BestellungDefaultDetailPanel extends DefaultDetailPanel{
     
     protected static final String Bestellung$$positionsListe = "Bestellung$$positionsListe";
     protected static final String Bestellung$$bestellID = "Bestellung$$bestellID";
+    protected static final String Bestellung$$warenwert = "Bestellung$$warenwert";
     
     protected BestellungDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
         super(exceptionHandler, anything);
@@ -1825,6 +1826,13 @@ class BestellungDefaultDetailPanel extends DefaultDetailPanel{
             BaseTypePanel panel = new IntegerPanel(this, "bestellID", this.getAnything().getBestellID());
             this.getScrollablePane().getChildren().add(panel);
             this.panels.put(Bestellung$$bestellID, panel);
+        }catch(ModelException e){
+            this.getExceptionAndEventhandler().handleException(e);
+        }
+        try{
+            BaseTypePanel panel = new IntegerPanel(this, "warenwert", this.getAnything().getWarenwert());
+            this.getScrollablePane().getChildren().add(panel);
+            this.panels.put(Bestellung$$warenwert, panel);
         }catch(ModelException e){
             this.getExceptionAndEventhandler().handleException(e);
         }
@@ -1851,11 +1859,19 @@ class GeliefertDefaultDetailPanel extends DefaultDetailPanel{
 class BestellManagerDefaultDetailPanel extends DefaultDetailPanel{
     
     protected static final String BestellManager$$bestellListe = "BestellManager$$bestellListe";
+    protected static final String BestellManager$$warenwert = "BestellManager$$warenwert";
     
     protected BestellManagerDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
         super(exceptionHandler, anything);
     }
     protected void addFields(){
+        try{
+            BaseTypePanel panel = new IntegerPanel(this, "warenwert", this.getAnything().getWarenwert());
+            this.getScrollablePane().getChildren().add(panel);
+            this.panels.put(BestellManager$$warenwert, panel);
+        }catch(ModelException e){
+            this.getExceptionAndEventhandler().handleException(e);
+        }
         
     }
     protected view.BestellManagerView getAnything(){

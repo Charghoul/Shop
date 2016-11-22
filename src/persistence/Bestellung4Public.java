@@ -7,6 +7,7 @@ public interface Bestellung4Public extends Anything, SubjInterface, AbstractPers
     
     public Bestellung_PositionsListeProxi getPositionsListe() throws PersistenceException ;
     public BestellManager4Public getBestellManager() throws PersistenceException ;
+    public long getWarenwert() throws PersistenceException ;
     public Bestellstatus4Public getBestellstatus() throws PersistenceException ;
     
     public void accept(AnythingVisitor visitor) throws PersistenceException;
