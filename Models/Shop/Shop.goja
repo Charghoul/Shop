@@ -94,6 +94,7 @@ singleton ZeitManager {
 	void handleTimeUnitElapsed() ;
 	event void neueHstLieferung(Artikel artikel, Integer menge);
 	event void neueKndLieferung(Bestellung bestellung, Lieferart lieferart);
+	event void forwardInternalEvent();
 	void removeZeitObjekt(ZeitObjekt zeitObjekt);
 }
 
