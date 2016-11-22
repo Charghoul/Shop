@@ -104,6 +104,9 @@ public abstract class AnythingStandardVisitor implements AnythingVisitor {
     public void handleCommonDate(CommonDate4Public commonDate) throws PersistenceException{
         this.standardHandling(commonDate);
     }
+    public void handleVorbestellenCommand(VorbestellenCommand4Public vorbestellenCommand) throws PersistenceException{
+        this.standardHandling(vorbestellenCommand);
+    }
     public void handleVerkauf(Verkauf4Public verkauf) throws PersistenceException{
         this.standardHandling(verkauf);
     }

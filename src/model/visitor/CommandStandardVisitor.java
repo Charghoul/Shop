@@ -5,6 +5,9 @@ import persistence.*;
 
 public abstract class CommandStandardVisitor implements CommandVisitor {
     
+    public void handleVorbestellenCommand(VorbestellenCommand4Public vorbestellenCommand) throws PersistenceException{
+        this.standardHandling(vorbestellenCommand);
+    }
     public void handleArtikelEinlagernCommand(ArtikelEinlagernCommand4Public artikelEinlagernCommand) throws PersistenceException{
         this.standardHandling(artikelEinlagernCommand);
     }

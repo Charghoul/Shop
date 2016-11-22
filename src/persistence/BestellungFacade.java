@@ -25,17 +25,17 @@ public class BestellungFacade{
 	}
 
     /* If idCreateIfLessZero is negative, a new id is generated. */
-    public PersistentBestellung newBestellung(long bestellID,long idCreateIfLessZero) throws PersistenceException {
+    public PersistentBestellung newBestellung(long bestellID,long warenwert,long idCreateIfLessZero) throws PersistenceException {
         if(idCreateIfLessZero > 0) return (PersistentBestellung)PersistentProxi.createProxi(idCreateIfLessZero, 136);
         long id = ConnectionHandler.getTheConnectionHandler().theBestellungFacade.getNextId();
-        Bestellung result = new Bestellung(null,bestellID,null,null,null,id);
+        Bestellung result = new Bestellung(null,bestellID,warenwert,null,null,null,id);
         Cache.getTheCache().put(result);
         return (PersistentBestellung)PersistentProxi.createProxi(id, 136);
     }
     
-    public PersistentBestellung newDelayedBestellung(long bestellID) throws PersistenceException {
+    public PersistentBestellung newDelayedBestellung(long bestellID,long warenwert) throws PersistenceException {
         long id = ConnectionHandler.getTheConnectionHandler().theBestellungFacade.getNextId();
-        Bestellung result = new Bestellung(null,bestellID,null,null,null,id);
+        Bestellung result = new Bestellung(null,bestellID,warenwert,null,null,null,id);
         Cache.getTheCache().put(result);
         return (PersistentBestellung)PersistentProxi.createProxi(id, 136);
     }
@@ -73,6 +73,9 @@ public class BestellungFacade{
         
     }
     public void bestellIDSet(long BestellungId, long bestellIDVal) throws PersistenceException {
+        
+    }
+    public void warenwertSet(long BestellungId, long warenwertVal) throws PersistenceException {
         
     }
     public void bestellstatusSet(long BestellungId, Bestellstatus4Public bestellstatusVal) throws PersistenceException {

@@ -7,7 +7,6 @@ public interface PersistentArtikel extends PersistentKomponente, Artikel4Public 
     public void setArtikelnummer(String newValue) throws PersistenceException ;
     public String getBezeichnung() throws PersistenceException ;
     public void setBezeichnung(String newValue) throws PersistenceException ;
-    public long getPreis() throws PersistenceException ;
     public void setPreis(long newValue) throws PersistenceException ;
     public void setMinLagerbestand(long newValue) throws PersistenceException ;
     public void setMaxLagerbestand(long newValue) throws PersistenceException ;

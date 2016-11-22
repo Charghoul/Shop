@@ -35,6 +35,7 @@ public interface AnythingReturnExceptionVisitor<R, E extends model.UserException
     public R handleStatusAuslaufCommand(StatusAuslaufCommand4Public statusAuslaufCommand) throws PersistenceException, E;
     public R handleStatusVerkaufCommand(StatusVerkaufCommand4Public statusVerkaufCommand) throws PersistenceException, E;
     public R handleSubj(Subj4Public subj) throws PersistenceException, E;
+    public R handleVorbestellenCommand(VorbestellenCommand4Public vorbestellenCommand) throws PersistenceException, E;
     public R handleWarenlager(Warenlager4Public warenlager) throws PersistenceException, E;
     public R handleZeitManager(ZeitManager4Public zeitManager) throws PersistenceException, E;
     public R handleZeitManagerZeitObjektListe(ZeitManagerZeitObjektListe4Public zeitManagerZeitObjektListe) throws PersistenceException, E;

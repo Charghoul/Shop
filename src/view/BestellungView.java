@@ -10,6 +10,8 @@ public interface BestellungView extends Anything, AbstractViewRoot {
     public void setPositionsListe(java.util.Vector<PositionInBestellungView> newValue) throws ModelException ;
     public long getBestellID()throws ModelException;
     public void setBestellID(long newValue) throws ModelException ;
+    public long getWarenwert()throws ModelException;
+    public void setWarenwert(long newValue) throws ModelException ;
     public BestellstatusView getBestellstatus()throws ModelException;
     public void setBestellstatus(BestellstatusView newValue) throws ModelException ;
     

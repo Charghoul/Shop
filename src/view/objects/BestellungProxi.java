@@ -16,6 +16,7 @@ public class BestellungProxi extends ViewProxi implements BestellungView{
         java.util.Vector<String> positionsListe_string = (java.util.Vector<String>)resultTable.get("positionsListe");
         java.util.Vector<PositionInBestellungView> positionsListe = ViewProxi.getProxiVector(positionsListe_string, connectionKey);
         long bestellID = new Long((String)resultTable.get("bestellID")).longValue();
+        long warenwert = new Long((String)resultTable.get("warenwert")).longValue();
         ViewProxi bestellstatus = null;
         String bestellstatus$String = (String)resultTable.get("bestellstatus");
         if (bestellstatus$String != null) {
@@ -23,7 +24,7 @@ public class BestellungProxi extends ViewProxi implements BestellungView{
             bestellstatus = view.objects.ViewProxi.createProxi(bestellstatus$Info,connectionKey);
             bestellstatus.setToString(bestellstatus$Info.getToString());
         }
-        BestellungView result$$ = new Bestellung(positionsListe,(long)bestellID,(BestellstatusView)bestellstatus, this.getId(), this.getClassId());
+        BestellungView result$$ = new Bestellung(positionsListe,(long)bestellID,(long)warenwert,(BestellstatusView)bestellstatus, this.getId(), this.getClassId());
         ((ViewRoot)result$$).setToString((String) resultTable.get(common.RPCConstantsAndServices.RPCToStringFieldName));
         return result$$;
     }
@@ -67,6 +68,12 @@ public class BestellungProxi extends ViewProxi implements BestellungView{
     }
     public void setBestellID(long newValue) throws ModelException {
         ((Bestellung)this.getTheObject()).setBestellID(newValue);
+    }
+    public long getWarenwert()throws ModelException{
+        return ((Bestellung)this.getTheObject()).getWarenwert();
+    }
+    public void setWarenwert(long newValue) throws ModelException {
+        ((Bestellung)this.getTheObject()).setWarenwert(newValue);
     }
     public BestellstatusView getBestellstatus()throws ModelException{
         return ((Bestellung)this.getTheObject()).getBestellstatus();

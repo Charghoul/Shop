@@ -33,6 +33,12 @@ public class BestellungProxi extends PersistentProxi implements PersistentBestel
     public void setBestellID(long newValue) throws PersistenceException {
         ((PersistentBestellung)this.getTheObject()).setBestellID(newValue);
     }
+    public long getWarenwert() throws PersistenceException {
+        return ((PersistentBestellung)this.getTheObject()).getWarenwert();
+    }
+    public void setWarenwert(long newValue) throws PersistenceException {
+        ((PersistentBestellung)this.getTheObject()).setWarenwert(newValue);
+    }
     public Bestellstatus4Public getBestellstatus() throws PersistenceException {
         return ((PersistentBestellung)this.getTheObject()).getBestellstatus();
     }

@@ -430,7 +430,8 @@ public class ServiceKunde extends model.ServiceShop implements PersistentService
     }
     public void vorbestellen(final EinkaufsManager4Public einkaufsManager) 
 				throws PersistenceException{
-       einkaufsManager.vorbestellen();
+       einkaufsManager.vorbestellen(getThis());
+        getThis().signalChanged(true);
     }
     public void zuEinkaufswagenHinzufuegen(final Artikel4Public artikel, final long menge) 
 				throws PersistenceException{

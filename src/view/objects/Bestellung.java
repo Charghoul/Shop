@@ -14,13 +14,15 @@ public class Bestellung extends ViewObject implements BestellungView{
     
     protected java.util.Vector<PositionInBestellungView> positionsListe;
     protected long bestellID;
+    protected long warenwert;
     protected BestellstatusView bestellstatus;
     
-    public Bestellung(java.util.Vector<PositionInBestellungView> positionsListe,long bestellID,BestellstatusView bestellstatus,long id, long classId) {
+    public Bestellung(java.util.Vector<PositionInBestellungView> positionsListe,long bestellID,long warenwert,BestellstatusView bestellstatus,long id, long classId) {
         /* Shall not be used. Objects are created on the server only */
         super(id, classId);
         this.positionsListe = positionsListe;
         this.bestellID = bestellID;
+        this.warenwert = warenwert;
         this.bestellstatus = bestellstatus;        
     }
     
@@ -43,6 +45,12 @@ public class Bestellung extends ViewObject implements BestellungView{
     }
     public void setBestellID(long newValue) throws ModelException {
         this.bestellID = newValue;
+    }
+    public long getWarenwert()throws ModelException{
+        return this.warenwert;
+    }
+    public void setWarenwert(long newValue) throws ModelException {
+        this.warenwert = newValue;
     }
     public BestellstatusView getBestellstatus()throws ModelException{
         return this.bestellstatus;
@@ -104,8 +112,12 @@ public class Bestellung extends ViewObject implements BestellungView{
     public int getBestellIDIndex() throws ModelException {
         return 0 + this.getPositionsListe().size();
     }
+    public int getWarenwertIndex() throws ModelException {
+        return 0 + this.getPositionsListe().size() + 1;
+    }
     public int getRowCount(){
         return 0 
+            + 1
             + 1;
     }
     public Object getValueAt(int rowIndex, int columnIndex){
@@ -113,8 +125,12 @@ public class Bestellung extends ViewObject implements BestellungView{
             if(columnIndex == 0){
                 if(rowIndex == 0) return "bestellID";
                 rowIndex = rowIndex - 1;
+                if(rowIndex == 0) return "warenwert";
+                rowIndex = rowIndex - 1;
             } else {
                 if(rowIndex == 0) return new Long(getBestellID());
+                rowIndex = rowIndex - 1;
+                if(rowIndex == 0) return new Long(getWarenwert());
                 rowIndex = rowIndex - 1;
             }
             throw new ModelException("Table index out of bounds!", -1);
@@ -129,6 +145,11 @@ public class Bestellung extends ViewObject implements BestellungView{
     public void setValueAt(String newValue, int rowIndex) throws Exception {
         if(rowIndex == 0){
             this.setBestellID(Long.parseLong(newValue));
+            return;
+        }
+        rowIndex = rowIndex - 1;
+        if(rowIndex == 0){
+            this.setWarenwert(Long.parseLong(newValue));
             return;
         }
         rowIndex = rowIndex - 1;

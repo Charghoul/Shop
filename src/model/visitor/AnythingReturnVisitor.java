@@ -35,6 +35,7 @@ public interface AnythingReturnVisitor<R> extends ArtikelstatusReturnVisitor<R> 
     public R handleStatusAuslaufCommand(StatusAuslaufCommand4Public statusAuslaufCommand) throws PersistenceException;
     public R handleStatusVerkaufCommand(StatusVerkaufCommand4Public statusVerkaufCommand) throws PersistenceException;
     public R handleSubj(Subj4Public subj) throws PersistenceException;
+    public R handleVorbestellenCommand(VorbestellenCommand4Public vorbestellenCommand) throws PersistenceException;
     public R handleWarenlager(Warenlager4Public warenlager) throws PersistenceException;
     public R handleZeitManager(ZeitManager4Public zeitManager) throws PersistenceException;
     public R handleZeitManagerZeitObjektListe(ZeitManagerZeitObjektListe4Public zeitManagerZeitObjektListe) throws PersistenceException;

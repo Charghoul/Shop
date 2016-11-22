@@ -278,23 +278,31 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
 		}
 		subService.updateObservers(event);
     }
+    public void vorbestellen(final Invoker invoker) 
+				throws PersistenceException{
+        java.sql.Date now = new java.sql.Date(new java.util.Date().getTime());
+		VorbestellenCommand4Public command = model.meta.VorbestellenCommand.createVorbestellenCommand(now, now);
+		command.setInvoker(invoker);
+		command.setCommandReceiver(getThis());
+		model.meta.CommandCoordinator.getTheCommandCoordinator().coordinate(command);
+    }
     
     
     // Start of section that contains operations that must be implemented.
     
     public void bestellen(final Lieferart4Public lieferart) 
 				throws model.ExcWarenwertUeberKontoguthaben, model.ExcArtikelNichtVerfuegbar, PersistenceException{
-        //überprüfen ob warenmenge kontoguthaben übersteigt
-        if(getThis().gibGesamtPreis() > getThis().getMyServiceKunde().getKonto().getKontostand()) {
+        //überprüfen ob warenmenge+bisherige nicht bezahlte bestellungen  kontoguthaben übersteigt
+        long bestellungswert = getThis().gibGesamtPreis();
+        if(bestellungswert + getThis().getBestellManager().getWarenwert() > getThis().getMyServiceKunde().getKonto().getKontostand()) {
             throw new ExcWarenwertUeberKontoguthaben(ErrorMessages.WarenwertUeberKontoguthaben);
         }
 
         //überprüfen ob alles auf lager ist
         Position4Public temp = Warenlager.getTheWarenlager().nichtVerfPruefen(getThis().getEinkaufsListe().getList());
         //TODO: überprüfung ob artikel vorhanden ist funktioniert noch nicht!
-        //TODO: prüfen ob Warenwert unter Kontostand liegt, inkl. Vorbestellungen
         if(temp == null) {
-            Bestellung4Public bestellung = getThis().getBestellManager().neueBestellung(getThis().getEinkaufsListe().getList(), Verarbeitung.getTheVerarbeitung());
+            Bestellung4Public bestellung = getThis().getBestellManager().neueBestellung(getThis().getEinkaufsListe().getList(), Verarbeitung.getTheVerarbeitung(), bestellungswert);
             getThis().getEinkaufsListe().applyToAll(new Procdure<Position4Public>() {
                 @Override
                 public void doItTo(Position4Public argument) throws PersistenceException {
@@ -340,7 +348,7 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
 
             @Override
             public Long compose(Long result, Position4Public position4Public) throws PersistenceException {
-                return result + position4Public.getMenge();
+                return result + (position4Public.getMenge() * position4Public.getArtikel().getPreis());
             }
 
         });
@@ -378,8 +386,14 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
         }
     }
     public void vorbestellen() 
-				throws PersistenceException{
+				throws model.ExcWarenwertUeberKontoguthaben, PersistenceException{
         //TODO: vorbestellen implementieren - Vorbestellungsliste und abarbeitung etc, prüfen ob warenkorb zu konto passt vom preis her
+        long bestellungswert = getThis().gibGesamtPreis();
+       if(bestellungswert + getThis().getBestellManager().getWarenwert() > getThis().getMyServiceKunde().getKonto().getKontostand()){
+           throw new ExcWarenwertUeberKontoguthaben(ErrorMessages.WarenwertUeberKontoguthaben);
+       }
+        getThis().getBestellManager().neueBestellung(getThis().getEinkaufsListe().getList(),Vorbestellung.getTheVorbestellung(),bestellungswert);
+
         System.out.println("gesamtpreis: " +getThis().gibGesamtPreis());
 
 

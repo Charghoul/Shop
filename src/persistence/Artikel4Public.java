@@ -5,6 +5,7 @@ import model.visitor.*;
 
 public interface Artikel4Public extends Komponente4Public {
     
+    public long getPreis() throws PersistenceException ;
     public long getMinLagerbestand() throws PersistenceException ;
     public long getMaxLagerbestand() throws PersistenceException ;
     public long getHstLieferzeit() throws PersistenceException ;

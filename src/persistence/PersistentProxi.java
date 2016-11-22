@@ -19,7 +19,7 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
 	
   private static ListProxiFactory [] getTheListProxiFactories(){
 	if (listProxiFactories == null){
-		listProxiFactories = new ListProxiFactory[251];
+		listProxiFactories = new ListProxiFactory[252];
         listProxiFactories[2] = new ListProxiFactory(){
             AbstractPersistentRoot create(long objectId, long entryId){
                 return new ServerListEntryProxi(objectId, entryId);
@@ -185,6 +185,11 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
                 return new CommonDateListEntryProxi(objectId, entryId);
             }
         };
+        listProxiFactories[251] = new ListProxiFactory(){
+            AbstractPersistentRoot create(long objectId, long entryId){
+                return new VorbestellenCommandListEntryProxi(objectId, entryId);
+            }
+        };
         listProxiFactories[111] = new ListProxiFactory(){
             AbstractPersistentRoot create(long objectId, long entryId){
                 return new VerkaufListEntryProxi(objectId, entryId);
@@ -300,7 +305,7 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
   }
   private static ProxiFactory [] getTheProxiFactories(){
 	if (proxiFactories == null){
-		proxiFactories = new ProxiFactory [251];
+		proxiFactories = new ProxiFactory [252];
         proxiFactories[2] = new ProxiFactory(){
             AbstractPersistentRoot create(long objectId){
                 return new ServerProxi(objectId);
@@ -464,6 +469,11 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
         proxiFactories[8] = new ProxiFactory(){
             AbstractPersistentRoot create(long objectId){
                 return new CommonDateProxi(objectId);
+            }
+        };
+        proxiFactories[251] = new ProxiFactory(){
+            AbstractPersistentRoot create(long objectId){
+                return new VorbestellenCommandProxi(objectId);
             }
         };
         proxiFactories[111] = new ProxiFactory(){

@@ -35,6 +35,7 @@ public interface AnythingExceptionVisitor<E extends model.UserException> extends
     public void handleStatusAuslaufCommand(StatusAuslaufCommand4Public statusAuslaufCommand) throws PersistenceException, E;
     public void handleStatusVerkaufCommand(StatusVerkaufCommand4Public statusVerkaufCommand) throws PersistenceException, E;
     public void handleSubj(Subj4Public subj) throws PersistenceException, E;
+    public void handleVorbestellenCommand(VorbestellenCommand4Public vorbestellenCommand) throws PersistenceException, E;
     public void handleWarenlager(Warenlager4Public warenlager) throws PersistenceException, E;
     public void handleZeitManager(ZeitManager4Public zeitManager) throws PersistenceException, E;
     public void handleZeitManagerZeitObjektListe(ZeitManagerZeitObjektListe4Public zeitManagerZeitObjektListe) throws PersistenceException, E;
