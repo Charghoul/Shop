@@ -179,6 +179,7 @@ class Bestellung{
 	void listeHinzufuegen(Position ** positionsListe);
 	void aendereStatus(Bestellstatus bestellstatus);
 	void annehmen();
+	Integer berechneWarenwert();
 }
 
 class KndLieferung extends ZeitObjekt{

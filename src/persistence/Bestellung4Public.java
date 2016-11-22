@@ -25,6 +25,8 @@ public interface Bestellung4Public extends Anything, SubjInterface, AbstractPers
 				throws PersistenceException;
     public void annehmen() 
 				throws PersistenceException;
+    public long berechneWarenwert() 
+				throws PersistenceException;
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException;
     public void initializeOnCreation() 

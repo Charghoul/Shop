@@ -316,6 +316,23 @@ public class Bestellung extends PersistentObject implements PersistentBestellung
         getThis().setBestellstatus(Angenommen.getTheAngenommen());
         getThis().getBestellManager().verringereWarenwert(getThis().getWarenwert());
     }
+    public long berechneWarenwert() 
+				throws PersistenceException{
+        Long temp = getThis().getPositionsListe().aggregate(new Aggregtion<PositionInBestellung4Public, Long>() {
+            @Override
+            public Long neutral() throws PersistenceException {
+                return (long) 0;
+            }
+
+            @Override
+            public Long compose(Long result, PositionInBestellung4Public positionInBestellung4Public) throws PersistenceException {
+                return result + (positionInBestellung4Public.getMenge() * positionInBestellung4Public.getArtikel().getPreis());
+            }
+        });
+        getThis().setWarenwert(temp);
+        return temp;
+        
+    }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{
         
