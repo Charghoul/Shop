@@ -77,6 +77,7 @@ public class ConnectionHandler {
     public HstLieferungFacade theHstLieferungFacade;
     public KndLieferungFacade theKndLieferungFacade;
     public ServiceKundeFacade theServiceKundeFacade;
+    public KndAnnahmeFacade theKndAnnahmeFacade;
     public ZuEinkaufswHinzCommandFacade theZuEinkaufswHinzCommandFacade;
     public ProduktKatalogFacade theProduktKatalogFacade;
     public BestellstatusFacade theBestellstatusFacade;
@@ -121,6 +122,7 @@ public class ConnectionHandler {
     public RueckversandFacade theRueckversandFacade;
     public LieferartManagerFacade theLieferartManagerFacade;
     public HinversandFacade theHinversandFacade;
+    public AllesZuruecksendenCommandFacade theAllesZuruecksendenCommandFacade;
     public IntegerWrapperFacade theIntegerWrapperFacade;
     public ArtikelstatusFacade theArtikelstatusFacade;
     public CommandExecuterFacade theCommandExecuterFacade;
@@ -145,6 +147,7 @@ public class ConnectionHandler {
             this.theHstLieferungFacade= new HstLieferungFacade();
             this.theKndLieferungFacade= new KndLieferungFacade();
             this.theServiceKundeFacade= new ServiceKundeFacade();
+            this.theKndAnnahmeFacade= new KndAnnahmeFacade();
             this.theZuEinkaufswHinzCommandFacade= new ZuEinkaufswHinzCommandFacade();
             this.theProduktKatalogFacade= new ProduktKatalogFacade();
             this.theBestellstatusFacade= new BestellstatusFacade();
@@ -189,6 +192,7 @@ public class ConnectionHandler {
             this.theRueckversandFacade= new RueckversandFacade();
             this.theLieferartManagerFacade= new LieferartManagerFacade();
             this.theHinversandFacade= new HinversandFacade();
+            this.theAllesZuruecksendenCommandFacade= new AllesZuruecksendenCommandFacade();
             this.theIntegerWrapperFacade= new IntegerWrapperFacade();
             this.theArtikelstatusFacade= new ArtikelstatusFacade();
             this.theCommandExecuterFacade= new CommandExecuterFacade();

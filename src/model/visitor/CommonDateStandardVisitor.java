@@ -32,6 +32,9 @@ public abstract class CommonDateStandardVisitor implements CommonDateVisitor {
     public void handleArtikelEinlagernCommand(ArtikelEinlagernCommand4Public artikelEinlagernCommand) throws PersistenceException{
         this.standardHandling(artikelEinlagernCommand);
     }
+    public void handleAllesZuruecksendenCommand(AllesZuruecksendenCommand4Public allesZuruecksendenCommand) throws PersistenceException{
+        this.standardHandling(allesZuruecksendenCommand);
+    }
     public void handleZuruecksendenCommand(ZuruecksendenCommand4Public zuruecksendenCommand) throws PersistenceException{
         this.standardHandling(zuruecksendenCommand);
     }

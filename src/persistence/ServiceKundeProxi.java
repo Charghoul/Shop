@@ -169,6 +169,10 @@ public class ServiceKundeProxi extends ServiceShopProxi implements PersistentSer
 				throws model.ExcLagerbestandUnderZero, model.ExcLagerbestandOverMax, PersistenceException{
         ((PersistentServiceKunde)this.getTheObject()).aendereMenge(position, menge);
     }
+    public void allesZuruecksenden(final Bestellung4Public bestellung) 
+				throws PersistenceException{
+        ((PersistentServiceKunde)this.getTheObject()).allesZuruecksenden(bestellung);
+    }
     public void annehmen(final Bestellung4Public bestellung) 
 				throws PersistenceException{
         ((PersistentServiceKunde)this.getTheObject()).annehmen(bestellung);

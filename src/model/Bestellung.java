@@ -266,6 +266,14 @@ public class Bestellung extends PersistentObject implements PersistentBestellung
     }
     
     
+    public void allesZuruecksenden(final Invoker invoker) 
+				throws PersistenceException{
+        java.sql.Date now = new java.sql.Date(new java.util.Date().getTime());
+		AllesZuruecksendenCommand4Public command = model.meta.AllesZuruecksendenCommand.createAllesZuruecksendenCommand(now, now);
+		command.setInvoker(invoker);
+		command.setCommandReceiver(getThis());
+		model.meta.CommandCoordinator.getTheCommandCoordinator().coordinate(command);
+    }
     public synchronized void deregister(final ObsInterface observee) 
 				throws PersistenceException{
         SubjInterface subService = getThis().getSubService();
@@ -310,6 +318,18 @@ public class Bestellung extends PersistentObject implements PersistentBestellung
 				throws PersistenceException{
         getThis().setBestellstatus(bestellstatus);
         
+    }
+    public void allesZuruecksenden() 
+				throws PersistenceException{
+        getThis().getPositionsListe().applyToAll(x -> {
+            try {
+                Warenlager.getTheWarenlager().artikelEinlagern(x.getArtikel(), x.getMenge());
+
+            } catch (ExcLagerbestandOverMax excLagerbestandOverMax) {
+                excLagerbestandOverMax.printStackTrace();
+            }
+        });
+        getThis().getBestellManager().getBestellListe().removeFirst(getThis());
     }
     public void annehmen() 
 				throws PersistenceException{

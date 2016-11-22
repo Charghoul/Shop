@@ -6,6 +6,7 @@ import model.visitor.*;
 public interface LieferartManager4Public extends Anything, SubjInterface, AbstractPersistentProxi {
     
     public LieferartManager_LieferartenListeProxi getLieferartenListe() throws PersistenceException ;
+    public long getRueckversandGebuehr() throws PersistenceException ;
     
     public void accept(AnythingVisitor visitor) throws PersistenceException;
     public <R> R accept(AnythingReturnVisitor<R>  visitor) throws PersistenceException;
@@ -20,6 +21,8 @@ public interface LieferartManager4Public extends Anything, SubjInterface, Abstra
 				throws PersistenceException;
     public void aendereLieferart(final Lieferart4Public lieferart, final String name, final long lieferzeit, final common.Fraction preis) 
 				throws model.ExcAlreadyExists, PersistenceException;
+    public void aendereRueckversandGebuehr(final long percent) 
+				throws PersistenceException;
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException;
     public void initializeOnCreation() 

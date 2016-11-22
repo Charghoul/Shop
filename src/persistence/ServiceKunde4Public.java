@@ -42,6 +42,8 @@ public interface ServiceKunde4Public extends ServiceShop4Public {
 				throws PersistenceException;
     public void aendereMenge(final Position4Public position, final long menge) 
 				throws model.ExcLagerbestandUnderZero, model.ExcLagerbestandOverMax, PersistenceException;
+    public void allesZuruecksenden(final Bestellung4Public bestellung) 
+				throws PersistenceException;
     public void annehmen(final Bestellung4Public bestellung) 
 				throws PersistenceException;
     public void auszahlen(final Konto4Public konto, final long betrag) 

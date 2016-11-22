@@ -414,6 +414,12 @@ public class ServiceAdmin extends model.ServiceShop implements PersistentService
     
     // Start of section that contains operations that must be implemented.
     
+    public void aendereAnnahmezeit(final ZeitManager4Public zeitManager, final long neueZeit) 
+				throws PersistenceException{
+        zeitManager.aendereAnnahmezeit(neueZeit);
+        getThis().signalChanged(true);
+        
+    }
     public void aendereArtikel(final Artikel4Public artikel, final long preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
 				throws model.ExcAlreadyExists, PersistenceException{
         artikel.aendereArtikel(preis, minLagerbestand, maxLagerbestand, hstLieferzeit);
@@ -428,7 +434,6 @@ public class ServiceAdmin extends model.ServiceShop implements PersistentService
     public void aendereHstLieferzeit(final Artikel4Public artikel, final long hstLieferzeit) 
 				throws PersistenceException{
         artikel.setHstLieferzeit(hstLieferzeit);
-        
     }
     public void aendereLieferart(final Lieferart4Public lieferart, final String name, final long lieferzeit, final common.Fraction preis) 
 				throws model.ExcAlreadyExists, PersistenceException{
@@ -436,9 +441,20 @@ public class ServiceAdmin extends model.ServiceShop implements PersistentService
         getThis().signalChanged(true);
 
     }
+    public void aendereMaxAnlieferungsVersuche(final ZeitManager4Public zeitManager, final long maxAnlieferungsVersuche) 
+				throws PersistenceException{
+        zeitManager.aendereMaxAnlieferungsVersuche(maxAnlieferungsVersuche);
+        getThis().signalChanged(true);
+        
+    }
     public void aendereMenge(final Position4Public position, final long menge) 
 				throws model.ExcLagerbestandUnderZero, model.ExcLagerbestandOverMax, PersistenceException{
         position.aendereMenge(menge);
+        getThis().signalChanged(true);
+    }
+    public void aendereRueckversandGebuehr(final LieferartManager4Public lieferartManager, final long percent) 
+				throws PersistenceException{
+        lieferartManager.aendereRueckversandGebuehr(percent);
         getThis().signalChanged(true);
     }
     public void artikelAbhaengen(final Produktgruppe4Public produktgruppe, final Artikel4Public artikel) 
@@ -504,10 +520,11 @@ public class ServiceAdmin extends model.ServiceShop implements PersistentService
         getThis().setProduktKatalog(ProduktKatalog.getTheProduktKatalog());
         getThis().setZeitManager(ZeitManager.getTheZeitManager());
 
+
         //Test Daten
         Artikel4Public art1 = Artikel.createArtikel("1234","test", 999,10,100,3, Verkauf.getTheVerkauf());
         Artikel4Public art2 = Artikel.createArtikel("31415626","Raspberry", 1999,5,200,4, Neuanlage.getTheNeuanlage());
-        Artikel4Public art3 = Artikel.createArtikel("666","Teufel's Dreizack", 6666,2,100,3,Verkauf.getTheVerkauf());
+        Artikel4Public art3 = Artikel.createArtikel("666","Teufel's Dreizack", 666,2,100,3,Verkauf.getTheVerkauf());
 
         //Listen
         ((PersistentArtikelManager)getThis().getArtikelManager()).getArtikelListe().add(art1);

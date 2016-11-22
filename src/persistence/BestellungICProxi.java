@@ -85,6 +85,10 @@ public class BestellungICProxi extends PersistentInCacheProxiOptimistic implemen
     }
     
     
+    public void allesZuruecksenden(final Invoker invoker) 
+				throws PersistenceException{
+        ((PersistentBestellung)this.getTheObject()).allesZuruecksenden(invoker);
+    }
     public void deregister(final ObsInterface observee) 
 				throws PersistenceException{
         ((PersistentBestellung)this.getTheObject()).deregister(observee);
@@ -104,6 +108,10 @@ public class BestellungICProxi extends PersistentInCacheProxiOptimistic implemen
     public void aendereStatus(final Bestellstatus4Public bestellstatus) 
 				throws PersistenceException{
         ((PersistentBestellung)this.getTheObject()).aendereStatus(bestellstatus);
+    }
+    public void allesZuruecksenden() 
+				throws PersistenceException{
+        ((PersistentBestellung)this.getTheObject()).allesZuruecksenden();
     }
     public void annehmen() 
 				throws PersistenceException{

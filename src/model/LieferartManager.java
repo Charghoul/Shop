@@ -62,6 +62,7 @@ public class LieferartManager extends PersistentObject implements PersistentLief
         if (depth > 0 && essentialLevel <= common.RPCConstantsAndServices.EssentialDepth){
             result = super.toHashtable(allResults, depth, essentialLevel, forGUI, false, tdObserver);
             result.put("lieferartenListe", this.getLieferartenListe().getVector(allResults, depth, essentialLevel, forGUI, tdObserver, false, true));
+            result.put("rueckversandGebuehr", new Long(this.getRueckversandGebuehr()).toString());
             String uniqueKey = common.RPCConstantsAndServices.createHashtableKey(this.getClassId(), this.getId());
             if (leaf && !allResults.containsKey(uniqueKey)) allResults.put(uniqueKey, result);
         }
@@ -70,7 +71,8 @@ public class LieferartManager extends PersistentObject implements PersistentLief
     
     public LieferartManager provideCopy() throws PersistenceException{
         LieferartManager result = this;
-        result = new LieferartManager(this.subService, 
+        result = new LieferartManager(this.rueckversandGebuehr, 
+                                      this.subService, 
                                       this.This, 
                                       this.getId());
         result.lieferartenListe = this.lieferartenListe.copy(result);
@@ -82,13 +84,15 @@ public class LieferartManager extends PersistentObject implements PersistentLief
         return false;
     }
     protected LieferartManager_LieferartenListeProxi lieferartenListe;
+    protected long rueckversandGebuehr;
     protected SubjInterface subService;
     protected PersistentLieferartManager This;
     
-    public LieferartManager(SubjInterface subService,PersistentLieferartManager This,long id) throws PersistenceException {
+    public LieferartManager(long rueckversandGebuehr,SubjInterface subService,PersistentLieferartManager This,long id) throws PersistenceException {
         /* Shall not be used by clients for object construction! Use static create operation instead! */
         super(id);
         this.lieferartenListe = new LieferartManager_LieferartenListeProxi(this);
+        this.rueckversandGebuehr = rueckversandGebuehr;
         this.subService = subService;
         if (This != null && !(this.isTheSameAs(This))) this.This = This;        
     }
@@ -107,6 +111,13 @@ public class LieferartManager extends PersistentObject implements PersistentLief
     
     public LieferartManager_LieferartenListeProxi getLieferartenListe() throws PersistenceException {
         return this.lieferartenListe;
+    }
+    public long getRueckversandGebuehr() throws PersistenceException {
+        return this.rueckversandGebuehr;
+    }
+    public void setRueckversandGebuehr(long newValue) throws PersistenceException {
+        if(!this.isDelayed$Persistence()) ConnectionHandler.getTheConnectionHandler().theLieferartManagerFacade.rueckversandGebuehrSet(this.getId(), newValue);
+        this.rueckversandGebuehr = newValue;
     }
     public SubjInterface getSubService() throws PersistenceException {
         return this.subService;
@@ -217,13 +228,18 @@ public class LieferartManager extends PersistentObject implements PersistentLief
         lieferart.aendereLieferart(lieferzeit, preis);
         
     }
+    public void aendereRueckversandGebuehr(final long percent) 
+				throws PersistenceException{
+        getThis().setRueckversandGebuehr(percent);
+        
+    }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{
         
     }
     public void initializeOnCreation() 
 				throws PersistenceException{
-
+        setRueckversandGebuehr(5);
         
     }
     public void initializeOnInstantiation() 

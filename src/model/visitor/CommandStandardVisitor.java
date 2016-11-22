@@ -8,20 +8,8 @@ public abstract class CommandStandardVisitor implements CommandVisitor {
     public void handleVorbestellenCommand(VorbestellenCommand4Public vorbestellenCommand) throws PersistenceException{
         this.standardHandling(vorbestellenCommand);
     }
-    public void handleArtikelEinlagernCommand(ArtikelEinlagernCommand4Public artikelEinlagernCommand) throws PersistenceException{
-        this.standardHandling(artikelEinlagernCommand);
-    }
     public void handleArtikelEntfernenCommand(ArtikelEntfernenCommand4Public artikelEntfernenCommand) throws PersistenceException{
         this.standardHandling(artikelEntfernenCommand);
-    }
-    public void handleZuruecksendenCommand(ZuruecksendenCommand4Public zuruecksendenCommand) throws PersistenceException{
-        this.standardHandling(zuruecksendenCommand);
-    }
-    public void handleBestellenCommand(BestellenCommand4Public bestellenCommand) throws PersistenceException{
-        this.standardHandling(bestellenCommand);
-    }
-    public void handleZuEinkaufswHinzCommand(ZuEinkaufswHinzCommand4Public zuEinkaufswHinzCommand) throws PersistenceException{
-        this.standardHandling(zuEinkaufswHinzCommand);
     }
     public void handleProduktgruppeEntfernenCommand(ProduktgruppeEntfernenCommand4Public produktgruppeEntfernenCommand) throws PersistenceException{
         this.standardHandling(produktgruppeEntfernenCommand);
@@ -40,6 +28,21 @@ public abstract class CommandStandardVisitor implements CommandVisitor {
     }
     public void handleStatusVerkaufCommand(StatusVerkaufCommand4Public statusVerkaufCommand) throws PersistenceException{
         this.standardHandling(statusVerkaufCommand);
+    }
+    public void handleArtikelEinlagernCommand(ArtikelEinlagernCommand4Public artikelEinlagernCommand) throws PersistenceException{
+        this.standardHandling(artikelEinlagernCommand);
+    }
+    public void handleAllesZuruecksendenCommand(AllesZuruecksendenCommand4Public allesZuruecksendenCommand) throws PersistenceException{
+        this.standardHandling(allesZuruecksendenCommand);
+    }
+    public void handleZuruecksendenCommand(ZuruecksendenCommand4Public zuruecksendenCommand) throws PersistenceException{
+        this.standardHandling(zuruecksendenCommand);
+    }
+    public void handleBestellenCommand(BestellenCommand4Public bestellenCommand) throws PersistenceException{
+        this.standardHandling(bestellenCommand);
+    }
+    public void handleZuEinkaufswHinzCommand(ZuEinkaufswHinzCommand4Public zuEinkaufswHinzCommand) throws PersistenceException{
+        this.standardHandling(zuEinkaufswHinzCommand);
     }
     protected abstract void standardHandling(Command command) throws PersistenceException;
 }

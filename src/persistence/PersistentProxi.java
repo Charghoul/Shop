@@ -19,7 +19,7 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
 	
   private static ListProxiFactory [] getTheListProxiFactories(){
 	if (listProxiFactories == null){
-		listProxiFactories = new ListProxiFactory[254];
+		listProxiFactories = new ListProxiFactory[258];
         listProxiFactories[2] = new ListProxiFactory(){
             AbstractPersistentRoot create(long objectId, long entryId){
                 return new ServerListEntryProxi(objectId, entryId);
@@ -100,6 +100,11 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
                 return new ServiceKundeListEntryProxi(objectId, entryId);
             }
         };
+        listProxiFactories[254] = new ListProxiFactory(){
+            AbstractPersistentRoot create(long objectId, long entryId){
+                return new KndAnnahmeListEntryProxi(objectId, entryId);
+            }
+        };
         listProxiFactories[202] = new ListProxiFactory(){
             AbstractPersistentRoot create(long objectId, long entryId){
                 return new ZuEinkaufswHinzCommandListEntryProxi(objectId, entryId);
@@ -165,7 +170,7 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
                 return new AngenommenListEntryProxi(objectId, entryId);
             }
         };
-        listProxiFactories[247] = new ListProxiFactory(){
+        listProxiFactories[257] = new ListProxiFactory(){
             AbstractPersistentRoot create(long objectId, long entryId){
                 return new ZuruecksendenCommandListEntryProxi(objectId, entryId);
             }
@@ -285,6 +290,11 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
                 return new HinversandListEntryProxi(objectId, entryId);
             }
         };
+        listProxiFactories[256] = new ListProxiFactory(){
+            AbstractPersistentRoot create(long objectId, long entryId){
+                return new AllesZuruecksendenCommandListEntryProxi(objectId, entryId);
+            }
+        };
         listProxiFactories[192] = new ListProxiFactory(){
             AbstractPersistentRoot create(long objectId, long entryId){
                 return new IntegerWrapperListEntryProxi(objectId, entryId);
@@ -305,7 +315,7 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
   }
   private static ProxiFactory [] getTheProxiFactories(){
 	if (proxiFactories == null){
-		proxiFactories = new ProxiFactory [254];
+		proxiFactories = new ProxiFactory [258];
         proxiFactories[2] = new ProxiFactory(){
             AbstractPersistentRoot create(long objectId){
                 return new ServerProxi(objectId);
@@ -386,6 +396,11 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
                 return new ServiceKundeProxi(objectId);
             }
         };
+        proxiFactories[254] = new ProxiFactory(){
+            AbstractPersistentRoot create(long objectId){
+                return new KndAnnahmeProxi(objectId);
+            }
+        };
         proxiFactories[202] = new ProxiFactory(){
             AbstractPersistentRoot create(long objectId){
                 return new ZuEinkaufswHinzCommandProxi(objectId);
@@ -451,7 +466,7 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
                 return new AngenommenProxi(objectId);
             }
         };
-        proxiFactories[247] = new ProxiFactory(){
+        proxiFactories[257] = new ProxiFactory(){
             AbstractPersistentRoot create(long objectId){
                 return new ZuruecksendenCommandProxi(objectId);
             }
@@ -569,6 +584,11 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
         proxiFactories[117] = new ProxiFactory(){
             AbstractPersistentRoot create(long objectId){
                 return new HinversandProxi(objectId);
+            }
+        };
+        proxiFactories[256] = new ProxiFactory(){
+            AbstractPersistentRoot create(long objectId){
+                return new AllesZuruecksendenCommandProxi(objectId);
             }
         };
         proxiFactories[192] = new ProxiFactory(){

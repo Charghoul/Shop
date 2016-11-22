@@ -19,9 +19,13 @@ public interface Bestellung4Public extends Anything, SubjInterface, AbstractPers
     public <E extends model.UserException>  void accept(SubjInterfaceExceptionVisitor<E> visitor) throws PersistenceException, E;
     public <R, E extends model.UserException> R accept(SubjInterfaceReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E;
     
+    public void allesZuruecksenden(final Invoker invoker) 
+				throws PersistenceException;
     public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
 				throws PersistenceException;
     public void aendereStatus(final Bestellstatus4Public bestellstatus) 
+				throws PersistenceException;
+    public void allesZuruecksenden() 
 				throws PersistenceException;
     public void annehmen() 
 				throws PersistenceException;

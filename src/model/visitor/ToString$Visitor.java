@@ -14,6 +14,7 @@ public abstract class ToString$Visitor extends AnythingStandardVisitor{
     public abstract void handleServiceRegister(ServiceRegister4Public serviceRegister) throws PersistenceException;
     public abstract void handleHstLieferung(HstLieferung4Public hstLieferung) throws PersistenceException;
     public abstract void handleKndLieferung(KndLieferung4Public kndLieferung) throws PersistenceException;
+    public abstract void handleKndAnnahme(KndAnnahme4Public kndAnnahme) throws PersistenceException;
     public abstract void handleServiceKunde(ServiceKunde4Public serviceKunde) throws PersistenceException;
     public abstract void handleProduktKatalog(ProduktKatalog4Public produktKatalog) throws PersistenceException;
     public abstract void handleArtikel(Artikel4Public artikel) throws PersistenceException;

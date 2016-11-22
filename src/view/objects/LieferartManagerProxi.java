@@ -15,7 +15,8 @@ public class LieferartManagerProxi extends ViewProxi implements LieferartManager
     public LieferartManagerView getRemoteObject(java.util.HashMap<String,Object> resultTable, ExceptionAndEventHandler connectionKey) throws ModelException{
         java.util.Vector<String> lieferartenListe_string = (java.util.Vector<String>)resultTable.get("lieferartenListe");
         java.util.Vector<LieferartView> lieferartenListe = ViewProxi.getProxiVector(lieferartenListe_string, connectionKey);
-        LieferartManagerView result$$ = new LieferartManager(lieferartenListe, this.getId(), this.getClassId());
+        long rueckversandGebuehr = new Long((String)resultTable.get("rueckversandGebuehr")).longValue();
+        LieferartManagerView result$$ = new LieferartManager(lieferartenListe,(long)rueckversandGebuehr, this.getId(), this.getClassId());
         ((ViewRoot)result$$).setToString((String) resultTable.get(common.RPCConstantsAndServices.RPCToStringFieldName));
         return result$$;
     }
@@ -53,6 +54,12 @@ public class LieferartManagerProxi extends ViewProxi implements LieferartManager
     }
     public void setLieferartenListe(java.util.Vector<LieferartView> newValue) throws ModelException {
         ((LieferartManager)this.getTheObject()).setLieferartenListe(newValue);
+    }
+    public long getRueckversandGebuehr()throws ModelException{
+        return ((LieferartManager)this.getTheObject()).getRueckversandGebuehr();
+    }
+    public void setRueckversandGebuehr(long newValue) throws ModelException {
+        ((LieferartManager)this.getTheObject()).setRueckversandGebuehr(newValue);
     }
     
     public void accept(AnythingVisitor visitor) throws ModelException {

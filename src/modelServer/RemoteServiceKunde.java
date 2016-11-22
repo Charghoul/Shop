@@ -61,6 +61,16 @@ public  class RemoteServiceKunde extends RemoteServiceShop {
         }
     }
     
+    public synchronized java.util.HashMap<?,?> allesZuruecksenden(String bestellungProxiString){
+        try {
+            PersistentBestellung bestellung = (PersistentBestellung)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(bestellungProxiString));
+            ((PersistentServiceKunde)this.server).allesZuruecksenden(bestellung);
+            return createOKResult();
+        }catch(PersistenceException pe){
+            return createExceptionResult(pe);
+        }
+    }
+    
     public synchronized java.util.HashMap<?,?> annehmen(String bestellungProxiString){
         try {
             PersistentBestellung bestellung = (PersistentBestellung)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(bestellungProxiString));

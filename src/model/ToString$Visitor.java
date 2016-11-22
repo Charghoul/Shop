@@ -1,5 +1,6 @@
 package model;
 
+import model.visitor.ZeitObjektReturnVisitor;
 import persistence.*;
 import serverConstants.ToStringConstants;
 
@@ -97,7 +98,9 @@ public class ToString$Visitor extends model.visitor.ToString$Visitor {
 	@Override
 	public void handleBestellung(Bestellung4Public bestellung) throws PersistenceException {
 		PersistentBestellung persB = (PersistentBestellung)bestellung;
-		result = persB.getBestellID() + " | " + persB.getBestellstatus() +" | " + persB.getPositionsListe().toString();
+		String temp = ToStringConstants.Bestellung + persB.getBestellID() + " | " + persB.getBestellstatus();
+
+		result = temp;
 	}
 
 	@Override
@@ -139,7 +142,11 @@ public class ToString$Visitor extends model.visitor.ToString$Visitor {
 	@Override
 	public void handleKndLieferung(KndLieferung4Public kndLieferung) throws PersistenceException {
 		PersistentKndLieferung persKnd = (PersistentKndLieferung) kndLieferung;
-		result =  persKnd.getLieferart().toString() + persKnd.getLieferversuche();
+		result =  ToStringConstants.Kundenlieferung + persKnd.getLieferart().toString() +" (" + persKnd.getLieferversuche() + "/" + ZeitManager.getTheZeitManager().getMaxAnlieferungsVersuche()+")";
+	}
+
+	@Override
+	public void handleKndAnnahme(KndAnnahme4Public kndAnnahme) throws PersistenceException {
 	}
 
 	@Override
@@ -187,7 +194,7 @@ public class ToString$Visitor extends model.visitor.ToString$Visitor {
 	public void handleArtikel(Artikel4Public artikel) throws PersistenceException {
 		PersistentArtikel persistentArtikel = (PersistentArtikel) artikel;
 		String temp = "("+persistentArtikel.getArtikelnummer() + ") " + persistentArtikel.getBezeichnung()
-				+" | " + persistentArtikel.getArtikelstatus() + " " + persistentArtikel.getPreis()/100 + "."+persistentArtikel.getPreis()%100 + " Euro";
+				+" | " + persistentArtikel.getArtikelstatus() + " | " + persistentArtikel.getPreis()/100 + "."+persistentArtikel.getPreis()%100 + " Euro";
 		if(persistentArtikel.getHersteller()!=null){
 			temp = temp +" | " + persistentArtikel.getHersteller();
 		}

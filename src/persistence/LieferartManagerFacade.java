@@ -26,7 +26,7 @@ public class LieferartManagerFacade{
 
     public PersistentLieferartManager getTheLieferartManager() throws PersistenceException {
         long id = ConnectionHandler.getTheConnectionHandler().theLieferartManagerFacade.getNextId();
-        LieferartManager result = new LieferartManager(null, null, id);
+        LieferartManager result = new LieferartManager(0, null, null, id);
         PersistentInCacheProxi cached = Cache.getTheCache().putSingleton(result);
         return (PersistentLieferartManager)PersistentProxi.createProxi(cached.getId()  * (cached.getTheObject().isTheSameAs(result) ? -1 : 1), 198);
     }
@@ -48,6 +48,9 @@ public class LieferartManagerFacade{
     }
     public LieferartList lieferartenListeGet(long LieferartManagerId) throws PersistenceException {
         return new LieferartList(); // remote access for initialization only!
+    }
+    public void rueckversandGebuehrSet(long LieferartManagerId, long rueckversandGebuehrVal) throws PersistenceException {
+        
     }
     public void subServiceSet(long LieferartManagerId, SubjInterface subServiceVal) throws PersistenceException {
         

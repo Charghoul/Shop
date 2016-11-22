@@ -50,6 +50,9 @@ public abstract class AnythingStandardVisitor implements AnythingVisitor {
     public void handleKndLieferung(KndLieferung4Public kndLieferung) throws PersistenceException{
         this.standardHandling(kndLieferung);
     }
+    public void handleKndAnnahme(KndAnnahme4Public kndAnnahme) throws PersistenceException{
+        this.standardHandling(kndAnnahme);
+    }
     public void handleServiceKunde(ServiceKunde4Public serviceKunde) throws PersistenceException{
         this.standardHandling(serviceKunde);
     }
@@ -163,6 +166,9 @@ public abstract class AnythingStandardVisitor implements AnythingVisitor {
     }
     public void handleHinversand(Hinversand4Public hinversand) throws PersistenceException{
         this.standardHandling(hinversand);
+    }
+    public void handleAllesZuruecksendenCommand(AllesZuruecksendenCommand4Public allesZuruecksendenCommand) throws PersistenceException{
+        this.standardHandling(allesZuruecksendenCommand);
     }
     public void handleIntegerWrapper(IntegerWrapper4Public integerWrapper) throws PersistenceException{
         this.standardHandling(integerWrapper);
