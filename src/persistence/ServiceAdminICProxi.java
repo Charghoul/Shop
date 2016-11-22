@@ -187,6 +187,10 @@ public class ServiceAdminICProxi extends ServiceShopICProxi implements Persisten
 				throws PersistenceException{
         ((PersistentServiceAdmin)this.getTheObject()).updateObservers(event);
     }
+    public void aendereAnnahmezeit(final ZeitManager4Public zeitManager, final long neueZeit) 
+				throws PersistenceException{
+        ((PersistentServiceAdmin)this.getTheObject()).aendereAnnahmezeit(zeitManager, neueZeit);
+    }
     public void aendereArtikel(final Artikel4Public artikel, final long preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
 				throws model.ExcAlreadyExists, PersistenceException{
         ((PersistentServiceAdmin)this.getTheObject()).aendereArtikel(artikel, preis, minLagerbestand, maxLagerbestand, hstLieferzeit);
@@ -203,9 +207,17 @@ public class ServiceAdminICProxi extends ServiceShopICProxi implements Persisten
 				throws model.ExcAlreadyExists, PersistenceException{
         ((PersistentServiceAdmin)this.getTheObject()).aendereLieferart(lieferart, name, lieferzeit, preis);
     }
+    public void aendereMaxAnlieferungsVersuche(final ZeitManager4Public zeitManager, final long maxAnlieferungsVersuche) 
+				throws PersistenceException{
+        ((PersistentServiceAdmin)this.getTheObject()).aendereMaxAnlieferungsVersuche(zeitManager, maxAnlieferungsVersuche);
+    }
     public void aendereMenge(final Position4Public position, final long menge) 
 				throws model.ExcLagerbestandUnderZero, model.ExcLagerbestandOverMax, PersistenceException{
         ((PersistentServiceAdmin)this.getTheObject()).aendereMenge(position, menge);
+    }
+    public void aendereRueckversandGebuehr(final LieferartManager4Public lieferartManager, final long percent) 
+				throws PersistenceException{
+        ((PersistentServiceAdmin)this.getTheObject()).aendereRueckversandGebuehr(lieferartManager, percent);
     }
     public void artikelAbhaengen(final Produktgruppe4Public produktgruppe, final Artikel4Public artikel) 
 				throws PersistenceException{

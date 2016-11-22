@@ -79,6 +79,17 @@ public  class RemoteServiceAdmin extends RemoteServiceShop {
         }
     }
     
+    public synchronized java.util.HashMap<?,?> aendereAnnahmezeit(String zeitManagerProxiString, String neueZeitAsString){
+        try {
+            PersistentZeitManager zeitManager = (PersistentZeitManager)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(zeitManagerProxiString));
+            long neueZeit = new Long(neueZeitAsString).longValue();
+            ((PersistentServiceAdmin)this.server).aendereAnnahmezeit(zeitManager, neueZeit);
+            return createOKResult();
+        }catch(PersistenceException pe){
+            return createExceptionResult(pe);
+        }
+    }
+    
     public synchronized java.util.HashMap<?,?> aendereArtikel(String artikelProxiString, String preisAsString, String minLagerbestandAsString, String maxLagerbestandAsString, String hstLieferzeitAsString){
         try {
             PersistentArtikel artikel = (PersistentArtikel)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(artikelProxiString));
@@ -132,6 +143,17 @@ public  class RemoteServiceAdmin extends RemoteServiceShop {
         }
     }
     
+    public synchronized java.util.HashMap<?,?> aendereMaxAnlieferungsVersuche(String zeitManagerProxiString, String maxAnlieferungsVersucheAsString){
+        try {
+            PersistentZeitManager zeitManager = (PersistentZeitManager)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(zeitManagerProxiString));
+            long maxAnlieferungsVersuche = new Long(maxAnlieferungsVersucheAsString).longValue();
+            ((PersistentServiceAdmin)this.server).aendereMaxAnlieferungsVersuche(zeitManager, maxAnlieferungsVersuche);
+            return createOKResult();
+        }catch(PersistenceException pe){
+            return createExceptionResult(pe);
+        }
+    }
+    
     public synchronized java.util.HashMap<?,?> aendereMenge(String positionProxiString, String mengeAsString){
         try {
             PersistentPosition position = (PersistentPosition)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(positionProxiString));
@@ -144,6 +166,17 @@ public  class RemoteServiceAdmin extends RemoteServiceShop {
             return createExceptionResult(e0, this);
         }catch(model.ExcLagerbestandOverMax e1){
             return createExceptionResult(e1, this);
+        }
+    }
+    
+    public synchronized java.util.HashMap<?,?> aendereRueckversandGebuehr(String lieferartManagerProxiString, String percentAsString){
+        try {
+            PersistentLieferartManager lieferartManager = (PersistentLieferartManager)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(lieferartManagerProxiString));
+            long percent = new Long(percentAsString).longValue();
+            ((PersistentServiceAdmin)this.server).aendereRueckversandGebuehr(lieferartManager, percent);
+            return createOKResult();
+        }catch(PersistenceException pe){
+            return createExceptionResult(pe);
         }
     }
     

@@ -8,6 +8,8 @@ public interface LieferartManagerView extends Anything, AbstractViewRoot {
     
     public java.util.Vector<LieferartView> getLieferartenListe()throws ModelException;
     public void setLieferartenListe(java.util.Vector<LieferartView> newValue) throws ModelException ;
+    public long getRueckversandGebuehr()throws ModelException;
+    public void setRueckversandGebuehr(long newValue) throws ModelException ;
     
     public void accept(AnythingVisitor visitor) throws ModelException;
     public <R> R accept(AnythingReturnVisitor<R>  visitor) throws ModelException;

@@ -16,11 +16,13 @@ import view.visitor.AnythingVisitor;
 public class LieferartManager extends ViewObject implements LieferartManagerView{
     
     protected java.util.Vector<LieferartView> lieferartenListe;
+    protected long rueckversandGebuehr;
     
-    public LieferartManager(java.util.Vector<LieferartView> lieferartenListe,long id, long classId) {
+    public LieferartManager(java.util.Vector<LieferartView> lieferartenListe,long rueckversandGebuehr,long id, long classId) {
         /* Shall not be used. Objects are created on the server only */
         super(id, classId);
-        this.lieferartenListe = lieferartenListe;        
+        this.lieferartenListe = lieferartenListe;
+        this.rueckversandGebuehr = rueckversandGebuehr;        
     }
     
     static public long getTypeId() {
@@ -36,6 +38,12 @@ public class LieferartManager extends ViewObject implements LieferartManagerView
     }
     public void setLieferartenListe(java.util.Vector<LieferartView> newValue) throws ModelException {
         this.lieferartenListe = newValue;
+    }
+    public long getRueckversandGebuehr()throws ModelException{
+        return this.rueckversandGebuehr;
+    }
+    public void setRueckversandGebuehr(long newValue) throws ModelException {
+        this.rueckversandGebuehr = newValue;
     }
     
     public void accept(AnythingVisitor visitor) throws ModelException {
@@ -84,13 +92,21 @@ public class LieferartManager extends ViewObject implements LieferartManagerView
         }
         return -1;
     }
+    public int getRueckversandGebuehrIndex() throws ModelException {
+        return 0 + this.getLieferartenListe().size();
+    }
     public int getRowCount(){
-        return 0 ;
+        return 0 
+            + 1;
     }
     public Object getValueAt(int rowIndex, int columnIndex){
         try {
             if(columnIndex == 0){
+                if(rowIndex == 0) return "rueckversandGebuehr";
+                rowIndex = rowIndex - 1;
             } else {
+                if(rowIndex == 0) return new Long(getRueckversandGebuehr());
+                rowIndex = rowIndex - 1;
             }
             throw new ModelException("Table index out of bounds!", -1);
         } catch (ModelException e){
@@ -102,7 +118,11 @@ public class LieferartManager extends ViewObject implements LieferartManagerView
         return true;
     }
     public void setValueAt(String newValue, int rowIndex) throws Exception {
-        
+        if(rowIndex == 0){
+            this.setRueckversandGebuehr(Long.parseLong(newValue));
+            return;
+        }
+        rowIndex = rowIndex - 1;
     }
     public boolean hasTransientFields(){
         return false;

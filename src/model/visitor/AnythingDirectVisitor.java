@@ -81,6 +81,9 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     public void handleKndLieferung(KndLieferung4Public kndLieferung) throws PersistenceException{
         this.handleZeitObjekt(kndLieferung);
     }
+    public void handleKndAnnahme(KndAnnahme4Public kndAnnahme) throws PersistenceException{
+        this.handleZeitObjekt(kndAnnahme);
+    }
     public abstract void handleArtikelManager(ArtikelManager4Public artikelManager) throws PersistenceException;
     
     public abstract void handleService(Service4Public service) throws PersistenceException;
@@ -117,20 +120,8 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     public void handleVorbestellenCommand(VorbestellenCommand4Public vorbestellenCommand) throws PersistenceException{
         this.handleCommonDate(vorbestellenCommand);
     }
-    public void handleArtikelEinlagernCommand(ArtikelEinlagernCommand4Public artikelEinlagernCommand) throws PersistenceException{
-        this.handleCommonDate(artikelEinlagernCommand);
-    }
     public void handleArtikelEntfernenCommand(ArtikelEntfernenCommand4Public artikelEntfernenCommand) throws PersistenceException{
         this.handleCommonDate(artikelEntfernenCommand);
-    }
-    public void handleZuruecksendenCommand(ZuruecksendenCommand4Public zuruecksendenCommand) throws PersistenceException{
-        this.handleCommonDate(zuruecksendenCommand);
-    }
-    public void handleBestellenCommand(BestellenCommand4Public bestellenCommand) throws PersistenceException{
-        this.handleCommonDate(bestellenCommand);
-    }
-    public void handleZuEinkaufswHinzCommand(ZuEinkaufswHinzCommand4Public zuEinkaufswHinzCommand) throws PersistenceException{
-        this.handleCommonDate(zuEinkaufswHinzCommand);
     }
     public void handleProduktgruppeEntfernenCommand(ProduktgruppeEntfernenCommand4Public produktgruppeEntfernenCommand) throws PersistenceException{
         this.handleCommonDate(produktgruppeEntfernenCommand);
@@ -149,6 +140,21 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     }
     public void handleStatusVerkaufCommand(StatusVerkaufCommand4Public statusVerkaufCommand) throws PersistenceException{
         this.handleCommonDate(statusVerkaufCommand);
+    }
+    public void handleArtikelEinlagernCommand(ArtikelEinlagernCommand4Public artikelEinlagernCommand) throws PersistenceException{
+        this.handleCommonDate(artikelEinlagernCommand);
+    }
+    public void handleAllesZuruecksendenCommand(AllesZuruecksendenCommand4Public allesZuruecksendenCommand) throws PersistenceException{
+        this.handleCommonDate(allesZuruecksendenCommand);
+    }
+    public void handleZuruecksendenCommand(ZuruecksendenCommand4Public zuruecksendenCommand) throws PersistenceException{
+        this.handleCommonDate(zuruecksendenCommand);
+    }
+    public void handleBestellenCommand(BestellenCommand4Public bestellenCommand) throws PersistenceException{
+        this.handleCommonDate(bestellenCommand);
+    }
+    public void handleZuEinkaufswHinzCommand(ZuEinkaufswHinzCommand4Public zuEinkaufswHinzCommand) throws PersistenceException{
+        this.handleCommonDate(zuEinkaufswHinzCommand);
     }
     public abstract void handleCommandExecuter(CommandExecuter4Public commandExecuter) throws PersistenceException;
     

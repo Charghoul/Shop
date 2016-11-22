@@ -1221,6 +1221,9 @@ class DetailPanelFactory implements AnythingVisitor {
     public void handleServiceKunde(view.ServiceKundeView object){
         result = new ServiceKundeDefaultDetailPanel(handler, object);
     }
+    public void handleKndAnnahme(view.KndAnnahmeView object){
+        result = new KndAnnahmeDefaultDetailPanel(handler, object);
+    }
     public void handleProduktKatalog(view.ProduktKatalogView object){
         result = new ProduktKatalogDefaultDetailPanel(handler, object);
     }
@@ -1532,6 +1535,29 @@ class ServiceKundeDefaultDetailPanel extends DefaultDetailPanel{
     }
     protected view.ServiceKundeView getAnything(){
         return (view.ServiceKundeView)this.anything;
+    }
+}
+
+class KndAnnahmeDefaultDetailPanel extends DefaultDetailPanel{
+    
+    protected static final String ZeitObjekt$$remainingTime = "ZeitObjekt$$remainingTime";
+    protected static final String KndAnnahme$$kndLieferung = "KndAnnahme$$kndLieferung";
+    
+    protected KndAnnahmeDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
+        super(exceptionHandler, anything);
+    }
+    protected void addFields(){
+        try{
+            BaseTypePanel panel = new IntegerPanel(this, "remainingTime", this.getAnything().getRemainingTime());
+            this.getScrollablePane().getChildren().add(panel);
+            this.panels.put(ZeitObjekt$$remainingTime, panel);
+        }catch(ModelException e){
+            this.getExceptionAndEventhandler().handleException(e);
+        }
+        
+    }
+    protected view.KndAnnahmeView getAnything(){
+        return (view.KndAnnahmeView)this.anything;
     }
 }
 
@@ -1860,6 +1886,7 @@ class BestellManagerDefaultDetailPanel extends DefaultDetailPanel{
     
     protected static final String BestellManager$$bestellListe = "BestellManager$$bestellListe";
     protected static final String BestellManager$$warenwert = "BestellManager$$warenwert";
+    protected static final String BestellManager$$bestellID = "BestellManager$$bestellID";
     
     protected BestellManagerDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
         super(exceptionHandler, anything);
@@ -1869,6 +1896,13 @@ class BestellManagerDefaultDetailPanel extends DefaultDetailPanel{
             BaseTypePanel panel = new IntegerPanel(this, "warenwert", this.getAnything().getWarenwert());
             this.getScrollablePane().getChildren().add(panel);
             this.panels.put(BestellManager$$warenwert, panel);
+        }catch(ModelException e){
+            this.getExceptionAndEventhandler().handleException(e);
+        }
+        try{
+            BaseTypePanel panel = new IntegerPanel(this, "bestellID", this.getAnything().getBestellID());
+            this.getScrollablePane().getChildren().add(panel);
+            this.panels.put(BestellManager$$bestellID, panel);
         }catch(ModelException e){
             this.getExceptionAndEventhandler().handleException(e);
         }
@@ -1882,11 +1916,28 @@ class BestellManagerDefaultDetailPanel extends DefaultDetailPanel{
 class ZeitManagerDefaultDetailPanel extends DefaultDetailPanel{
     
     protected static final String ZeitManager$$zeitObjektListe = "ZeitManager$$zeitObjektListe";
+    protected static final String ZeitManager$$annahmeZeiten = "ZeitManager$$annahmeZeiten";
+    protected static final String ZeitManager$$annahmezeit = "ZeitManager$$annahmezeit";
+    protected static final String ZeitManager$$maxAnlieferungsVersuche = "ZeitManager$$maxAnlieferungsVersuche";
     
     protected ZeitManagerDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
         super(exceptionHandler, anything);
     }
     protected void addFields(){
+        try{
+            BaseTypePanel panel = new IntegerPanel(this, "annahmezeit", this.getAnything().getAnnahmezeit());
+            this.getScrollablePane().getChildren().add(panel);
+            this.panels.put(ZeitManager$$annahmezeit, panel);
+        }catch(ModelException e){
+            this.getExceptionAndEventhandler().handleException(e);
+        }
+        try{
+            BaseTypePanel panel = new IntegerPanel(this, "maxAnlieferungsVersuche", this.getAnything().getMaxAnlieferungsVersuche());
+            this.getScrollablePane().getChildren().add(panel);
+            this.panels.put(ZeitManager$$maxAnlieferungsVersuche, panel);
+        }catch(ModelException e){
+            this.getExceptionAndEventhandler().handleException(e);
+        }
         
     }
     protected view.ZeitManagerView getAnything(){
@@ -1976,11 +2027,19 @@ class RueckversandDefaultDetailPanel extends DefaultDetailPanel{
 class LieferartManagerDefaultDetailPanel extends DefaultDetailPanel{
     
     protected static final String LieferartManager$$lieferartenListe = "LieferartManager$$lieferartenListe";
+    protected static final String LieferartManager$$rueckversandGebuehr = "LieferartManager$$rueckversandGebuehr";
     
     protected LieferartManagerDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
         super(exceptionHandler, anything);
     }
     protected void addFields(){
+        try{
+            BaseTypePanel panel = new IntegerPanel(this, "rueckversandGebuehr", this.getAnything().getRueckversandGebuehr());
+            this.getScrollablePane().getChildren().add(panel);
+            this.panels.put(LieferartManager$$rueckversandGebuehr, panel);
+        }catch(ModelException e){
+            this.getExceptionAndEventhandler().handleException(e);
+        }
         
     }
     protected view.LieferartManagerView getAnything(){

@@ -25,6 +25,12 @@ public class LieferartManagerICProxi extends PersistentInCacheProxiOptimistic im
     public LieferartManager_LieferartenListeProxi getLieferartenListe() throws PersistenceException {
         return ((PersistentLieferartManager)this.getTheObject()).getLieferartenListe();
     }
+    public long getRueckversandGebuehr() throws PersistenceException {
+        return ((PersistentLieferartManager)this.getTheObject()).getRueckversandGebuehr();
+    }
+    public void setRueckversandGebuehr(long newValue) throws PersistenceException {
+        ((PersistentLieferartManager)this.getTheObject()).setRueckversandGebuehr(newValue);
+    }
     public SubjInterface getSubService() throws PersistenceException {
         return ((PersistentLieferartManager)this.getTheObject()).getSubService();
     }
@@ -80,6 +86,10 @@ public class LieferartManagerICProxi extends PersistentInCacheProxiOptimistic im
     public void aendereLieferart(final Lieferart4Public lieferart, final String name, final long lieferzeit, final common.Fraction preis) 
 				throws model.ExcAlreadyExists, PersistenceException{
         ((PersistentLieferartManager)this.getTheObject()).aendereLieferart(lieferart, name, lieferzeit, preis);
+    }
+    public void aendereRueckversandGebuehr(final long percent) 
+				throws PersistenceException{
+        ((PersistentLieferartManager)this.getTheObject()).aendereRueckversandGebuehr(percent);
     }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{

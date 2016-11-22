@@ -402,6 +402,7 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
     }
     public void herstellerHinzufuegen(final Hersteller4Public hersteller) 
 				throws PersistenceException{
+        //TODO: wenn hersteller hinzugefügt wurde und der bestand 0 ist - hstLieferung erstellen damit geliefert wird
         getThis().setHersteller(hersteller);
     }
     public void initializeOnCreation() 
@@ -433,6 +434,8 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
     }
     public void statusVerkauf() 
 				throws model.ExcInconsistentStatusChange, PersistenceException{
+
+        //TODO: Artikel ohne hersteller kann nicht verkauft werden, da er nicht nachgeliefert wird
         getThis().getArtikelstatus().accept(new ArtikelstatusExceptionVisitor<ExcInconsistentStatusChange>() {
             @Override
             public void handleAuslauf(Auslauf4Public auslauf) throws PersistenceException, ExcInconsistentStatusChange {

@@ -347,6 +347,7 @@ public class ServiceKunde extends model.ServiceShop implements PersistentService
 			if(this.filter_zuruecksenden((PositionInBestellung4Public)anything)) result = result + "zuruecksendenPRMTRPositionInBestellungPRMTR+++";
 		}
 		if(anything instanceof Bestellung4Public) {
+			if(this.filter_allesZuruecksenden((Bestellung4Public)anything)) result = result + "allesZuruecksendenPRMTRBestellungPRMTR+++";
 			if(this.filter_annehmen((Bestellung4Public)anything)) result = result + "annehmenPRMTRBestellungPRMTR+++";
 		}
 		return result;
@@ -377,9 +378,16 @@ public class ServiceKunde extends model.ServiceShop implements PersistentService
         position.aendereMenge(menge);
         getThis().signalChanged(true);
     }
+    public void allesZuruecksenden(final Bestellung4Public bestellung) 
+				throws PersistenceException{
+        getThis().getKonto().abbuchen(bestellung.getWarenwert() /100 * LieferartManager.getTheLieferartManager().getRueckversandGebuehr());
+        bestellung.allesZuruecksenden();
+        getThis().signalChanged(true);
+    }
     public void annehmen(final Bestellung4Public bestellung) 
 				throws PersistenceException{
         bestellung.annehmen();
+        getThis().getKonto().abbuchen(bestellung.getWarenwert());
         getThis().signalChanged(true);
     }
     public void auszahlen(final Konto4Public konto, final long betrag) 
@@ -450,9 +458,9 @@ public class ServiceKunde extends model.ServiceShop implements PersistentService
     }
     public void zuruecksenden(final PositionInBestellung4Public position) 
 				throws PersistenceException{
+        getKonto().abbuchen((position.getArtikel().getPreis() * position.getMenge())/100 * 5);
         position.zuruecksenden(getThis());
         getThis().signalChanged(true);
-        
     }
     
     
@@ -470,6 +478,10 @@ public class ServiceKunde extends model.ServiceShop implements PersistentService
     }
 
     private boolean filter_annehmen(Bestellung4Public anything) throws PersistenceException {
+        return anything.getBestellstatus().equals(Geliefert.getTheGeliefert());
+    }
+
+    private boolean filter_allesZuruecksenden(Bestellung4Public anything) throws PersistenceException {
         return anything.getBestellstatus().equals(Geliefert.getTheGeliefert());
     }
     
