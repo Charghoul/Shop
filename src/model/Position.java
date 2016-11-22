@@ -201,7 +201,6 @@ public class Position extends model.PositionAbstrakt implements PersistentPositi
     }
     public void entfernePosition(final EinkaufsManager4Public einkaufsManager) 
 				throws PersistenceException{
-        //TODO: entfernePosition updated noch nicht den einkaufswagen!
         einkaufsManager.entfernePosition(getThis());
         
     }

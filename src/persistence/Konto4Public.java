@@ -19,11 +19,13 @@ public interface Konto4Public extends Anything, SubjInterface, AbstractPersisten
     
     public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
 				throws PersistenceException;
-    public void abbuchen(final common.Fraction betrag) 
+    public void abbuchen(final long betrag) 
 				throws PersistenceException;
+    public void auszahlen(final long betrag) 
+				throws model.ExcAuszahlungGroesserGutgaben, PersistenceException;
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException;
-    public void einzahlen(final common.Fraction betrag) 
+    public void einzahlen(final long betrag) 
 				throws PersistenceException;
     public void initializeOnCreation() 
 				throws PersistenceException;

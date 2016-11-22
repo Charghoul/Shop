@@ -3,6 +3,7 @@ package view.objects;
 
 import view.KontoView;
 import view.ModelException;
+import view.ServiceKundeView;
 import view.visitor.AnythingExceptionVisitor;
 import view.visitor.AnythingReturnExceptionVisitor;
 import view.visitor.AnythingReturnVisitor;
@@ -15,12 +16,14 @@ public class Konto extends ViewObject implements KontoView{
     
     protected long kontostand;
     protected long limit;
+    protected ServiceKundeView myServiceKunde;
     
-    public Konto(long kontostand,long limit,long id, long classId) {
+    public Konto(long kontostand,long limit,ServiceKundeView myServiceKunde,long id, long classId) {
         /* Shall not be used. Objects are created on the server only */
         super(id, classId);
         this.kontostand = kontostand;
-        this.limit = limit;        
+        this.limit = limit;
+        this.myServiceKunde = myServiceKunde;        
     }
     
     static public long getTypeId() {
@@ -43,6 +46,9 @@ public class Konto extends ViewObject implements KontoView{
     public void setLimit(long newValue) throws ModelException {
         this.limit = newValue;
     }
+    public ServiceKundeView getMyServiceKunde()throws ModelException{
+        return this.myServiceKunde;
+    }
     
     public void accept(AnythingVisitor visitor) throws ModelException {
         visitor.handleKonto(this);
@@ -58,6 +64,10 @@ public class Konto extends ViewObject implements KontoView{
     }
     
     public void resolveProxies(java.util.HashMap<String,Object> resultTable) throws ModelException {
+        ServiceKundeView myServiceKunde = this.getMyServiceKunde();
+        if (myServiceKunde != null) {
+            ((ViewProxi)myServiceKunde).setObject((ViewObject)resultTable.get(common.RPCConstantsAndServices.createHashtableKey(myServiceKunde.getClassId(), myServiceKunde.getId())));
+        }
         
     }
     public void sortSetValuedFields() throws ModelException {

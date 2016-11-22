@@ -382,6 +382,11 @@ public class ServiceKunde extends model.ServiceShop implements PersistentService
         bestellung.annehmen();
         getThis().signalChanged(true);
     }
+    public void auszahlen(final Konto4Public konto, final long betrag) 
+				throws model.ExcAuszahlungGroesserGutgaben, PersistenceException{
+        konto.auszahlen(betrag);
+        getThis().signalChanged(true);
+    }
     public void bestellManager_update(final model.meta.BestellManagerMssgs event) 
 				throws PersistenceException{
         getThis().signalChanged(true);
@@ -402,6 +407,11 @@ public class ServiceKunde extends model.ServiceShop implements PersistentService
     public void disconnected() 
 				throws PersistenceException{
 
+    }
+    public void einzahlen(final Konto4Public konto, final long betrag) 
+				throws PersistenceException{
+        konto.einzahlen(betrag);
+        getThis().signalChanged(true);
     }
     public void entfernePosition(final Position4Public position) 
 				throws PersistenceException{

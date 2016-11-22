@@ -11,6 +11,7 @@ public interface UserExceptionReturnVisitor<R> {
     public R handleExcArtikelHatKeinenHersteller(ExcArtikelHatKeinenHersteller excArtikelHatKeinenHersteller) throws ModelException;
     public R handleExcArtikelNichtVerfuegbar(ExcArtikelNichtVerfuegbar excArtikelNichtVerfuegbar) throws ModelException;
     public R handleExcArtikelNochNichtVerfuegbar(ExcArtikelNochNichtVerfuegbar excArtikelNochNichtVerfuegbar) throws ModelException;
+    public R handleExcAuszahlungGroesserGutgaben(ExcAuszahlungGroesserGutgaben excAuszahlungGroesserGutgaben) throws ModelException;
     public R handleExcEinkaufslisteNichtVerfuegbar(ExcEinkaufslisteNichtVerfuegbar excEinkaufslisteNichtVerfuegbar) throws ModelException;
     public R handleExcHasChildren(ExcHasChildren excHasChildren) throws ModelException;
     public R handleExcHasNoParent(ExcHasNoParent excHasNoParent) throws ModelException;

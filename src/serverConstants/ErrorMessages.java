@@ -24,6 +24,7 @@ public class ErrorMessages {
     public static final String ArtikelHatKeinenHersteller = "Ein Artikel ohne Hersteller kann nicht nachgeliefert werden";
     public static final String ArtikelNochNichtVerfuegbar = "Dieser Artikel steht in naher Zukunft zum Verkauf bereit";
     public static final String WarenwertUeberKontoguthaben = "Der Warenwert der Bestellung (zzgl. Vorbestellungen) liegt ueber ihrem Kontoguthaben";
+    public static final String AuszahlungGroesserGuthaben= "Die Auszahlungssumme ist groesser als ihr aktuelles Guthaben";
 
     private ErrorMessages(){}
 }
