@@ -53,5 +53,8 @@ public abstract class UserExceptionStandardVisitor implements UserExceptionVisit
     public void handleExcHasNoParent(ExcHasNoParent excHasNoParent) throws ModelException{
         this.standardHandling(excHasNoParent);
     }
+    public void handleExcWarenwertUeberKontoguthaben(ExcWarenwertUeberKontoguthaben excWarenwertUeberKontoguthaben) throws ModelException{
+        this.standardHandling(excWarenwertUeberKontoguthaben);
+    }
     protected abstract void standardHandling(UserException userException) throws ModelException;
 }

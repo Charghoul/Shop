@@ -74,7 +74,7 @@ public class KontoProxi extends PersistentProxi implements PersistentKonto{
 				throws PersistenceException{
         ((PersistentKonto)this.getTheObject()).initialize(This, final$$Fields);
     }
-    public ServiceShop4Public inverseGetKonto() 
+    public ServiceKunde4Public inverseGetKonto() 
 				throws PersistenceException{
         return ((PersistentKonto)this.getTheObject()).inverseGetKonto();
     }

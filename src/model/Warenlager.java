@@ -244,6 +244,7 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
     
     public void artikelEinlagern(final Artikel4Public artikel, final long menge) 
 				throws model.ExcLagerbestandOverMax, PersistenceException{
+        //TODO: Warenlager observen
         Position4Public p4 = getThis().getWarenListe().findFirst(new Predcate<Position4Public>() {
             @Override
             public boolean test(Position4Public argument) throws PersistenceException {

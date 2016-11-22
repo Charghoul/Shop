@@ -11,7 +11,7 @@ public interface PersistentEinkaufsManager extends Anything, SubjInterface, Abst
     public PersistentEinkaufsManager getThis() throws PersistenceException ;
     
     
-    public ServiceKunde4Public inverseGetEinkaufsManager() 
+    public ServiceKunde4Public getMyServiceKunde() 
 				throws PersistenceException;
 
 }

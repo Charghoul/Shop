@@ -23,7 +23,6 @@ public abstract class ServiceAdmin$AuthoriseVisitor extends AnythingStandardVisi
     public abstract void handleServiceAdmin(PersistentServiceAdmin serviceAdmin) throws PersistenceException;
     public abstract void handleArtikelManager(PersistentArtikelManager artikelManager) throws PersistenceException;
     public abstract void handleZeitManager(PersistentZeitManager zeitManager) throws PersistenceException;
-    public abstract void handleKonto(PersistentKonto konto) throws PersistenceException;
     public abstract void handlePositionInBestellung(PersistentPositionInBestellung positionInBestellung) throws PersistenceException;
     public abstract void handleVorbestellung(PersistentVorbestellung vorbestellung) throws PersistenceException;
     public abstract void handleHersteller(PersistentHersteller hersteller) throws PersistenceException;

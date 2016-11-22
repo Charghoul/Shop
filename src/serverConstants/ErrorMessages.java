@@ -23,6 +23,7 @@ public class ErrorMessages {
     public static final String ArtikelNichtVerfuegbar = " ist nicht ausreichend verfuegbar";
     public static final String ArtikelHatKeinenHersteller = "Ein Artikel ohne Hersteller kann nicht nachgeliefert werden";
     public static final String ArtikelNochNichtVerfuegbar = "Dieser Artikel steht in naher Zukunft zum Verkauf bereit";
+    public static final String WarenwertUeberKontoguthaben = "Der Warenwert der Bestellung liegt ueber ihrem Kontoguthaben";
 
     private ErrorMessages(){}
 }

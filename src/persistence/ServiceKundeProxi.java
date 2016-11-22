@@ -18,6 +18,12 @@ public class ServiceKundeProxi extends ServiceShopProxi implements PersistentSer
         return -181;
     }
     
+    public Konto4Public getKonto() throws PersistenceException {
+        return ((PersistentServiceKunde)this.getTheObject()).getKonto();
+    }
+    public void setKonto(Konto4Public newValue) throws PersistenceException {
+        ((PersistentServiceKunde)this.getTheObject()).setKonto(newValue);
+    }
     public EinkaufsManager4Public getEinkaufsManager() throws PersistenceException {
         return ((PersistentServiceKunde)this.getTheObject()).getEinkaufsManager();
     }

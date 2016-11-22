@@ -57,6 +57,8 @@ public class ServiceKundeConnection extends ServiceShopConnection {
                     throw RestrictionException.fromHashtableToRestrictionException((java.util.HashMap<String,Object>)success.get(common.RPCConstantsAndServices.ResultFieldName), this.getHandler());
                 if(((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == -284)
                     throw ExcHasNoParent.fromHashtableToExcHasNoParent((java.util.HashMap<String,Object>)success.get(common.RPCConstantsAndServices.ResultFieldName), this.getHandler());
+                if(((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == -351)
+                    throw ExcWarenwertUeberKontoguthaben.fromHashtableToExcWarenwertUeberKontoguthaben((java.util.HashMap<String,Object>)success.get(common.RPCConstantsAndServices.ResultFieldName), this.getHandler());
                 throw new ModelException ("Fatal error (unknown exception code:" + (Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName) + ")",0);
             }else{
                 java.util.HashMap<String,Object> allResults = (java.util.HashMap<String,Object>) success.get(common.RPCConstantsAndServices.ResultFieldName);
@@ -116,6 +118,8 @@ public class ServiceKundeConnection extends ServiceShopConnection {
                     throw RestrictionException.fromHashtableToRestrictionException((java.util.HashMap<String,Object>)success.get(common.RPCConstantsAndServices.ResultFieldName), this.getHandler());
                 if(((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == -284)
                     throw ExcHasNoParent.fromHashtableToExcHasNoParent((java.util.HashMap<String,Object>)success.get(common.RPCConstantsAndServices.ResultFieldName), this.getHandler());
+                if(((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == -351)
+                    throw ExcWarenwertUeberKontoguthaben.fromHashtableToExcWarenwertUeberKontoguthaben((java.util.HashMap<String,Object>)success.get(common.RPCConstantsAndServices.ResultFieldName), this.getHandler());
                 throw new ModelException ("Fatal error (unknown exception code:" + (Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName) + ")",0);
             }else{
                 java.util.HashMap<String,Object> allResults = (java.util.HashMap<String,Object>) success.get(common.RPCConstantsAndServices.ResultFieldName);
@@ -309,6 +313,8 @@ public class ServiceKundeConnection extends ServiceShopConnection {
                     throw RestrictionException.fromHashtableToRestrictionException((java.util.HashMap<String,Object>)success.get(common.RPCConstantsAndServices.ResultFieldName), this.getHandler());
                 if(((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == -284)
                     throw ExcHasNoParent.fromHashtableToExcHasNoParent((java.util.HashMap<String,Object>)success.get(common.RPCConstantsAndServices.ResultFieldName), this.getHandler());
+                if(((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == -351)
+                    throw ExcWarenwertUeberKontoguthaben.fromHashtableToExcWarenwertUeberKontoguthaben((java.util.HashMap<String,Object>)success.get(common.RPCConstantsAndServices.ResultFieldName), this.getHandler());
                 throw new ModelException ("Fatal error (unknown exception code:" + (Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName) + ")",0);
             }
         }catch(IOException ioe){

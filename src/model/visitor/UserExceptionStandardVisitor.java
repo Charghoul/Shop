@@ -53,5 +53,8 @@ public abstract class UserExceptionStandardVisitor implements UserExceptionVisit
     public void handleExcHasNoParent(model.ExcHasNoParent excHasNoParent) throws PersistenceException{
         this.standardHandling(excHasNoParent);
     }
+    public void handleExcWarenwertUeberKontoguthaben(model.ExcWarenwertUeberKontoguthaben excWarenwertUeberKontoguthaben) throws PersistenceException{
+        this.standardHandling(excWarenwertUeberKontoguthaben);
+    }
     protected abstract void standardHandling(model.UserException userException) throws PersistenceException;
 }

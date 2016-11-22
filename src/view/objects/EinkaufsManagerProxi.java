@@ -22,7 +22,14 @@ public class EinkaufsManagerProxi extends ViewProxi implements EinkaufsManagerVi
             bestellManager = view.objects.ViewProxi.createProxi(bestellManager$Info,connectionKey);
             bestellManager.setToString(bestellManager$Info.getToString());
         }
-        EinkaufsManagerView result$$ = new EinkaufsManager(einkaufsListe,(BestellManagerView)bestellManager, this.getId(), this.getClassId());
+        ViewProxi myServiceKunde = null;
+        String myServiceKunde$String = (String)resultTable.get("myServiceKunde");
+        if (myServiceKunde$String != null) {
+            common.ProxiInformation myServiceKunde$Info = common.RPCConstantsAndServices.createProxiInformation(myServiceKunde$String);
+            myServiceKunde = view.objects.ViewProxi.createProxi(myServiceKunde$Info,connectionKey);
+            myServiceKunde.setToString(myServiceKunde$Info.getToString());
+        }
+        EinkaufsManagerView result$$ = new EinkaufsManager(einkaufsListe,(BestellManagerView)bestellManager,(ServiceKundeView)myServiceKunde, this.getId(), this.getClassId());
         ((ViewRoot)result$$).setToString((String) resultTable.get(common.RPCConstantsAndServices.RPCToStringFieldName));
         return result$$;
     }
@@ -66,6 +73,9 @@ public class EinkaufsManagerProxi extends ViewProxi implements EinkaufsManagerVi
     }
     public void setBestellManager(BestellManagerView newValue) throws ModelException {
         ((EinkaufsManager)this.getTheObject()).setBestellManager(newValue);
+    }
+    public ServiceKundeView getMyServiceKunde()throws ModelException{
+        return ((EinkaufsManager)this.getTheObject()).getMyServiceKunde();
     }
     
     public void accept(AnythingVisitor visitor) throws ModelException {

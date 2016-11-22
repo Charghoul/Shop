@@ -5,6 +5,7 @@ import model.visitor.*;
 
 public interface ServiceKunde4Public extends ServiceShop4Public {
     
+    public Konto4Public getKonto() throws PersistenceException ;
     
     public void accept(ServiceShopVisitor visitor) throws PersistenceException;
     public <R> R accept(ServiceShopReturnVisitor<R>  visitor) throws PersistenceException;

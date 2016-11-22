@@ -3,6 +3,7 @@ package persistence;
 
 public interface PersistentServiceKunde extends PersistentServiceShop, ServiceKunde4Public {
     
+    public void setKonto(Konto4Public newValue) throws PersistenceException ;
     public EinkaufsManager4Public getEinkaufsManager() throws PersistenceException ;
     public void setEinkaufsManager(EinkaufsManager4Public newValue) throws PersistenceException ;
     public LieferartManager4Public getLieferartManager() throws PersistenceException ;

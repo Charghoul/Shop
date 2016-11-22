@@ -20,10 +20,12 @@ public interface EinkaufsManager4Public extends Anything, SubjInterface, Abstrac
     public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
 				throws PersistenceException;
     public void bestellen(final Lieferart4Public lieferart) 
-				throws model.ExcArtikelNichtVerfuegbar, PersistenceException;
+				throws model.ExcWarenwertUeberKontoguthaben, model.ExcArtikelNichtVerfuegbar, PersistenceException;
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException;
     public void entfernePosition(final Position4Public position) 
+				throws PersistenceException;
+    public long gibGesamtPreis() 
 				throws PersistenceException;
     public void initializeOnCreation() 
 				throws PersistenceException;

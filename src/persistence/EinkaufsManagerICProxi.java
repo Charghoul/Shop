@@ -75,13 +75,13 @@ public class EinkaufsManagerICProxi extends PersistentInCacheProxiOptimistic imp
 				throws PersistenceException{
         ((PersistentEinkaufsManager)this.getTheObject()).deregister(observee);
     }
+    public ServiceKunde4Public getMyServiceKunde() 
+				throws PersistenceException{
+        return ((PersistentEinkaufsManager)this.getTheObject()).getMyServiceKunde();
+    }
     public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
 				throws PersistenceException{
         ((PersistentEinkaufsManager)this.getTheObject()).initialize(This, final$$Fields);
-    }
-    public ServiceKunde4Public inverseGetEinkaufsManager() 
-				throws PersistenceException{
-        return ((PersistentEinkaufsManager)this.getTheObject()).inverseGetEinkaufsManager();
     }
     public void register(final ObsInterface observee) 
 				throws PersistenceException{
@@ -92,7 +92,7 @@ public class EinkaufsManagerICProxi extends PersistentInCacheProxiOptimistic imp
         ((PersistentEinkaufsManager)this.getTheObject()).updateObservers(event);
     }
     public void bestellen(final Lieferart4Public lieferart) 
-				throws model.ExcArtikelNichtVerfuegbar, PersistenceException{
+				throws model.ExcWarenwertUeberKontoguthaben, model.ExcArtikelNichtVerfuegbar, PersistenceException{
         ((PersistentEinkaufsManager)this.getTheObject()).bestellen(lieferart);
     }
     public void copyingPrivateUserAttributes(final Anything copy) 
@@ -102,6 +102,10 @@ public class EinkaufsManagerICProxi extends PersistentInCacheProxiOptimistic imp
     public void entfernePosition(final Position4Public position) 
 				throws PersistenceException{
         ((PersistentEinkaufsManager)this.getTheObject()).entfernePosition(position);
+    }
+    public long gibGesamtPreis() 
+				throws PersistenceException{
+        return ((PersistentEinkaufsManager)this.getTheObject()).gibGesamtPreis();
     }
     public void initializeOnCreation() 
 				throws PersistenceException{

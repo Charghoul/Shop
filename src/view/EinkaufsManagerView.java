@@ -10,6 +10,7 @@ public interface EinkaufsManagerView extends Anything, AbstractViewRoot {
     public void setEinkaufsListe(java.util.Vector<PositionView> newValue) throws ModelException ;
     public BestellManagerView getBestellManager()throws ModelException;
     public void setBestellManager(BestellManagerView newValue) throws ModelException ;
+    public ServiceKundeView getMyServiceKunde()throws ModelException;
     
     public void accept(AnythingVisitor visitor) throws ModelException;
     public <R> R accept(AnythingReturnVisitor<R>  visitor) throws ModelException;
