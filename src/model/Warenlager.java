@@ -244,7 +244,7 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
     
     public void artikelEinlagern(final Artikel4Public artikel, final long menge) 
 				throws model.ExcLagerbestandOverMax, PersistenceException{
-        //TODO: Warenlager observen
+        //TODO: Warenlager observen um Vorbestellungen rausschicken zu können
         Position4Public p4 = getThis().getWarenListe().findFirst(new Predcate<Position4Public>() {
             @Override
             public boolean test(Position4Public argument) throws PersistenceException {
@@ -260,6 +260,7 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
     public void artikelEntfernen(final Position4Public position) 
 				throws PersistenceException{
         //TODO: CUSTOM artikelEntfernen überprüfung ob noch sachen auf lager und artikelstatus auslauf
+
         getThis().getWarenListe().removeAll(position);
     }
     public void artikelEntnehmen(final Artikel4Public artikel, final long menge) 
