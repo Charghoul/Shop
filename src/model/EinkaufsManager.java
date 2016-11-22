@@ -300,9 +300,6 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
 
         //überprüfen ob alles auf lager ist
         Position4Public temp = Warenlager.getTheWarenlager().nichtVerfPruefen(getThis().getEinkaufsListe().getList());
-        //TODO: überprüfung ob artikel vorhanden ist funktioniert noch nicht!
-
-        //TODO: bestellungswert implementation ändern (methode in bestellung selbst)
         if(temp == null) {
             Bestellung4Public bestellung = getThis().getBestellManager().neueBestellung(getThis().getEinkaufsListe().getList(), Verarbeitung.getTheVerarbeitung(), bestellungswert);
             getThis().getEinkaufsListe().applyToAll(new Procdure<Position4Public>() {
@@ -337,7 +334,7 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
     public void entfernePosition(final Position4Public position) 
 				throws PersistenceException{
         getThis().getEinkaufsListe().removeFirst(position);
-        
+        getThis().getMyServiceKunde().signalChanged(true);
     }
     public long gibGesamtPreis() 
 				throws PersistenceException{
@@ -365,33 +362,33 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
         
     }
     public void neuePosition(final Artikel4Public artikel, final long menge) 
-				throws model.ExcArtikelAlreadyExists, model.UserException, model.ExcLagerbestandOverMax, PersistenceException{
+				throws model.ExcArtikelAlreadyExists, model.ExcArtikelNochNichtVerfuegbar, model.ExcLagerbestandOverMax, PersistenceException{
         //prüft ob Artikel schon im Verkauf ist
         if(artikel.getArtikelstatus().equals(Neuanlage.getTheNeuanlage())){
             throw new ExcArtikelNochNichtVerfuegbar(ErrorMessages.ArtikelNochNichtVerfuegbar);
         }
         //prüft ob der Artikel schon in der Einkaufsliste ist
-        //TODO: überprüfung ob artikel schon im einkaufswagen ist funktioniert nicht!
         Position4Public temp = getThis().getEinkaufsListe().findFirst(new Predcate<Position4Public>() {
             @Override
             public boolean test(Position4Public argument) throws PersistenceException{
-                return argument.equals(artikel);
+                return argument.getArtikel().equals(artikel);
             }
         });
-        //wenn der Artikel nicht in der Einkaufsliste gefunden wurde
+        //wenn der Artikel schon in der Einkaufsliste gefunden wurde
         if( temp != null) throw new ExcArtikelAlreadyExists(ErrorMessages.ArtikelAlreadyInBasket);
-        else {
-            if(artikel.getMaxLagerbestand() < menge){
-                throw new ExcLagerbestandOverMax(ErrorMessages.LagerbestandOverMax);
-            }
-            else getThis().getEinkaufsListe().add(Position.createPosition(artikel, menge));
+
+        //überprüfe ob mehr bestellt werden soll als der maximale lagerbestand ist
+        if(artikel.getMaxLagerbestand() < menge){
+            throw new ExcLagerbestandOverMax(ErrorMessages.LagerbestandOverMax);
         }
+
+        getThis().getEinkaufsListe().add(Position.createPosition(artikel, menge));
+
     }
     public void vorbestellen() 
 				throws model.ExcWarenwertUeberKontoguthaben, PersistenceException{
         //TODO: vorbestellen implementieren - Vorbestellungsliste und abarbeitung etc
 
-        //TODO: bestellungswert implementatio ändern
         long bestellungswert = getThis().gibGesamtPreis();
        if(bestellungswert + getThis().getBestellManager().getWarenwert() > getThis().getMyServiceKunde().getKonto().getKontostand()){
            throw new ExcWarenwertUeberKontoguthaben(ErrorMessages.WarenwertUeberKontoguthaben);

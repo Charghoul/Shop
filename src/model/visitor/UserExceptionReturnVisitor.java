@@ -11,6 +11,7 @@ public interface UserExceptionReturnVisitor<R> {
     public R handleExcArtikelHatKeinenHersteller(model.ExcArtikelHatKeinenHersteller excArtikelHatKeinenHersteller) throws PersistenceException;
     public R handleExcArtikelNichtVerfuegbar(model.ExcArtikelNichtVerfuegbar excArtikelNichtVerfuegbar) throws PersistenceException;
     public R handleExcArtikelNochNichtVerfuegbar(model.ExcArtikelNochNichtVerfuegbar excArtikelNochNichtVerfuegbar) throws PersistenceException;
+    public R handleExcAuszahlungGroesserGutgaben(model.ExcAuszahlungGroesserGutgaben excAuszahlungGroesserGutgaben) throws PersistenceException;
     public R handleExcEinkaufslisteNichtVerfuegbar(model.ExcEinkaufslisteNichtVerfuegbar excEinkaufslisteNichtVerfuegbar) throws PersistenceException;
     public R handleExcHasChildren(model.ExcHasChildren excHasChildren) throws PersistenceException;
     public R handleExcHasNoParent(model.ExcHasNoParent excHasNoParent) throws PersistenceException;

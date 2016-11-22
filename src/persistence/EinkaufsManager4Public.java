@@ -34,7 +34,7 @@ public interface EinkaufsManager4Public extends Anything, SubjInterface, Abstrac
     public void initializeOnInstantiation() 
 				throws PersistenceException;
     public void neuePosition(final Artikel4Public artikel, final long menge) 
-				throws model.ExcArtikelAlreadyExists, model.UserException, model.ExcLagerbestandOverMax, PersistenceException;
+				throws model.ExcArtikelAlreadyExists, model.ExcArtikelNochNichtVerfuegbar, model.ExcLagerbestandOverMax, PersistenceException;
     public void vorbestellen() 
 				throws model.ExcWarenwertUeberKontoguthaben, PersistenceException;
 

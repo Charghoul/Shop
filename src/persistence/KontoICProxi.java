@@ -74,13 +74,13 @@ public class KontoICProxi extends PersistentInCacheProxiOptimistic implements Pe
 				throws PersistenceException{
         ((PersistentKonto)this.getTheObject()).deregister(observee);
     }
+    public ServiceKunde4Public getMyServiceKunde() 
+				throws PersistenceException{
+        return ((PersistentKonto)this.getTheObject()).getMyServiceKunde();
+    }
     public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
 				throws PersistenceException{
         ((PersistentKonto)this.getTheObject()).initialize(This, final$$Fields);
-    }
-    public ServiceKunde4Public inverseGetKonto() 
-				throws PersistenceException{
-        return ((PersistentKonto)this.getTheObject()).inverseGetKonto();
     }
     public void register(final ObsInterface observee) 
 				throws PersistenceException{
@@ -90,15 +90,19 @@ public class KontoICProxi extends PersistentInCacheProxiOptimistic implements Pe
 				throws PersistenceException{
         ((PersistentKonto)this.getTheObject()).updateObservers(event);
     }
-    public void abbuchen(final common.Fraction betrag) 
+    public void abbuchen(final long betrag) 
 				throws PersistenceException{
         ((PersistentKonto)this.getTheObject()).abbuchen(betrag);
+    }
+    public void auszahlen(final long betrag) 
+				throws model.ExcAuszahlungGroesserGutgaben, PersistenceException{
+        ((PersistentKonto)this.getTheObject()).auszahlen(betrag);
     }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{
         ((PersistentKonto)this.getTheObject()).copyingPrivateUserAttributes(copy);
     }
-    public void einzahlen(final common.Fraction betrag) 
+    public void einzahlen(final long betrag) 
 				throws PersistenceException{
         ((PersistentKonto)this.getTheObject()).einzahlen(betrag);
     }

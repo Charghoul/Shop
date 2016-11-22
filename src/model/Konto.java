@@ -3,6 +3,7 @@ package model;
 
 import model.visitor.*;
 import persistence.*;
+import serverConstants.ErrorMessages;
 
 
 /* Additional import section end */
@@ -61,6 +62,15 @@ public class Konto extends PersistentObject implements PersistentKonto{
             result = super.toHashtable(allResults, depth, essentialLevel, forGUI, false, tdObserver);
             result.put("kontostand", new Long(this.getKontostand()).toString());
             result.put("limit", new Long(this.getLimit()).toString());
+            AbstractPersistentRoot myServiceKunde = (AbstractPersistentRoot)this.getMyServiceKunde();
+            if (myServiceKunde != null) {
+                result.put("myServiceKunde", myServiceKunde.createProxiInformation(false, essentialLevel <= 1));
+                if(depth > 1) {
+                    myServiceKunde.toHashtable(allResults, depth - 1, essentialLevel, forGUI, true , tdObserver);
+                }else{
+                    if(forGUI && myServiceKunde.hasEssentialFields())myServiceKunde.toHashtable(allResults, depth, essentialLevel + 1, false, true, tdObserver);
+                }
+            }
             String uniqueKey = common.RPCConstantsAndServices.createHashtableKey(this.getClassId(), this.getId());
             if (leaf && !allResults.containsKey(uniqueKey)) allResults.put(uniqueKey, result);
         }
@@ -208,15 +218,7 @@ public class Konto extends PersistentObject implements PersistentKonto{
 		}
 		subService.deregister(observee);
     }
-    public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
-				throws PersistenceException{
-        this.setThis((PersistentKonto)This);
-		if(this.isTheSameAs(This)){
-			this.setKontostand((Long)final$$Fields.get("kontostand"));
-			this.setLimit((Long)final$$Fields.get("limit"));
-		}
-    }
-    public ServiceKunde4Public inverseGetKonto() 
+    public ServiceKunde4Public getMyServiceKunde() 
 				throws PersistenceException{
         ServiceKundeSearchList result = null;
 		if (result == null) result = ConnectionHandler.getTheConnectionHandler().theServiceKundeFacade
@@ -225,6 +227,14 @@ public class Konto extends PersistentObject implements PersistentKonto{
 			return result.iterator().next();
 		} catch (java.util.NoSuchElementException nsee){
 			return null;
+		}
+    }
+    public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
+				throws PersistenceException{
+        this.setThis((PersistentKonto)This);
+		if(this.isTheSameAs(This)){
+			this.setKontostand((Long)final$$Fields.get("kontostand"));
+			this.setLimit((Long)final$$Fields.get("limit"));
 		}
     }
     public synchronized void register(final ObsInterface observee) 
@@ -249,19 +259,28 @@ public class Konto extends PersistentObject implements PersistentKonto{
     
     // Start of section that contains operations that must be implemented.
     
-    public void abbuchen(final common.Fraction betrag) 
+    public void abbuchen(final long betrag) 
 				throws PersistenceException{
-        //TODO: implement method: abbuchen
+        getThis().setKontostand(getThis().getKontostand() - betrag);
+        getThis().getMyServiceKunde().signalChanged(true);
+        
+    }
+    public void auszahlen(final long betrag) 
+				throws model.ExcAuszahlungGroesserGutgaben, PersistenceException{
+        if(betrag > getThis().getKontostand()){
+            throw new ExcAuszahlungGroesserGutgaben(ErrorMessages.AuszahlungGroesserGuthaben);
+        }
+        getThis().abbuchen(betrag);
         
     }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{
         
     }
-    public void einzahlen(final common.Fraction betrag) 
+    public void einzahlen(final long betrag) 
 				throws PersistenceException{
-        //TODO: implement method: einzahlen
-        
+        getThis().setKontostand(getThis().getKontostand()+betrag);
+        getThis().getMyServiceKunde().signalChanged(true);
     }
     public void initializeOnCreation() 
 				throws PersistenceException{

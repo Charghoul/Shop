@@ -303,7 +303,7 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
 				throws PersistenceException{
         return positionsListe.findFirst(bestellungsposition -> {
             Position4Public temp = getThis().getWarenListe().findFirst(warenposition -> {
-                return warenposition.getMenge() < bestellungsposition.getMenge();
+                return (warenposition.getMenge() < bestellungsposition.getMenge() && warenposition.getArtikel().equals(bestellungsposition.getArtikel()));
             });
             return temp != null;
         });

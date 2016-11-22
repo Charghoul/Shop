@@ -11,7 +11,7 @@ abstract server ServiceShop extends Service{
 	observe ProduktKatalog produktKatalog;
 }
 server ServiceKunde extends ServiceShop {
-	public one-to-one Konto konto;
+	public one-to-one (no-view myServiceKunde) Konto konto;
 	one-to-one (no-view myServiceKunde) EinkaufsManager einkaufsManager;
 	no-view LieferartManager lieferartManager;
 	observe BestellManager  bestellManager;
@@ -23,6 +23,8 @@ server ServiceKunde extends ServiceShop {
 	void zuruecksenden(PositionInBestellung position checked);
 	void annehmen(Bestellung bestellung checked);
 	void entfernePosition(Position position);
+	void einzahlen(Konto konto, Integer betrag);
+	void auszahlen(Konto konto, Integer betrag) throws ExcAuszahlungGroesserGutgaben;
 }
 server ServiceAdmin extends ServiceShop {
 	Warenlager warenlager;
@@ -117,7 +119,7 @@ class EinkaufsManager{
 	prior no-view BestellManager bestellManager;
 	active void bestellen(Lieferart lieferart) throws ExcArtikelNichtVerfuegbar, ExcWarenwertUeberKontoguthaben;
 	active void vorbestellen() throws ExcWarenwertUeberKontoguthaben;
-	void neuePosition(Artikel artikel, Integer menge) throws ExcArtikelAlreadyExists, UserException, ExcLagerbestandOverMax;
+	void neuePosition(Artikel artikel, Integer menge) throws ExcArtikelAlreadyExists, ExcLagerbestandOverMax, ExcArtikelNochNichtVerfuegbar;
 	void entfernePosition(Position position);
 	Integer gibGesamtPreis();
 }
@@ -136,8 +138,9 @@ class Kunde{
 class Konto{
 	public prior Integer kontostand;
 	public prior Integer limit;
-	void abbuchen(Fraction betrag);
-	void einzahlen(Fraction betrag);
+	void abbuchen(Integer betrag);
+	void einzahlen(Integer betrag);
+	void auszahlen(Integer betrag) throws ExcAuszahlungGroesserGutgaben;
 }
 hierarchy Hierarchie;
 abstract class Komponente {
@@ -232,6 +235,7 @@ singleton Geliefert extends Bestellstatus{}
 singleton Angenommen extends Bestellstatus{}
 singleton Rueckversand extends Bestellstatus{}
 
+exception ExcAuszahlungGroesserGutgaben{}
 exception ExcWarenwertUeberKontoguthaben{}
 exception ExcArtikelNochNichtVerfuegbar{}
 exception ExcArtikelHatKeinenHersteller{}

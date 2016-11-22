@@ -177,6 +177,10 @@ public class ServiceKundeICProxi extends ServiceShopICProxi implements Persisten
 				throws PersistenceException{
         ((PersistentServiceKunde)this.getTheObject()).annehmen(bestellung);
     }
+    public void auszahlen(final Konto4Public konto, final long betrag) 
+				throws model.ExcAuszahlungGroesserGutgaben, PersistenceException{
+        ((PersistentServiceKunde)this.getTheObject()).auszahlen(konto, betrag);
+    }
     public void bestellManager_update(final model.meta.BestellManagerMssgs event) 
 				throws PersistenceException{
         ((PersistentServiceKunde)this.getTheObject()).bestellManager_update(event);
@@ -196,6 +200,10 @@ public class ServiceKundeICProxi extends ServiceShopICProxi implements Persisten
     public void disconnected() 
 				throws PersistenceException{
         ((PersistentServiceKunde)this.getTheObject()).disconnected();
+    }
+    public void einzahlen(final Konto4Public konto, final long betrag) 
+				throws PersistenceException{
+        ((PersistentServiceKunde)this.getTheObject()).einzahlen(konto, betrag);
     }
     public void entfernePosition(final Position4Public position) 
 				throws PersistenceException{

@@ -314,7 +314,7 @@ public class Bestellung extends PersistentObject implements PersistentBestellung
     public void annehmen() 
 				throws PersistenceException{
         getThis().setBestellstatus(Angenommen.getTheAngenommen());
-        getThis().getBestellManager().verringereWarenwert(getThis().getWarenwert());
+        getThis().getBestellManager().verringereWarenwert(getThis().berechneWarenwert());
     }
     public long berechneWarenwert() 
 				throws PersistenceException{

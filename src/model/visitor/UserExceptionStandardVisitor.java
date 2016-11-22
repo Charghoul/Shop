@@ -17,6 +17,9 @@ public abstract class UserExceptionStandardVisitor implements UserExceptionVisit
     public void handleExcStatusDidNotChange(model.ExcStatusDidNotChange excStatusDidNotChange) throws PersistenceException{
         this.standardHandling(excStatusDidNotChange);
     }
+    public void handleExcAuszahlungGroesserGutgaben(model.ExcAuszahlungGroesserGutgaben excAuszahlungGroesserGutgaben) throws PersistenceException{
+        this.standardHandling(excAuszahlungGroesserGutgaben);
+    }
     public void handleExcArtikelHatKeinenHersteller(model.ExcArtikelHatKeinenHersteller excArtikelHatKeinenHersteller) throws PersistenceException{
         this.standardHandling(excArtikelHatKeinenHersteller);
     }

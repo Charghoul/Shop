@@ -71,11 +71,35 @@ public  class RemoteServiceKunde extends RemoteServiceShop {
         }
     }
     
+    public synchronized java.util.HashMap<?,?> auszahlen(String kontoProxiString, String betragAsString){
+        try {
+            PersistentKonto konto = (PersistentKonto)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(kontoProxiString));
+            long betrag = new Long(betragAsString).longValue();
+            ((PersistentServiceKunde)this.server).auszahlen(konto, betrag);
+            return createOKResult();
+        }catch(PersistenceException pe){
+            return createExceptionResult(pe);
+        }catch(model.ExcAuszahlungGroesserGutgaben e0){
+            return createExceptionResult(e0, this);
+        }
+    }
+    
     public synchronized java.util.HashMap<?,?> bestellen(String einkaufsManagerProxiString, String lieferartProxiString){
         try {
             PersistentEinkaufsManager einkaufsManager = (PersistentEinkaufsManager)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(einkaufsManagerProxiString));
             PersistentLieferart lieferart = (PersistentLieferart)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(lieferartProxiString));
             ((PersistentServiceKunde)this.server).bestellen(einkaufsManager, lieferart);
+            return createOKResult();
+        }catch(PersistenceException pe){
+            return createExceptionResult(pe);
+        }
+    }
+    
+    public synchronized java.util.HashMap<?,?> einzahlen(String kontoProxiString, String betragAsString){
+        try {
+            PersistentKonto konto = (PersistentKonto)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(kontoProxiString));
+            long betrag = new Long(betragAsString).longValue();
+            ((PersistentServiceKunde)this.server).einzahlen(konto, betrag);
             return createOKResult();
         }catch(PersistenceException pe){
             return createExceptionResult(pe);

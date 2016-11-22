@@ -304,7 +304,9 @@ public class ServiceKundeClientView extends BorderPane implements ExceptionAndEv
     interface MenuItemVisitor{
         ImageView handle(AendereMengePRMTRPositionPRMTRIntegerPRMTRMenuItem menuItem);
         ImageView handle(AnnehmenPRMTRBestellungPRMTRMenuItem menuItem);
+        ImageView handle(AuszahlenPRMTRKontoPRMTRIntegerPRMTRMenuItem menuItem);
         ImageView handle(BestellenPRMTREinkaufsManagerPRMTRLieferartPRMTRMenuItem menuItem);
+        ImageView handle(EinzahlenPRMTRKontoPRMTRIntegerPRMTRMenuItem menuItem);
         ImageView handle(EntfernePositionPRMTRPositionPRMTRMenuItem menuItem);
         ImageView handle(NeuePositionPRMTREinkaufsManagerPRMTRArtikelPRMTRIntegerPRMTRMenuItem menuItem);
         ImageView handle(VorbestellenPRMTREinkaufsManagerPRMTRMenuItem menuItem);
@@ -327,7 +329,17 @@ public class ServiceKundeClientView extends BorderPane implements ExceptionAndEv
             return visitor.handle(this);
         }
     }
+    private class AuszahlenPRMTRKontoPRMTRIntegerPRMTRMenuItem extends ServiceKundeMenuItem{
+        protected ImageView accept(MenuItemVisitor visitor){
+            return visitor.handle(this);
+        }
+    }
     private class BestellenPRMTREinkaufsManagerPRMTRLieferartPRMTRMenuItem extends ServiceKundeMenuItem{
+        protected ImageView accept(MenuItemVisitor visitor){
+            return visitor.handle(this);
+        }
+    }
+    private class EinzahlenPRMTRKontoPRMTRIntegerPRMTRMenuItem extends ServiceKundeMenuItem{
         protected ImageView accept(MenuItemVisitor visitor){
             return visitor.handle(this);
         }
@@ -370,6 +382,30 @@ public class ServiceKundeClientView extends BorderPane implements ExceptionAndEv
             } catch (ModelException me){
                 this.handleException(me);
                 return result;
+            }
+            if (selected instanceof KontoView){
+                item = new AuszahlenPRMTRKontoPRMTRIntegerPRMTRMenuItem();
+                item.setText("auszahlen ... ");
+                item.setOnAction(new EventHandler<ActionEvent>(){
+                    public void handle(javafx.event.ActionEvent e) {
+                        final ServiceKundeAuszahlenKontoIntegerMssgWizard wizard = new ServiceKundeAuszahlenKontoIntegerMssgWizard("auszahlen");
+                        wizard.setFirstArgument((KontoView)selected);
+                        wizard.setWidth(getNavigationPanel().getWidth());
+                        wizard.showAndWait();
+                    }
+                });
+                result.getItems().add(item);
+                item = new EinzahlenPRMTRKontoPRMTRIntegerPRMTRMenuItem();
+                item.setText("einzahlen ... ");
+                item.setOnAction(new EventHandler<ActionEvent>(){
+                    public void handle(javafx.event.ActionEvent e) {
+                        final ServiceKundeEinzahlenKontoIntegerMssgWizard wizard = new ServiceKundeEinzahlenKontoIntegerMssgWizard("einzahlen");
+                        wizard.setFirstArgument((KontoView)selected);
+                        wizard.setWidth(getNavigationPanel().getWidth());
+                        wizard.showAndWait();
+                    }
+                });
+                result.getItems().add(item);
             }
             if (selected instanceof PositionInBestellungView){
                 if (filter_zuruecksenden((PositionInBestellungView) selected)) {
@@ -592,6 +628,56 @@ public class ServiceKundeClientView extends BorderPane implements ExceptionAndEv
 		
 	}
 
+	class ServiceKundeAuszahlenKontoIntegerMssgWizard extends Wizard {
+
+		protected ServiceKundeAuszahlenKontoIntegerMssgWizard(String operationName){
+			super(ServiceKundeClientView.this);
+			getOkButton().setText(operationName);
+			getOkButton().setGraphic(new AuszahlenPRMTRKontoPRMTRIntegerPRMTRMenuItem ().getGraphic());
+		}
+		protected void initialize(){
+			this.helpFileName = "ServiceKundeAuszahlenKontoIntegerMssgWizard.help";
+			super.initialize();		
+		}
+				
+		protected void perform() {
+			try {
+				getConnection().auszahlen(firstArgument, ((IntegerSelectionPanel)getParametersPanel().getChildren().get(0)).getResult().longValue());
+				getConnection().setEagerRefresh();
+				this.close();	
+			} catch(ModelException me){
+				handleException(me);
+				this.close();
+			}
+			catch(ExcAuszahlungGroesserGutgaben e) {
+				getStatusBar().setText(e.getMessage());
+			}
+			
+		}
+		protected String checkCompleteParameterSet(){
+			return null;
+		}
+		protected boolean isModifying () {
+			return false;
+		}
+		protected void addParameters(){
+			getParametersPanel().getChildren().add(new IntegerSelectionPanel("betrag", this));		
+		}	
+		protected void handleDependencies(int i) {
+		}
+		
+		
+		private KontoView firstArgument; 
+	
+		public void setFirstArgument(KontoView firstArgument){
+			this.firstArgument = firstArgument;
+			this.setTitle(this.firstArgument.toString());
+			this.check();
+		}
+		
+		
+	}
+
 	class ServiceKundeBestellenEinkaufsManagerLieferartMssgWizard extends Wizard {
 
 		protected ServiceKundeBestellenEinkaufsManagerLieferartMssgWizard(String operationName){
@@ -643,6 +729,53 @@ public class ServiceKundeClientView extends BorderPane implements ExceptionAndEv
 		private EinkaufsManagerView firstArgument; 
 	
 		public void setFirstArgument(EinkaufsManagerView firstArgument){
+			this.firstArgument = firstArgument;
+			this.setTitle(this.firstArgument.toString());
+			this.check();
+		}
+		
+		
+	}
+
+	class ServiceKundeEinzahlenKontoIntegerMssgWizard extends Wizard {
+
+		protected ServiceKundeEinzahlenKontoIntegerMssgWizard(String operationName){
+			super(ServiceKundeClientView.this);
+			getOkButton().setText(operationName);
+			getOkButton().setGraphic(new EinzahlenPRMTRKontoPRMTRIntegerPRMTRMenuItem ().getGraphic());
+		}
+		protected void initialize(){
+			this.helpFileName = "ServiceKundeEinzahlenKontoIntegerMssgWizard.help";
+			super.initialize();		
+		}
+				
+		protected void perform() {
+			try {
+				getConnection().einzahlen(firstArgument, ((IntegerSelectionPanel)getParametersPanel().getChildren().get(0)).getResult().longValue());
+				getConnection().setEagerRefresh();
+				this.close();	
+			} catch(ModelException me){
+				handleException(me);
+				this.close();
+			}
+			
+		}
+		protected String checkCompleteParameterSet(){
+			return null;
+		}
+		protected boolean isModifying () {
+			return false;
+		}
+		protected void addParameters(){
+			getParametersPanel().getChildren().add(new IntegerSelectionPanel("betrag", this));		
+		}	
+		protected void handleDependencies(int i) {
+		}
+		
+		
+		private KontoView firstArgument; 
+	
+		public void setFirstArgument(KontoView firstArgument){
 			this.firstArgument = firstArgument;
 			this.setTitle(this.firstArgument.toString());
 			this.check();

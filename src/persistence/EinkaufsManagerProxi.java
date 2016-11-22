@@ -116,7 +116,7 @@ public class EinkaufsManagerProxi extends PersistentProxi implements PersistentE
         ((PersistentEinkaufsManager)this.getTheObject()).initializeOnInstantiation();
     }
     public void neuePosition(final Artikel4Public artikel, final long menge) 
-				throws model.ExcArtikelAlreadyExists, model.UserException, model.ExcLagerbestandOverMax, PersistenceException{
+				throws model.ExcArtikelAlreadyExists, model.ExcArtikelNochNichtVerfuegbar, model.ExcLagerbestandOverMax, PersistenceException{
         ((PersistentEinkaufsManager)this.getTheObject()).neuePosition(artikel, menge);
     }
     public void vorbestellen() 

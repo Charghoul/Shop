@@ -11,6 +11,7 @@ public interface UserExceptionExceptionVisitor<E extends model.UserException> {
     public void handleExcArtikelHatKeinenHersteller(model.ExcArtikelHatKeinenHersteller excArtikelHatKeinenHersteller) throws PersistenceException, E;
     public void handleExcArtikelNichtVerfuegbar(model.ExcArtikelNichtVerfuegbar excArtikelNichtVerfuegbar) throws PersistenceException, E;
     public void handleExcArtikelNochNichtVerfuegbar(model.ExcArtikelNochNichtVerfuegbar excArtikelNochNichtVerfuegbar) throws PersistenceException, E;
+    public void handleExcAuszahlungGroesserGutgaben(model.ExcAuszahlungGroesserGutgaben excAuszahlungGroesserGutgaben) throws PersistenceException, E;
     public void handleExcEinkaufslisteNichtVerfuegbar(model.ExcEinkaufslisteNichtVerfuegbar excEinkaufslisteNichtVerfuegbar) throws PersistenceException, E;
     public void handleExcHasChildren(model.ExcHasChildren excHasChildren) throws PersistenceException, E;
     public void handleExcHasNoParent(model.ExcHasNoParent excHasNoParent) throws PersistenceException, E;

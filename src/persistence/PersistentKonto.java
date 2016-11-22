@@ -10,7 +10,7 @@ public interface PersistentKonto extends Anything, SubjInterface, AbstractPersis
     public PersistentKonto getThis() throws PersistenceException ;
     
     
-    public ServiceKunde4Public inverseGetKonto() 
+    public ServiceKunde4Public getMyServiceKunde() 
 				throws PersistenceException;
 
 }
