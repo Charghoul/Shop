@@ -413,7 +413,10 @@ public class ServiceAdmin extends model.ServiceShop implements PersistentService
     
     
     // Start of section that contains operations that must be implemented.
-    
+
+    //TODO: schauen was wirklich active sein muss und was nicht - transaktion nötig
+
+
     public void aendereAnnahmezeit(final ZeitManager4Public zeitManager, final long neueZeit) 
 				throws PersistenceException{
         zeitManager.aendereAnnahmezeit(neueZeit);

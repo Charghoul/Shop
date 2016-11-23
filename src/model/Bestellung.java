@@ -338,6 +338,8 @@ public class Bestellung extends PersistentObject implements PersistentBestellung
     }
     public long berechneWarenwert() 
 				throws PersistenceException{
+
+        //TODO: Lieferartpreis auf den preis der lieferung draufrechnen ( hier oder unter lieferung)
         Long temp = getThis().getPositionsListe().aggregate(new Aggregtion<PositionInBestellung4Public, Long>() {
             @Override
             public Long neutral() throws PersistenceException {

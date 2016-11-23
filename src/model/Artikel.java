@@ -404,6 +404,7 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
 				throws PersistenceException{
         //TODO: wenn hersteller hinzugefügt wurde und der bestand 0 ist - hstLieferung erstellen damit geliefert wird
         getThis().setHersteller(hersteller);
+
     }
     public void initializeOnCreation() 
 				throws PersistenceException{
@@ -458,7 +459,8 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
 				throws model.UserException, PersistenceException{
         einkaufsManager.neuePosition(getThis(), menge);
     }
-    
+
+    //TODO: änern von artikeln im detail view und auch weitere in den anforderungen spezifizierte änderungen umsetzen
     
     // Start of section that contains overridden operations only.
     

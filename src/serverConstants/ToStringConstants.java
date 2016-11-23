@@ -33,6 +33,7 @@ public class ToStringConstants {
     public static final String Konto = "Konto";
     public static final String Kundenlieferung = "Lieferung: ";
     public static final String Bestellung = "Bestellung Nr. ";
+    public static final String KndAnnahme = "Kundenannahmezeit: ";
 
 
     private ToStringConstants(){}
