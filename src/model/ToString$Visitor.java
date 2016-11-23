@@ -147,6 +147,8 @@ public class ToString$Visitor extends model.visitor.ToString$Visitor {
 
 	@Override
 	public void handleKndAnnahme(KndAnnahme4Public kndAnnahme) throws PersistenceException {
+		PersistentKndAnnahme persKndA = (PersistentKndAnnahme) kndAnnahme;
+		result = ToStringConstants.KndAnnahme;
 	}
 
 	@Override

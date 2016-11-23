@@ -44,7 +44,15 @@ public class GetIconInfo$Visitor extends model.visitor.AnythingStandardVisitor {
 		result = 7;
 	}
 
+	@Override
+	public void handleKonto(Konto4Public konto) throws PersistenceException {
+		result = 8;
+	}
 
+	@Override
+	public void handleZeitManager(ZeitManager4Public zeitManager) throws PersistenceException {
+		result = 9;
+	}
 
 	public int getIconInfo(Anything anything) throws PersistenceException {
 		anything.accept(this);

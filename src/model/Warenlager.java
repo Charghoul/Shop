@@ -245,6 +245,8 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
     public void artikelEinlagern(final Artikel4Public artikel, final long menge) 
 				throws model.ExcLagerbestandOverMax, PersistenceException{
         //TODO: Warenlager observen um Vorbestellungen rausschicken zu können
+
+        //TODO: Artikel nachbestellen, wenn Hersteller hinzugefügt wurde
         Position4Public p4 = getThis().getWarenListe().findFirst(new Predcate<Position4Public>() {
             @Override
             public boolean test(Position4Public argument) throws PersistenceException {
@@ -254,7 +256,9 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
         if( p4 != null) {
             p4.erhoeheMenge(menge);
         }
-        else getThis().getWarenListe().add(Position.createPosition(artikel, menge));
+        else {
+            getThis().getWarenListe().add(Position.createPosition(artikel, menge));
+        }
 
     }
     public void artikelEntfernen(final Position4Public position) 
@@ -274,7 +278,8 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
             if(position.getArtikel().getHersteller()!=null){
                 throw new ExcArtikelHatKeinenHersteller(ErrorMessages.ArtikelHatKeinenHersteller);
             }
-            if (posM < artikel.getMinLagerbestand()) {
+            //TODO: nicht nachbestellen, wenn artikel im status "Auslauf" ist
+            if (posM < artikel.getMinLagerbestand() && artikel.getHersteller()!=null) {
                 getThis().nachbestellen(artikel, artikel.getMaxLagerbestand() - posM);
             }
         }

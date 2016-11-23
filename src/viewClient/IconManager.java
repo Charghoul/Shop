@@ -15,6 +15,8 @@ public class IconManager {
 			case 5: return new Image("/viewResources/Icons/Bestellung_finished.png");
 			case 6: return new Image("/viewResources/Icons/shop_color.png");
 			case 7: return new Image("/viewResources/Icons/hersteller.png");
+			case 8: return new Image("/viewResources/Icons/konto1.png");
+			case 9: return new Image("/viewResources/Icons/time.png");
 		// TODO provide images for icon info numbers!
 			default:
 			return new Image("/viewResources/Icons/database.png");

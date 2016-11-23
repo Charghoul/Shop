@@ -292,7 +292,8 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
     
     public void bestellen(final Lieferart4Public lieferart) 
 				throws model.ExcWarenwertUeberKontoguthaben, model.ExcArtikelNichtVerfuegbar, PersistenceException{
-        //überprüfen ob warenmenge+bisherige nicht bezahlte bestellungen  kontoguthaben übersteigt
+        //TODO: überprüfen ob warenmenge+bisherige nicht bezahlte bestellungen  kontoguthaben übersteigt
+        //TODO: betrag der bestellungen und vorbestellungen im konto mit hinterlegen - damit einfacher überprüft werden kann
         long bestellungswert = getThis().gibGesamtPreis();
         if(bestellungswert + getThis().getBestellManager().getWarenwert() > getThis().getMyServiceKunde().getKonto().getKontostand()) {
             throw new ExcWarenwertUeberKontoguthaben(ErrorMessages.WarenwertUeberKontoguthaben);
