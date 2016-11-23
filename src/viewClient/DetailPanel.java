@@ -1293,9 +1293,6 @@ class DetailPanelFactory implements AnythingVisitor {
     public void handleHinversand(view.HinversandView object){
         result = new HinversandDefaultDetailPanel(handler, object);
     }
-    public void handleIntegerWrapper(view.IntegerWrapperView object){
-        result = new IntegerWrapperDefaultDetailPanel(handler, object);
-    }
     public void handleactivated(view.activatedView object){
         result = new activatedDefaultDetailPanel(handler, object);
     }
@@ -1405,7 +1402,7 @@ class LieferartDefaultDetailPanel extends DefaultDetailPanel{
             this.getExceptionAndEventhandler().handleException(e);
         }
         try{
-            BaseTypePanel panel = new FractionPanel(this, "preis", this.getAnything().getPreis());
+            BaseTypePanel panel = new IntegerPanel(this, "preis", this.getAnything().getPreis());
             this.getScrollablePane().getChildren().add(panel);
             this.panels.put(Lieferart$$preis, panel);
         }catch(ModelException e){
@@ -1492,7 +1489,6 @@ class KndLieferungDefaultDetailPanel extends DefaultDetailPanel{
     
     protected static final String ZeitObjekt$$remainingTime = "ZeitObjekt$$remainingTime";
     protected static final String KndLieferung$$bestellung = "KndLieferung$$bestellung";
-    protected static final String KndLieferung$$lieferart = "KndLieferung$$lieferart";
     protected static final String KndLieferung$$lieferversuche = "KndLieferung$$lieferversuche";
     
     protected KndLieferungDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
@@ -1723,6 +1719,7 @@ class KontoDefaultDetailPanel extends DefaultDetailPanel{
     
     protected static final String Konto$$kontostand = "Konto$$kontostand";
     protected static final String Konto$$limit = "Konto$$limit";
+    protected static final String Konto$$reserviert = "Konto$$reserviert";
     
     protected KontoDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
         super(exceptionHandler, anything);
@@ -1739,6 +1736,13 @@ class KontoDefaultDetailPanel extends DefaultDetailPanel{
             BaseTypePanel panel = new IntegerPanel(this, "limit", this.getAnything().getLimit());
             this.getScrollablePane().getChildren().add(panel);
             this.panels.put(Konto$$limit, panel);
+        }catch(ModelException e){
+            this.getExceptionAndEventhandler().handleException(e);
+        }
+        try{
+            BaseTypePanel panel = new IntegerPanel(this, "reserviert", this.getAnything().getReserviert());
+            this.getScrollablePane().getChildren().add(panel);
+            this.panels.put(Konto$$reserviert, panel);
         }catch(ModelException e){
             this.getExceptionAndEventhandler().handleException(e);
         }
@@ -1843,6 +1847,7 @@ class BestellungDefaultDetailPanel extends DefaultDetailPanel{
     protected static final String Bestellung$$positionsListe = "Bestellung$$positionsListe";
     protected static final String Bestellung$$bestellID = "Bestellung$$bestellID";
     protected static final String Bestellung$$warenwert = "Bestellung$$warenwert";
+    protected static final String Bestellung$$lieferart = "Bestellung$$lieferart";
     
     protected BestellungDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
         super(exceptionHandler, anything);
@@ -1885,20 +1890,12 @@ class GeliefertDefaultDetailPanel extends DefaultDetailPanel{
 class BestellManagerDefaultDetailPanel extends DefaultDetailPanel{
     
     protected static final String BestellManager$$bestellListe = "BestellManager$$bestellListe";
-    protected static final String BestellManager$$warenwert = "BestellManager$$warenwert";
     protected static final String BestellManager$$bestellID = "BestellManager$$bestellID";
     
     protected BestellManagerDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
         super(exceptionHandler, anything);
     }
     protected void addFields(){
-        try{
-            BaseTypePanel panel = new IntegerPanel(this, "warenwert", this.getAnything().getWarenwert());
-            this.getScrollablePane().getChildren().add(panel);
-            this.panels.put(BestellManager$$warenwert, panel);
-        }catch(ModelException e){
-            this.getExceptionAndEventhandler().handleException(e);
-        }
         try{
             BaseTypePanel panel = new IntegerPanel(this, "bestellID", this.getAnything().getBestellID());
             this.getScrollablePane().getChildren().add(panel);
@@ -1916,7 +1913,6 @@ class BestellManagerDefaultDetailPanel extends DefaultDetailPanel{
 class ZeitManagerDefaultDetailPanel extends DefaultDetailPanel{
     
     protected static final String ZeitManager$$zeitObjektListe = "ZeitManager$$zeitObjektListe";
-    protected static final String ZeitManager$$annahmeZeiten = "ZeitManager$$annahmeZeiten";
     protected static final String ZeitManager$$annahmezeit = "ZeitManager$$annahmezeit";
     protected static final String ZeitManager$$maxAnlieferungsVersuche = "ZeitManager$$maxAnlieferungsVersuche";
     
@@ -2057,28 +2053,6 @@ class HinversandDefaultDetailPanel extends DefaultDetailPanel{
     }
     protected view.HinversandView getAnything(){
         return (view.HinversandView)this.anything;
-    }
-}
-
-class IntegerWrapperDefaultDetailPanel extends DefaultDetailPanel{
-    
-    protected static final String IntegerWrapper$$theInt = "IntegerWrapper$$theInt";
-    
-    protected IntegerWrapperDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
-        super(exceptionHandler, anything);
-    }
-    protected void addFields(){
-        try{
-            BaseTypePanel panel = new IntegerPanel(this, "theInt", this.getAnything().getTheInt());
-            this.getScrollablePane().getChildren().add(panel);
-            this.panels.put(IntegerWrapper$$theInt, panel);
-        }catch(ModelException e){
-            this.getExceptionAndEventhandler().handleException(e);
-        }
-        
-    }
-    protected view.IntegerWrapperView getAnything(){
-        return (view.IntegerWrapperView)this.anything;
     }
 }
 

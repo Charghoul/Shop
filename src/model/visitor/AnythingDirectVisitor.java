@@ -111,8 +111,6 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     
     public abstract void handleLieferartManager(LieferartManager4Public lieferartManager) throws PersistenceException;
     
-    public abstract void handleIntegerWrapper(IntegerWrapper4Public integerWrapper) throws PersistenceException;
-    
     public abstract void handleWarenlager(Warenlager4Public warenlager) throws PersistenceException;
     
     public abstract void handleCommonDate(CommonDate4Public commonDate) throws PersistenceException;

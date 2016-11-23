@@ -141,6 +141,10 @@ public class ServiceKundeProxi extends ServiceShopProxi implements PersistentSer
 				throws model.UserException, PersistenceException{
         return ((PersistentServiceKunde)this.getTheObject()).lieferart_Path_In_Bestellen();
     }
+    public LieferartManager4Public lieferart_Path_In_Vorbestellen() 
+				throws model.UserException, PersistenceException{
+        return ((PersistentServiceKunde)this.getTheObject()).lieferart_Path_In_Vorbestellen();
+    }
     public void register(final ObsInterface observee) 
 				throws PersistenceException{
         ((PersistentServiceKunde)this.getTheObject()).register(observee);
@@ -237,9 +241,9 @@ public class ServiceKundeProxi extends ServiceShopProxi implements PersistentSer
 				throws PersistenceException{
         ((PersistentServiceKunde)this.getTheObject()).produktKatalog_update(event);
     }
-    public void vorbestellen(final EinkaufsManager4Public einkaufsManager) 
+    public void vorbestellen(final EinkaufsManager4Public einkaufsManager, final Lieferart4Public lieferart) 
 				throws PersistenceException{
-        ((PersistentServiceKunde)this.getTheObject()).vorbestellen(einkaufsManager);
+        ((PersistentServiceKunde)this.getTheObject()).vorbestellen(einkaufsManager, lieferart);
     }
     public void zuEinkaufswagenHinzufuegen(final Artikel4Public artikel, final long menge) 
 				throws PersistenceException{

@@ -30,6 +30,12 @@ public class KontoProxi extends PersistentProxi implements PersistentKonto{
     public void setLimit(long newValue) throws PersistenceException {
         ((PersistentKonto)this.getTheObject()).setLimit(newValue);
     }
+    public long getReserviert() throws PersistenceException {
+        return ((PersistentKonto)this.getTheObject()).getReserviert();
+    }
+    public void setReserviert(long newValue) throws PersistenceException {
+        ((PersistentKonto)this.getTheObject()).setReserviert(newValue);
+    }
     public SubjInterface getSubService() throws PersistenceException {
         return ((PersistentKonto)this.getTheObject()).getSubService();
     }
@@ -109,6 +115,14 @@ public class KontoProxi extends PersistentProxi implements PersistentKonto{
     public void initializeOnInstantiation() 
 				throws PersistenceException{
         ((PersistentKonto)this.getTheObject()).initializeOnInstantiation();
+    }
+    public void reserviere(final long betrag) 
+				throws PersistenceException{
+        ((PersistentKonto)this.getTheObject()).reserviere(betrag);
+    }
+    public void verringereReserviert(final long betrag) 
+				throws PersistenceException{
+        ((PersistentKonto)this.getTheObject()).verringereReserviert(betrag);
     }
 
     

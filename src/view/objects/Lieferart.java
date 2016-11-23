@@ -15,9 +15,9 @@ public class Lieferart extends ViewObject implements LieferartView{
     
     protected String name;
     protected long lieferzeit;
-    protected common.Fraction preis;
+    protected long preis;
     
-    public Lieferart(String name,long lieferzeit,common.Fraction preis,long id, long classId) {
+    public Lieferart(String name,long lieferzeit,long preis,long id, long classId) {
         /* Shall not be used. Objects are created on the server only */
         super(id, classId);
         this.name = name;
@@ -45,10 +45,10 @@ public class Lieferart extends ViewObject implements LieferartView{
     public void setLieferzeit(long newValue) throws ModelException {
         this.lieferzeit = newValue;
     }
-    public common.Fraction getPreis()throws ModelException{
+    public long getPreis()throws ModelException{
         return this.preis;
     }
-    public void setPreis(common.Fraction newValue) throws ModelException {
+    public void setPreis(long newValue) throws ModelException {
         this.preis = newValue;
     }
     
@@ -114,7 +114,7 @@ public class Lieferart extends ViewObject implements LieferartView{
                 rowIndex = rowIndex - 1;
                 if(rowIndex == 0) return new Long(getLieferzeit());
                 rowIndex = rowIndex - 1;
-                if(rowIndex == 0) return this.getPreis();
+                if(rowIndex == 0) return new Long(getPreis());
                 rowIndex = rowIndex - 1;
             }
             throw new ModelException("Table index out of bounds!", -1);
@@ -138,7 +138,7 @@ public class Lieferart extends ViewObject implements LieferartView{
         }
         rowIndex = rowIndex - 1;
         if(rowIndex == 0){
-            this.setPreis(common.Fraction.parse(newValue));
+            this.setPreis(Long.parseLong(newValue));
             return;
         }
         rowIndex = rowIndex - 1;

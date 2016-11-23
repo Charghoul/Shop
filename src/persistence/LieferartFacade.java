@@ -25,7 +25,7 @@ public class LieferartFacade{
 	}
 
     /* If idCreateIfLessZero is negative, a new id is generated. */
-    public PersistentLieferart newLieferart(String name,long lieferzeit,common.Fraction preis,long idCreateIfLessZero) throws PersistenceException {
+    public PersistentLieferart newLieferart(String name,long lieferzeit,long preis,long idCreateIfLessZero) throws PersistenceException {
         if(idCreateIfLessZero > 0) return (PersistentLieferart)PersistentProxi.createProxi(idCreateIfLessZero, 138);
         long id = ConnectionHandler.getTheConnectionHandler().theLieferartFacade.getNextId();
         Lieferart result = new Lieferart(name,lieferzeit,preis,null,null,id);
@@ -33,7 +33,7 @@ public class LieferartFacade{
         return (PersistentLieferart)PersistentProxi.createProxi(id, 138);
     }
     
-    public PersistentLieferart newDelayedLieferart(String name,long lieferzeit,common.Fraction preis) throws PersistenceException {
+    public PersistentLieferart newDelayedLieferart(String name,long lieferzeit,long preis) throws PersistenceException {
         long id = ConnectionHandler.getTheConnectionHandler().theLieferartFacade.getNextId();
         Lieferart result = new Lieferart(name,lieferzeit,preis,null,null,id);
         Cache.getTheCache().put(result);
@@ -68,7 +68,7 @@ public class LieferartFacade{
     public void lieferzeitSet(long LieferartId, long lieferzeitVal) throws PersistenceException {
         
     }
-    public void preisSet(long LieferartId, common.Fraction preisVal) throws PersistenceException {
+    public void preisSet(long LieferartId, long preisVal) throws PersistenceException {
         
     }
     public void subServiceSet(long LieferartId, SubjInterface subServiceVal) throws PersistenceException {

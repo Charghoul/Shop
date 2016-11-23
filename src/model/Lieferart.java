@@ -16,11 +16,11 @@ public class Lieferart extends PersistentObject implements PersistentLieferart{
         return (Lieferart4Public)PersistentProxi.createProxi(objectId, classId);
     }
     
-    public static Lieferart4Public createLieferart(String name,long lieferzeit,common.Fraction preis) throws PersistenceException{
+    public static Lieferart4Public createLieferart(String name,long lieferzeit,long preis) throws PersistenceException{
         return createLieferart(name,lieferzeit,preis,false);
     }
     
-    public static Lieferart4Public createLieferart(String name,long lieferzeit,common.Fraction preis,boolean delayed$Persistence) throws PersistenceException {
+    public static Lieferart4Public createLieferart(String name,long lieferzeit,long preis,boolean delayed$Persistence) throws PersistenceException {
         if (name == null) throw new PersistenceException("Null not allowed for persistent strings, since null = \"\" in Oracle!", 0);
         PersistentLieferart result = null;
         if(delayed$Persistence){
@@ -40,7 +40,7 @@ public class Lieferart extends PersistentObject implements PersistentLieferart{
         return result;
     }
     
-    public static Lieferart4Public createLieferart(String name,long lieferzeit,common.Fraction preis,boolean delayed$Persistence,Lieferart4Public This) throws PersistenceException {
+    public static Lieferart4Public createLieferart(String name,long lieferzeit,long preis,boolean delayed$Persistence,Lieferart4Public This) throws PersistenceException {
         if (name == null) throw new PersistenceException("Null not allowed for persistent strings, since null = \"\" in Oracle!", 0);
         PersistentLieferart result = null;
         if(delayed$Persistence){
@@ -66,7 +66,7 @@ public class Lieferart extends PersistentObject implements PersistentLieferart{
             result = super.toHashtable(allResults, depth, essentialLevel, forGUI, false, tdObserver);
             result.put("name", this.getName());
             result.put("lieferzeit", new Long(this.getLieferzeit()).toString());
-            result.put("preis", this.getPreis().toString());
+            result.put("preis", new Long(this.getPreis()).toString());
             String uniqueKey = common.RPCConstantsAndServices.createHashtableKey(this.getClassId(), this.getId());
             if (leaf && !allResults.containsKey(uniqueKey)) allResults.put(uniqueKey, result);
         }
@@ -95,11 +95,11 @@ public class Lieferart extends PersistentObject implements PersistentLieferart{
     }
     protected String name;
     protected long lieferzeit;
-    protected common.Fraction preis;
+    protected long preis;
     protected SubjInterface subService;
     protected PersistentLieferart This;
     
-    public Lieferart(String name,long lieferzeit,common.Fraction preis,SubjInterface subService,PersistentLieferart This,long id) throws PersistenceException {
+    public Lieferart(String name,long lieferzeit,long preis,SubjInterface subService,PersistentLieferart This,long id) throws PersistenceException {
         /* Shall not be used by clients for object construction! Use static create operation instead! */
         super(id);
         this.name = name;
@@ -148,10 +148,10 @@ public class Lieferart extends PersistentObject implements PersistentLieferart{
         if(!this.isDelayed$Persistence()) ConnectionHandler.getTheConnectionHandler().theLieferartFacade.lieferzeitSet(this.getId(), newValue);
         this.lieferzeit = newValue;
     }
-    public common.Fraction getPreis() throws PersistenceException {
+    public long getPreis() throws PersistenceException {
         return this.preis;
     }
-    public void setPreis(common.Fraction newValue) throws PersistenceException {
+    public void setPreis(long newValue) throws PersistenceException {
         if(!this.isDelayed$Persistence()) ConnectionHandler.getTheConnectionHandler().theLieferartFacade.preisSet(this.getId(), newValue);
         this.preis = newValue;
     }
@@ -236,7 +236,7 @@ public class Lieferart extends PersistentObject implements PersistentLieferart{
 		if(this.isTheSameAs(This)){
 			this.setName((String)final$$Fields.get("name"));
 			this.setLieferzeit((Long)final$$Fields.get("lieferzeit"));
-			this.setPreis((common.Fraction)final$$Fields.get("preis"));
+			this.setPreis((Long)final$$Fields.get("preis"));
 		}
     }
     public synchronized void register(final ObsInterface observee) 
@@ -261,7 +261,7 @@ public class Lieferart extends PersistentObject implements PersistentLieferart{
     
     // Start of section that contains operations that must be implemented.
     
-    public void aendereLieferart(final long lieferzeit, final common.Fraction preis) 
+    public void aendereLieferart(final long lieferzeit, final long preis) 
 				throws model.ExcAlreadyExists, PersistenceException{
         if(Lieferart.getLieferartByName(name) != null){
             throw new ExcAlreadyExists(ErrorMessages.LieferArtAlreadyExists);

@@ -5,6 +5,9 @@ import persistence.*;
 
 public abstract class UserExceptionStandardVisitor implements UserExceptionVisitor {
     
+    public void handleExcIllogicalDataEntry(model.ExcIllogicalDataEntry excIllogicalDataEntry) throws PersistenceException{
+        this.standardHandling(excIllogicalDataEntry);
+    }
     public void handleExcLagerbestandOverMax(model.ExcLagerbestandOverMax excLagerbestandOverMax) throws PersistenceException{
         this.standardHandling(excLagerbestandOverMax);
     }

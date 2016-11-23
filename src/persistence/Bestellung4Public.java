@@ -7,8 +7,10 @@ public interface Bestellung4Public extends Anything, SubjInterface, AbstractPers
     
     public Bestellung_PositionsListeProxi getPositionsListe() throws PersistenceException ;
     public BestellManager4Public getBestellManager() throws PersistenceException ;
+    public KndLieferung4Public getKndLieferung() throws PersistenceException ;
     public long getWarenwert() throws PersistenceException ;
     public Bestellstatus4Public getBestellstatus() throws PersistenceException ;
+    public Lieferart4Public getLieferart() throws PersistenceException ;
     
     public void accept(AnythingVisitor visitor) throws PersistenceException;
     public <R> R accept(AnythingReturnVisitor<R>  visitor) throws PersistenceException;
@@ -36,6 +38,8 @@ public interface Bestellung4Public extends Anything, SubjInterface, AbstractPers
     public void initializeOnCreation() 
 				throws PersistenceException;
     public void initializeOnInstantiation() 
+				throws PersistenceException;
+    public void lieferungHinzufuegen(final KndLieferung4Public lieferung) 
 				throws PersistenceException;
     public void listeHinzufuegen(final PositionSearchList positionsListe) 
 				throws PersistenceException;

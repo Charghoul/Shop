@@ -20,7 +20,6 @@ public interface AnythingReturnExceptionVisitor<R, E extends model.UserException
     public R handleErrorDisplay(ErrorDisplay4Public errorDisplay) throws PersistenceException, E;
     public R handleHersteller(Hersteller4Public hersteller) throws PersistenceException, E;
     public R handleHerstellerManager(HerstellerManager4Public herstellerManager) throws PersistenceException, E;
-    public R handleIntegerWrapper(IntegerWrapper4Public integerWrapper) throws PersistenceException, E;
     public R handleKonto(Konto4Public konto) throws PersistenceException, E;
     public R handleKunde(Kunde4Public kunde) throws PersistenceException, E;
     public R handleLieferart(Lieferart4Public lieferart) throws PersistenceException, E;

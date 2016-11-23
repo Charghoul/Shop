@@ -14,6 +14,7 @@ public class KontoProxi extends ViewProxi implements KontoView{
     public KontoView getRemoteObject(java.util.HashMap<String,Object> resultTable, ExceptionAndEventHandler connectionKey) throws ModelException{
         long kontostand = new Long((String)resultTable.get("kontostand")).longValue();
         long limit = new Long((String)resultTable.get("limit")).longValue();
+        long reserviert = new Long((String)resultTable.get("reserviert")).longValue();
         ViewProxi myServiceKunde = null;
         String myServiceKunde$String = (String)resultTable.get("myServiceKunde");
         if (myServiceKunde$String != null) {
@@ -21,7 +22,7 @@ public class KontoProxi extends ViewProxi implements KontoView{
             myServiceKunde = view.objects.ViewProxi.createProxi(myServiceKunde$Info,connectionKey);
             myServiceKunde.setToString(myServiceKunde$Info.getToString());
         }
-        KontoView result$$ = new Konto((long)kontostand,(long)limit,(ServiceKundeView)myServiceKunde, this.getId(), this.getClassId());
+        KontoView result$$ = new Konto((long)kontostand,(long)limit,(long)reserviert,(ServiceKundeView)myServiceKunde, this.getId(), this.getClassId());
         ((ViewRoot)result$$).setToString((String) resultTable.get(common.RPCConstantsAndServices.RPCToStringFieldName));
         return result$$;
     }
@@ -55,6 +56,12 @@ public class KontoProxi extends ViewProxi implements KontoView{
     }
     public void setLimit(long newValue) throws ModelException {
         ((Konto)this.getTheObject()).setLimit(newValue);
+    }
+    public long getReserviert()throws ModelException{
+        return ((Konto)this.getTheObject()).getReserviert();
+    }
+    public void setReserviert(long newValue) throws ModelException {
+        ((Konto)this.getTheObject()).setReserviert(newValue);
     }
     public ServiceKundeView getMyServiceKunde()throws ModelException{
         return ((Konto)this.getTheObject()).getMyServiceKunde();

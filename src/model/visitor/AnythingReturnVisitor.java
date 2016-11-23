@@ -20,7 +20,6 @@ public interface AnythingReturnVisitor<R> extends ArtikelstatusReturnVisitor<R> 
     public R handleErrorDisplay(ErrorDisplay4Public errorDisplay) throws PersistenceException;
     public R handleHersteller(Hersteller4Public hersteller) throws PersistenceException;
     public R handleHerstellerManager(HerstellerManager4Public herstellerManager) throws PersistenceException;
-    public R handleIntegerWrapper(IntegerWrapper4Public integerWrapper) throws PersistenceException;
     public R handleKonto(Konto4Public konto) throws PersistenceException;
     public R handleKunde(Kunde4Public kunde) throws PersistenceException;
     public R handleLieferart(Lieferart4Public lieferart) throws PersistenceException;

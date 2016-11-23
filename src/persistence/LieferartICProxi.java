@@ -34,10 +34,10 @@ public class LieferartICProxi extends PersistentInCacheProxiOptimistic implement
     public void setLieferzeit(long newValue) throws PersistenceException {
         ((PersistentLieferart)this.getTheObject()).setLieferzeit(newValue);
     }
-    public common.Fraction getPreis() throws PersistenceException {
+    public long getPreis() throws PersistenceException {
         return ((PersistentLieferart)this.getTheObject()).getPreis();
     }
-    public void setPreis(common.Fraction newValue) throws PersistenceException {
+    public void setPreis(long newValue) throws PersistenceException {
         ((PersistentLieferart)this.getTheObject()).setPreis(newValue);
     }
     public SubjInterface getSubService() throws PersistenceException {
@@ -92,7 +92,7 @@ public class LieferartICProxi extends PersistentInCacheProxiOptimistic implement
 				throws PersistenceException{
         ((PersistentLieferart)this.getTheObject()).updateObservers(event);
     }
-    public void aendereLieferart(final long lieferzeit, final common.Fraction preis) 
+    public void aendereLieferart(final long lieferzeit, final long preis) 
 				throws model.ExcAlreadyExists, PersistenceException{
         ((PersistentLieferart)this.getTheObject()).aendereLieferart(lieferzeit, preis);
     }

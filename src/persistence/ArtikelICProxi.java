@@ -189,7 +189,7 @@ public class ArtikelICProxi extends KomponenteICProxi implements PersistentArtik
         ((PersistentArtikel)this.getTheObject()).statusAuslauf();
     }
     public void statusVerkauf() 
-				throws model.ExcInconsistentStatusChange, PersistenceException{
+				throws model.ExcInconsistentStatusChange, model.ExcArtikelHatKeinenHersteller, PersistenceException{
         ((PersistentArtikel)this.getTheObject()).statusVerkauf();
     }
     public void zuEinkaufswHinz(final long menge, final EinkaufsManager4Public einkaufsManager) 

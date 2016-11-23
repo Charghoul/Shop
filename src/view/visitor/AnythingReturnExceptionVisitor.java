@@ -12,7 +12,6 @@ public interface AnythingReturnExceptionVisitor<R, E extends view.UserException>
     public R handleErrorDisplay(ErrorDisplayView errorDisplay) throws ModelException, E;
     public R handleHersteller(HerstellerView hersteller) throws ModelException, E;
     public R handleHerstellerManager(HerstellerManagerView herstellerManager) throws ModelException, E;
-    public R handleIntegerWrapper(IntegerWrapperView integerWrapper) throws ModelException, E;
     public R handleKonto(KontoView konto) throws ModelException, E;
     public R handleKunde(KundeView kunde) throws ModelException, E;
     public R handleLieferart(LieferartView lieferart) throws ModelException, E;

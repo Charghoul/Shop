@@ -16,14 +16,16 @@ public class Bestellung extends ViewObject implements BestellungView{
     protected long bestellID;
     protected long warenwert;
     protected BestellstatusView bestellstatus;
+    protected LieferartView lieferart;
     
-    public Bestellung(java.util.Vector<PositionInBestellungView> positionsListe,long bestellID,long warenwert,BestellstatusView bestellstatus,long id, long classId) {
+    public Bestellung(java.util.Vector<PositionInBestellungView> positionsListe,long bestellID,long warenwert,BestellstatusView bestellstatus,LieferartView lieferart,long id, long classId) {
         /* Shall not be used. Objects are created on the server only */
         super(id, classId);
         this.positionsListe = positionsListe;
         this.bestellID = bestellID;
         this.warenwert = warenwert;
-        this.bestellstatus = bestellstatus;        
+        this.bestellstatus = bestellstatus;
+        this.lieferart = lieferart;        
     }
     
     static public long getTypeId() {
@@ -58,6 +60,12 @@ public class Bestellung extends ViewObject implements BestellungView{
     public void setBestellstatus(BestellstatusView newValue) throws ModelException {
         this.bestellstatus = newValue;
     }
+    public LieferartView getLieferart()throws ModelException{
+        return this.lieferart;
+    }
+    public void setLieferart(LieferartView newValue) throws ModelException {
+        this.lieferart = newValue;
+    }
     
     public void accept(AnythingVisitor visitor) throws ModelException {
         visitor.handleBestellung(this);
@@ -81,6 +89,10 @@ public class Bestellung extends ViewObject implements BestellungView{
         if (bestellstatus != null) {
             ((ViewProxi)bestellstatus).setObject((ViewObject)resultTable.get(common.RPCConstantsAndServices.createHashtableKey(bestellstatus.getClassId(), bestellstatus.getId())));
         }
+        LieferartView lieferart = this.getLieferart();
+        if (lieferart != null) {
+            ((ViewProxi)lieferart).setObject((ViewObject)resultTable.get(common.RPCConstantsAndServices.createHashtableKey(lieferart.getClassId(), lieferart.getId())));
+        }
         
     }
     public void sortSetValuedFields() throws ModelException {
@@ -90,15 +102,19 @@ public class Bestellung extends ViewObject implements BestellungView{
         int index = originalIndex;
         if(index < this.getPositionsListe().size()) return new PositionsListeBestellungWrapper(this, originalIndex, (ViewRoot)this.getPositionsListe().get(index));
         index = index - this.getPositionsListe().size();
+        if(index == 0 && this.getLieferart() != null) return new LieferartBestellungWrapper(this, originalIndex, (ViewRoot)this.getLieferart());
+        if(this.getLieferart() != null) index = index - 1;
         return null;
     }
     public int getChildCount() throws ModelException {
         return 0 
-            + (this.getPositionsListe().size());
+            + (this.getPositionsListe().size())
+            + (this.getLieferart() == null ? 0 : 1);
     }
     public boolean isLeaf() throws ModelException {
         return true 
-            && (this.getPositionsListe().size() == 0);
+            && (this.getPositionsListe().size() == 0)
+            && (this.getLieferart() == null ? true : false);
     }
     public int getIndexOfChild(Object child) throws ModelException {
         int result = 0;
@@ -107,6 +123,8 @@ public class Bestellung extends ViewObject implements BestellungView{
             if(getPositionsListeIterator.next().equals(child)) return result;
             result = result + 1;
         }
+        if(this.getLieferart() != null && this.getLieferart().equals(child)) return result;
+        if(this.getLieferart() != null) result = result + 1;
         return -1;
     }
     public int getBestellIDIndex() throws ModelException {

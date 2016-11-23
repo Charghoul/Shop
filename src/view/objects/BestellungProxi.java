@@ -24,7 +24,14 @@ public class BestellungProxi extends ViewProxi implements BestellungView{
             bestellstatus = view.objects.ViewProxi.createProxi(bestellstatus$Info,connectionKey);
             bestellstatus.setToString(bestellstatus$Info.getToString());
         }
-        BestellungView result$$ = new Bestellung(positionsListe,(long)bestellID,(long)warenwert,(BestellstatusView)bestellstatus, this.getId(), this.getClassId());
+        ViewProxi lieferart = null;
+        String lieferart$String = (String)resultTable.get("lieferart");
+        if (lieferart$String != null) {
+            common.ProxiInformation lieferart$Info = common.RPCConstantsAndServices.createProxiInformation(lieferart$String);
+            lieferart = view.objects.ViewProxi.createProxi(lieferart$Info,connectionKey);
+            lieferart.setToString(lieferart$Info.getToString());
+        }
+        BestellungView result$$ = new Bestellung(positionsListe,(long)bestellID,(long)warenwert,(BestellstatusView)bestellstatus,(LieferartView)lieferart, this.getId(), this.getClassId());
         ((ViewRoot)result$$).setToString((String) resultTable.get(common.RPCConstantsAndServices.RPCToStringFieldName));
         return result$$;
     }
@@ -36,16 +43,20 @@ public class BestellungProxi extends ViewProxi implements BestellungView{
         int index = originalIndex;
         if(index < this.getPositionsListe().size()) return new PositionsListeBestellungWrapper(this, originalIndex, (ViewRoot)this.getPositionsListe().get(index));
         index = index - this.getPositionsListe().size();
+        if(index == 0 && this.getLieferart() != null) return new LieferartBestellungWrapper(this, originalIndex, (ViewRoot)this.getLieferart());
+        if(this.getLieferart() != null) index = index - 1;
         return null;
     }
     public int getChildCount() throws ModelException {
         return 0 
-            + (this.getPositionsListe().size());
+            + (this.getPositionsListe().size())
+            + (this.getLieferart() == null ? 0 : 1);
     }
     public boolean isLeaf() throws ModelException {
         if (this.object == null) return this.getLeafInfo() == 0;
         return true 
-            && (this.getPositionsListe().size() == 0);
+            && (this.getPositionsListe().size() == 0)
+            && (this.getLieferart() == null ? true : false);
     }
     public int getIndexOfChild(Object child) throws ModelException {
         int result = 0;
@@ -54,6 +65,8 @@ public class BestellungProxi extends ViewProxi implements BestellungView{
             if(getPositionsListeIterator.next().equals(child)) return result;
             result = result + 1;
         }
+        if(this.getLieferart() != null && this.getLieferart().equals(child)) return result;
+        if(this.getLieferart() != null) result = result + 1;
         return -1;
     }
     
@@ -80,6 +93,12 @@ public class BestellungProxi extends ViewProxi implements BestellungView{
     }
     public void setBestellstatus(BestellstatusView newValue) throws ModelException {
         ((Bestellung)this.getTheObject()).setBestellstatus(newValue);
+    }
+    public LieferartView getLieferart()throws ModelException{
+        return ((Bestellung)this.getTheObject()).getLieferart();
+    }
+    public void setLieferart(LieferartView newValue) throws ModelException {
+        ((Bestellung)this.getTheObject()).setLieferart(newValue);
     }
     
     public void accept(AnythingVisitor visitor) throws ModelException {

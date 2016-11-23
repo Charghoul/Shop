@@ -19,7 +19,7 @@ public interface LieferartManager4Public extends Anything, SubjInterface, Abstra
     
     public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
 				throws PersistenceException;
-    public void aendereLieferart(final Lieferart4Public lieferart, final String name, final long lieferzeit, final common.Fraction preis) 
+    public void aendereLieferart(final Lieferart4Public lieferart, final String name, final long lieferzeit, final long preis) 
 				throws model.ExcAlreadyExists, PersistenceException;
     public void aendereRueckversandGebuehr(final long percent) 
 				throws PersistenceException;
@@ -29,7 +29,7 @@ public interface LieferartManager4Public extends Anything, SubjInterface, Abstra
 				throws PersistenceException;
     public void initializeOnInstantiation() 
 				throws PersistenceException;
-    public void neueLieferart(final String name, final long lieferzeit, final common.Fraction preis) 
+    public void neueLieferart(final String name, final long lieferzeit, final long preis) 
 				throws model.ExcAlreadyExists, PersistenceException;
 
 }

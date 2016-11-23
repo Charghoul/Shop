@@ -20,7 +20,6 @@ public interface AnythingExceptionVisitor<E extends model.UserException> extends
     public void handleErrorDisplay(ErrorDisplay4Public errorDisplay) throws PersistenceException, E;
     public void handleHersteller(Hersteller4Public hersteller) throws PersistenceException, E;
     public void handleHerstellerManager(HerstellerManager4Public herstellerManager) throws PersistenceException, E;
-    public void handleIntegerWrapper(IntegerWrapper4Public integerWrapper) throws PersistenceException, E;
     public void handleKonto(Konto4Public konto) throws PersistenceException, E;
     public void handleKunde(Kunde4Public kunde) throws PersistenceException, E;
     public void handleLieferart(Lieferart4Public lieferart) throws PersistenceException, E;

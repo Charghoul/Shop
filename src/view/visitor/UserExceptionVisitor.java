@@ -15,6 +15,7 @@ public interface UserExceptionVisitor {
     public void handleExcEinkaufslisteNichtVerfuegbar(ExcEinkaufslisteNichtVerfuegbar excEinkaufslisteNichtVerfuegbar) throws ModelException;
     public void handleExcHasChildren(ExcHasChildren excHasChildren) throws ModelException;
     public void handleExcHasNoParent(ExcHasNoParent excHasNoParent) throws ModelException;
+    public void handleExcIllogicalDataEntry(ExcIllogicalDataEntry excIllogicalDataEntry) throws ModelException;
     public void handleExcInconsistentStatusChange(ExcInconsistentStatusChange excInconsistentStatusChange) throws ModelException;
     public void handleExcLagerbestandOverMax(ExcLagerbestandOverMax excLagerbestandOverMax) throws ModelException;
     public void handleExcLagerbestandUnderZero(ExcLagerbestandUnderZero excLagerbestandUnderZero) throws ModelException;

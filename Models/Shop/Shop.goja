@@ -16,7 +16,7 @@ server ServiceKunde extends ServiceShop {
 	no-view LieferartManager lieferartManager;
 	observe BestellManager  bestellManager;
 	void neuePosition(EinkaufsManager einkaufsManager, Artikel artikel {produktKatalog}, Integer menge) throws UserException;
-	void vorbestellen(EinkaufsManager einkaufsManager);
+	void vorbestellen(EinkaufsManager einkaufsManager, Lieferart lieferart {lieferartManager});
 	void bestellen(EinkaufsManager einkaufsManager, Lieferart lieferart {lieferartManager});
 	void aendereMenge(Position position, Integer menge) throws ExcLagerbestandUnderZero, ExcLagerbestandOverMax;
 	void zuEinkaufswagenHinzufuegen(Artikel artikel, Integer menge);
@@ -41,8 +41,8 @@ server ServiceAdmin extends ServiceShop {
 	void artikelAbhaengen(Produktgruppe produktgruppe, Artikel artikel);
 	void statusVerkauf@@freigeben(Artikel artikel checked);
 	void statusAuslauf@@einstellen(Artikel artikel checked);
-	void neueLieferArt(LieferartManager lieferartManager, String name, Integer lieferzeit, Fraction preis) throws ExcAlreadyExists;
-	void aendereLieferart(Lieferart lieferart, String name, Integer lieferzeit, Fraction preis) throws ExcAlreadyExists;
+	void neueLieferArt(LieferartManager lieferartManager, String name, Integer lieferzeit, Integer preis) throws ExcAlreadyExists;
+	void aendereLieferart(Lieferart lieferart, String name, Integer lieferzeit, Integer preis) throws ExcAlreadyExists;
 	void artikelEinlagern(Warenlager warenlager, Artikel artikel {artikelManager}, Integer menge);
 	void artikelEntnehmen(Warenlager warenlager, Artikel artikel {artikelManager}, Integer menge);
 	void artikelEntfernen(Warenlager warenlager, Position position {warenlager});
@@ -68,11 +68,10 @@ singleton ArtikelManager{
 
 class BestellManager{
 	public Bestellung ** bestellListe;
-	public Integer warenwert;
 	Integer bestellID;
-	Bestellung neueBestellung(Position ** positionsListe, Bestellstatus bestellstatus, Integer warenwert);
+	server-only prior	public Konto konto;
+	Bestellung neueBestellung(Position ** positionsListe, Bestellstatus bestellstatus, Integer warenwert, Lieferart lieferart);
 	event void benachrichtige();	
-	void verringereWarenwert(Integer subtrahend);
 }
 
 singleton ProduktKatalog{
@@ -81,12 +80,6 @@ singleton ProduktKatalog{
 	event active void produktgruppeEntfernen##prodEntf(Produktgruppe produktgruppe) throws ExcHasNoParent;
 	event void artikelAnhaengen( Produktgruppe produktgruppe, Artikel artikel )  throws ExcAlreadyExists, CycleException;
 	event void artikelAbhaengen(Produktgruppe produktgruppe, Artikel artikel);
-}
-
-class IntegerWrapper {
-	public prior Integer theInt;
-	void add(Integer addend);
-	void substract(Integer subtrahend);
 }
 
 singleton Warenlager{
@@ -100,12 +93,12 @@ singleton Warenlager{
 
 singleton ZeitManager {
 	observe ZeitObjekt ** zeitObjektListe;
-	ZeitObjekt ** annahmeZeiten;
+	server-only ZeitObjekt ** annahmeZeiten;
 	public Integer annahmezeit;
 	public Integer maxAnlieferungsVersuche##maxAnl;
 	void handleTimeUnitElapsed() ;
 	event void neueHstLieferung(Artikel artikel, Integer menge);
-	event void neueKndLieferung(Bestellung bestellung, Lieferart lieferart);
+	event void neueKndLieferung(Bestellung bestellung);
 	event void neueKndAnnahme(KndLieferung kndLieferung);
 	event void forwardInternalEvent();
 	void removeZeitObjekt(ZeitObjekt zeitObjekt);
@@ -129,7 +122,7 @@ class EinkaufsManager{
 	Position ** einkaufsListe;
 	prior no-view BestellManager bestellManager;
 	active void bestellen(Lieferart lieferart) throws ExcArtikelNichtVerfuegbar, ExcWarenwertUeberKontoguthaben;
-	active void vorbestellen() throws ExcWarenwertUeberKontoguthaben;
+	active void vorbestellen(Lieferart lieferart) throws ExcWarenwertUeberKontoguthaben;
 	void neuePosition(Artikel artikel, Integer menge) throws ExcArtikelAlreadyExists, ExcLagerbestandOverMax, ExcArtikelNochNichtVerfuegbar;
 	void entfernePosition(Position position);
 	Integer gibGesamtPreis();
@@ -137,8 +130,8 @@ class EinkaufsManager{
 singleton LieferartManager{
 	public Lieferart ** lieferartenListe;
 	public prior Integer rueckversandGebuehr##rckG;
-	void neueLieferart(String name, Integer lieferzeit, Fraction preis) throws ExcAlreadyExists;
-	void aendereLieferart(Lieferart lieferart, String name, Integer lieferzeit, Fraction preis) throws ExcAlreadyExists;
+	void neueLieferart(String name, Integer lieferzeit, Integer preis) throws ExcAlreadyExists;
+	void aendereLieferart(Lieferart lieferart, String name, Integer lieferzeit, Integer preis) throws ExcAlreadyExists;
 	void aendereRueckversandGebuehr(Integer percent);
 }
 
@@ -151,9 +144,12 @@ class Kunde{
 class Konto{
 	public prior Integer kontostand;
 	public prior Integer limit;
+	public prior Integer reserviert;
 	void abbuchen(Integer betrag);
 	void einzahlen(Integer betrag);
 	void auszahlen(Integer betrag) throws ExcAuszahlungGroesserGutgaben;
+	void reserviere(Integer betrag);
+	void verringereReserviert(Integer betrag);
 }
 hierarchy Hierarchie;
 abstract class Komponente {
@@ -168,7 +164,7 @@ class Artikel extends Komponente{
 	public prior skip-view Artikelstatus artikelstatus;
 	public no-view Hersteller hersteller;
 	void aendereArtikel(Integer preis, Integer minLagerbestand, Integer maxLagerbestand, Integer hstLieferzeit) throws ExcAlreadyExists;
-	active void statusVerkauf() throws ExcInconsistentStatusChange;
+	active void statusVerkauf() throws ExcInconsistentStatusChange, ExcArtikelHatKeinenHersteller;
 	active void statusAuslauf() throws ExcInconsistentStatusChange;
 	active void zuEinkaufswHinz(Integer menge, EinkaufsManager einkaufsManager) throws UserException;
 	void herstellerHinzufuegen(Hersteller hersteller);
@@ -189,20 +185,22 @@ class Hersteller{
 class Bestellung{
 	public PositionInBestellung ** positionsListe;
 	prior public server-only BestellManager bestellManager;
+	server-only public KndLieferung kndLieferung;
 	prior indexed Integer bestellID;
 	public prior Integer warenwert;
 	public no-view Bestellstatus bestellstatus;
+	public prior Lieferart lieferart;
 	void listeHinzufuegen(Position ** positionsListe);
 	void aendereStatus(Bestellstatus bestellstatus);
 	void annehmen();
 	active void allesZuruecksenden##allZrck();
 	Integer berechneWarenwert();
+	void lieferungHinzufuegen(KndLieferung lieferung);
 }
 
 class KndLieferung extends ZeitObjekt{
-	prior Bestellung bestellung;
-	prior Lieferart lieferart;
-	Integer lieferversuche;
+	prior public Bestellung bestellung;
+	public Integer lieferversuche;
 	event void erneutSenden();
 }
 
@@ -234,8 +232,8 @@ class PositionInBestellung##posInBest extends PositionAbstrakt{
 class Lieferart{
 	indexed prior String name;
 	public prior Integer lieferzeit;
-	prior Fraction preis;
-	void aendereLieferart(Integer lieferzeit, Fraction preis) throws ExcAlreadyExists;
+	public prior Integer preis;
+	void aendereLieferart(Integer lieferzeit, Integer preis) throws ExcAlreadyExists;
 }
 
 abstract class Status {}
@@ -255,6 +253,7 @@ singleton Geliefert extends Bestellstatus{}
 singleton Angenommen extends Bestellstatus{}
 singleton Rueckversand extends Bestellstatus{}
 
+exception ExcIllogicalDataEntry{}
 exception ExcAuszahlungGroesserGutgaben{}
 exception ExcWarenwertUeberKontoguthaben{}
 exception ExcArtikelNochNichtVerfuegbar{}

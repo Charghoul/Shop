@@ -16,13 +16,15 @@ public class Konto extends ViewObject implements KontoView{
     
     protected long kontostand;
     protected long limit;
+    protected long reserviert;
     protected ServiceKundeView myServiceKunde;
     
-    public Konto(long kontostand,long limit,ServiceKundeView myServiceKunde,long id, long classId) {
+    public Konto(long kontostand,long limit,long reserviert,ServiceKundeView myServiceKunde,long id, long classId) {
         /* Shall not be used. Objects are created on the server only */
         super(id, classId);
         this.kontostand = kontostand;
         this.limit = limit;
+        this.reserviert = reserviert;
         this.myServiceKunde = myServiceKunde;        
     }
     
@@ -45,6 +47,12 @@ public class Konto extends ViewObject implements KontoView{
     }
     public void setLimit(long newValue) throws ModelException {
         this.limit = newValue;
+    }
+    public long getReserviert()throws ModelException{
+        return this.reserviert;
+    }
+    public void setReserviert(long newValue) throws ModelException {
+        this.reserviert = newValue;
     }
     public ServiceKundeView getMyServiceKunde()throws ModelException{
         return this.myServiceKunde;
@@ -93,8 +101,12 @@ public class Konto extends ViewObject implements KontoView{
     public int getLimitIndex() throws ModelException {
         return 0 + 1;
     }
+    public int getReserviertIndex() throws ModelException {
+        return 0 + 1 + 1;
+    }
     public int getRowCount(){
         return 0 
+            + 1
             + 1
             + 1;
     }
@@ -105,10 +117,14 @@ public class Konto extends ViewObject implements KontoView{
                 rowIndex = rowIndex - 1;
                 if(rowIndex == 0) return "limit";
                 rowIndex = rowIndex - 1;
+                if(rowIndex == 0) return "reserviert";
+                rowIndex = rowIndex - 1;
             } else {
                 if(rowIndex == 0) return new Long(getKontostand());
                 rowIndex = rowIndex - 1;
                 if(rowIndex == 0) return new Long(getLimit());
+                rowIndex = rowIndex - 1;
+                if(rowIndex == 0) return new Long(getReserviert());
                 rowIndex = rowIndex - 1;
             }
             throw new ModelException("Table index out of bounds!", -1);
@@ -128,6 +144,11 @@ public class Konto extends ViewObject implements KontoView{
         rowIndex = rowIndex - 1;
         if(rowIndex == 0){
             this.setLimit(Long.parseLong(newValue));
+            return;
+        }
+        rowIndex = rowIndex - 1;
+        if(rowIndex == 0){
+            this.setReserviert(Long.parseLong(newValue));
             return;
         }
         rowIndex = rowIndex - 1;

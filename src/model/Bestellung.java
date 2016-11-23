@@ -15,11 +15,11 @@ public class Bestellung extends PersistentObject implements PersistentBestellung
         return (Bestellung4Public)PersistentProxi.createProxi(objectId, classId);
     }
     
-    public static Bestellung4Public createBestellung(BestellManager4Public bestellManager,long bestellID,long warenwert) throws PersistenceException{
-        return createBestellung(bestellManager,bestellID,warenwert,false);
+    public static Bestellung4Public createBestellung(BestellManager4Public bestellManager,long bestellID,long warenwert,Lieferart4Public lieferart) throws PersistenceException{
+        return createBestellung(bestellManager,bestellID,warenwert,lieferart,false);
     }
     
-    public static Bestellung4Public createBestellung(BestellManager4Public bestellManager,long bestellID,long warenwert,boolean delayed$Persistence) throws PersistenceException {
+    public static Bestellung4Public createBestellung(BestellManager4Public bestellManager,long bestellID,long warenwert,Lieferart4Public lieferart,boolean delayed$Persistence) throws PersistenceException {
         PersistentBestellung result = null;
         if(delayed$Persistence){
             result = ConnectionHandler.getTheConnectionHandler().theBestellungFacade
@@ -33,12 +33,13 @@ public class Bestellung extends PersistentObject implements PersistentBestellung
         final$$Fields.put("bestellManager", bestellManager);
         final$$Fields.put("bestellID", bestellID);
         final$$Fields.put("warenwert", warenwert);
+        final$$Fields.put("lieferart", lieferart);
         result.initialize(result, final$$Fields);
         result.initializeOnCreation();
         return result;
     }
     
-    public static Bestellung4Public createBestellung(BestellManager4Public bestellManager,long bestellID,long warenwert,boolean delayed$Persistence,Bestellung4Public This) throws PersistenceException {
+    public static Bestellung4Public createBestellung(BestellManager4Public bestellManager,long bestellID,long warenwert,Lieferart4Public lieferart,boolean delayed$Persistence,Bestellung4Public This) throws PersistenceException {
         PersistentBestellung result = null;
         if(delayed$Persistence){
             result = ConnectionHandler.getTheConnectionHandler().theBestellungFacade
@@ -52,6 +53,7 @@ public class Bestellung extends PersistentObject implements PersistentBestellung
         final$$Fields.put("bestellManager", bestellManager);
         final$$Fields.put("bestellID", bestellID);
         final$$Fields.put("warenwert", warenwert);
+        final$$Fields.put("lieferart", lieferart);
         result.initialize(This, final$$Fields);
         result.initializeOnCreation();
         return result;
@@ -73,6 +75,15 @@ public class Bestellung extends PersistentObject implements PersistentBestellung
                     if(forGUI && bestellstatus.hasEssentialFields())bestellstatus.toHashtable(allResults, depth, essentialLevel + 1, false, true, tdObserver);
                 }
             }
+            AbstractPersistentRoot lieferart = (AbstractPersistentRoot)this.getLieferart();
+            if (lieferart != null) {
+                result.put("lieferart", lieferart.createProxiInformation(false, essentialLevel <= 1));
+                if(depth > 1) {
+                    lieferart.toHashtable(allResults, depth - 1, essentialLevel, forGUI, true , tdObserver);
+                }else{
+                    if(forGUI && lieferart.hasEssentialFields())lieferart.toHashtable(allResults, depth, essentialLevel + 1, false, true, tdObserver);
+                }
+            }
             String uniqueKey = common.RPCConstantsAndServices.createHashtableKey(this.getClassId(), this.getId());
             if (leaf && !allResults.containsKey(uniqueKey)) allResults.put(uniqueKey, result);
         }
@@ -87,9 +98,11 @@ public class Bestellung extends PersistentObject implements PersistentBestellung
     public Bestellung provideCopy() throws PersistenceException{
         Bestellung result = this;
         result = new Bestellung(this.bestellManager, 
+                                this.kndLieferung, 
                                 this.bestellID, 
                                 this.warenwert, 
                                 this.bestellstatus, 
+                                this.lieferart, 
                                 this.subService, 
                                 this.This, 
                                 this.getId());
@@ -103,20 +116,24 @@ public class Bestellung extends PersistentObject implements PersistentBestellung
     }
     protected Bestellung_PositionsListeProxi positionsListe;
     protected PersistentBestellManager bestellManager;
+    protected PersistentKndLieferung kndLieferung;
     protected long bestellID;
     protected long warenwert;
     protected PersistentBestellstatus bestellstatus;
+    protected PersistentLieferart lieferart;
     protected SubjInterface subService;
     protected PersistentBestellung This;
     
-    public Bestellung(PersistentBestellManager bestellManager,long bestellID,long warenwert,PersistentBestellstatus bestellstatus,SubjInterface subService,PersistentBestellung This,long id) throws PersistenceException {
+    public Bestellung(PersistentBestellManager bestellManager,PersistentKndLieferung kndLieferung,long bestellID,long warenwert,PersistentBestellstatus bestellstatus,PersistentLieferart lieferart,SubjInterface subService,PersistentBestellung This,long id) throws PersistenceException {
         /* Shall not be used by clients for object construction! Use static create operation instead! */
         super(id);
         this.positionsListe = new Bestellung_PositionsListeProxi(this);
         this.bestellManager = bestellManager;
+        this.kndLieferung = kndLieferung;
         this.bestellID = bestellID;
         this.warenwert = warenwert;
         this.bestellstatus = bestellstatus;
+        this.lieferart = lieferart;
         this.subService = subService;
         if (This != null && !(this.isTheSameAs(This))) this.This = This;        
     }
@@ -139,9 +156,17 @@ public class Bestellung extends PersistentObject implements PersistentBestellung
             this.getBestellManager().store();
             ConnectionHandler.getTheConnectionHandler().theBestellungFacade.bestellManagerSet(this.getId(), getBestellManager());
         }
+        if(this.getKndLieferung() != null){
+            this.getKndLieferung().store();
+            ConnectionHandler.getTheConnectionHandler().theBestellungFacade.kndLieferungSet(this.getId(), getKndLieferung());
+        }
         if(this.getBestellstatus() != null){
             this.getBestellstatus().store();
             ConnectionHandler.getTheConnectionHandler().theBestellungFacade.bestellstatusSet(this.getId(), getBestellstatus());
+        }
+        if(this.getLieferart() != null){
+            this.getLieferart().store();
+            ConnectionHandler.getTheConnectionHandler().theBestellungFacade.lieferartSet(this.getId(), getLieferart());
         }
         if(this.getSubService() != null){
             this.getSubService().store();
@@ -171,6 +196,20 @@ public class Bestellung extends PersistentObject implements PersistentBestellung
             ConnectionHandler.getTheConnectionHandler().theBestellungFacade.bestellManagerSet(this.getId(), newValue);
         }
     }
+    public KndLieferung4Public getKndLieferung() throws PersistenceException {
+        return this.kndLieferung;
+    }
+    public void setKndLieferung(KndLieferung4Public newValue) throws PersistenceException {
+        if (newValue == null) throw new PersistenceException("Null values not allowed!", 0);
+        if(newValue.isTheSameAs(this.kndLieferung)) return;
+        long objectId = newValue.getId();
+        long classId = newValue.getClassId();
+        this.kndLieferung = (PersistentKndLieferung)PersistentProxi.createProxi(objectId, classId);
+        if(!this.isDelayed$Persistence()){
+            newValue.store();
+            ConnectionHandler.getTheConnectionHandler().theBestellungFacade.kndLieferungSet(this.getId(), newValue);
+        }
+    }
     public long getBestellID() throws PersistenceException {
         return this.bestellID;
     }
@@ -197,6 +236,20 @@ public class Bestellung extends PersistentObject implements PersistentBestellung
         if(!this.isDelayed$Persistence()){
             newValue.store();
             ConnectionHandler.getTheConnectionHandler().theBestellungFacade.bestellstatusSet(this.getId(), newValue);
+        }
+    }
+    public Lieferart4Public getLieferart() throws PersistenceException {
+        return this.lieferart;
+    }
+    public void setLieferart(Lieferart4Public newValue) throws PersistenceException {
+        if (newValue == null) throw new PersistenceException("Null values not allowed!", 0);
+        if(newValue.isTheSameAs(this.lieferart)) return;
+        long objectId = newValue.getId();
+        long classId = newValue.getClassId();
+        this.lieferart = (PersistentLieferart)PersistentProxi.createProxi(objectId, classId);
+        if(!this.isDelayed$Persistence()){
+            newValue.store();
+            ConnectionHandler.getTheConnectionHandler().theBestellungFacade.lieferartSet(this.getId(), newValue);
         }
     }
     public SubjInterface getSubService() throws PersistenceException {
@@ -261,6 +314,7 @@ public class Bestellung extends PersistentObject implements PersistentBestellung
          return visitor.handleBestellung(this);
     }
     public int getLeafInfo() throws PersistenceException{
+        if (this.getLieferart() != null) return 1;
         if (this.getPositionsListe().getLength() > 0) return 1;
         return 0;
     }
@@ -290,6 +344,7 @@ public class Bestellung extends PersistentObject implements PersistentBestellung
 			this.setBestellManager((PersistentBestellManager)final$$Fields.get("bestellManager"));
 			this.setBestellID((Long)final$$Fields.get("bestellID"));
 			this.setWarenwert((Long)final$$Fields.get("warenwert"));
+			this.setLieferart((PersistentLieferart)final$$Fields.get("lieferart"));
 		}
     }
     public synchronized void register(final ObsInterface observee) 
@@ -329,17 +384,18 @@ public class Bestellung extends PersistentObject implements PersistentBestellung
                 excLagerbestandOverMax.printStackTrace();
             }
         });
+        getThis().getBestellManager().getKonto().abbuchen(getThis().berechneWarenwert() /100 * LieferartManager.getTheLieferartManager().getRueckversandGebuehr());
         getThis().getBestellManager().getBestellListe().removeFirst(getThis());
+
     }
     public void annehmen() 
 				throws PersistenceException{
         getThis().setBestellstatus(Angenommen.getTheAngenommen());
-        getThis().getBestellManager().verringereWarenwert(getThis().berechneWarenwert());
+        getThis().getBestellManager().getKonto().verringereReserviert(getThis().berechneWarenwert());
+        getThis().getBestellManager().getKonto().abbuchen(getThis().getWarenwert());
     }
     public long berechneWarenwert() 
 				throws PersistenceException{
-
-        //TODO: Lieferartpreis auf den preis der lieferung draufrechnen ( hier oder unter lieferung)
         Long temp = getThis().getPositionsListe().aggregate(new Aggregtion<PositionInBestellung4Public, Long>() {
             @Override
             public Long neutral() throws PersistenceException {
@@ -351,6 +407,9 @@ public class Bestellung extends PersistentObject implements PersistentBestellung
                 return result + (positionInBestellung4Public.getMenge() * positionInBestellung4Public.getArtikel().getPreis());
             }
         });
+        System.out.println("vor addition:"+temp);
+        temp = temp+getThis().getLieferart().getPreis();
+        System.out.println("nach addition:" + temp);
         getThis().setWarenwert(temp);
         return temp;
         
@@ -366,6 +425,10 @@ public class Bestellung extends PersistentObject implements PersistentBestellung
     public void initializeOnInstantiation() 
 				throws PersistenceException{
         
+    }
+    public void lieferungHinzufuegen(final KndLieferung4Public lieferung) 
+				throws PersistenceException{
+        getThis().setKndLieferung(lieferung);
     }
     public void listeHinzufuegen(final PositionSearchList positionsListe) 
 				throws PersistenceException{

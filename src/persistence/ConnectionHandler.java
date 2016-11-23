@@ -123,7 +123,6 @@ public class ConnectionHandler {
     public LieferartManagerFacade theLieferartManagerFacade;
     public HinversandFacade theHinversandFacade;
     public AllesZuruecksendenCommandFacade theAllesZuruecksendenCommandFacade;
-    public IntegerWrapperFacade theIntegerWrapperFacade;
     public ArtikelstatusFacade theArtikelstatusFacade;
     public CommandExecuterFacade theCommandExecuterFacade;
     public activatedFacade theactivatedFacade;
@@ -193,7 +192,6 @@ public class ConnectionHandler {
             this.theLieferartManagerFacade= new LieferartManagerFacade();
             this.theHinversandFacade= new HinversandFacade();
             this.theAllesZuruecksendenCommandFacade= new AllesZuruecksendenCommandFacade();
-            this.theIntegerWrapperFacade= new IntegerWrapperFacade();
             this.theArtikelstatusFacade= new ArtikelstatusFacade();
             this.theCommandExecuterFacade= new CommandExecuterFacade();
             this.theactivatedFacade= new activatedFacade();

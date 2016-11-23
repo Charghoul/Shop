@@ -133,7 +133,7 @@ public  class RemoteServiceAdmin extends RemoteServiceShop {
         try {
             PersistentLieferart lieferart = (PersistentLieferart)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(lieferartProxiString));
             long lieferzeit = new Long(lieferzeitAsString).longValue();
-            common.Fraction preis = common.Fraction.parse(preisAsString);
+            long preis = new Long(preisAsString).longValue();
             ((PersistentServiceAdmin)this.server).aendereLieferart(lieferart, name, lieferzeit, preis);
             return createOKResult();
         }catch(PersistenceException pe){
@@ -269,7 +269,7 @@ public  class RemoteServiceAdmin extends RemoteServiceShop {
         try {
             PersistentLieferartManager lieferartManager = (PersistentLieferartManager)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(lieferartManagerProxiString));
             long lieferzeit = new Long(lieferzeitAsString).longValue();
-            common.Fraction preis = common.Fraction.parse(preisAsString);
+            long preis = new Long(preisAsString).longValue();
             ((PersistentServiceAdmin)this.server).neueLieferArt(lieferartManager, name, lieferzeit, preis);
             return createOKResult();
         }catch(PersistenceException pe){

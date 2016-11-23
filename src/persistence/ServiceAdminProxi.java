@@ -199,7 +199,7 @@ public class ServiceAdminProxi extends ServiceShopProxi implements PersistentSer
 				throws PersistenceException{
         ((PersistentServiceAdmin)this.getTheObject()).aendereHstLieferzeit(artikel, hstLieferzeit);
     }
-    public void aendereLieferart(final Lieferart4Public lieferart, final String name, final long lieferzeit, final common.Fraction preis) 
+    public void aendereLieferart(final Lieferart4Public lieferart, final String name, final long lieferzeit, final long preis) 
 				throws model.ExcAlreadyExists, PersistenceException{
         ((PersistentServiceAdmin)this.getTheObject()).aendereLieferart(lieferart, name, lieferzeit, preis);
     }
@@ -275,7 +275,7 @@ public class ServiceAdminProxi extends ServiceShopProxi implements PersistentSer
 				throws PersistenceException{
         ((PersistentServiceAdmin)this.getTheObject()).initializeOnInstantiation();
     }
-    public void neueLieferArt(final LieferartManager4Public lieferartManager, final String name, final long lieferzeit, final common.Fraction preis) 
+    public void neueLieferArt(final LieferartManager4Public lieferartManager, final String name, final long lieferzeit, final long preis) 
 				throws model.ExcAlreadyExists, PersistenceException{
         ((PersistentServiceAdmin)this.getTheObject()).neueLieferArt(lieferartManager, name, lieferzeit, preis);
     }

@@ -19,7 +19,7 @@ public interface EinkaufsManager4Public extends Anything, SubjInterface, Abstrac
 				throws PersistenceException;
     public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
 				throws PersistenceException;
-    public void vorbestellen(final Invoker invoker) 
+    public void vorbestellen(final Lieferart4Public lieferart, final Invoker invoker) 
 				throws PersistenceException;
     public void bestellen(final Lieferart4Public lieferart) 
 				throws model.ExcWarenwertUeberKontoguthaben, model.ExcArtikelNichtVerfuegbar, PersistenceException;
@@ -35,7 +35,7 @@ public interface EinkaufsManager4Public extends Anything, SubjInterface, Abstrac
 				throws PersistenceException;
     public void neuePosition(final Artikel4Public artikel, final long menge) 
 				throws model.ExcArtikelAlreadyExists, model.ExcArtikelNochNichtVerfuegbar, model.ExcLagerbestandOverMax, PersistenceException;
-    public void vorbestellen() 
+    public void vorbestellen(final Lieferart4Public lieferart) 
 				throws model.ExcWarenwertUeberKontoguthaben, PersistenceException;
 
 }

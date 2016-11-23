@@ -170,9 +170,6 @@ public abstract class AnythingStandardVisitor implements AnythingVisitor {
     public void handleAllesZuruecksendenCommand(AllesZuruecksendenCommand4Public allesZuruecksendenCommand) throws PersistenceException{
         this.standardHandling(allesZuruecksendenCommand);
     }
-    public void handleIntegerWrapper(IntegerWrapper4Public integerWrapper) throws PersistenceException{
-        this.standardHandling(integerWrapper);
-    }
     public void handleCommandExecuter(CommandExecuter4Public commandExecuter) throws PersistenceException{
         this.standardHandling(commandExecuter);
     }

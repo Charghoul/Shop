@@ -241,7 +241,8 @@ public class ArtikelManager extends PersistentObject implements PersistentArtike
     }
     public void neuerArtikel(final String artikelnummer, final String bezeichnung, final long preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
 				throws model.UserException, PersistenceException{
-        //TODO: Check, dass max Lagerbestand nicht kleiner als min lagerbestand ist
+
+        if(minLagerbestand > maxLagerbestand) throw new ExcIllogicalDataEntry(ErrorMessages.LagerbestandMinGroesserMax);
         ArtikelSearchList artikelSearchList = Artikel.getArtikelByArtikelnummer(artikelnummer);
         if( artikelSearchList.iterator().hasNext()){
             throw new ExcArtikelAlreadyExists(serverConstants.ErrorMessages.ArtikelAlreadyExists);

@@ -38,6 +38,8 @@ public interface ServiceKunde4Public extends ServiceShop4Public {
 				throws PersistenceException;
     public LieferartManager4Public lieferart_Path_In_Bestellen() 
 				throws model.UserException, PersistenceException;
+    public LieferartManager4Public lieferart_Path_In_Vorbestellen() 
+				throws model.UserException, PersistenceException;
     public String serviceKunde_Menu_Filter(final Anything anything) 
 				throws PersistenceException;
     public void aendereMenge(final Position4Public position, final long menge) 
@@ -62,7 +64,7 @@ public interface ServiceKunde4Public extends ServiceShop4Public {
 				throws PersistenceException;
     public void neuePosition(final EinkaufsManager4Public einkaufsManager, final Artikel4Public artikel, final long menge) 
 				throws model.UserException, PersistenceException;
-    public void vorbestellen(final EinkaufsManager4Public einkaufsManager) 
+    public void vorbestellen(final EinkaufsManager4Public einkaufsManager, final Lieferart4Public lieferart) 
 				throws PersistenceException;
     public void zuEinkaufswagenHinzufuegen(final Artikel4Public artikel, final long menge) 
 				throws PersistenceException;

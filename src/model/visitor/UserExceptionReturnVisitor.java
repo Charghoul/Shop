@@ -15,6 +15,7 @@ public interface UserExceptionReturnVisitor<R> {
     public R handleExcEinkaufslisteNichtVerfuegbar(model.ExcEinkaufslisteNichtVerfuegbar excEinkaufslisteNichtVerfuegbar) throws PersistenceException;
     public R handleExcHasChildren(model.ExcHasChildren excHasChildren) throws PersistenceException;
     public R handleExcHasNoParent(model.ExcHasNoParent excHasNoParent) throws PersistenceException;
+    public R handleExcIllogicalDataEntry(model.ExcIllogicalDataEntry excIllogicalDataEntry) throws PersistenceException;
     public R handleExcInconsistentStatusChange(model.ExcInconsistentStatusChange excInconsistentStatusChange) throws PersistenceException;
     public R handleExcLagerbestandOverMax(model.ExcLagerbestandOverMax excLagerbestandOverMax) throws PersistenceException;
     public R handleExcLagerbestandUnderZero(model.ExcLagerbestandUnderZero excLagerbestandUnderZero) throws PersistenceException;

@@ -16,41 +16,43 @@ public class Konto extends PersistentObject implements PersistentKonto{
         return (Konto4Public)PersistentProxi.createProxi(objectId, classId);
     }
     
-    public static Konto4Public createKonto(long kontostand,long limit) throws PersistenceException{
-        return createKonto(kontostand,limit,false);
+    public static Konto4Public createKonto(long kontostand,long limit,long reserviert) throws PersistenceException{
+        return createKonto(kontostand,limit,reserviert,false);
     }
     
-    public static Konto4Public createKonto(long kontostand,long limit,boolean delayed$Persistence) throws PersistenceException {
+    public static Konto4Public createKonto(long kontostand,long limit,long reserviert,boolean delayed$Persistence) throws PersistenceException {
         PersistentKonto result = null;
         if(delayed$Persistence){
             result = ConnectionHandler.getTheConnectionHandler().theKontoFacade
-                .newDelayedKonto(kontostand,limit);
+                .newDelayedKonto(kontostand,limit,reserviert);
             result.setDelayed$Persistence(true);
         }else{
             result = ConnectionHandler.getTheConnectionHandler().theKontoFacade
-                .newKonto(kontostand,limit,-1);
+                .newKonto(kontostand,limit,reserviert,-1);
         }
         java.util.HashMap<String,Object> final$$Fields = new java.util.HashMap<String,Object>();
         final$$Fields.put("kontostand", kontostand);
         final$$Fields.put("limit", limit);
+        final$$Fields.put("reserviert", reserviert);
         result.initialize(result, final$$Fields);
         result.initializeOnCreation();
         return result;
     }
     
-    public static Konto4Public createKonto(long kontostand,long limit,boolean delayed$Persistence,Konto4Public This) throws PersistenceException {
+    public static Konto4Public createKonto(long kontostand,long limit,long reserviert,boolean delayed$Persistence,Konto4Public This) throws PersistenceException {
         PersistentKonto result = null;
         if(delayed$Persistence){
             result = ConnectionHandler.getTheConnectionHandler().theKontoFacade
-                .newDelayedKonto(kontostand,limit);
+                .newDelayedKonto(kontostand,limit,reserviert);
             result.setDelayed$Persistence(true);
         }else{
             result = ConnectionHandler.getTheConnectionHandler().theKontoFacade
-                .newKonto(kontostand,limit,-1);
+                .newKonto(kontostand,limit,reserviert,-1);
         }
         java.util.HashMap<String,Object> final$$Fields = new java.util.HashMap<String,Object>();
         final$$Fields.put("kontostand", kontostand);
         final$$Fields.put("limit", limit);
+        final$$Fields.put("reserviert", reserviert);
         result.initialize(This, final$$Fields);
         result.initializeOnCreation();
         return result;
@@ -62,6 +64,7 @@ public class Konto extends PersistentObject implements PersistentKonto{
             result = super.toHashtable(allResults, depth, essentialLevel, forGUI, false, tdObserver);
             result.put("kontostand", new Long(this.getKontostand()).toString());
             result.put("limit", new Long(this.getLimit()).toString());
+            result.put("reserviert", new Long(this.getReserviert()).toString());
             AbstractPersistentRoot myServiceKunde = (AbstractPersistentRoot)this.getMyServiceKunde();
             if (myServiceKunde != null) {
                 result.put("myServiceKunde", myServiceKunde.createProxiInformation(false, essentialLevel <= 1));
@@ -81,6 +84,7 @@ public class Konto extends PersistentObject implements PersistentKonto{
         Konto result = this;
         result = new Konto(this.kontostand, 
                            this.limit, 
+                           this.reserviert, 
                            this.subService, 
                            this.This, 
                            this.getId());
@@ -93,14 +97,16 @@ public class Konto extends PersistentObject implements PersistentKonto{
     }
     protected long kontostand;
     protected long limit;
+    protected long reserviert;
     protected SubjInterface subService;
     protected PersistentKonto This;
     
-    public Konto(long kontostand,long limit,SubjInterface subService,PersistentKonto This,long id) throws PersistenceException {
+    public Konto(long kontostand,long limit,long reserviert,SubjInterface subService,PersistentKonto This,long id) throws PersistenceException {
         /* Shall not be used by clients for object construction! Use static create operation instead! */
         super(id);
         this.kontostand = kontostand;
         this.limit = limit;
+        this.reserviert = reserviert;
         this.subService = subService;
         if (This != null && !(this.isTheSameAs(This))) this.This = This;        
     }
@@ -116,7 +122,7 @@ public class Konto extends PersistentObject implements PersistentKonto{
     public void store() throws PersistenceException {
         if(!this.isDelayed$Persistence()) return;
         if (this.getClassId() == 146) ConnectionHandler.getTheConnectionHandler().theKontoFacade
-            .newKonto(kontostand,limit,this.getId());
+            .newKonto(kontostand,limit,reserviert,this.getId());
         super.store();
         if(this.getSubService() != null){
             this.getSubService().store();
@@ -142,6 +148,13 @@ public class Konto extends PersistentObject implements PersistentKonto{
     public void setLimit(long newValue) throws PersistenceException {
         if(!this.isDelayed$Persistence()) ConnectionHandler.getTheConnectionHandler().theKontoFacade.limitSet(this.getId(), newValue);
         this.limit = newValue;
+    }
+    public long getReserviert() throws PersistenceException {
+        return this.reserviert;
+    }
+    public void setReserviert(long newValue) throws PersistenceException {
+        if(!this.isDelayed$Persistence()) ConnectionHandler.getTheConnectionHandler().theKontoFacade.reserviertSet(this.getId(), newValue);
+        this.reserviert = newValue;
     }
     public SubjInterface getSubService() throws PersistenceException {
         return this.subService;
@@ -235,6 +248,7 @@ public class Konto extends PersistentObject implements PersistentKonto{
 		if(this.isTheSameAs(This)){
 			this.setKontostand((Long)final$$Fields.get("kontostand"));
 			this.setLimit((Long)final$$Fields.get("limit"));
+			this.setReserviert((Long)final$$Fields.get("reserviert"));
 		}
     }
     public synchronized void register(final ObsInterface observee) 
@@ -289,6 +303,16 @@ public class Konto extends PersistentObject implements PersistentKonto{
     public void initializeOnInstantiation() 
 				throws PersistenceException{
         
+    }
+    public void reserviere(final long betrag) 
+				throws PersistenceException{
+        getThis().setReserviert(getThis().getReserviert() + betrag);
+        getThis().getMyServiceKunde().signalChanged(true);
+    }
+    public void verringereReserviert(final long betrag) 
+				throws PersistenceException{
+        getThis().setReserviert(getThis().getReserviert() - betrag);
+        getThis().getMyServiceKunde().signalChanged(true);
     }
     
     

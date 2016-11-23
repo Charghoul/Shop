@@ -10,8 +10,8 @@ public interface LieferartView extends Anything, AbstractViewRoot {
     public void setName(String newValue) throws ModelException ;
     public long getLieferzeit()throws ModelException;
     public void setLieferzeit(long newValue) throws ModelException ;
-    public common.Fraction getPreis()throws ModelException;
-    public void setPreis(common.Fraction newValue) throws ModelException ;
+    public long getPreis()throws ModelException;
+    public void setPreis(long newValue) throws ModelException ;
     
     public void accept(AnythingVisitor visitor) throws ModelException;
     public <R> R accept(AnythingReturnVisitor<R>  visitor) throws ModelException;

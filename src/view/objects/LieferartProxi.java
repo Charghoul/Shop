@@ -14,8 +14,8 @@ public class LieferartProxi extends ViewProxi implements LieferartView{
     public LieferartView getRemoteObject(java.util.HashMap<String,Object> resultTable, ExceptionAndEventHandler connectionKey) throws ModelException{
         String name = (String)resultTable.get("name");
         long lieferzeit = new Long((String)resultTable.get("lieferzeit")).longValue();
-        common.Fraction preis = common.Fraction.parse((String)resultTable.get("preis"));
-        LieferartView result$$ = new Lieferart((String)name,(long)lieferzeit,(common.Fraction)preis, this.getId(), this.getClassId());
+        long preis = new Long((String)resultTable.get("preis")).longValue();
+        LieferartView result$$ = new Lieferart((String)name,(long)lieferzeit,(long)preis, this.getId(), this.getClassId());
         ((ViewRoot)result$$).setToString((String) resultTable.get(common.RPCConstantsAndServices.RPCToStringFieldName));
         return result$$;
     }
@@ -50,10 +50,10 @@ public class LieferartProxi extends ViewProxi implements LieferartView{
     public void setLieferzeit(long newValue) throws ModelException {
         ((Lieferart)this.getTheObject()).setLieferzeit(newValue);
     }
-    public common.Fraction getPreis()throws ModelException{
+    public long getPreis()throws ModelException{
         return ((Lieferart)this.getTheObject()).getPreis();
     }
-    public void setPreis(common.Fraction newValue) throws ModelException {
+    public void setPreis(long newValue) throws ModelException {
         ((Lieferart)this.getTheObject()).setPreis(newValue);
     }
     
