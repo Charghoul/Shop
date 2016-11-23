@@ -10,6 +10,8 @@ public interface KontoView extends Anything, AbstractViewRoot {
     public void setKontostand(long newValue) throws ModelException ;
     public long getLimit()throws ModelException;
     public void setLimit(long newValue) throws ModelException ;
+    public long getReserviert()throws ModelException;
+    public void setReserviert(long newValue) throws ModelException ;
     public ServiceKundeView getMyServiceKunde()throws ModelException;
     
     public void accept(AnythingVisitor visitor) throws ModelException;

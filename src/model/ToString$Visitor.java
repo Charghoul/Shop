@@ -54,11 +54,6 @@ public class ToString$Visitor extends model.visitor.ToString$Visitor {
 
 
 	@Override
-	public void handleIntegerWrapper(IntegerWrapper4Public integerWrapper) throws PersistenceException {
-		result = integerWrapper.getTheInt() + "";
-	}
-
-	@Override
 	public void handleactivated(activated4Public activated) throws PersistenceException {
 		result = ToStringConstants.activated;
 	}
@@ -98,8 +93,8 @@ public class ToString$Visitor extends model.visitor.ToString$Visitor {
 	@Override
 	public void handleBestellung(Bestellung4Public bestellung) throws PersistenceException {
 		PersistentBestellung persB = (PersistentBestellung)bestellung;
-		String temp = ToStringConstants.Bestellung + persB.getBestellID() + " | " + persB.getBestellstatus();
-
+		String temp = ToStringConstants.Bestellung + persB.getBestellID() + " | " + persB.getBestellstatus() + " | Versuch (" +
+				((PersistentKndLieferung)persB.getKndLieferung()).getLieferversuche() + "/" + ZeitManager.getTheZeitManager().getMaxAnlieferungsVersuche() + ")";
 		result = temp;
 	}
 
@@ -110,7 +105,9 @@ public class ToString$Visitor extends model.visitor.ToString$Visitor {
 
 	@Override
 	public void handleLieferart(Lieferart4Public lieferart) throws PersistenceException {
-		result = ToStringConstants.Lieferart +  ((PersistentLieferart) lieferart).getName();
+		PersistentLieferart persL = (PersistentLieferart) lieferart;
+		long preis = persL.getPreis();
+		result = ToStringConstants.Lieferart +  persL.getName() + " - " + preis/100 + "." + preis%100 + " Euro";
 	}
 
 	@Override
@@ -142,7 +139,7 @@ public class ToString$Visitor extends model.visitor.ToString$Visitor {
 	@Override
 	public void handleKndLieferung(KndLieferung4Public kndLieferung) throws PersistenceException {
 		PersistentKndLieferung persKnd = (PersistentKndLieferung) kndLieferung;
-		result =  ToStringConstants.Kundenlieferung + persKnd.getLieferart().toString() +" (" + persKnd.getLieferversuche() + "/" + ZeitManager.getTheZeitManager().getMaxAnlieferungsVersuche()+")";
+		result =  ToStringConstants.Kundenlieferung + persKnd.getBestellung().getLieferart().toString() +" (" + persKnd.getLieferversuche() + "/" + ZeitManager.getTheZeitManager().getMaxAnlieferungsVersuche()+")";
 	}
 
 	@Override
@@ -169,7 +166,7 @@ public class ToString$Visitor extends model.visitor.ToString$Visitor {
 
 	@Override
 	public void handleKonto(Konto4Public konto) throws PersistenceException {
-		result = ToStringConstants.Konto + " - " + konto.getKontostand()/100 + "." + konto.getKontostand()%100 +" Euro ";
+		result = ToStringConstants.Konto + " - " + konto.getKontostand()/100 + "." + konto.getKontostand()%100 +" Euro (" + (+ konto.getReserviert()/100 + "." + konto.getReserviert()%100 +" Euro)");
 	}
 
 	@Override

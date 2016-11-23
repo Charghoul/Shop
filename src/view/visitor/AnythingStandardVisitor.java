@@ -110,9 +110,6 @@ public abstract class AnythingStandardVisitor implements AnythingVisitor {
     public void handleHinversand(HinversandView hinversand) throws ModelException{
         this.standardHandling(hinversand);
     }
-    public void handleIntegerWrapper(IntegerWrapperView integerWrapper) throws ModelException{
-        this.standardHandling(integerWrapper);
-    }
     public void handleactivated(activatedView activated) throws ModelException{
         this.standardHandling(activated);
     }

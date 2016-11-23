@@ -6,6 +6,7 @@ import model.visitor.*;
 public interface Lieferart4Public extends Anything, SubjInterface, AbstractPersistentProxi {
     
     public long getLieferzeit() throws PersistenceException ;
+    public long getPreis() throws PersistenceException ;
     
     public void accept(AnythingVisitor visitor) throws PersistenceException;
     public <R> R accept(AnythingReturnVisitor<R>  visitor) throws PersistenceException;
@@ -18,7 +19,7 @@ public interface Lieferart4Public extends Anything, SubjInterface, AbstractPersi
     
     public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
 				throws PersistenceException;
-    public void aendereLieferart(final long lieferzeit, final common.Fraction preis) 
+    public void aendereLieferart(final long lieferzeit, final long preis) 
 				throws model.ExcAlreadyExists, PersistenceException;
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException;

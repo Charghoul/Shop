@@ -25,17 +25,17 @@ public class KontoFacade{
 	}
 
     /* If idCreateIfLessZero is negative, a new id is generated. */
-    public PersistentKonto newKonto(long kontostand,long limit,long idCreateIfLessZero) throws PersistenceException {
+    public PersistentKonto newKonto(long kontostand,long limit,long reserviert,long idCreateIfLessZero) throws PersistenceException {
         if(idCreateIfLessZero > 0) return (PersistentKonto)PersistentProxi.createProxi(idCreateIfLessZero, 146);
         long id = ConnectionHandler.getTheConnectionHandler().theKontoFacade.getNextId();
-        Konto result = new Konto(kontostand,limit,null,null,id);
+        Konto result = new Konto(kontostand,limit,reserviert,null,null,id);
         Cache.getTheCache().put(result);
         return (PersistentKonto)PersistentProxi.createProxi(id, 146);
     }
     
-    public PersistentKonto newDelayedKonto(long kontostand,long limit) throws PersistenceException {
+    public PersistentKonto newDelayedKonto(long kontostand,long limit,long reserviert) throws PersistenceException {
         long id = ConnectionHandler.getTheConnectionHandler().theKontoFacade.getNextId();
-        Konto result = new Konto(kontostand,limit,null,null,id);
+        Konto result = new Konto(kontostand,limit,reserviert,null,null,id);
         Cache.getTheCache().put(result);
         return (PersistentKonto)PersistentProxi.createProxi(id, 146);
     }
@@ -53,6 +53,9 @@ public class KontoFacade{
         
     }
     public void limitSet(long KontoId, long limitVal) throws PersistenceException {
+        
+    }
+    public void reserviertSet(long KontoId, long reserviertVal) throws PersistenceException {
         
     }
     public void subServiceSet(long KontoId, SubjInterface subServiceVal) throws PersistenceException {

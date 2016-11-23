@@ -36,6 +36,17 @@ public  class RemoteServiceKunde extends RemoteServiceShop {
         }
     }
     
+    public synchronized java.util.HashMap<?,?> lieferart_Path_In_Vorbestellen(){
+        try {
+            LieferartManager4Public result = ((PersistentServiceKunde)this.server).lieferart_Path_In_Vorbestellen();
+            return createOKResult(result, 1, this);
+        }catch(PersistenceException pe){
+            return createExceptionResult(pe);
+        }catch(model.UserException e0){
+            return createExceptionResult(e0, this);
+        }
+    }
+    
     public synchronized java.util.HashMap<?,?> serviceKunde_Menu_Filter(String anythingProxiString){
         try {
             Anything anything = (Anything)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(anythingProxiString));
@@ -140,10 +151,11 @@ public  class RemoteServiceKunde extends RemoteServiceShop {
         }
     }
     
-    public synchronized java.util.HashMap<?,?> vorbestellen(String einkaufsManagerProxiString){
+    public synchronized java.util.HashMap<?,?> vorbestellen(String einkaufsManagerProxiString, String lieferartProxiString){
         try {
             PersistentEinkaufsManager einkaufsManager = (PersistentEinkaufsManager)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(einkaufsManagerProxiString));
-            ((PersistentServiceKunde)this.server).vorbestellen(einkaufsManager);
+            PersistentLieferart lieferart = (PersistentLieferart)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(lieferartProxiString));
+            ((PersistentServiceKunde)this.server).vorbestellen(einkaufsManager, lieferart);
             return createOKResult();
         }catch(PersistenceException pe){
             return createExceptionResult(pe);

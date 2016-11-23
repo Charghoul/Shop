@@ -331,6 +331,10 @@ public class ServiceKunde extends model.ServiceShop implements PersistentService
 				throws model.UserException, PersistenceException{
         	return getThis().getLieferartManager();
     }
+    public LieferartManager4Public lieferart_Path_In_Vorbestellen() 
+				throws model.UserException, PersistenceException{
+        	return getThis().getLieferartManager();
+    }
     public synchronized void register(final ObsInterface observee) 
 				throws PersistenceException{
         SubjInterface subService = getThis().getSubService();
@@ -380,7 +384,6 @@ public class ServiceKunde extends model.ServiceShop implements PersistentService
     }
     public void allesZuruecksenden(final Bestellung4Public bestellung) 
 				throws PersistenceException{
-        getThis().getKonto().abbuchen(bestellung.getWarenwert() /100 * LieferartManager.getTheLieferartManager().getRueckversandGebuehr());
         bestellung.allesZuruecksenden();
         getThis().signalChanged(true);
     }
@@ -432,10 +435,12 @@ public class ServiceKunde extends model.ServiceShop implements PersistentService
 
         getThis().setProduktKatalog(ProduktKatalog.getTheProduktKatalog());
         getThis().setLieferartManager(LieferartManager.getTheLieferartManager());
-        BestellManager4Public temp = BestellManager.createBestellManager();
+        Konto4Public k = Konto.createKonto(4999, 0, 0);
+        getThis().setKonto(k);
+        BestellManager4Public temp = BestellManager.createBestellManager(k);
         getThis().setBestellManager(temp);
         getThis().setEinkaufsManager(EinkaufsManager.createEinkaufsManager(temp));
-        getThis().setKonto(Konto.createKonto(4999,0));
+        
     }
     public void initializeOnInstantiation() 
 				throws PersistenceException{
@@ -446,9 +451,9 @@ public class ServiceKunde extends model.ServiceShop implements PersistentService
         getThis().getEinkaufsManager().neuePosition(artikel, menge);
         getThis().signalChanged(true);
     }
-    public void vorbestellen(final EinkaufsManager4Public einkaufsManager) 
+    public void vorbestellen(final EinkaufsManager4Public einkaufsManager, final Lieferart4Public lieferart) 
 				throws PersistenceException{
-       einkaufsManager.vorbestellen(getThis());
+       einkaufsManager.vorbestellen(lieferart,getThis());
         getThis().signalChanged(true);
     }
     public void zuEinkaufswagenHinzufuegen(final Artikel4Public artikel, final long menge) 
@@ -458,7 +463,6 @@ public class ServiceKunde extends model.ServiceShop implements PersistentService
     }
     public void zuruecksenden(final PositionInBestellung4Public position) 
 				throws PersistenceException{
-        getKonto().abbuchen((position.getArtikel().getPreis() * position.getMenge())/100 * 5);
         position.zuruecksenden(getThis());
         getThis().signalChanged(true);
     }

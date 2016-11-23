@@ -223,7 +223,7 @@ public class LieferartManager extends PersistentObject implements PersistentLief
     
     // Start of section that contains operations that must be implemented.
     
-    public void aendereLieferart(final Lieferart4Public lieferart, final String name, final long lieferzeit, final common.Fraction preis) 
+    public void aendereLieferart(final Lieferart4Public lieferart, final String name, final long lieferzeit, final long preis) 
 				throws model.ExcAlreadyExists, PersistenceException{
         lieferart.aendereLieferart(lieferzeit, preis);
         
@@ -246,7 +246,7 @@ public class LieferartManager extends PersistentObject implements PersistentLief
 				throws PersistenceException{
         
     }
-    public void neueLieferart(final String name, final long lieferzeit, final common.Fraction preis) 
+    public void neueLieferart(final String name, final long lieferzeit, final long preis) 
 				throws model.ExcAlreadyExists, PersistenceException{
         LieferartSearchList lieferartSearchList = Lieferart.getLieferartByName(name);
         if(lieferartSearchList.iterator().hasNext()){

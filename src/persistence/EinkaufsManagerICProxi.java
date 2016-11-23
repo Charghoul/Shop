@@ -91,9 +91,9 @@ public class EinkaufsManagerICProxi extends PersistentInCacheProxiOptimistic imp
 				throws PersistenceException{
         ((PersistentEinkaufsManager)this.getTheObject()).updateObservers(event);
     }
-    public void vorbestellen(final Invoker invoker) 
+    public void vorbestellen(final Lieferart4Public lieferart, final Invoker invoker) 
 				throws PersistenceException{
-        ((PersistentEinkaufsManager)this.getTheObject()).vorbestellen(invoker);
+        ((PersistentEinkaufsManager)this.getTheObject()).vorbestellen(lieferart, invoker);
     }
     public void bestellen(final Lieferart4Public lieferart) 
 				throws model.ExcWarenwertUeberKontoguthaben, model.ExcArtikelNichtVerfuegbar, PersistenceException{
@@ -123,9 +123,9 @@ public class EinkaufsManagerICProxi extends PersistentInCacheProxiOptimistic imp
 				throws model.ExcArtikelAlreadyExists, model.ExcArtikelNochNichtVerfuegbar, model.ExcLagerbestandOverMax, PersistenceException{
         ((PersistentEinkaufsManager)this.getTheObject()).neuePosition(artikel, menge);
     }
-    public void vorbestellen() 
+    public void vorbestellen(final Lieferart4Public lieferart) 
 				throws model.ExcWarenwertUeberKontoguthaben, PersistenceException{
-        ((PersistentEinkaufsManager)this.getTheObject()).vorbestellen();
+        ((PersistentEinkaufsManager)this.getTheObject()).vorbestellen(lieferart);
     }
 
     

@@ -263,7 +263,6 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
     }
     public void artikelEntfernen(final Position4Public position) 
 				throws PersistenceException{
-        //TODO: CUSTOM artikelEntfernen überprüfung ob noch sachen auf lager und artikelstatus auslauf
 
         getThis().getWarenListe().removeAll(position);
     }
@@ -275,11 +274,10 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
         if(position != null) {
             position.verringereMenge(menge);
             long posM = position.getMenge();
-            if(position.getArtikel().getHersteller()!=null){
-                throw new ExcArtikelHatKeinenHersteller(ErrorMessages.ArtikelHatKeinenHersteller);
-            }
-            //TODO: nicht nachbestellen, wenn artikel im status "Auslauf" ist
-            if (posM < artikel.getMinLagerbestand() && artikel.getHersteller()!=null) {
+            if (posM < artikel.getMinLagerbestand() && artikel.getArtikelstatus().equals(Verkauf.getTheVerkauf())) {
+                if(position.getArtikel().getHersteller()==null){
+                    throw new ExcArtikelHatKeinenHersteller(ErrorMessages.ArtikelHatKeinenHerstellerNachlieferung);
+                }
                 getThis().nachbestellen(artikel, artikel.getMaxLagerbestand() - posM);
             }
         }

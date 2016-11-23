@@ -99,8 +99,6 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     
     public abstract void handleLieferartManager(LieferartManagerView lieferartManager) throws ModelException;
     
-    public abstract void handleIntegerWrapper(IntegerWrapperView integerWrapper) throws ModelException;
-    
     public abstract void handleWarenlager(WarenlagerView warenlager) throws ModelException;
     
     public abstract void handleArtikelstatus(ArtikelstatusView artikelstatus) throws ModelException;

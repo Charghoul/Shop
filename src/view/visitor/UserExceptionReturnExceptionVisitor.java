@@ -15,6 +15,7 @@ public interface UserExceptionReturnExceptionVisitor<R, E extends view.UserExcep
     public R handleExcEinkaufslisteNichtVerfuegbar(ExcEinkaufslisteNichtVerfuegbar excEinkaufslisteNichtVerfuegbar) throws ModelException, E;
     public R handleExcHasChildren(ExcHasChildren excHasChildren) throws ModelException, E;
     public R handleExcHasNoParent(ExcHasNoParent excHasNoParent) throws ModelException, E;
+    public R handleExcIllogicalDataEntry(ExcIllogicalDataEntry excIllogicalDataEntry) throws ModelException, E;
     public R handleExcInconsistentStatusChange(ExcInconsistentStatusChange excInconsistentStatusChange) throws ModelException, E;
     public R handleExcLagerbestandOverMax(ExcLagerbestandOverMax excLagerbestandOverMax) throws ModelException, E;
     public R handleExcLagerbestandUnderZero(ExcLagerbestandUnderZero excLagerbestandUnderZero) throws ModelException, E;

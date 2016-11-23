@@ -15,6 +15,7 @@ public interface UserExceptionExceptionVisitor<E extends view.UserException> {
     public void handleExcEinkaufslisteNichtVerfuegbar(ExcEinkaufslisteNichtVerfuegbar excEinkaufslisteNichtVerfuegbar) throws ModelException, E;
     public void handleExcHasChildren(ExcHasChildren excHasChildren) throws ModelException, E;
     public void handleExcHasNoParent(ExcHasNoParent excHasNoParent) throws ModelException, E;
+    public void handleExcIllogicalDataEntry(ExcIllogicalDataEntry excIllogicalDataEntry) throws ModelException, E;
     public void handleExcInconsistentStatusChange(ExcInconsistentStatusChange excInconsistentStatusChange) throws ModelException, E;
     public void handleExcLagerbestandOverMax(ExcLagerbestandOverMax excLagerbestandOverMax) throws ModelException, E;
     public void handleExcLagerbestandUnderZero(ExcLagerbestandUnderZero excLagerbestandUnderZero) throws ModelException, E;

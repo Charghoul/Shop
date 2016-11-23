@@ -7,6 +7,7 @@ public interface Konto4Public extends Anything, SubjInterface, AbstractPersisten
     
     public long getKontostand() throws PersistenceException ;
     public long getLimit() throws PersistenceException ;
+    public long getReserviert() throws PersistenceException ;
     
     public void accept(AnythingVisitor visitor) throws PersistenceException;
     public <R> R accept(AnythingReturnVisitor<R>  visitor) throws PersistenceException;
@@ -30,6 +31,10 @@ public interface Konto4Public extends Anything, SubjInterface, AbstractPersisten
     public void initializeOnCreation() 
 				throws PersistenceException;
     public void initializeOnInstantiation() 
+				throws PersistenceException;
+    public void reserviere(final long betrag) 
+				throws PersistenceException;
+    public void verringereReserviert(final long betrag) 
 				throws PersistenceException;
 
 }

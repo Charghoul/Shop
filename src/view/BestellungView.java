@@ -14,6 +14,8 @@ public interface BestellungView extends Anything, AbstractViewRoot {
     public void setWarenwert(long newValue) throws ModelException ;
     public BestellstatusView getBestellstatus()throws ModelException;
     public void setBestellstatus(BestellstatusView newValue) throws ModelException ;
+    public LieferartView getLieferart()throws ModelException;
+    public void setLieferart(LieferartView newValue) throws ModelException ;
     
     public void accept(AnythingVisitor visitor) throws ModelException;
     public <R> R accept(AnythingReturnVisitor<R>  visitor) throws ModelException;

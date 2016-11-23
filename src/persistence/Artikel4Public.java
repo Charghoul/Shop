@@ -55,7 +55,7 @@ public interface Artikel4Public extends Komponente4Public {
     public void statusAuslauf() 
 				throws model.ExcInconsistentStatusChange, PersistenceException;
     public void statusVerkauf() 
-				throws model.ExcInconsistentStatusChange, PersistenceException;
+				throws model.ExcInconsistentStatusChange, model.ExcArtikelHatKeinenHersteller, PersistenceException;
     public void zuEinkaufswHinz(final long menge, final EinkaufsManager4Public einkaufsManager) 
 				throws model.UserException, PersistenceException;
 

@@ -15,6 +15,7 @@ public interface UserExceptionExceptionVisitor<E extends model.UserException> {
     public void handleExcEinkaufslisteNichtVerfuegbar(model.ExcEinkaufslisteNichtVerfuegbar excEinkaufslisteNichtVerfuegbar) throws PersistenceException, E;
     public void handleExcHasChildren(model.ExcHasChildren excHasChildren) throws PersistenceException, E;
     public void handleExcHasNoParent(model.ExcHasNoParent excHasNoParent) throws PersistenceException, E;
+    public void handleExcIllogicalDataEntry(model.ExcIllogicalDataEntry excIllogicalDataEntry) throws PersistenceException, E;
     public void handleExcInconsistentStatusChange(model.ExcInconsistentStatusChange excInconsistentStatusChange) throws PersistenceException, E;
     public void handleExcLagerbestandOverMax(model.ExcLagerbestandOverMax excLagerbestandOverMax) throws PersistenceException, E;
     public void handleExcLagerbestandUnderZero(model.ExcLagerbestandUnderZero excLagerbestandUnderZero) throws PersistenceException, E;

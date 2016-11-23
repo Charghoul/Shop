@@ -79,7 +79,7 @@ public class LieferartManagerProxi extends PersistentProxi implements Persistent
 				throws PersistenceException{
         ((PersistentLieferartManager)this.getTheObject()).updateObservers(event);
     }
-    public void aendereLieferart(final Lieferart4Public lieferart, final String name, final long lieferzeit, final common.Fraction preis) 
+    public void aendereLieferart(final Lieferart4Public lieferart, final String name, final long lieferzeit, final long preis) 
 				throws model.ExcAlreadyExists, PersistenceException{
         ((PersistentLieferartManager)this.getTheObject()).aendereLieferart(lieferart, name, lieferzeit, preis);
     }
@@ -99,7 +99,7 @@ public class LieferartManagerProxi extends PersistentProxi implements Persistent
 				throws PersistenceException{
         ((PersistentLieferartManager)this.getTheObject()).initializeOnInstantiation();
     }
-    public void neueLieferart(final String name, final long lieferzeit, final common.Fraction preis) 
+    public void neueLieferart(final String name, final long lieferzeit, final long preis) 
 				throws model.ExcAlreadyExists, PersistenceException{
         ((PersistentLieferartManager)this.getTheObject()).neueLieferart(name, lieferzeit, preis);
     }

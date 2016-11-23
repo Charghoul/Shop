@@ -20,7 +20,6 @@ public interface AnythingVisitor extends ArtikelstatusVisitor,BestellstatusVisit
     public void handleErrorDisplay(ErrorDisplay4Public errorDisplay) throws PersistenceException;
     public void handleHersteller(Hersteller4Public hersteller) throws PersistenceException;
     public void handleHerstellerManager(HerstellerManager4Public herstellerManager) throws PersistenceException;
-    public void handleIntegerWrapper(IntegerWrapper4Public integerWrapper) throws PersistenceException;
     public void handleKonto(Konto4Public konto) throws PersistenceException;
     public void handleKunde(Kunde4Public kunde) throws PersistenceException;
     public void handleLieferart(Lieferart4Public lieferart) throws PersistenceException;

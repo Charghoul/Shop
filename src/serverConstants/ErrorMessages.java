@@ -21,10 +21,12 @@ public class ErrorMessages {
     public static final String ProduktgruppeHasNoParent = "Diese Produktgruppe ist der Katalog und daher nicht entfernbar";
     public static final String EinkaufslisteNichtVerfuegbar = "Die Artikel sind in den Mengen aktuell nicht verfuegbar";
     public static final String ArtikelNichtVerfuegbar = " ist nicht ausreichend verfuegbar";
-    public static final String ArtikelHatKeinenHersteller = "Ein Artikel ohne Hersteller kann nicht nachgeliefert werden";
+    public static final String ArtikelHatKeinenHerstellerNachlieferung = "Ein Artikel ohne Hersteller kann nicht nachgeliefert werden";
+    public static final String ArtikelHatKeinenHerstellerVerkauf = "Ein Artikel ohne Hersteller kann nicht verkauft werden";
     public static final String ArtikelNochNichtVerfuegbar = "Dieser Artikel steht in naher Zukunft zum Verkauf bereit";
     public static final String WarenwertUeberKontoguthaben = "Der Warenwert der Bestellung (zzgl. Vorbestellungen) liegt ueber ihrem Kontoguthaben";
     public static final String AuszahlungGroesserGuthaben= "Die Auszahlungssumme ist groesser als ihr aktuelles Guthaben";
+    public static final String LagerbestandMinGroesserMax = "Der minimale Lagerbestand darf nicht groesser als der maximale sein";
 
     private ErrorMessages(){}
 }

@@ -53,7 +53,7 @@ public interface ServiceAdmin4Public extends ServiceShop4Public {
 				throws model.ExcAlreadyExists, PersistenceException;
     public void aendereHstLieferzeit(final Artikel4Public artikel, final long hstLieferzeit) 
 				throws PersistenceException;
-    public void aendereLieferart(final Lieferart4Public lieferart, final String name, final long lieferzeit, final common.Fraction preis) 
+    public void aendereLieferart(final Lieferart4Public lieferart, final String name, final long lieferzeit, final long preis) 
 				throws model.ExcAlreadyExists, PersistenceException;
     public void aendereMaxAnlieferungsVersuche(final ZeitManager4Public zeitManager, final long maxAnlieferungsVersuche) 
 				throws PersistenceException;
@@ -81,7 +81,7 @@ public interface ServiceAdmin4Public extends ServiceShop4Public {
 				throws PersistenceException;
     public void initializeOnInstantiation() 
 				throws PersistenceException;
-    public void neueLieferArt(final LieferartManager4Public lieferartManager, final String name, final long lieferzeit, final common.Fraction preis) 
+    public void neueLieferArt(final LieferartManager4Public lieferartManager, final String name, final long lieferzeit, final long preis) 
 				throws model.ExcAlreadyExists, PersistenceException;
     public void neuerArtikel(final ArtikelManager4Public artikelManager, final String artikelnummer, final String bezeichnung, final long preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
 				throws PersistenceException;

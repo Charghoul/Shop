@@ -4,6 +4,7 @@ package model;
 import model.visitor.*;
 import persistence.*;
 import serverConstants.ErrorMessages;
+import serverConstants.ToStringConstants;
 
 
 /* Additional import section end */
@@ -404,7 +405,6 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
 				throws PersistenceException{
         //TODO: wenn hersteller hinzugefügt wurde und der bestand 0 ist - hstLieferung erstellen damit geliefert wird
         getThis().setHersteller(hersteller);
-
     }
     public void initializeOnCreation() 
 				throws PersistenceException{
@@ -434,33 +434,36 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
         });
     }
     public void statusVerkauf() 
-				throws model.ExcInconsistentStatusChange, PersistenceException{
+				throws model.ExcInconsistentStatusChange, model.ExcArtikelHatKeinenHersteller, PersistenceException{
+        //überprüfen ob Artikel Hersteller hat oder artikel vorhanden sind (falls artikel von auslauf wieder in verkauf gesetzt wird und noch etwas auf lager ist)
+        if(getThis().getHersteller() != null || Warenlager.getTheWarenlager().getWarenListe().findFirst(x -> {
+            return x.getArtikel().equals(getThis()) && x.getMenge() > 0;
+        })!=null){
+            getThis().getArtikelstatus().accept(new ArtikelstatusExceptionVisitor<ExcInconsistentStatusChange>() {
+                @Override
+                public void handleAuslauf(Auslauf4Public auslauf) throws PersistenceException, ExcInconsistentStatusChange {
+                    getThis().setArtikelstatus(Verkauf.getTheVerkauf());
+                }
 
-        //TODO: Artikel ohne hersteller kann nicht verkauft werden, da er nicht nachgeliefert wird
-        getThis().getArtikelstatus().accept(new ArtikelstatusExceptionVisitor<ExcInconsistentStatusChange>() {
-            @Override
-            public void handleAuslauf(Auslauf4Public auslauf) throws PersistenceException, ExcInconsistentStatusChange {
-                getThis().setArtikelstatus(Verkauf.getTheVerkauf());
-            }
+                @Override
+                public void handleNeuanlage(Neuanlage4Public neuanlage) throws PersistenceException, ExcInconsistentStatusChange {
+                    getThis().setArtikelstatus(Verkauf.getTheVerkauf());
+                }
 
-            @Override
-            public void handleNeuanlage(Neuanlage4Public neuanlage) throws PersistenceException, ExcInconsistentStatusChange {
-                getThis().setArtikelstatus(Verkauf.getTheVerkauf());
-            }
+                @Override
+                public void handleVerkauf(Verkauf4Public verkauf) throws PersistenceException, ExcInconsistentStatusChange {
+                    throw new ExcInconsistentStatusChange(ErrorMessages.StatusDidNotChange);
 
-            @Override
-            public void handleVerkauf(Verkauf4Public verkauf) throws PersistenceException, ExcInconsistentStatusChange {
-                throw new ExcInconsistentStatusChange(ErrorMessages.StatusDidNotChange);
-
-            }
-        });
+                }
+            });
+        }
+        else throw new ExcArtikelHatKeinenHersteller(ErrorMessages.ArtikelHatKeinenHerstellerVerkauf);
     }
     public void zuEinkaufswHinz(final long menge, final EinkaufsManager4Public einkaufsManager) 
 				throws model.UserException, PersistenceException{
         einkaufsManager.neuePosition(getThis(), menge);
     }
-
-    //TODO: änern von artikeln im detail view und auch weitere in den anforderungen spezifizierte änderungen umsetzen
+    
     
     // Start of section that contains overridden operations only.
     

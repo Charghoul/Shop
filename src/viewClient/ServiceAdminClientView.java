@@ -328,7 +328,7 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
         ImageView handle(AendereArtikelPRMTRArtikelPRMTRIntegerPRMTRIntegerPRMTRIntegerPRMTRIntegerPRMTRMenuItem menuItem);
         ImageView handle(AendereHerstellerPRMTRHerstellerPRMTRStringPRMTRMenuItem menuItem);
         ImageView handle(AendereHstLieferzeitPRMTRArtikelPRMTRIntegerPRMTRMenuItem menuItem);
-        ImageView handle(AendereLieferartPRMTRLieferartPRMTRStringPRMTRIntegerPRMTRFractionPRMTRMenuItem menuItem);
+        ImageView handle(AendereLieferartPRMTRLieferartPRMTRStringPRMTRIntegerPRMTRIntegerPRMTRMenuItem menuItem);
         ImageView handle(AendereMaxAnlieferungsVersuchePRMTRZeitManagerPRMTRIntegerPRMTRMenuItem menuItem);
         ImageView handle(AendereMengePRMTRPositionPRMTRIntegerPRMTRMenuItem menuItem);
         ImageView handle(AendereRueckversandGebuehrPRMTRLieferartManagerPRMTRIntegerPRMTRMenuItem menuItem);
@@ -341,7 +341,7 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
         ImageView handle(ErhoeheMengePRMTRPositionPRMTRIntegerPRMTRMenuItem menuItem);
         ImageView handle(StatusVerkaufPRMTRArtikelPRMTRMenuItem menuItem);
         ImageView handle(HerstellerHinzufuegenPRMTRArtikelPRMTRHerstellerPRMTRMenuItem menuItem);
-        ImageView handle(NeueLieferArtPRMTRLieferartManagerPRMTRStringPRMTRIntegerPRMTRFractionPRMTRMenuItem menuItem);
+        ImageView handle(NeueLieferArtPRMTRLieferartManagerPRMTRStringPRMTRIntegerPRMTRIntegerPRMTRMenuItem menuItem);
         ImageView handle(NeuerArtikelPRMTRArtikelManagerPRMTRStringPRMTRStringPRMTRIntegerPRMTRIntegerPRMTRIntegerPRMTRIntegerPRMTRMenuItem menuItem);
         ImageView handle(NeuerHerstellerPRMTRHerstellerManagerPRMTRStringPRMTRMenuItem menuItem);
         ImageView handle(ProduktgruppeEntfernenPRMTRProduktgruppePRMTRMenuItem menuItem);
@@ -374,7 +374,7 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
             return visitor.handle(this);
         }
     }
-    private class AendereLieferartPRMTRLieferartPRMTRStringPRMTRIntegerPRMTRFractionPRMTRMenuItem extends ServiceAdminMenuItem{
+    private class AendereLieferartPRMTRLieferartPRMTRStringPRMTRIntegerPRMTRIntegerPRMTRMenuItem extends ServiceAdminMenuItem{
         protected ImageView accept(MenuItemVisitor visitor){
             return visitor.handle(this);
         }
@@ -439,7 +439,7 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
             return visitor.handle(this);
         }
     }
-    private class NeueLieferArtPRMTRLieferartManagerPRMTRStringPRMTRIntegerPRMTRFractionPRMTRMenuItem extends ServiceAdminMenuItem{
+    private class NeueLieferArtPRMTRLieferartManagerPRMTRStringPRMTRIntegerPRMTRIntegerPRMTRMenuItem extends ServiceAdminMenuItem{
         protected ImageView accept(MenuItemVisitor visitor){
             return visitor.handle(this);
         }
@@ -508,11 +508,11 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
                     }
                 });
                 result.getItems().add(item);
-                item = new NeueLieferArtPRMTRLieferartManagerPRMTRStringPRMTRIntegerPRMTRFractionPRMTRMenuItem();
+                item = new NeueLieferArtPRMTRLieferartManagerPRMTRStringPRMTRIntegerPRMTRIntegerPRMTRMenuItem();
                 item.setText("neueLieferArt ... ");
                 item.setOnAction(new EventHandler<ActionEvent>(){
                     public void handle(javafx.event.ActionEvent e) {
-                        final ServiceAdminNeueLieferArtLieferartManagerStringIntegerFractionMssgWizard wizard = new ServiceAdminNeueLieferArtLieferartManagerStringIntegerFractionMssgWizard("neueLieferArt");
+                        final ServiceAdminNeueLieferArtLieferartManagerStringIntegerIntegerMssgWizard wizard = new ServiceAdminNeueLieferArtLieferartManagerStringIntegerIntegerMssgWizard("neueLieferArt");
                         wizard.setFirstArgument((LieferartManagerView)selected);
                         wizard.setWidth(getNavigationPanel().getWidth());
                         wizard.showAndWait();
@@ -593,11 +593,11 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
                 result.getItems().add(item);
             }
             if (selected instanceof LieferartView){
-                item = new AendereLieferartPRMTRLieferartPRMTRStringPRMTRIntegerPRMTRFractionPRMTRMenuItem();
+                item = new AendereLieferartPRMTRLieferartPRMTRStringPRMTRIntegerPRMTRIntegerPRMTRMenuItem();
                 item.setText("aendereLieferart ... ");
                 item.setOnAction(new EventHandler<ActionEvent>(){
                     public void handle(javafx.event.ActionEvent e) {
-                        final ServiceAdminAendereLieferartLieferartStringIntegerFractionMssgWizard wizard = new ServiceAdminAendereLieferartLieferartStringIntegerFractionMssgWizard("aendereLieferart");
+                        final ServiceAdminAendereLieferartLieferartStringIntegerIntegerMssgWizard wizard = new ServiceAdminAendereLieferartLieferartStringIntegerIntegerMssgWizard("aendereLieferart");
                         wizard.setFirstArgument((LieferartView)selected);
                         wizard.setWidth(getNavigationPanel().getWidth());
                         wizard.showAndWait();
@@ -1051,15 +1051,15 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
 		
 	}
 
-	class ServiceAdminAendereLieferartLieferartStringIntegerFractionMssgWizard extends Wizard {
+	class ServiceAdminAendereLieferartLieferartStringIntegerIntegerMssgWizard extends Wizard {
 
-		protected ServiceAdminAendereLieferartLieferartStringIntegerFractionMssgWizard(String operationName){
+		protected ServiceAdminAendereLieferartLieferartStringIntegerIntegerMssgWizard(String operationName){
 			super(ServiceAdminClientView.this);
 			getOkButton().setText(operationName);
-			getOkButton().setGraphic(new AendereLieferartPRMTRLieferartPRMTRStringPRMTRIntegerPRMTRFractionPRMTRMenuItem ().getGraphic());
+			getOkButton().setGraphic(new AendereLieferartPRMTRLieferartPRMTRStringPRMTRIntegerPRMTRIntegerPRMTRMenuItem ().getGraphic());
 		}
 		protected void initialize(){
-			this.helpFileName = "ServiceAdminAendereLieferartLieferartStringIntegerFractionMssgWizard.help";
+			this.helpFileName = "ServiceAdminAendereLieferartLieferartStringIntegerIntegerMssgWizard.help";
 			super.initialize();		
 		}
 				
@@ -1067,7 +1067,7 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
 			try {
 				getConnection().aendereLieferart(firstArgument, ((StringSelectionPanel)getParametersPanel().getChildren().get(0)).getResult(),
 									((IntegerSelectionPanel)getParametersPanel().getChildren().get(1)).getResult().longValue(),
-									((FractionSelectionPanel)getParametersPanel().getChildren().get(2)).getResult());
+									((IntegerSelectionPanel)getParametersPanel().getChildren().get(2)).getResult().longValue());
 				getConnection().setEagerRefresh();
 				this.close();	
 			} catch(ModelException me){
@@ -1088,7 +1088,7 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
 		protected void addParameters(){
 			getParametersPanel().getChildren().add(new StringSelectionPanel("name", this));
 			getParametersPanel().getChildren().add(new IntegerSelectionPanel("lieferzeit", this));
-			getParametersPanel().getChildren().add(new FractionSelectionPanel("preis", this));		
+			getParametersPanel().getChildren().add(new IntegerSelectionPanel("preis", this));		
 		}	
 		protected void handleDependencies(int i) {
 		}
@@ -1705,15 +1705,15 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
 		
 	}
 
-	class ServiceAdminNeueLieferArtLieferartManagerStringIntegerFractionMssgWizard extends Wizard {
+	class ServiceAdminNeueLieferArtLieferartManagerStringIntegerIntegerMssgWizard extends Wizard {
 
-		protected ServiceAdminNeueLieferArtLieferartManagerStringIntegerFractionMssgWizard(String operationName){
+		protected ServiceAdminNeueLieferArtLieferartManagerStringIntegerIntegerMssgWizard(String operationName){
 			super(ServiceAdminClientView.this);
 			getOkButton().setText(operationName);
-			getOkButton().setGraphic(new NeueLieferArtPRMTRLieferartManagerPRMTRStringPRMTRIntegerPRMTRFractionPRMTRMenuItem ().getGraphic());
+			getOkButton().setGraphic(new NeueLieferArtPRMTRLieferartManagerPRMTRStringPRMTRIntegerPRMTRIntegerPRMTRMenuItem ().getGraphic());
 		}
 		protected void initialize(){
-			this.helpFileName = "ServiceAdminNeueLieferArtLieferartManagerStringIntegerFractionMssgWizard.help";
+			this.helpFileName = "ServiceAdminNeueLieferArtLieferartManagerStringIntegerIntegerMssgWizard.help";
 			super.initialize();		
 		}
 				
@@ -1721,7 +1721,7 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
 			try {
 				getConnection().neueLieferArt(firstArgument, ((StringSelectionPanel)getParametersPanel().getChildren().get(0)).getResult(),
 									((IntegerSelectionPanel)getParametersPanel().getChildren().get(1)).getResult().longValue(),
-									((FractionSelectionPanel)getParametersPanel().getChildren().get(2)).getResult());
+									((IntegerSelectionPanel)getParametersPanel().getChildren().get(2)).getResult().longValue());
 				getConnection().setEagerRefresh();
 				this.close();	
 			} catch(ModelException me){
@@ -1742,7 +1742,7 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
 		protected void addParameters(){
 			getParametersPanel().getChildren().add(new StringSelectionPanel("name", this));
 			getParametersPanel().getChildren().add(new IntegerSelectionPanel("lieferzeit", this));
-			getParametersPanel().getChildren().add(new FractionSelectionPanel("preis", this));		
+			getParametersPanel().getChildren().add(new IntegerSelectionPanel("preis", this));		
 		}	
 		protected void handleDependencies(int i) {
 		}

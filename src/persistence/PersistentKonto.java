@@ -5,6 +5,7 @@ public interface PersistentKonto extends Anything, SubjInterface, AbstractPersis
     
     public void setKontostand(long newValue) throws PersistenceException ;
     public void setLimit(long newValue) throws PersistenceException ;
+    public void setReserviert(long newValue) throws PersistenceException ;
     public SubjInterface getSubService() throws PersistenceException ;
     public void setSubService(SubjInterface newValue) throws PersistenceException ;
     public PersistentKonto getThis() throws PersistenceException ;

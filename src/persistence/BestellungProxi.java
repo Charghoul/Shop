@@ -27,6 +27,12 @@ public class BestellungProxi extends PersistentProxi implements PersistentBestel
     public void setBestellManager(BestellManager4Public newValue) throws PersistenceException {
         ((PersistentBestellung)this.getTheObject()).setBestellManager(newValue);
     }
+    public KndLieferung4Public getKndLieferung() throws PersistenceException {
+        return ((PersistentBestellung)this.getTheObject()).getKndLieferung();
+    }
+    public void setKndLieferung(KndLieferung4Public newValue) throws PersistenceException {
+        ((PersistentBestellung)this.getTheObject()).setKndLieferung(newValue);
+    }
     public long getBestellID() throws PersistenceException {
         return ((PersistentBestellung)this.getTheObject()).getBestellID();
     }
@@ -44,6 +50,12 @@ public class BestellungProxi extends PersistentProxi implements PersistentBestel
     }
     public void setBestellstatus(Bestellstatus4Public newValue) throws PersistenceException {
         ((PersistentBestellung)this.getTheObject()).setBestellstatus(newValue);
+    }
+    public Lieferart4Public getLieferart() throws PersistenceException {
+        return ((PersistentBestellung)this.getTheObject()).getLieferart();
+    }
+    public void setLieferart(Lieferart4Public newValue) throws PersistenceException {
+        ((PersistentBestellung)this.getTheObject()).setLieferart(newValue);
     }
     public SubjInterface getSubService() throws PersistenceException {
         return ((PersistentBestellung)this.getTheObject()).getSubService();
@@ -128,6 +140,10 @@ public class BestellungProxi extends PersistentProxi implements PersistentBestel
     public void initializeOnInstantiation() 
 				throws PersistenceException{
         ((PersistentBestellung)this.getTheObject()).initializeOnInstantiation();
+    }
+    public void lieferungHinzufuegen(final KndLieferung4Public lieferung) 
+				throws PersistenceException{
+        ((PersistentBestellung)this.getTheObject()).lieferungHinzufuegen(lieferung);
     }
     public void listeHinzufuegen(final PositionSearchList positionsListe) 
 				throws PersistenceException{

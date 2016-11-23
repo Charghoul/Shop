@@ -413,10 +413,7 @@ public class ServiceAdmin extends model.ServiceShop implements PersistentService
     
     
     // Start of section that contains operations that must be implemented.
-
-    //TODO: schauen was wirklich active sein muss und was nicht - transaktion nötig
-
-
+    
     public void aendereAnnahmezeit(final ZeitManager4Public zeitManager, final long neueZeit) 
 				throws PersistenceException{
         zeitManager.aendereAnnahmezeit(neueZeit);
@@ -438,7 +435,7 @@ public class ServiceAdmin extends model.ServiceShop implements PersistentService
 				throws PersistenceException{
         artikel.setHstLieferzeit(hstLieferzeit);
     }
-    public void aendereLieferart(final Lieferart4Public lieferart, final String name, final long lieferzeit, final common.Fraction preis) 
+    public void aendereLieferart(final Lieferart4Public lieferart, final String name, final long lieferzeit, final long preis) 
 				throws model.ExcAlreadyExists, PersistenceException{
         lieferart.aendereLieferart(lieferzeit, preis);
         getThis().signalChanged(true);
@@ -533,7 +530,8 @@ public class ServiceAdmin extends model.ServiceShop implements PersistentService
         ((PersistentArtikelManager)getThis().getArtikelManager()).getArtikelListe().add(art1);
         ((PersistentArtikelManager)getThis().getArtikelManager()).getArtikelListe().add(art2);
         ((PersistentArtikelManager)getThis().getArtikelManager()).getArtikelListe().add(art3);
-        getThis().getLieferartManager().getLieferartenListe().add(Lieferart.createLieferart("Standard", 3, Fraction.parse("2/1")));
+        getThis().getLieferartManager().getLieferartenListe().add(Lieferart.createLieferart("Standard", 3, 199));
+        getThis().getLieferartManager().getLieferartenListe().add(Lieferart.createLieferart("Express", 3, 499));
         ((PersistentHerstellerManager)getThis().getHerstellerManager()).getHerstellerListe().add(Hersteller.createHersteller("Nintendo"));
         Server.createServer("test","test",0,new Timestamp(new Date().getTime()));
         try {
@@ -559,7 +557,7 @@ public class ServiceAdmin extends model.ServiceShop implements PersistentService
 				throws PersistenceException{
         super.initializeOnInstantiation();
     }
-    public void neueLieferArt(final LieferartManager4Public lieferartManager, final String name, final long lieferzeit, final common.Fraction preis) 
+    public void neueLieferArt(final LieferartManager4Public lieferartManager, final String name, final long lieferzeit, final long preis) 
 				throws model.ExcAlreadyExists, PersistenceException{
         lieferartManager.neueLieferart(name, lieferzeit, preis);
             getThis().signalChanged(true);

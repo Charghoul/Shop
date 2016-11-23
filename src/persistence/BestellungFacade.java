@@ -28,14 +28,14 @@ public class BestellungFacade{
     public PersistentBestellung newBestellung(long bestellID,long warenwert,long idCreateIfLessZero) throws PersistenceException {
         if(idCreateIfLessZero > 0) return (PersistentBestellung)PersistentProxi.createProxi(idCreateIfLessZero, 136);
         long id = ConnectionHandler.getTheConnectionHandler().theBestellungFacade.getNextId();
-        Bestellung result = new Bestellung(null,bestellID,warenwert,null,null,null,id);
+        Bestellung result = new Bestellung(null,null,bestellID,warenwert,null,null,null,null,id);
         Cache.getTheCache().put(result);
         return (PersistentBestellung)PersistentProxi.createProxi(id, 136);
     }
     
     public PersistentBestellung newDelayedBestellung(long bestellID,long warenwert) throws PersistenceException {
         long id = ConnectionHandler.getTheConnectionHandler().theBestellungFacade.getNextId();
-        Bestellung result = new Bestellung(null,bestellID,warenwert,null,null,null,id);
+        Bestellung result = new Bestellung(null,null,bestellID,warenwert,null,null,null,null,id);
         Cache.getTheCache().put(result);
         return (PersistentBestellung)PersistentProxi.createProxi(id, 136);
     }
@@ -72,6 +72,9 @@ public class BestellungFacade{
     public void bestellManagerSet(long BestellungId, BestellManager4Public bestellManagerVal) throws PersistenceException {
         
     }
+    public void kndLieferungSet(long BestellungId, KndLieferung4Public kndLieferungVal) throws PersistenceException {
+        
+    }
     public void bestellIDSet(long BestellungId, long bestellIDVal) throws PersistenceException {
         
     }
@@ -79,6 +82,9 @@ public class BestellungFacade{
         
     }
     public void bestellstatusSet(long BestellungId, Bestellstatus4Public bestellstatusVal) throws PersistenceException {
+        
+    }
+    public void lieferartSet(long BestellungId, Lieferart4Public lieferartVal) throws PersistenceException {
         
     }
     public void subServiceSet(long BestellungId, SubjInterface subServiceVal) throws PersistenceException {

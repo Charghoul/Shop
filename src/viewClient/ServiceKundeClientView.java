@@ -310,7 +310,7 @@ public class ServiceKundeClientView extends BorderPane implements ExceptionAndEv
         ImageView handle(EinzahlenPRMTRKontoPRMTRIntegerPRMTRMenuItem menuItem);
         ImageView handle(EntfernePositionPRMTRPositionPRMTRMenuItem menuItem);
         ImageView handle(NeuePositionPRMTREinkaufsManagerPRMTRArtikelPRMTRIntegerPRMTRMenuItem menuItem);
-        ImageView handle(VorbestellenPRMTREinkaufsManagerPRMTRMenuItem menuItem);
+        ImageView handle(VorbestellenPRMTREinkaufsManagerPRMTRLieferartPRMTRMenuItem menuItem);
         ImageView handle(ZuEinkaufswagenHinzufuegenPRMTRArtikelPRMTRIntegerPRMTRMenuItem menuItem);
         ImageView handle(ZuruecksendenPRMTRPositionInBestellungPRMTRMenuItem menuItem);
     }
@@ -360,7 +360,7 @@ public class ServiceKundeClientView extends BorderPane implements ExceptionAndEv
             return visitor.handle(this);
         }
     }
-    private class VorbestellenPRMTREinkaufsManagerPRMTRMenuItem extends ServiceKundeMenuItem{
+    private class VorbestellenPRMTREinkaufsManagerPRMTRLieferartPRMTRMenuItem extends ServiceKundeMenuItem{
         protected ImageView accept(MenuItemVisitor visitor){
             return visitor.handle(this);
         }
@@ -495,24 +495,14 @@ public class ServiceKundeClientView extends BorderPane implements ExceptionAndEv
                     }
                 });
                 result.getItems().add(item);
-                item = new VorbestellenPRMTREinkaufsManagerPRMTRMenuItem();
-                item.setText("vorbestellen");
+                item = new VorbestellenPRMTREinkaufsManagerPRMTRLieferartPRMTRMenuItem();
+                item.setText("vorbestellen ... ");
                 item.setOnAction(new EventHandler<ActionEvent>(){
                     public void handle(javafx.event.ActionEvent e) {
-                        Alert confirm = new Alert(AlertType.CONFIRMATION);
-                        confirm.setTitle(GUIConstants.ConfirmButtonText);
-                        confirm.setHeaderText(null);
-                        confirm.setContentText("vorbestellen" + GUIConstants.ConfirmQuestionMark);
-                        Optional<ButtonType> buttonResult = confirm.showAndWait();
-                        if (buttonResult.get() == ButtonType.OK) {
-                            try {
-                                getConnection().vorbestellen((EinkaufsManagerView)selected);
-                                getConnection().setEagerRefresh();
-                                
-                            }catch(ModelException me){
-                                handleException(me);
-                            }
-                        }
+                        final ServiceKundeVorbestellenEinkaufsManagerLieferartMssgWizard wizard = new ServiceKundeVorbestellenEinkaufsManagerLieferartMssgWizard("vorbestellen");
+                        wizard.setFirstArgument((EinkaufsManagerView)selected);
+                        wizard.setWidth(getNavigationPanel().getWidth());
+                        wizard.showAndWait();
                     }
                 });
                 result.getItems().add(item);
@@ -864,6 +854,65 @@ public class ServiceKundeClientView extends BorderPane implements ExceptionAndEv
 				return;
 			 }
 			getParametersPanel().getChildren().add(new IntegerSelectionPanel("menge", this));		
+		}	
+		protected void handleDependencies(int i) {
+		}
+		
+		
+		private EinkaufsManagerView firstArgument; 
+	
+		public void setFirstArgument(EinkaufsManagerView firstArgument){
+			this.firstArgument = firstArgument;
+			this.setTitle(this.firstArgument.toString());
+			this.check();
+		}
+		
+		
+	}
+
+	class ServiceKundeVorbestellenEinkaufsManagerLieferartMssgWizard extends Wizard {
+
+		protected ServiceKundeVorbestellenEinkaufsManagerLieferartMssgWizard(String operationName){
+			super(ServiceKundeClientView.this);
+			getOkButton().setText(operationName);
+			getOkButton().setGraphic(new VorbestellenPRMTREinkaufsManagerPRMTRLieferartPRMTRMenuItem ().getGraphic());
+		}
+		protected void initialize(){
+			this.helpFileName = "ServiceKundeVorbestellenEinkaufsManagerLieferartMssgWizard.help";
+			super.initialize();		
+		}
+				
+		protected void perform() {
+			try {
+				getConnection().vorbestellen(firstArgument, (LieferartView)((ObjectSelectionPanel)getParametersPanel().getChildren().get(0)).getResult());
+				getConnection().setEagerRefresh();
+				this.close();	
+			} catch(ModelException me){
+				handleException(me);
+				this.close();
+			}
+			
+		}
+		protected String checkCompleteParameterSet(){
+			return null;
+		}
+		protected boolean isModifying () {
+			return false;
+		}
+		protected void addParameters(){
+			try{
+				final ObjectSelectionPanel panel3 = new ObjectSelectionPanel("lieferart", "view.LieferartView", null, this);
+				getParametersPanel().getChildren().add(panel3);
+				panel3.setBrowserRoot((ViewRoot)getConnection().lieferart_Path_In_Vorbestellen());
+			}catch(ModelException me){;
+				handleException(me);
+				close();
+				return;
+			 }catch(UserException ue){;
+				handleUserException(ue);
+				close();
+				return;
+			 }		
 		}	
 		protected void handleDependencies(int i) {
 		}
