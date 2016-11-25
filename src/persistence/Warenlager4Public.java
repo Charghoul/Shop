@@ -39,7 +39,7 @@ public interface Warenlager4Public extends Anything, SubjInterface, AbstractPers
     public void initializeOnInstantiation() 
 				throws PersistenceException;
     public void nachbestellen(final Artikel4Public artikel, final long menge) 
-				throws PersistenceException;
+				throws model.ExcArtikelHatKeinenHersteller, PersistenceException;
     public Position4Public nichtVerfPruefen(final PositionSearchList positionsListe) 
 				throws PersistenceException;
 

@@ -93,7 +93,7 @@ singleton Warenlager{
 	event active void artikelEinlagern(Artikel artikel, Integer menge) throws ExcLagerbestandOverMax;
 	active void artikelEntfernen##artEntn(Position position);
 	Position nichtVerfPruefen(Position ** positionsListe);
-	void nachbestellen(Artikel artikel, Integer menge);
+	void nachbestellen(Artikel artikel, Integer menge) throws ExcArtikelHatKeinenHersteller;
 }
 
 singleton ZeitManager {

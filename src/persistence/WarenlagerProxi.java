@@ -114,7 +114,7 @@ public class WarenlagerProxi extends PersistentProxi implements PersistentWarenl
         ((PersistentWarenlager)this.getTheObject()).initializeOnInstantiation();
     }
     public void nachbestellen(final Artikel4Public artikel, final long menge) 
-				throws PersistenceException{
+				throws model.ExcArtikelHatKeinenHersteller, PersistenceException{
         ((PersistentWarenlager)this.getTheObject()).nachbestellen(artikel, menge);
     }
     public Position4Public nichtVerfPruefen(final PositionSearchList positionsListe) 

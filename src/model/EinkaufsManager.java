@@ -364,7 +364,6 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
     }
     public void vorbestellen(final Lieferart4Public lieferart) 
 				throws model.ExcWarenwertUeberKontoguthaben, PersistenceException{
-        //TODO: vorbestellen implementieren - Vorbestellungsliste und abarbeitung etc
 
         long bestellungswert = getThis().gibGesamtPreis();
         if(bestellungswert + getThis().getBestellManager().getKonto().getReserviert() > getThis().getMyServiceKunde().getKonto().getKontostand()){
