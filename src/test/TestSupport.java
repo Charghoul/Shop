@@ -29,7 +29,6 @@ public class TestSupport {
         model.Verarbeitung.reset$For$Test = true;
         model.Geliefert.reset$For$Test = true;
         model.ZeitManager.reset$For$Test = true;
-        model.Vorbestellung.reset$For$Test = true;
         model.Rueckversand.reset$For$Test = true;
         model.LieferartManager.reset$For$Test = true;
         model.Hinversand.reset$For$Test = true;

@@ -2,25 +2,24 @@
 package view.objects;
 
 import view.*;
+import viewClient.*;
 import view.visitor.*;
-import viewClient.ConnectionIndex;
-import viewClient.ConnectionMaster;
-import viewClient.ExceptionAndEventHandler;
-import viewClient.ServiceKundeConnection;
 
 
 /* Additional import section end */
 
 public class ServiceKunde extends view.objects.ServiceShop implements ServiceKundeView{
     
+    protected WarenlagerView warenlager;
     protected KontoView konto;
     protected EinkaufsManagerView einkaufsManager;
     protected LieferartManagerView lieferartManager;
     protected BestellManagerView bestellManager;
     
-    public ServiceKunde(java.util.Vector<ErrorDisplayView> errors,ProduktKatalogView produktKatalog,KontoView konto,EinkaufsManagerView einkaufsManager,LieferartManagerView lieferartManager,BestellManagerView bestellManager,long id, long classId) {
+    public ServiceKunde(java.util.Vector<ErrorDisplayView> errors,ProduktKatalogView produktKatalog,WarenlagerView warenlager,KontoView konto,EinkaufsManagerView einkaufsManager,LieferartManagerView lieferartManager,BestellManagerView bestellManager,long id, long classId) {
         /* Shall not be used. Objects are created on the server only */
         super(errors,(ProduktKatalogView)produktKatalog,id, classId);
+        this.warenlager = warenlager;
         this.konto = konto;
         this.einkaufsManager = einkaufsManager;
         this.lieferartManager = lieferartManager;
@@ -35,6 +34,12 @@ public class ServiceKunde extends view.objects.ServiceShop implements ServiceKun
         return getTypeId();
     }
     
+    public WarenlagerView getWarenlager()throws ModelException{
+        return this.warenlager;
+    }
+    public void setWarenlager(WarenlagerView newValue) throws ModelException {
+        this.warenlager = newValue;
+    }
     public KontoView getKonto()throws ModelException{
         return this.konto;
     }
@@ -117,6 +122,10 @@ public class ServiceKunde extends view.objects.ServiceShop implements ServiceKun
         ProduktKatalogView produktKatalog = this.getProduktKatalog();
         if (produktKatalog != null) {
             ((ViewProxi)produktKatalog).setObject((ViewObject)resultTable.get(common.RPCConstantsAndServices.createHashtableKey(produktKatalog.getClassId(), produktKatalog.getId())));
+        }
+        WarenlagerView warenlager = this.getWarenlager();
+        if (warenlager != null) {
+            ((ViewProxi)warenlager).setObject((ViewObject)resultTable.get(common.RPCConstantsAndServices.createHashtableKey(warenlager.getClassId(), warenlager.getId())));
         }
         KontoView konto = this.getKonto();
         if (konto != null) {

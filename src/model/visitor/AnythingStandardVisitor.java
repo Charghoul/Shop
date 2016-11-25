@@ -134,6 +134,9 @@ public abstract class AnythingStandardVisitor implements AnythingVisitor {
     public void handleGeliefert(Geliefert4Public geliefert) throws PersistenceException{
         this.standardHandling(geliefert);
     }
+    public void handleServiceKundeWarenlager(ServiceKundeWarenlager4Public serviceKundeWarenlager) throws PersistenceException{
+        this.standardHandling(serviceKundeWarenlager);
+    }
     public void handleBestellManager(BestellManager4Public bestellManager) throws PersistenceException{
         this.standardHandling(bestellManager);
     }
@@ -149,11 +152,11 @@ public abstract class AnythingStandardVisitor implements AnythingVisitor {
     public void handleSubj(Subj4Public subj) throws PersistenceException{
         this.standardHandling(subj);
     }
-    public void handleVorbestellung(Vorbestellung4Public vorbestellung) throws PersistenceException{
-        this.standardHandling(vorbestellung);
-    }
     public void handlePositionInBestellung(PositionInBestellung4Public positionInBestellung) throws PersistenceException{
         this.standardHandling(positionInBestellung);
+    }
+    public void handleVorbestellung(Vorbestellung4Public vorbestellung) throws PersistenceException{
+        this.standardHandling(vorbestellung);
     }
     public void handleRueckversand(Rueckversand4Public rueckversand) throws PersistenceException{
         this.standardHandling(rueckversand);

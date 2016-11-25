@@ -178,6 +178,13 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
     }
     
     
+    public void artikelEinlagern(final Artikel4Public artikel, final long menge) 
+				throws model.ExcLagerbestandOverMax, PersistenceException{
+        model.meta.WarenlagerArtikelEinlagernArtikelIntegerMssg event = new model.meta.WarenlagerArtikelEinlagernArtikelIntegerMssg(artikel, menge, getThis());
+		event.execute();
+		getThis().updateObservers(event);
+		event.getResult();
+    }
     public void artikelEinlagern(final Artikel4Public artikel, final long menge, final Invoker invoker) 
 				throws PersistenceException{
         java.sql.Date now = new java.sql.Date(new java.util.Date().getTime());
@@ -242,9 +249,10 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
     
     // Start of section that contains operations that must be implemented.
     
-    public void artikelEinlagern(final Artikel4Public artikel, final long menge) 
+    public void artikelEinlagernImplementation(final Artikel4Public artikel, final long menge) 
 				throws model.ExcLagerbestandOverMax, PersistenceException{
         //TODO: Warenlager observen um Vorbestellungen rausschicken zu können
+        //TODO: alternative: bei jedem tick die vorbestellungen überprüfen, ob welche schickbar sind, von anfang bis ende durch
 
         //TODO: Artikel nachbestellen, wenn Hersteller hinzugefügt wurde
         Position4Public p4 = getThis().getWarenListe().findFirst(new Predcate<Position4Public>() {

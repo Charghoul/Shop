@@ -1,9 +1,7 @@
 
 package view.objects;
 
-import view.ArtikelView;
-import view.ModelException;
-import view.PositionView;
+import view.*;
 import view.visitor.*;
 
 

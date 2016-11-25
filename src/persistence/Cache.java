@@ -315,6 +315,7 @@ public class Cache {
 		this.number2NameMap.put(334, "ServiceAdminZeitManager");
 		this.number2NameMap.put(-181, "ServiceKunde");
 		this.number2NameMap.put(336, "ServiceKundeBestellManager");
+		this.number2NameMap.put(364, "ServiceKundeWarenlager");
 		this.number2NameMap.put(-189, "ServiceRegister");
 		this.number2NameMap.put(327, "ServiceShopProduktKatalog");
 		this.number2NameMap.put(261, "StatusAuslaufCommand");

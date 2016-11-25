@@ -22,6 +22,9 @@ public class ServiceKundeICProxi extends ServiceShopICProxi implements Persisten
         return -181;
     }
     
+    public void setWarenlager(ServiceKundeWarenlager4Public newValue) throws PersistenceException {
+        ((PersistentServiceKunde)this.getTheObject()).setWarenlager(newValue);
+    }
     public Konto4Public getKonto() throws PersistenceException {
         return ((PersistentServiceKunde)this.getTheObject()).getKonto();
     }
@@ -137,6 +140,10 @@ public class ServiceKundeICProxi extends ServiceShopICProxi implements Persisten
 				throws PersistenceException{
         return ((PersistentServiceKunde)this.getTheObject()).getProduktKatalog();
     }
+    public Warenlager4Public getWarenlager() 
+				throws PersistenceException{
+        return ((PersistentServiceKunde)this.getTheObject()).getWarenlager();
+    }
     public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
 				throws PersistenceException{
         ((PersistentServiceKunde)this.getTheObject()).initialize(This, final$$Fields);
@@ -164,6 +171,10 @@ public class ServiceKundeICProxi extends ServiceShopICProxi implements Persisten
     public void setProduktKatalog(final ProduktKatalog4Public produktKatalog) 
 				throws PersistenceException{
         ((PersistentServiceKunde)this.getTheObject()).setProduktKatalog(produktKatalog);
+    }
+    public void setWarenlager(final Warenlager4Public warenlager) 
+				throws PersistenceException{
+        ((PersistentServiceKunde)this.getTheObject()).setWarenlager(warenlager);
     }
     public void signalChanged(final boolean signal) 
 				throws PersistenceException{
@@ -248,6 +259,10 @@ public class ServiceKundeICProxi extends ServiceShopICProxi implements Persisten
     public void vorbestellen(final EinkaufsManager4Public einkaufsManager, final Lieferart4Public lieferart) 
 				throws PersistenceException{
         ((PersistentServiceKunde)this.getTheObject()).vorbestellen(einkaufsManager, lieferart);
+    }
+    public void warenlager_update(final model.meta.WarenlagerMssgs event) 
+				throws PersistenceException{
+        ((PersistentServiceKunde)this.getTheObject()).warenlager_update(event);
     }
     public void zuEinkaufswagenHinzufuegen(final Artikel4Public artikel, final long menge) 
 				throws PersistenceException{

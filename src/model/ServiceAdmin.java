@@ -603,7 +603,6 @@ public class ServiceAdmin extends model.ServiceShop implements PersistentService
     public void zeitManager_update(final model.meta.ZeitManagerMssgs event) 
 				throws PersistenceException{
         getThis().signalChanged(true);
-        
     }
     
     

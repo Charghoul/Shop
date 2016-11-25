@@ -19,8 +19,6 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     
     public abstract void handleErrorDisplay(ErrorDisplayView errorDisplay) throws ModelException;
     
-    public abstract void handleBestellung(BestellungView bestellung) throws ModelException;
-    
     public abstract void handleHerstellerManager(HerstellerManagerView herstellerManager) throws ModelException;
     
     public abstract void handleLieferart(LieferartView lieferart) throws ModelException;
@@ -37,9 +35,6 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     
     public abstract void handleBestellstatus(BestellstatusView bestellstatus) throws ModelException;
     
-    public void handleVorbestellung(VorbestellungView vorbestellung) throws ModelException{
-        this.handleBestellstatus(vorbestellung);
-    }
     public void handleRueckversand(RueckversandView rueckversand) throws ModelException{
         this.handleBestellstatus(rueckversand);
     }
@@ -86,6 +81,14 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     }
     public void handleServiceAdmin(ServiceAdminView serviceAdmin) throws ModelException{
         this.handleService(serviceAdmin);
+    }
+    public abstract void handleBestellungAbstrakt(BestellungAbstraktView bestellungAbstrakt) throws ModelException;
+    
+    public void handleVorbestellung(VorbestellungView vorbestellung) throws ModelException{
+        this.handleBestellungAbstrakt(vorbestellung);
+    }
+    public void handleBestellung(BestellungView bestellung) throws ModelException{
+        this.handleBestellungAbstrakt(bestellung);
     }
     public abstract void handleBestellManager(BestellManagerView bestellManager) throws ModelException;
     

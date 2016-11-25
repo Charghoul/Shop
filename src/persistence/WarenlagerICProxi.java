@@ -61,6 +61,10 @@ public class WarenlagerICProxi extends PersistentInCacheProxiOptimistic implemen
     }
     
     
+    public void artikelEinlagern(final Artikel4Public artikel, final long menge) 
+				throws model.ExcLagerbestandOverMax, PersistenceException{
+        ((PersistentWarenlager)this.getTheObject()).artikelEinlagern(artikel, menge);
+    }
     public void artikelEinlagern(final Artikel4Public artikel, final long menge, final Invoker invoker) 
 				throws PersistenceException{
         ((PersistentWarenlager)this.getTheObject()).artikelEinlagern(artikel, menge, invoker);
@@ -89,9 +93,9 @@ public class WarenlagerICProxi extends PersistentInCacheProxiOptimistic implemen
 				throws PersistenceException{
         ((PersistentWarenlager)this.getTheObject()).updateObservers(event);
     }
-    public void artikelEinlagern(final Artikel4Public artikel, final long menge) 
+    public void artikelEinlagernImplementation(final Artikel4Public artikel, final long menge) 
 				throws model.ExcLagerbestandOverMax, PersistenceException{
-        ((PersistentWarenlager)this.getTheObject()).artikelEinlagern(artikel, menge);
+        ((PersistentWarenlager)this.getTheObject()).artikelEinlagernImplementation(artikel, menge);
     }
     public void artikelEntfernen(final Position4Public position) 
 				throws PersistenceException{
