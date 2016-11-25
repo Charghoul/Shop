@@ -84,6 +84,7 @@ singleton ProduktKatalog{
 	event active void produktgruppeEntfernen##prodEntf(Produktgruppe produktgruppe) throws ExcHasNoParent;
 	event void artikelAnhaengen( Produktgruppe produktgruppe, Artikel artikel )  throws ExcAlreadyExists, CycleException;
 	event void artikelAbhaengen(Produktgruppe produktgruppe, Artikel artikel);
+	event void internalUpdate();
 }
 
 singleton Warenlager{

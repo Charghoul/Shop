@@ -522,17 +522,24 @@ public class ServiceAdmin extends model.ServiceShop implements PersistentService
 
 
         //Test Daten
-        Artikel4Public art1 = Artikel.createArtikel("1234","test", 999,10,100,3, Verkauf.getTheVerkauf());
+        Hersteller4Public hst1 = Hersteller.createHersteller("Nintendo");
+        Hersteller4Public hst2 = Hersteller.createHersteller("Sony");
+        Lieferart4Public l1 = Lieferart.createLieferart("Standard", 3, 199);
+        Lieferart4Public l2 = Lieferart.createLieferart("Express", 3, 499);
+        Artikel4Public art1 = Artikel.createArtikel("1234","Switch", 999,10,100,3, Verkauf.getTheVerkauf());
         Artikel4Public art2 = Artikel.createArtikel("31415626","Raspberry", 1999,5,200,4, Neuanlage.getTheNeuanlage());
         Artikel4Public art3 = Artikel.createArtikel("666","Teufel's Dreizack", 666,2,100,3,Verkauf.getTheVerkauf());
+        art1.herstellerHinzufuegen(hst1);
+        art3.herstellerHinzufuegen(hst2);
 
         //Listen
         ((PersistentArtikelManager)getThis().getArtikelManager()).getArtikelListe().add(art1);
         ((PersistentArtikelManager)getThis().getArtikelManager()).getArtikelListe().add(art2);
         ((PersistentArtikelManager)getThis().getArtikelManager()).getArtikelListe().add(art3);
-        getThis().getLieferartManager().getLieferartenListe().add(Lieferart.createLieferart("Standard", 3, 199));
-        getThis().getLieferartManager().getLieferartenListe().add(Lieferart.createLieferart("Express", 3, 499));
-        ((PersistentHerstellerManager)getThis().getHerstellerManager()).getHerstellerListe().add(Hersteller.createHersteller("Nintendo"));
+        getThis().getLieferartManager().getLieferartenListe().add(l1);
+        getThis().getLieferartManager().getLieferartenListe().add(l2);
+        ((PersistentHerstellerManager)getThis().getHerstellerManager()).getHerstellerListe().add(hst1);
+        ((PersistentHerstellerManager)getThis().getHerstellerManager()).getHerstellerListe().add(hst2);
         Server.createServer("test","test",0,new Timestamp(new Date().getTime()));
         try {
             ProduktKatalog.getTheProduktKatalog().produktgruppeHinzufuegen(ProduktKatalog.getTheProduktKatalog().getProduktgruppen(), "Langweiliges");
@@ -548,7 +555,7 @@ public class ServiceAdmin extends model.ServiceShop implements PersistentService
         try {
             getThis().getWarenlager().artikelEinlagern(art1, 50);
             getThis().getWarenlager().artikelEinlagern(art2, 17);
-            getThis().getWarenlager().artikelEinlagern(art3,66);
+            getThis().getWarenlager().artikelEinlagern(art3,10);
         } catch (ExcLagerbestandOverMax excLagerbestandOverMax) {
             excLagerbestandOverMax.printStackTrace();
         }

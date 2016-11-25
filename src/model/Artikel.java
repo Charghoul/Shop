@@ -405,6 +405,7 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
 				throws PersistenceException{
         //TODO: wenn hersteller hinzugefügt wurde und der bestand 0 ist - hstLieferung erstellen damit geliefert wird
         getThis().setHersteller(hersteller);
+        ProduktKatalog.getTheProduktKatalog().internalUpdate();
     }
     public void initializeOnCreation() 
 				throws PersistenceException{
@@ -432,10 +433,11 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
                 getThis().setArtikelstatus(Auslauf.getTheAuslauf());
             }
         });
+        ProduktKatalog.getTheProduktKatalog().internalUpdate();
     }
     public void statusVerkauf() 
 				throws model.ExcInconsistentStatusChange, model.ExcArtikelHatKeinenHersteller, PersistenceException{
-        //überprüfen ob Artikel Hersteller hat oder artikel vorhanden sind (falls artikel von auslauf wieder in verkauf gesetzt wird und noch etwas auf lager ist)
+        //TODO: überprüfen ob Artikel Hersteller hat oder artikel vorhanden sind (falls artikel von auslauf wieder in verkauf gesetzt wird und noch etwas auf lager ist)
         if(getThis().getHersteller() != null || Warenlager.getTheWarenlager().getWarenListe().findFirst(x -> {
             return x.getArtikel().equals(getThis()) && x.getMenge() > 0;
         })!=null){
@@ -456,6 +458,7 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
 
                 }
             });
+            ProduktKatalog.getTheProduktKatalog().internalUpdate();
         }
         else throw new ExcArtikelHatKeinenHersteller(ErrorMessages.ArtikelHatKeinenHerstellerVerkauf);
     }

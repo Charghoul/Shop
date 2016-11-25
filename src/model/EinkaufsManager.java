@@ -372,8 +372,7 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
         }
         getThis().getMyServiceKunde().getKonto().reserviere(bestellungswert);
         getThis().getBestellManager().neueVorbestellung(getThis().getEinkaufsListe().getList(),bestellungswert,lieferart);
-
-
+        getThis().getBestellManager().pruefeVorbestellungen();
     }
     
     
