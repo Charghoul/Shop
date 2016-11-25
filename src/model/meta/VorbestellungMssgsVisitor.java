@@ -9,7 +9,7 @@ interface VorbestellungDOWNMssgsVisitor  {
 }
 
 
-interface VorbestellungUPMssgsVisitor extends BestellstatusUPMssgsVisitor {
+interface VorbestellungUPMssgsVisitor extends BestellungAbstraktUPMssgsVisitor {
 
     
 }

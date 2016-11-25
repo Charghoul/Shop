@@ -92,11 +92,11 @@ public abstract class AnythingStandardVisitor implements AnythingVisitor {
     public void handleZeitManager(ZeitManagerView zeitManager) throws ModelException{
         this.standardHandling(zeitManager);
     }
-    public void handleVorbestellung(VorbestellungView vorbestellung) throws ModelException{
-        this.standardHandling(vorbestellung);
-    }
     public void handlePositionInBestellung(PositionInBestellungView positionInBestellung) throws ModelException{
         this.standardHandling(positionInBestellung);
+    }
+    public void handleVorbestellung(VorbestellungView vorbestellung) throws ModelException{
+        this.standardHandling(vorbestellung);
     }
     public void handleRueckversand(RueckversandView rueckversand) throws ModelException{
         this.standardHandling(rueckversand);

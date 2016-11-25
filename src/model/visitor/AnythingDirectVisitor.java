@@ -21,8 +21,6 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     
     public abstract void handleServiceAdminZeitManager(ServiceAdminZeitManager4Public serviceAdminZeitManager) throws PersistenceException;
     
-    public abstract void handleBestellung(Bestellung4Public bestellung) throws PersistenceException;
-    
     public abstract void handleHerstellerManager(HerstellerManager4Public herstellerManager) throws PersistenceException;
     
     public abstract void handleLieferart(Lieferart4Public lieferart) throws PersistenceException;
@@ -41,13 +39,12 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     }
     public abstract void handleZeitManagerZeitObjektListe(ZeitManagerZeitObjektListe4Public zeitManagerZeitObjektListe) throws PersistenceException;
     
+    public abstract void handleServiceKundeWarenlager(ServiceKundeWarenlager4Public serviceKundeWarenlager) throws PersistenceException;
+    
     public abstract void handleProduktKatalog(ProduktKatalog4Public produktKatalog) throws PersistenceException;
     
     public abstract void handleBestellstatus(Bestellstatus4Public bestellstatus) throws PersistenceException;
     
-    public void handleVorbestellung(Vorbestellung4Public vorbestellung) throws PersistenceException{
-        this.handleBestellstatus(vorbestellung);
-    }
     public void handleRueckversand(Rueckversand4Public rueckversand) throws PersistenceException{
         this.handleBestellstatus(rueckversand);
     }
@@ -96,6 +93,14 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     }
     public void handleServiceAdmin(ServiceAdmin4Public serviceAdmin) throws PersistenceException{
         this.handleService(serviceAdmin);
+    }
+    public abstract void handleBestellungAbstrakt(BestellungAbstrakt4Public bestellungAbstrakt) throws PersistenceException;
+    
+    public void handleVorbestellung(Vorbestellung4Public vorbestellung) throws PersistenceException{
+        this.handleBestellungAbstrakt(vorbestellung);
+    }
+    public void handleBestellung(Bestellung4Public bestellung) throws PersistenceException{
+        this.handleBestellungAbstrakt(bestellung);
     }
     public abstract void handleBestellManager(BestellManager4Public bestellManager) throws PersistenceException;
     

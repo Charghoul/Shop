@@ -3,15 +3,16 @@ package persistence;
 
 import model.visitor.*;
 
-public interface Bestellung4Public extends Anything, SubjInterface, AbstractPersistentProxi {
+public interface Bestellung4Public extends BestellungAbstrakt4Public {
     
     public Bestellung_PositionsListeProxi getPositionsListe() throws PersistenceException ;
-    public BestellManager4Public getBestellManager() throws PersistenceException ;
     public KndLieferung4Public getKndLieferung() throws PersistenceException ;
-    public long getWarenwert() throws PersistenceException ;
     public Bestellstatus4Public getBestellstatus() throws PersistenceException ;
-    public Lieferart4Public getLieferart() throws PersistenceException ;
     
+    public void accept(BestellungAbstraktVisitor visitor) throws PersistenceException;
+    public <R> R accept(BestellungAbstraktReturnVisitor<R>  visitor) throws PersistenceException;
+    public <E extends model.UserException>  void accept(BestellungAbstraktExceptionVisitor<E> visitor) throws PersistenceException, E;
+    public <R, E extends model.UserException> R accept(BestellungAbstraktReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E;
     public void accept(AnythingVisitor visitor) throws PersistenceException;
     public <R> R accept(AnythingReturnVisitor<R>  visitor) throws PersistenceException;
     public <E extends model.UserException>  void accept(AnythingExceptionVisitor<E> visitor) throws PersistenceException, E;
@@ -40,8 +41,6 @@ public interface Bestellung4Public extends Anything, SubjInterface, AbstractPers
     public void initializeOnInstantiation() 
 				throws PersistenceException;
     public void lieferungHinzufuegen(final KndLieferung4Public lieferung) 
-				throws PersistenceException;
-    public void listeHinzufuegen(final PositionSearchList positionsListe) 
 				throws PersistenceException;
 
 }

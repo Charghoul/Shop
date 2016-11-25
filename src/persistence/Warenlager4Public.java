@@ -16,6 +16,8 @@ public interface Warenlager4Public extends Anything, SubjInterface, AbstractPers
     public <E extends model.UserException>  void accept(SubjInterfaceExceptionVisitor<E> visitor) throws PersistenceException, E;
     public <R, E extends model.UserException> R accept(SubjInterfaceReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E;
     
+    public void artikelEinlagern(final Artikel4Public artikel, final long menge) 
+				throws model.ExcLagerbestandOverMax, PersistenceException;
     public void artikelEinlagern(final Artikel4Public artikel, final long menge, final Invoker invoker) 
 				throws PersistenceException;
     public void artikelEntfernen(final Position4Public position, final Invoker invoker) 
@@ -24,7 +26,7 @@ public interface Warenlager4Public extends Anything, SubjInterface, AbstractPers
 				throws PersistenceException;
     public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
 				throws PersistenceException;
-    public void artikelEinlagern(final Artikel4Public artikel, final long menge) 
+    public void artikelEinlagernImplementation(final Artikel4Public artikel, final long menge) 
 				throws model.ExcLagerbestandOverMax, PersistenceException;
     public void artikelEntfernen(final Position4Public position) 
 				throws PersistenceException;

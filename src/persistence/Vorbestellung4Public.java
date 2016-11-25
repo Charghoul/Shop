@@ -3,13 +3,14 @@ package persistence;
 
 import model.visitor.*;
 
-public interface Vorbestellung4Public extends Bestellstatus4Public {
+public interface Vorbestellung4Public extends BestellungAbstrakt4Public {
     
+    public Vorbestellung_PositionsListeProxi getPositionsListe() throws PersistenceException ;
     
-    public void accept(BestellstatusVisitor visitor) throws PersistenceException;
-    public <R> R accept(BestellstatusReturnVisitor<R>  visitor) throws PersistenceException;
-    public <E extends model.UserException>  void accept(BestellstatusExceptionVisitor<E> visitor) throws PersistenceException, E;
-    public <R, E extends model.UserException> R accept(BestellstatusReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E;
+    public void accept(BestellungAbstraktVisitor visitor) throws PersistenceException;
+    public <R> R accept(BestellungAbstraktReturnVisitor<R>  visitor) throws PersistenceException;
+    public <E extends model.UserException>  void accept(BestellungAbstraktExceptionVisitor<E> visitor) throws PersistenceException, E;
+    public <R, E extends model.UserException> R accept(BestellungAbstraktReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E;
     public void accept(AnythingVisitor visitor) throws PersistenceException;
     public <R> R accept(AnythingReturnVisitor<R>  visitor) throws PersistenceException;
     public <E extends model.UserException>  void accept(AnythingExceptionVisitor<E> visitor) throws PersistenceException, E;
@@ -26,6 +27,8 @@ public interface Vorbestellung4Public extends Bestellstatus4Public {
     public void initializeOnCreation() 
 				throws PersistenceException;
     public void initializeOnInstantiation() 
+				throws PersistenceException;
+    public void stornieren() 
 				throws PersistenceException;
 
 }

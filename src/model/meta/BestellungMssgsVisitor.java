@@ -9,7 +9,7 @@ interface BestellungDOWNMssgsVisitor  {
 }
 
 
-interface BestellungUPMssgsVisitor  {
+interface BestellungUPMssgsVisitor extends BestellungAbstraktUPMssgsVisitor {
 
     
 }

@@ -293,39 +293,16 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
     
     public void bestellen(final Lieferart4Public lieferart) 
 				throws model.ExcWarenwertUeberKontoguthaben, model.ExcArtikelNichtVerfuegbar, PersistenceException{
+        //überprüfen ob der Kunde genügend nicht reserviertes Guthaben hat
         long bestellungswert = getThis().gibGesamtPreis();
         if(bestellungswert + getThis().getBestellManager().getKonto().getReserviert() > getThis().getMyServiceKunde().getKonto().getKontostand()) {
             throw new ExcWarenwertUeberKontoguthaben(ErrorMessages.WarenwertUeberKontoguthaben);
         }
+        Bestellung4Public bestellung = getThis().getBestellManager().neueBestellung(getThis().getEinkaufsListe().getList(), bestellungswert, lieferart);
+        getThis().getEinkaufsListe().filter(x -> {
+            return false;
+        });
 
-        //überprüfen ob alles auf lager ist
-        Position4Public temp = Warenlager.getTheWarenlager().nichtVerfPruefen(getThis().getEinkaufsListe().getList());
-        if(temp == null) {
-            Bestellung4Public bestellung = getThis().getBestellManager().neueBestellung(getThis().getEinkaufsListe().getList(), Verarbeitung.getTheVerarbeitung(), bestellungswert, lieferart);
-            getThis().getEinkaufsListe().applyToAll(new Procdure<Position4Public>() {
-                @Override
-                public void doItTo(Position4Public argument) throws PersistenceException {
-
-                    try {
-                        Warenlager.getTheWarenlager().artikelEntnehmen(argument.getArtikel(), argument.getMenge());
-                    } catch (ExcArtikelHatKeinenHersteller excArtikelHatKeinenHersteller) {
-                        excArtikelHatKeinenHersteller.printStackTrace();
-                    } catch (ExcLagerbestandUnderZero excLagerbestandUnderZero) {
-                        excLagerbestandUnderZero.printStackTrace();
-                    }
-
-                }
-            });
-            bestellung.aendereStatus(Hinversand.getTheHinversand());
-            ZeitManager.getTheZeitManager().neueKndLieferung(bestellung);
-            //leert die Liste
-            getThis().getEinkaufsListe().filter(x -> {
-                return false;
-            });
-        }
-        else {
-            throw new ExcArtikelNichtVerfuegbar(temp.toString()+ ErrorMessages.ArtikelNichtVerfuegbar);
-        }
     }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{
@@ -390,15 +367,12 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
         //TODO: vorbestellen implementieren - Vorbestellungsliste und abarbeitung etc
 
         long bestellungswert = getThis().gibGesamtPreis();
-       if(bestellungswert + getThis().getBestellManager().getKonto().getReserviert() > getThis().getMyServiceKunde().getKonto().getKontostand()){
+        if(bestellungswert + getThis().getBestellManager().getKonto().getReserviert() > getThis().getMyServiceKunde().getKonto().getKontostand()){
            throw new ExcWarenwertUeberKontoguthaben(ErrorMessages.WarenwertUeberKontoguthaben);
-       }
-        getThis().getBestellManager().neueBestellung(getThis().getEinkaufsListe().getList(),Vorbestellung.getTheVorbestellung(),bestellungswert,lieferart);
+        }
+        getThis().getMyServiceKunde().getKonto().reserviere(bestellungswert);
+        getThis().getBestellManager().neueVorbestellung(getThis().getEinkaufsListe().getList(),bestellungswert,lieferart);
 
-        System.out.println("gesamtpreis: " +getThis().gibGesamtPreis());
-
-
-        // getThis().getBestellManager().neueBestellung(getThis().getEinkaufsListe().getList(),Vorbestellung.getTheVorbestellung());
 
     }
     

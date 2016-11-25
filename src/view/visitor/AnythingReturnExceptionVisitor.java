@@ -3,11 +3,10 @@ package view.visitor;
 
 import view.*;
 
-public interface AnythingReturnExceptionVisitor<R, E extends view.UserException> extends ArtikelstatusReturnExceptionVisitor<R, E> ,BestellstatusReturnExceptionVisitor<R, E> ,KomponenteReturnExceptionVisitor<R, E> ,PositionAbstraktReturnExceptionVisitor<R, E> ,ServiceReturnExceptionVisitor<R, E> ,StatusReturnExceptionVisitor<R, E> ,ZeitObjektReturnExceptionVisitor<R, E> {
+public interface AnythingReturnExceptionVisitor<R, E extends view.UserException> extends ArtikelstatusReturnExceptionVisitor<R, E> ,BestellstatusReturnExceptionVisitor<R, E> ,BestellungAbstraktReturnExceptionVisitor<R, E> ,KomponenteReturnExceptionVisitor<R, E> ,PositionAbstraktReturnExceptionVisitor<R, E> ,ServiceReturnExceptionVisitor<R, E> ,StatusReturnExceptionVisitor<R, E> ,ZeitObjektReturnExceptionVisitor<R, E> {
     
     public R handleArtikelManager(ArtikelManagerView artikelManager) throws ModelException, E;
     public R handleBestellManager(BestellManagerView bestellManager) throws ModelException, E;
-    public R handleBestellung(BestellungView bestellung) throws ModelException, E;
     public R handleEinkaufsManager(EinkaufsManagerView einkaufsManager) throws ModelException, E;
     public R handleErrorDisplay(ErrorDisplayView errorDisplay) throws ModelException, E;
     public R handleHersteller(HerstellerView hersteller) throws ModelException, E;

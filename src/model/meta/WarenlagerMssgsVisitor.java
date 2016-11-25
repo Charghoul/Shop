@@ -5,11 +5,13 @@ public interface WarenlagerMssgsVisitor extends WarenlagerDOWNMssgsVisitor, Ware
 
 interface WarenlagerDOWNMssgsVisitor  {
 
+    public void handleWarenlagerArtikelEinlagernArtikelIntegerMssg(WarenlagerArtikelEinlagernArtikelIntegerMssg event) throws persistence.PersistenceException;
     
 }
 
 
 interface WarenlagerUPMssgsVisitor  {
 
+    public void handleWarenlagerArtikelEinlagernArtikelIntegerMssg(WarenlagerArtikelEinlagernArtikelIntegerMssg event) throws persistence.PersistenceException;
     
 }

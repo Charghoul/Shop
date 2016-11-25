@@ -10,6 +10,5 @@ public interface BestellstatusExceptionVisitor<E extends view.UserException> {
     public void handleHinversand(HinversandView hinversand) throws ModelException, E;
     public void handleRueckversand(RueckversandView rueckversand) throws ModelException, E;
     public void handleVerarbeitung(VerarbeitungView verarbeitung) throws ModelException, E;
-    public void handleVorbestellung(VorbestellungView vorbestellung) throws ModelException, E;
     
 }

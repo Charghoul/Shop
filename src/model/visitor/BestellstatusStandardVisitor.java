@@ -5,9 +5,6 @@ import persistence.*;
 
 public abstract class BestellstatusStandardVisitor implements BestellstatusVisitor {
     
-    public void handleVorbestellung(Vorbestellung4Public vorbestellung) throws PersistenceException{
-        this.standardHandling(vorbestellung);
-    }
     public void handleRueckversand(Rueckversand4Public rueckversand) throws PersistenceException{
         this.standardHandling(rueckversand);
     }

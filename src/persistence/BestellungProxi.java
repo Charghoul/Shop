@@ -4,7 +4,7 @@ package persistence;
 
 import model.visitor.*;
 
-public class BestellungProxi extends PersistentProxi implements PersistentBestellung{
+public class BestellungProxi extends BestellungAbstraktProxi implements PersistentBestellung{
     
     public BestellungProxi(long objectId) {
         super(objectId);
@@ -21,12 +21,6 @@ public class BestellungProxi extends PersistentProxi implements PersistentBestel
     public Bestellung_PositionsListeProxi getPositionsListe() throws PersistenceException {
         return ((PersistentBestellung)this.getTheObject()).getPositionsListe();
     }
-    public BestellManager4Public getBestellManager() throws PersistenceException {
-        return ((PersistentBestellung)this.getTheObject()).getBestellManager();
-    }
-    public void setBestellManager(BestellManager4Public newValue) throws PersistenceException {
-        ((PersistentBestellung)this.getTheObject()).setBestellManager(newValue);
-    }
     public KndLieferung4Public getKndLieferung() throws PersistenceException {
         return ((PersistentBestellung)this.getTheObject()).getKndLieferung();
     }
@@ -39,34 +33,28 @@ public class BestellungProxi extends PersistentProxi implements PersistentBestel
     public void setBestellID(long newValue) throws PersistenceException {
         ((PersistentBestellung)this.getTheObject()).setBestellID(newValue);
     }
-    public long getWarenwert() throws PersistenceException {
-        return ((PersistentBestellung)this.getTheObject()).getWarenwert();
-    }
-    public void setWarenwert(long newValue) throws PersistenceException {
-        ((PersistentBestellung)this.getTheObject()).setWarenwert(newValue);
-    }
     public Bestellstatus4Public getBestellstatus() throws PersistenceException {
         return ((PersistentBestellung)this.getTheObject()).getBestellstatus();
     }
     public void setBestellstatus(Bestellstatus4Public newValue) throws PersistenceException {
         ((PersistentBestellung)this.getTheObject()).setBestellstatus(newValue);
     }
-    public Lieferart4Public getLieferart() throws PersistenceException {
-        return ((PersistentBestellung)this.getTheObject()).getLieferart();
-    }
-    public void setLieferart(Lieferart4Public newValue) throws PersistenceException {
-        ((PersistentBestellung)this.getTheObject()).setLieferart(newValue);
-    }
-    public SubjInterface getSubService() throws PersistenceException {
-        return ((PersistentBestellung)this.getTheObject()).getSubService();
-    }
-    public void setSubService(SubjInterface newValue) throws PersistenceException {
-        ((PersistentBestellung)this.getTheObject()).setSubService(newValue);
-    }
     public PersistentBestellung getThis() throws PersistenceException {
         return ((PersistentBestellung)this.getTheObject()).getThis();
     }
     
+    public void accept(BestellungAbstraktVisitor visitor) throws PersistenceException {
+        visitor.handleBestellung(this);
+    }
+    public <R> R accept(BestellungAbstraktReturnVisitor<R>  visitor) throws PersistenceException {
+         return visitor.handleBestellung(this);
+    }
+    public <E extends model.UserException>  void accept(BestellungAbstraktExceptionVisitor<E> visitor) throws PersistenceException, E {
+         visitor.handleBestellung(this);
+    }
+    public <R, E extends model.UserException> R accept(BestellungAbstraktReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E {
+         return visitor.handleBestellung(this);
+    }
     public void accept(AnythingVisitor visitor) throws PersistenceException {
         visitor.handleBestellung(this);
     }

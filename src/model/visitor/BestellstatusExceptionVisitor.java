@@ -10,6 +10,5 @@ public interface BestellstatusExceptionVisitor<E extends model.UserException> {
     public void handleHinversand(Hinversand4Public hinversand) throws PersistenceException, E;
     public void handleRueckversand(Rueckversand4Public rueckversand) throws PersistenceException, E;
     public void handleVerarbeitung(Verarbeitung4Public verarbeitung) throws PersistenceException, E;
-    public void handleVorbestellung(Vorbestellung4Public vorbestellung) throws PersistenceException, E;
     
 }

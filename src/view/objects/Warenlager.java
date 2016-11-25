@@ -2,10 +2,7 @@
 package view.objects;
 
 import view.*;
-import view.visitor.AnythingExceptionVisitor;
-import view.visitor.AnythingReturnExceptionVisitor;
-import view.visitor.AnythingReturnVisitor;
-import view.visitor.AnythingVisitor;
+import view.visitor.*;
 
 
 /* Additional import section end */

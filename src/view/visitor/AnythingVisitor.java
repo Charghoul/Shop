@@ -3,11 +3,10 @@ package view.visitor;
 
 import view.*;
 
-public interface AnythingVisitor extends ArtikelstatusVisitor,BestellstatusVisitor,KomponenteVisitor,PositionAbstraktVisitor,ServiceVisitor,StatusVisitor,ZeitObjektVisitor{
+public interface AnythingVisitor extends ArtikelstatusVisitor,BestellstatusVisitor,BestellungAbstraktVisitor,KomponenteVisitor,PositionAbstraktVisitor,ServiceVisitor,StatusVisitor,ZeitObjektVisitor{
     
     public void handleArtikelManager(ArtikelManagerView artikelManager) throws ModelException;
     public void handleBestellManager(BestellManagerView bestellManager) throws ModelException;
-    public void handleBestellung(BestellungView bestellung) throws ModelException;
     public void handleEinkaufsManager(EinkaufsManagerView einkaufsManager) throws ModelException;
     public void handleErrorDisplay(ErrorDisplayView errorDisplay) throws ModelException;
     public void handleHersteller(HerstellerView hersteller) throws ModelException;

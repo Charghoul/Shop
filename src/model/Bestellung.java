@@ -7,53 +7,48 @@ import persistence.*;
 
 /* Additional import section end */
 
-public class Bestellung extends PersistentObject implements PersistentBestellung{
+public class Bestellung extends model.BestellungAbstrakt implements PersistentBestellung{
     
-    /** Throws persistence exception if the object with the given id does not exist. */
-    public static Bestellung4Public getById(long objectId) throws PersistenceException{
-        long classId = ConnectionHandler.getTheConnectionHandler().theBestellungFacade.getClass(objectId);
-        return (Bestellung4Public)PersistentProxi.createProxi(objectId, classId);
+    
+    public static Bestellung4Public createBestellung(BestellManager4Public bestellManager,long warenwert,Lieferart4Public lieferart,long bestellID) throws PersistenceException{
+        return createBestellung(bestellManager,warenwert,lieferart,bestellID,false);
     }
     
-    public static Bestellung4Public createBestellung(BestellManager4Public bestellManager,long bestellID,long warenwert,Lieferart4Public lieferart) throws PersistenceException{
-        return createBestellung(bestellManager,bestellID,warenwert,lieferart,false);
-    }
-    
-    public static Bestellung4Public createBestellung(BestellManager4Public bestellManager,long bestellID,long warenwert,Lieferart4Public lieferart,boolean delayed$Persistence) throws PersistenceException {
+    public static Bestellung4Public createBestellung(BestellManager4Public bestellManager,long warenwert,Lieferart4Public lieferart,long bestellID,boolean delayed$Persistence) throws PersistenceException {
         PersistentBestellung result = null;
         if(delayed$Persistence){
             result = ConnectionHandler.getTheConnectionHandler().theBestellungFacade
-                .newDelayedBestellung(bestellID,warenwert);
+                .newDelayedBestellung(warenwert,bestellID);
             result.setDelayed$Persistence(true);
         }else{
             result = ConnectionHandler.getTheConnectionHandler().theBestellungFacade
-                .newBestellung(bestellID,warenwert,-1);
+                .newBestellung(warenwert,bestellID,-1);
         }
         java.util.HashMap<String,Object> final$$Fields = new java.util.HashMap<String,Object>();
         final$$Fields.put("bestellManager", bestellManager);
-        final$$Fields.put("bestellID", bestellID);
         final$$Fields.put("warenwert", warenwert);
         final$$Fields.put("lieferart", lieferart);
+        final$$Fields.put("bestellID", bestellID);
         result.initialize(result, final$$Fields);
         result.initializeOnCreation();
         return result;
     }
     
-    public static Bestellung4Public createBestellung(BestellManager4Public bestellManager,long bestellID,long warenwert,Lieferart4Public lieferart,boolean delayed$Persistence,Bestellung4Public This) throws PersistenceException {
+    public static Bestellung4Public createBestellung(BestellManager4Public bestellManager,long warenwert,Lieferart4Public lieferart,long bestellID,boolean delayed$Persistence,Bestellung4Public This) throws PersistenceException {
         PersistentBestellung result = null;
         if(delayed$Persistence){
             result = ConnectionHandler.getTheConnectionHandler().theBestellungFacade
-                .newDelayedBestellung(bestellID,warenwert);
+                .newDelayedBestellung(warenwert,bestellID);
             result.setDelayed$Persistence(true);
         }else{
             result = ConnectionHandler.getTheConnectionHandler().theBestellungFacade
-                .newBestellung(bestellID,warenwert,-1);
+                .newBestellung(warenwert,bestellID,-1);
         }
         java.util.HashMap<String,Object> final$$Fields = new java.util.HashMap<String,Object>();
         final$$Fields.put("bestellManager", bestellManager);
-        final$$Fields.put("bestellID", bestellID);
         final$$Fields.put("warenwert", warenwert);
         final$$Fields.put("lieferart", lieferart);
+        final$$Fields.put("bestellID", bestellID);
         result.initialize(This, final$$Fields);
         result.initializeOnCreation();
         return result;
@@ -65,7 +60,6 @@ public class Bestellung extends PersistentObject implements PersistentBestellung
             result = super.toHashtable(allResults, depth, essentialLevel, forGUI, false, tdObserver);
             result.put("positionsListe", this.getPositionsListe().getVector(allResults, depth, essentialLevel, forGUI, tdObserver, false, true));
             result.put("bestellID", new Long(this.getBestellID()).toString());
-            result.put("warenwert", new Long(this.getWarenwert()).toString());
             AbstractPersistentRoot bestellstatus = (AbstractPersistentRoot)this.getBestellstatus();
             if (bestellstatus != null) {
                 result.put("bestellstatus", bestellstatus.createProxiInformation(false, essentialLevel <= 1));
@@ -73,15 +67,6 @@ public class Bestellung extends PersistentObject implements PersistentBestellung
                     bestellstatus.toHashtable(allResults, depth - 1, essentialLevel, forGUI, true , tdObserver);
                 }else{
                     if(forGUI && bestellstatus.hasEssentialFields())bestellstatus.toHashtable(allResults, depth, essentialLevel + 1, false, true, tdObserver);
-                }
-            }
-            AbstractPersistentRoot lieferart = (AbstractPersistentRoot)this.getLieferart();
-            if (lieferart != null) {
-                result.put("lieferart", lieferart.createProxiInformation(false, essentialLevel <= 1));
-                if(depth > 1) {
-                    lieferart.toHashtable(allResults, depth - 1, essentialLevel, forGUI, true , tdObserver);
-                }else{
-                    if(forGUI && lieferart.hasEssentialFields())lieferart.toHashtable(allResults, depth, essentialLevel + 1, false, true, tdObserver);
                 }
             }
             String uniqueKey = common.RPCConstantsAndServices.createHashtableKey(this.getClassId(), this.getId());
@@ -98,13 +83,13 @@ public class Bestellung extends PersistentObject implements PersistentBestellung
     public Bestellung provideCopy() throws PersistenceException{
         Bestellung result = this;
         result = new Bestellung(this.bestellManager, 
-                                this.kndLieferung, 
-                                this.bestellID, 
                                 this.warenwert, 
-                                this.bestellstatus, 
                                 this.lieferart, 
                                 this.subService, 
                                 this.This, 
+                                this.kndLieferung, 
+                                this.bestellID, 
+                                this.bestellstatus, 
                                 this.getId());
         result.positionsListe = this.positionsListe.copy(result);
         this.copyingPrivateUserAttributes(result);
@@ -115,27 +100,17 @@ public class Bestellung extends PersistentObject implements PersistentBestellung
         return false;
     }
     protected Bestellung_PositionsListeProxi positionsListe;
-    protected PersistentBestellManager bestellManager;
     protected PersistentKndLieferung kndLieferung;
     protected long bestellID;
-    protected long warenwert;
     protected PersistentBestellstatus bestellstatus;
-    protected PersistentLieferart lieferart;
-    protected SubjInterface subService;
-    protected PersistentBestellung This;
     
-    public Bestellung(PersistentBestellManager bestellManager,PersistentKndLieferung kndLieferung,long bestellID,long warenwert,PersistentBestellstatus bestellstatus,PersistentLieferart lieferart,SubjInterface subService,PersistentBestellung This,long id) throws PersistenceException {
+    public Bestellung(PersistentBestellManager bestellManager,long warenwert,PersistentLieferart lieferart,SubjInterface subService,PersistentBestellungAbstrakt This,PersistentKndLieferung kndLieferung,long bestellID,PersistentBestellstatus bestellstatus,long id) throws PersistenceException {
         /* Shall not be used by clients for object construction! Use static create operation instead! */
-        super(id);
+        super((PersistentBestellManager)bestellManager,(long)warenwert,(PersistentLieferart)lieferart,(SubjInterface)subService,(PersistentBestellungAbstrakt)This,id);
         this.positionsListe = new Bestellung_PositionsListeProxi(this);
-        this.bestellManager = bestellManager;
         this.kndLieferung = kndLieferung;
         this.bestellID = bestellID;
-        this.warenwert = warenwert;
-        this.bestellstatus = bestellstatus;
-        this.lieferart = lieferart;
-        this.subService = subService;
-        if (This != null && !(this.isTheSameAs(This))) this.This = This;        
+        this.bestellstatus = bestellstatus;        
     }
     
     static public long getTypeId() {
@@ -149,13 +124,9 @@ public class Bestellung extends PersistentObject implements PersistentBestellung
     public void store() throws PersistenceException {
         if(!this.isDelayed$Persistence()) return;
         if (this.getClassId() == 136) ConnectionHandler.getTheConnectionHandler().theBestellungFacade
-            .newBestellung(bestellID,warenwert,this.getId());
+            .newBestellung(warenwert,bestellID,this.getId());
         super.store();
         this.getPositionsListe().store();
-        if(this.getBestellManager() != null){
-            this.getBestellManager().store();
-            ConnectionHandler.getTheConnectionHandler().theBestellungFacade.bestellManagerSet(this.getId(), getBestellManager());
-        }
         if(this.getKndLieferung() != null){
             this.getKndLieferung().store();
             ConnectionHandler.getTheConnectionHandler().theBestellungFacade.kndLieferungSet(this.getId(), getKndLieferung());
@@ -164,37 +135,11 @@ public class Bestellung extends PersistentObject implements PersistentBestellung
             this.getBestellstatus().store();
             ConnectionHandler.getTheConnectionHandler().theBestellungFacade.bestellstatusSet(this.getId(), getBestellstatus());
         }
-        if(this.getLieferart() != null){
-            this.getLieferart().store();
-            ConnectionHandler.getTheConnectionHandler().theBestellungFacade.lieferartSet(this.getId(), getLieferart());
-        }
-        if(this.getSubService() != null){
-            this.getSubService().store();
-            ConnectionHandler.getTheConnectionHandler().theBestellungFacade.subServiceSet(this.getId(), getSubService());
-        }
-        if(!this.isTheSameAs(this.getThis())){
-            this.getThis().store();
-            ConnectionHandler.getTheConnectionHandler().theBestellungFacade.ThisSet(this.getId(), getThis());
-        }
         
     }
     
     public Bestellung_PositionsListeProxi getPositionsListe() throws PersistenceException {
         return this.positionsListe;
-    }
-    public BestellManager4Public getBestellManager() throws PersistenceException {
-        return this.bestellManager;
-    }
-    public void setBestellManager(BestellManager4Public newValue) throws PersistenceException {
-        if (newValue == null) throw new PersistenceException("Null values not allowed!", 0);
-        if(newValue.isTheSameAs(this.bestellManager)) return;
-        long objectId = newValue.getId();
-        long classId = newValue.getClassId();
-        this.bestellManager = (PersistentBestellManager)PersistentProxi.createProxi(objectId, classId);
-        if(!this.isDelayed$Persistence()){
-            newValue.store();
-            ConnectionHandler.getTheConnectionHandler().theBestellungFacade.bestellManagerSet(this.getId(), newValue);
-        }
     }
     public KndLieferung4Public getKndLieferung() throws PersistenceException {
         return this.kndLieferung;
@@ -217,13 +162,6 @@ public class Bestellung extends PersistentObject implements PersistentBestellung
         if(!this.isDelayed$Persistence()) ConnectionHandler.getTheConnectionHandler().theBestellungFacade.bestellIDSet(this.getId(), newValue);
         this.bestellID = newValue;
     }
-    public long getWarenwert() throws PersistenceException {
-        return this.warenwert;
-    }
-    public void setWarenwert(long newValue) throws PersistenceException {
-        if(!this.isDelayed$Persistence()) ConnectionHandler.getTheConnectionHandler().theBestellungFacade.warenwertSet(this.getId(), newValue);
-        this.warenwert = newValue;
-    }
     public Bestellstatus4Public getBestellstatus() throws PersistenceException {
         return this.bestellstatus;
     }
@@ -238,49 +176,6 @@ public class Bestellung extends PersistentObject implements PersistentBestellung
             ConnectionHandler.getTheConnectionHandler().theBestellungFacade.bestellstatusSet(this.getId(), newValue);
         }
     }
-    public Lieferart4Public getLieferart() throws PersistenceException {
-        return this.lieferart;
-    }
-    public void setLieferart(Lieferart4Public newValue) throws PersistenceException {
-        if (newValue == null) throw new PersistenceException("Null values not allowed!", 0);
-        if(newValue.isTheSameAs(this.lieferart)) return;
-        long objectId = newValue.getId();
-        long classId = newValue.getClassId();
-        this.lieferart = (PersistentLieferart)PersistentProxi.createProxi(objectId, classId);
-        if(!this.isDelayed$Persistence()){
-            newValue.store();
-            ConnectionHandler.getTheConnectionHandler().theBestellungFacade.lieferartSet(this.getId(), newValue);
-        }
-    }
-    public SubjInterface getSubService() throws PersistenceException {
-        return this.subService;
-    }
-    public void setSubService(SubjInterface newValue) throws PersistenceException {
-        if (newValue == null) throw new PersistenceException("Null values not allowed!", 0);
-        if(newValue.isTheSameAs(this.subService)) return;
-        long objectId = newValue.getId();
-        long classId = newValue.getClassId();
-        this.subService = (SubjInterface)PersistentProxi.createProxi(objectId, classId);
-        if(!this.isDelayed$Persistence()){
-            newValue.store();
-            ConnectionHandler.getTheConnectionHandler().theBestellungFacade.subServiceSet(this.getId(), newValue);
-        }
-    }
-    protected void setThis(PersistentBestellung newValue) throws PersistenceException {
-        if (newValue == null) throw new PersistenceException("Null values not allowed!", 0);
-        if (newValue.isTheSameAs(this)){
-            this.This = null;
-            return;
-        }
-        if(newValue.isTheSameAs(this.This)) return;
-        long objectId = newValue.getId();
-        long classId = newValue.getClassId();
-        this.This = (PersistentBestellung)PersistentProxi.createProxi(objectId, classId);
-        if(!this.isDelayed$Persistence()){
-            newValue.store();
-            ConnectionHandler.getTheConnectionHandler().theBestellungFacade.ThisSet(this.getId(), newValue);
-        }
-    }
     public PersistentBestellung getThis() throws PersistenceException {
         if(this.This == null){
             PersistentBestellung result = (PersistentBestellung)PersistentProxi.createProxi(this.getId(),this.getClassId());
@@ -289,6 +184,18 @@ public class Bestellung extends PersistentObject implements PersistentBestellung
         }return (PersistentBestellung)this.This;
     }
     
+    public void accept(BestellungAbstraktVisitor visitor) throws PersistenceException {
+        visitor.handleBestellung(this);
+    }
+    public <R> R accept(BestellungAbstraktReturnVisitor<R>  visitor) throws PersistenceException {
+         return visitor.handleBestellung(this);
+    }
+    public <E extends model.UserException>  void accept(BestellungAbstraktExceptionVisitor<E> visitor) throws PersistenceException, E {
+         visitor.handleBestellung(this);
+    }
+    public <R, E extends model.UserException> R accept(BestellungAbstraktReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E {
+         return visitor.handleBestellung(this);
+    }
     public void accept(AnythingVisitor visitor) throws PersistenceException {
         visitor.handleBestellung(this);
     }
@@ -342,9 +249,9 @@ public class Bestellung extends PersistentObject implements PersistentBestellung
         this.setThis((PersistentBestellung)This);
 		if(this.isTheSameAs(This)){
 			this.setBestellManager((PersistentBestellManager)final$$Fields.get("bestellManager"));
-			this.setBestellID((Long)final$$Fields.get("bestellID"));
 			this.setWarenwert((Long)final$$Fields.get("warenwert"));
 			this.setLieferart((PersistentLieferart)final$$Fields.get("lieferart"));
+			this.setBestellID((Long)final$$Fields.get("bestellID"));
 		}
     }
     public synchronized void register(final ObsInterface observee) 
@@ -385,6 +292,7 @@ public class Bestellung extends PersistentObject implements PersistentBestellung
             }
         });
         getThis().getBestellManager().getKonto().abbuchen(getThis().berechneWarenwert() /100 * LieferartManager.getTheLieferartManager().getRueckversandGebuehr());
+        getThis().getBestellManager().getKonto().verringereReserviert(getThis().berechneWarenwert());
         getThis().getBestellManager().getBestellListe().removeFirst(getThis());
 
     }
@@ -407,9 +315,7 @@ public class Bestellung extends PersistentObject implements PersistentBestellung
                 return result + (positionInBestellung4Public.getMenge() * positionInBestellung4Public.getArtikel().getPreis());
             }
         });
-        System.out.println("vor addition:"+temp);
         temp = temp+getThis().getLieferart().getPreis();
-        System.out.println("nach addition:" + temp);
         getThis().setWarenwert(temp);
         return temp;
         
@@ -430,16 +336,16 @@ public class Bestellung extends PersistentObject implements PersistentBestellung
 				throws PersistenceException{
         getThis().setKndLieferung(lieferung);
     }
-    public void listeHinzufuegen(final PositionSearchList positionsListe) 
-				throws PersistenceException{
-      positionsListe.applyToAll( x -> {
-          getThis().getPositionsListe().add(PositionInBestellung.createPositionInBestellung(x.getArtikel(),x.getMenge(), getThis()));
-      });
-    }
     
     
     // Start of section that contains overridden operations only.
     
+    public void listeHinzufuegen(final PositionSearchList positionsListe) 
+				throws PersistenceException{
+        positionsListe.applyToAll(x -> {
+            getThis().getPositionsListe().add(PositionInBestellung.createPositionInBestellung(x.getArtikel(),x.getMenge(),getThis()));
+        });
+    }
 
     /* Start of protected part that is not overridden by persistence generator */
     

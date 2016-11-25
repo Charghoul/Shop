@@ -4,7 +4,7 @@ package persistence;
 
 import model.visitor.*;
 
-public class VorbestellungProxi extends BestellstatusProxi implements PersistentVorbestellung{
+public class VorbestellungProxi extends BestellungAbstraktProxi implements PersistentVorbestellung{
     
     public VorbestellungProxi(long objectId) {
         super(objectId);
@@ -18,20 +18,23 @@ public class VorbestellungProxi extends BestellstatusProxi implements Persistent
         return 216;
     }
     
+    public Vorbestellung_PositionsListeProxi getPositionsListe() throws PersistenceException {
+        return ((PersistentVorbestellung)this.getTheObject()).getPositionsListe();
+    }
     public PersistentVorbestellung getThis() throws PersistenceException {
         return ((PersistentVorbestellung)this.getTheObject()).getThis();
     }
     
-    public void accept(BestellstatusVisitor visitor) throws PersistenceException {
+    public void accept(BestellungAbstraktVisitor visitor) throws PersistenceException {
         visitor.handleVorbestellung(this);
     }
-    public <R> R accept(BestellstatusReturnVisitor<R>  visitor) throws PersistenceException {
+    public <R> R accept(BestellungAbstraktReturnVisitor<R>  visitor) throws PersistenceException {
          return visitor.handleVorbestellung(this);
     }
-    public <E extends model.UserException>  void accept(BestellstatusExceptionVisitor<E> visitor) throws PersistenceException, E {
+    public <E extends model.UserException>  void accept(BestellungAbstraktExceptionVisitor<E> visitor) throws PersistenceException, E {
          visitor.handleVorbestellung(this);
     }
-    public <R, E extends model.UserException> R accept(BestellstatusReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E {
+    public <R, E extends model.UserException> R accept(BestellungAbstraktReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E {
          return visitor.handleVorbestellung(this);
     }
     public void accept(AnythingVisitor visitor) throws PersistenceException {
@@ -87,6 +90,14 @@ public class VorbestellungProxi extends BestellstatusProxi implements Persistent
     public void initializeOnInstantiation() 
 				throws PersistenceException{
         ((PersistentVorbestellung)this.getTheObject()).initializeOnInstantiation();
+    }
+    public void listeHinzufuegen(final PositionSearchList positionsListe) 
+				throws PersistenceException{
+        ((PersistentVorbestellung)this.getTheObject()).listeHinzufuegen(positionsListe);
+    }
+    public void stornieren() 
+				throws PersistenceException{
+        ((PersistentVorbestellung)this.getTheObject()).stornieren();
     }
 
     

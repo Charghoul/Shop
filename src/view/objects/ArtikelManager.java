@@ -1,14 +1,8 @@
 
 package view.objects;
 
-import view.ArtikelManagerView;
-import view.ArtikelView;
-import view.ModelException;
-import view.ProduktgruppeView;
-import view.visitor.AnythingExceptionVisitor;
-import view.visitor.AnythingReturnExceptionVisitor;
-import view.visitor.AnythingReturnVisitor;
-import view.visitor.AnythingVisitor;
+import view.*;
+import view.visitor.*;
 
 
 /* Additional import section end */

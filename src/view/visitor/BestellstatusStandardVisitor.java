@@ -5,9 +5,6 @@ import view.*;
 
 public abstract class BestellstatusStandardVisitor implements BestellstatusVisitor {
     
-    public void handleVorbestellung(VorbestellungView vorbestellung) throws ModelException{
-        this.standardHandling(vorbestellung);
-    }
     public void handleRueckversand(RueckversandView rueckversand) throws ModelException{
         this.standardHandling(rueckversand);
     }

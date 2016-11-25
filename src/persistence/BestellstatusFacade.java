@@ -27,7 +27,6 @@ public class BestellstatusFacade{
     public long getClass(long objectId) throws PersistenceException{
         if(Cache.getTheCache().contains(objectId, 311)) return 311;
         if(Cache.getTheCache().contains(objectId, 215)) return 215;
-        if(Cache.getTheCache().contains(objectId, 216)) return 216;
         if(Cache.getTheCache().contains(objectId, 217)) return 217;
         if(Cache.getTheCache().contains(objectId, 218)) return 218;
         if(Cache.getTheCache().contains(objectId, 219)) return 219;

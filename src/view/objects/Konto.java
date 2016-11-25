@@ -1,13 +1,8 @@
 
 package view.objects;
 
-import view.KontoView;
-import view.ModelException;
-import view.ServiceKundeView;
-import view.visitor.AnythingExceptionVisitor;
-import view.visitor.AnythingReturnExceptionVisitor;
-import view.visitor.AnythingReturnVisitor;
-import view.visitor.AnythingVisitor;
+import view.*;
+import view.visitor.*;
 
 
 /* Additional import section end */

@@ -1,8 +1,7 @@
 
 package view.objects;
 
-import view.GeliefertView;
-import view.ModelException;
+import view.*;
 import view.visitor.*;
 
 

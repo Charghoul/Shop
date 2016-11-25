@@ -11,6 +11,7 @@ abstract server ServiceShop extends Service{
 	observe ProduktKatalog produktKatalog;
 }
 server ServiceKunde extends ServiceShop {
+	observe no-view Warenlager warenlager;
 	public one-to-one (no-view myServiceKunde) Konto konto;
 	one-to-one (no-view myServiceKunde) EinkaufsManager einkaufsManager;
 	no-view LieferartManager lieferartManager;
@@ -68,10 +69,13 @@ singleton ArtikelManager{
 
 class BestellManager{
 	public Bestellung ** bestellListe;
+	public Vorbestellung ** vorbestellListe;
 	Integer bestellID;
 	server-only prior	public Konto konto;
-	Bestellung neueBestellung(Position ** positionsListe, Bestellstatus bestellstatus, Integer warenwert, Lieferart lieferart);
-	event void benachrichtige();	
+	Bestellung neueBestellung(Position ** positionsListe, Integer warenwert, Lieferart lieferart) throws ExcArtikelNichtVerfuegbar;
+	Vorbestellung neueVorbestellung(Position ** positionsListe, Integer warenwert, Lieferart lieferart);
+	event void benachrichtige();
+	void pruefeVorbestellungen();	
 }
 
 singleton ProduktKatalog{
@@ -85,7 +89,7 @@ singleton ProduktKatalog{
 singleton Warenlager{
 	public Position ** warenListe;
 	active void artikelEntnehmen##artEntf(Artikel artikel, Integer menge) throws ExcLagerbestandUnderZero, ExcArtikelHatKeinenHersteller;
-	active void artikelEinlagern(Artikel artikel, Integer menge) throws ExcLagerbestandOverMax;
+	event active void artikelEinlagern(Artikel artikel, Integer menge) throws ExcLagerbestandOverMax;
 	active void artikelEntfernen##artEntn(Position position);
 	Position nichtVerfPruefen(Position ** positionsListe);
 	void nachbestellen(Artikel artikel, Integer menge);
@@ -182,20 +186,28 @@ class Hersteller{
 	prior indexed String name;
 	void aendereHersteller(String name) throws ExcAlreadyExists;
 }
-class Bestellung{
-	public PositionInBestellung ** positionsListe;
-	prior public server-only BestellManager bestellManager;
-	server-only public KndLieferung kndLieferung;
-	prior indexed Integer bestellID;
+abstract class BestellungAbstrakt##BstAbstr{
+	public prior server-only BestellManager bestellManager;
 	public prior Integer warenwert;
-	public no-view Bestellstatus bestellstatus;
 	public prior Lieferart lieferart;
 	void listeHinzufuegen(Position ** positionsListe);
+}
+
+class Bestellung extends BestellungAbstrakt{
+	public PositionInBestellung ** positionsListe;
+	server-only public KndLieferung kndLieferung;
+	prior indexed Integer bestellID;
+	public no-view Bestellstatus bestellstatus;
 	void aendereStatus(Bestellstatus bestellstatus);
 	void annehmen();
 	active void allesZuruecksenden##allZrck();
 	Integer berechneWarenwert();
 	void lieferungHinzufuegen(KndLieferung lieferung);
+	
+}
+class Vorbestellung extends BestellungAbstrakt{
+	public Position ** positionsListe;
+	void stornieren();
 }
 
 class KndLieferung extends ZeitObjekt{
@@ -246,7 +258,6 @@ singleton Verkauf extends Artikelstatus{}
 singleton Auslauf extends Artikelstatus{}
 
 abstract class Bestellstatus{}
-singleton Vorbestellung extends Bestellstatus{}
 singleton Verarbeitung extends Bestellstatus{}
 singleton Hinversand extends Bestellstatus{}
 singleton Geliefert extends Bestellstatus{}
