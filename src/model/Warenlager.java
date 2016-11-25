@@ -251,10 +251,6 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
     
     public void artikelEinlagernImplementation(final Artikel4Public artikel, final long menge) 
 				throws model.ExcLagerbestandOverMax, PersistenceException{
-        //TODO: Warenlager observen um Vorbestellungen rausschicken zu können
-        //TODO: alternative: bei jedem tick die vorbestellungen überprüfen, ob welche schickbar sind, von anfang bis ende durch
-
-        //TODO: Artikel nachbestellen, wenn Hersteller hinzugefügt wurde
         Position4Public p4 = getThis().getWarenListe().findFirst(new Predcate<Position4Public>() {
             @Override
             public boolean test(Position4Public argument) throws PersistenceException {
@@ -283,9 +279,6 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
             position.verringereMenge(menge);
             long posM = position.getMenge();
             if (posM < artikel.getMinLagerbestand() && artikel.getArtikelstatus().equals(Verkauf.getTheVerkauf())) {
-                if(position.getArtikel().getHersteller()==null){
-                    throw new ExcArtikelHatKeinenHersteller(ErrorMessages.ArtikelHatKeinenHerstellerNachlieferung);
-                }
                 getThis().nachbestellen(artikel, artikel.getMaxLagerbestand() - posM);
             }
         }
@@ -306,8 +299,12 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
         
     }
     public void nachbestellen(final Artikel4Public artikel, final long menge) 
-				throws PersistenceException{
-        ZeitManager.getTheZeitManager().neueHstLieferungImplementation(artikel,menge);
+				throws model.ExcArtikelHatKeinenHersteller, PersistenceException{
+        //bestellt nicht nach, wenn kein Hersteller vorhanden ist
+        if(artikel.getHersteller()!=null){
+            ZeitManager.getTheZeitManager().neueHstLieferungImplementation(artikel,menge);
+        }
+        else throw new ExcArtikelHatKeinenHersteller(ErrorMessages.ArtikelHatKeinenHerstellerNachlieferung);
         
     }
     public Position4Public nichtVerfPruefen(final PositionSearchList positionsListe) 
