@@ -529,8 +529,8 @@ public class ServiceAdmin extends model.ServiceShop implements PersistentService
         Artikel4Public art1 = Artikel.createArtikel("1234","Switch", 999,10,100,3, Verkauf.getTheVerkauf());
         Artikel4Public art2 = Artikel.createArtikel("31415626","Raspberry", 1999,5,200,4, Neuanlage.getTheNeuanlage());
         Artikel4Public art3 = Artikel.createArtikel("666","Teufel's Dreizack", 666,2,100,3,Verkauf.getTheVerkauf());
-        art1.herstellerHinzufuegen(hst1);
-        art3.herstellerHinzufuegen(hst2);
+       // art1.herstellerHinzufuegen(hst1);
+       // art3.herstellerHinzufuegen(hst2);
 
         //Listen
         ((PersistentArtikelManager)getThis().getArtikelManager()).getArtikelListe().add(art1);

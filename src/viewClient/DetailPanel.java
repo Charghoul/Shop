@@ -1304,7 +1304,6 @@ class DetailPanelFactory implements AnythingVisitor {
 class ServerDefaultDetailPanel extends DefaultDetailPanel{
     
     protected static final String Server$$service = "Server$$service";
-    protected static final String Server$$zeitmanager = "Server$$zeitmanager";
     protected static final String Server$$user = "Server$$user";
     
     protected ServerDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {

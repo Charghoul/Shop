@@ -5,8 +5,6 @@ public interface PersistentServer extends Invoker, Anything, SubjInterface, Remo
     
     public Service4Public getService() throws PersistenceException ;
     public void setService(Service4Public newValue) throws PersistenceException ;
-    public ZeitManager4Public getZeitmanager() throws PersistenceException ;
-    public void setZeitmanager(ZeitManager4Public newValue) throws PersistenceException ;
     public SubjInterface getSubService() throws PersistenceException ;
     public void setSubService(SubjInterface newValue) throws PersistenceException ;
     public Server_ErrorsProxi getErrors() throws PersistenceException ;

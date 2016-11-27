@@ -28,14 +28,14 @@ public class ServerFacade{
     public PersistentServer newServer(String password,String user,long hackCount,java.sql.Timestamp hackDelay,long idCreateIfLessZero) throws PersistenceException {
         if(idCreateIfLessZero > 0) return (PersistentServer)PersistentProxi.createProxi(idCreateIfLessZero, -103);
         long id = ConnectionHandler.getTheConnectionHandler().theServerFacade.getNextId();
-        Server result = new Server(null,null,null,null,password,user,hackCount,hackDelay,id);
+        Server result = new Server(null,null,null,password,user,hackCount,hackDelay,id);
         Cache.getTheCache().put(result);
         return (PersistentServer)PersistentProxi.createProxi(id, -103);
     }
     
     public PersistentServer newDelayedServer(String password,String user,long hackCount,java.sql.Timestamp hackDelay) throws PersistenceException {
         long id = ConnectionHandler.getTheConnectionHandler().theServerFacade.getNextId();
-        Server result = new Server(null,null,null,null,password,user,hackCount,hackDelay,id);
+        Server result = new Server(null,null,null,password,user,hackCount,hackDelay,id);
         Cache.getTheCache().put(result);
         return (PersistentServer)PersistentProxi.createProxi(id, -103);
     }
@@ -63,9 +63,6 @@ public class ServerFacade{
         return result;
     }
     public void serviceSet(long ServerId, Service4Public serviceVal) throws PersistenceException {
-        
-    }
-    public void zeitmanagerSet(long ServerId, ZeitManager4Public zeitmanagerVal) throws PersistenceException {
         
     }
     public void subServiceSet(long ServerId, SubjInterface subServiceVal) throws PersistenceException {
