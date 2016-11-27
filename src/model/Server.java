@@ -78,15 +78,6 @@ public class Server extends PersistentObject implements PersistentServer{
                     if(forGUI && service.hasEssentialFields())service.toHashtable(allResults, depth, essentialLevel + 1, false, true, tdObserver);
                 }
             }
-            AbstractPersistentRoot zeitmanager = (AbstractPersistentRoot)this.getZeitmanager();
-            if (zeitmanager != null) {
-                result.put("zeitmanager", zeitmanager.createProxiInformation(false, essentialLevel <= 1));
-                if(depth > 1) {
-                    zeitmanager.toHashtable(allResults, depth - 1, essentialLevel, forGUI, true , tdObserver);
-                }else{
-                    if(forGUI && zeitmanager.hasEssentialFields())zeitmanager.toHashtable(allResults, depth, essentialLevel + 1, false, true, tdObserver);
-                }
-            }
             result.put("errors", this.getErrors().getVector(allResults, depth, essentialLevel, forGUI, tdObserver, false, true));
             result.put("user", this.getUser());
             String uniqueKey = common.RPCConstantsAndServices.createHashtableKey(this.getClassId(), this.getId());
@@ -103,7 +94,6 @@ public class Server extends PersistentObject implements PersistentServer{
     public Server provideCopy() throws PersistenceException{
         Server result = this;
         result = new Server(this.service, 
-                            this.zeitmanager, 
                             this.subService, 
                             this.This, 
                             this.password, 
@@ -125,7 +115,6 @@ public class Server extends PersistentObject implements PersistentServer{
     protected boolean changed = false;
     
     protected PersistentService service;
-    protected PersistentZeitManager zeitmanager;
     protected SubjInterface subService;
     protected PersistentServer This;
     protected Server_ErrorsProxi errors;
@@ -134,11 +123,10 @@ public class Server extends PersistentObject implements PersistentServer{
     protected long hackCount;
     protected java.sql.Timestamp hackDelay;
     
-    public Server(PersistentService service,PersistentZeitManager zeitmanager,SubjInterface subService,PersistentServer This,String password,String user,long hackCount,java.sql.Timestamp hackDelay,long id) throws PersistenceException {
+    public Server(PersistentService service,SubjInterface subService,PersistentServer This,String password,String user,long hackCount,java.sql.Timestamp hackDelay,long id) throws PersistenceException {
         /* Shall not be used by clients for object construction! Use static create operation instead! */
         super(id);
         this.service = service;
-        this.zeitmanager = zeitmanager;
         this.subService = subService;
         if (This != null && !(this.isTheSameAs(This))) this.This = This;
         this.errors = new Server_ErrorsProxi(this);
@@ -165,10 +153,6 @@ public class Server extends PersistentObject implements PersistentServer{
             this.getService().store();
             ConnectionHandler.getTheConnectionHandler().theServerFacade.serviceSet(this.getId(), getService());
         }
-        if(this.getZeitmanager() != null){
-            this.getZeitmanager().store();
-            ConnectionHandler.getTheConnectionHandler().theServerFacade.zeitmanagerSet(this.getId(), getZeitmanager());
-        }
         if(this.getSubService() != null){
             this.getSubService().store();
             ConnectionHandler.getTheConnectionHandler().theServerFacade.subServiceSet(this.getId(), getSubService());
@@ -192,20 +176,6 @@ public class Server extends PersistentObject implements PersistentServer{
         if(!this.isDelayed$Persistence()){
             newValue.store();
             ConnectionHandler.getTheConnectionHandler().theServerFacade.serviceSet(this.getId(), newValue);
-        }
-    }
-    public ZeitManager4Public getZeitmanager() throws PersistenceException {
-        return this.zeitmanager;
-    }
-    public void setZeitmanager(ZeitManager4Public newValue) throws PersistenceException {
-        if (newValue == null) throw new PersistenceException("Null values not allowed!", 0);
-        if(newValue.isTheSameAs(this.zeitmanager)) return;
-        long objectId = newValue.getId();
-        long classId = newValue.getClassId();
-        this.zeitmanager = (PersistentZeitManager)PersistentProxi.createProxi(objectId, classId);
-        if(!this.isDelayed$Persistence()){
-            newValue.store();
-            ConnectionHandler.getTheConnectionHandler().theServerFacade.zeitmanagerSet(this.getId(), newValue);
         }
     }
     public SubjInterface getSubService() throws PersistenceException {
@@ -328,7 +298,6 @@ public class Server extends PersistentObject implements PersistentServer{
     }
     public int getLeafInfo() throws PersistenceException{
         if (this.getService() != null) return 1;
-        if (this.getZeitmanager() != null) return 1;
         return 0;
     }
     
@@ -433,7 +402,7 @@ public class Server extends PersistentObject implements PersistentServer{
     public void initializeOnCreation() 
 				throws PersistenceException{
        // Entscheidet, ob Kunden- oder Service gestartet wird
-        getThis().setZeitmanager(ZeitManager.getTheZeitManager());
+       // getThis().setZeitmanager(ZeitManager.getTheZeitManager());
        if (getThis().getUser().equals(common.RPCConstantsAndServices.AdministratorName)){
             getThis().setService(model.ServiceAdmin.createServiceAdmin());
        }

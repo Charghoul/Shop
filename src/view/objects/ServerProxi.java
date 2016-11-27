@@ -20,17 +20,10 @@ public class ServerProxi extends ViewProxi implements ServerView{
             service = view.objects.ViewProxi.createProxi(service$Info,connectionKey);
             service.setToString(service$Info.getToString());
         }
-        ViewProxi zeitmanager = null;
-        String zeitmanager$String = (String)resultTable.get("zeitmanager");
-        if (zeitmanager$String != null) {
-            common.ProxiInformation zeitmanager$Info = common.RPCConstantsAndServices.createProxiInformation(zeitmanager$String);
-            zeitmanager = view.objects.ViewProxi.createProxi(zeitmanager$Info,connectionKey);
-            zeitmanager.setToString(zeitmanager$Info.getToString());
-        }
         java.util.Vector<String> errors_string = (java.util.Vector<String>)resultTable.get("errors");
         java.util.Vector<ErrorDisplayView> errors = ViewProxi.getProxiVector(errors_string, connectionKey);
         String user = (String)resultTable.get("user");
-        ServerView result$$ = new Server((ServiceView)service,(ZeitManagerView)zeitmanager,errors,(String)user, this.getId(), this.getClassId());
+        ServerView result$$ = new Server((ServiceView)service,errors,(String)user, this.getId(), this.getClassId());
         ((ViewRoot)result$$).setToString((String) resultTable.get(common.RPCConstantsAndServices.RPCToStringFieldName));
         return result$$;
     }
@@ -42,27 +35,21 @@ public class ServerProxi extends ViewProxi implements ServerView{
         int index = originalIndex;
         if(index == 0 && this.getService() != null) return new ServiceServerWrapper(this, originalIndex, (ViewRoot)this.getService());
         if(this.getService() != null) index = index - 1;
-        if(index == 0 && this.getZeitmanager() != null) return new ZeitmanagerServerWrapper(this, originalIndex, (ViewRoot)this.getZeitmanager());
-        if(this.getZeitmanager() != null) index = index - 1;
         return null;
     }
     public int getChildCount() throws ModelException {
         return 0 
-            + (this.getService() == null ? 0 : 1)
-            + (this.getZeitmanager() == null ? 0 : 1);
+            + (this.getService() == null ? 0 : 1);
     }
     public boolean isLeaf() throws ModelException {
         if (this.object == null) return this.getLeafInfo() == 0;
         return true 
-            && (this.getService() == null ? true : false)
-            && (this.getZeitmanager() == null ? true : false);
+            && (this.getService() == null ? true : false);
     }
     public int getIndexOfChild(Object child) throws ModelException {
         int result = 0;
         if(this.getService() != null && this.getService().equals(child)) return result;
         if(this.getService() != null) result = result + 1;
-        if(this.getZeitmanager() != null && this.getZeitmanager().equals(child)) return result;
-        if(this.getZeitmanager() != null) result = result + 1;
         return -1;
     }
     
@@ -71,12 +58,6 @@ public class ServerProxi extends ViewProxi implements ServerView{
     }
     public void setService(ServiceView newValue) throws ModelException {
         ((Server)this.getTheObject()).setService(newValue);
-    }
-    public ZeitManagerView getZeitmanager()throws ModelException{
-        return ((Server)this.getTheObject()).getZeitmanager();
-    }
-    public void setZeitmanager(ZeitManagerView newValue) throws ModelException {
-        ((Server)this.getTheObject()).setZeitmanager(newValue);
     }
     public java.util.Vector<ErrorDisplayView> getErrors()throws ModelException{
         return ((Server)this.getTheObject()).getErrors();

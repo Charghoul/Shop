@@ -28,12 +28,6 @@ public class ServerICProxi extends PersistentInCacheProxiOptimistic implements P
     public void setService(Service4Public newValue) throws PersistenceException {
         ((PersistentServer)this.getTheObject()).setService(newValue);
     }
-    public ZeitManager4Public getZeitmanager() throws PersistenceException {
-        return ((PersistentServer)this.getTheObject()).getZeitmanager();
-    }
-    public void setZeitmanager(ZeitManager4Public newValue) throws PersistenceException {
-        ((PersistentServer)this.getTheObject()).setZeitmanager(newValue);
-    }
     public SubjInterface getSubService() throws PersistenceException {
         return ((PersistentServer)this.getTheObject()).getSubService();
     }

@@ -405,8 +405,10 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
 				throws PersistenceException{
         getThis().setHersteller(hersteller);
         //überprüft ob Artikelbestand 0 ist und bestellt dann nach
-        Position4Public temp = Warenlager.getTheWarenlager().nichtVerfPruefen((PositionSearchList) Position.createPosition(getThis(), 1));
-        if(temp != null){
+        Position4Public position = Warenlager.getTheWarenlager().getWarenListe().findFirst(argument -> {
+            return argument.getArtikel().equals(getThis()) && argument.getMenge() < 1;
+        });
+        if(position != null){
             try {
                 Warenlager.getTheWarenlager().nachbestellen(getThis(),getThis().getMaxLagerbestand());
             } catch (ExcArtikelHatKeinenHersteller excArtikelHatKeinenHersteller) {

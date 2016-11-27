@@ -2,7 +2,7 @@ model Shop {
 
 server Server {
 	Service service;
-	ZeitManager zeitmanager;
+	ZeitManager zeitManager;
 }
 
 abstract server Service {

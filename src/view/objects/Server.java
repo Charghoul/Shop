@@ -11,15 +11,13 @@ import view.visitor.*;
 public class Server extends ViewObject implements ServerView{
     
     protected ServiceView service;
-    protected ZeitManagerView zeitmanager;
     protected java.util.Vector<ErrorDisplayView> errors;
     protected String user;
     
-    public Server(ServiceView service,ZeitManagerView zeitmanager,java.util.Vector<ErrorDisplayView> errors,String user,long id, long classId) {
+    public Server(ServiceView service,java.util.Vector<ErrorDisplayView> errors,String user,long id, long classId) {
         /* Shall not be used. Objects are created on the server only */
         super(id, classId);
         this.service = service;
-        this.zeitmanager = zeitmanager;
         this.errors = errors;
         this.user = user;        
     }
@@ -37,12 +35,6 @@ public class Server extends ViewObject implements ServerView{
     }
     public void setService(ServiceView newValue) throws ModelException {
         this.service = newValue;
-    }
-    public ZeitManagerView getZeitmanager()throws ModelException{
-        return this.zeitmanager;
-    }
-    public void setZeitmanager(ZeitManagerView newValue) throws ModelException {
-        this.zeitmanager = newValue;
     }
     public java.util.Vector<ErrorDisplayView> getErrors()throws ModelException{
         return this.errors;
@@ -87,10 +79,6 @@ public class Server extends ViewObject implements ServerView{
         if (service != null) {
             ((ViewProxi)service).setObject((ViewObject)resultTable.get(common.RPCConstantsAndServices.createHashtableKey(service.getClassId(), service.getId())));
         }
-        ZeitManagerView zeitmanager = this.getZeitmanager();
-        if (zeitmanager != null) {
-            ((ViewProxi)zeitmanager).setObject((ViewObject)resultTable.get(common.RPCConstantsAndServices.createHashtableKey(zeitmanager.getClassId(), zeitmanager.getId())));
-        }
         java.util.Vector<?> errors = this.getErrors();
         if (errors != null) {
             ViewObject.resolveVectorProxies(errors, resultTable);
@@ -104,30 +92,24 @@ public class Server extends ViewObject implements ServerView{
         int index = originalIndex;
         if(index == 0 && this.getService() != null) return new ServiceServerWrapper(this, originalIndex, (ViewRoot)this.getService());
         if(this.getService() != null) index = index - 1;
-        if(index == 0 && this.getZeitmanager() != null) return new ZeitmanagerServerWrapper(this, originalIndex, (ViewRoot)this.getZeitmanager());
-        if(this.getZeitmanager() != null) index = index - 1;
         return null;
     }
     public int getChildCount() throws ModelException {
         return 0 
-            + (this.getService() == null ? 0 : 1)
-            + (this.getZeitmanager() == null ? 0 : 1);
+            + (this.getService() == null ? 0 : 1);
     }
     public boolean isLeaf() throws ModelException {
         return true 
-            && (this.getService() == null ? true : false)
-            && (this.getZeitmanager() == null ? true : false);
+            && (this.getService() == null ? true : false);
     }
     public int getIndexOfChild(Object child) throws ModelException {
         int result = 0;
         if(this.getService() != null && this.getService().equals(child)) return result;
         if(this.getService() != null) result = result + 1;
-        if(this.getZeitmanager() != null && this.getZeitmanager().equals(child)) return result;
-        if(this.getZeitmanager() != null) result = result + 1;
         return -1;
     }
     public int getUserIndex() throws ModelException {
-        return 0 + (this.getService() == null ? 0 : 1) + (this.getZeitmanager() == null ? 0 : 1);
+        return 0 + (this.getService() == null ? 0 : 1);
     }
     public int getRowCount(){
         return 0 
