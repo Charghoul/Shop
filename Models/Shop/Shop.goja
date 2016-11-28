@@ -79,7 +79,7 @@ singleton ArtikelManager{
 class BestellManager{
 	public Bestellung ** bestellListe;
 	public Vorbestellung ** vorbestellListe;
-	Integer bestellID;
+	server-only Integer bestellID;
 	server-only prior	public Konto konto;
 	//Eine neue Bestellung wird mit den dazugehörigen Positionen, dem aktuellen warenwert und der vom Kunden gewählten Lieferart erstellt. Dazu kommt eine hochlaufende bestellID. Falls ein Artikel nicht vorhanden ist wird dies als Exception geworfen
 	Bestellung neueBestellung(Position ** positionsListe, Integer warenwert, Lieferart lieferart) throws ExcArtikelNichtVerfuegbar;
