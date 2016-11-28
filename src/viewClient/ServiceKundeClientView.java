@@ -63,7 +63,7 @@ public class ServiceKundeClientView extends BorderPane implements ExceptionAndEv
 		if( this.mainSplitPane == null) {
 			this.mainSplitPane = new SplitPane();
 			this.mainSplitPane.setOrientation( Orientation.HORIZONTAL);
-			this.mainSplitPane.getItems().addAll( this.getNavigationSplitPane(), this.getTitledDetailsPane() );	
+			this.mainSplitPane.getItems().addAll( this.getNavigationSplitPane() );	//,this.getTitledDetailsPane() nach getnavigationsplitpane
 			this.mainSplitPane.setDividerPosition( 0, 0.5);
 			this.mainSplitPane.prefHeightProperty().bind( this.heightProperty());
 			this.mainSplitPane.prefWidthProperty().bind( this.widthProperty());

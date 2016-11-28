@@ -1890,19 +1890,11 @@ class BestellManagerDefaultDetailPanel extends DefaultDetailPanel{
     
     protected static final String BestellManager$$bestellListe = "BestellManager$$bestellListe";
     protected static final String BestellManager$$vorbestellListe = "BestellManager$$vorbestellListe";
-    protected static final String BestellManager$$bestellID = "BestellManager$$bestellID";
     
     protected BestellManagerDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
         super(exceptionHandler, anything);
     }
     protected void addFields(){
-        try{
-            BaseTypePanel panel = new IntegerPanel(this, "bestellID", this.getAnything().getBestellID());
-            this.getScrollablePane().getChildren().add(panel);
-            this.panels.put(BestellManager$$bestellID, panel);
-        }catch(ModelException e){
-            this.getExceptionAndEventhandler().handleException(e);
-        }
         
     }
     protected view.BestellManagerView getAnything(){
