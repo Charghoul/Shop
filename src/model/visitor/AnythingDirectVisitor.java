@@ -25,6 +25,8 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     
     public abstract void handleLieferart(Lieferart4Public lieferart) throws PersistenceException;
     
+    public abstract void handleKundenManager(KundenManager4Public kundenManager) throws PersistenceException;
+    
     public abstract void handleServiceKundeBestellManager(ServiceKundeBestellManager4Public serviceKundeBestellManager) throws PersistenceException;
     
     public abstract void handleCommandCoordinator(CommandCoordinator4Public commandCoordinator) throws PersistenceException;
@@ -70,6 +72,8 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     public void handleactivated(activated4Public activated) throws PersistenceException{
         this.handleStatus(activated);
     }
+    public abstract void handleServiceAdminKundenManager(ServiceAdminKundenManager4Public serviceAdminKundenManager) throws PersistenceException;
+    
     public abstract void handleZeitObjekt(ZeitObjekt4Public zeitObjekt) throws PersistenceException;
     
     public void handleHstLieferung(HstLieferung4Public hstLieferung) throws PersistenceException{

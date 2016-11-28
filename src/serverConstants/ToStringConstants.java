@@ -7,7 +7,6 @@ public class ToStringConstants {
     public static final String Lieferart = "Lieferart: ";
     public static final String LieferartManager = "Lieferarten";
     public static final String Warenlager = "Warenlager";
-    public static final String Bestellart = "Bestellart: ";
     public static final String Bestellstatus = "Status: ";
     public static final String Einkaufswagen = "Einkaufswagen";
     public static final String ArtikelManager = "Artikelverzeichnis";
@@ -34,6 +33,8 @@ public class ToStringConstants {
     public static final String Kundenlieferung = "Lieferung: ";
     public static final String Bestellung = "Bestellung Nr. ";
     public static final String KndAnnahme = "Kundenannahmezeit: ";
+    public static final String KundenManager = "Kundenliste";
+    public static final String Kunde = "Kunde: ";
 
 
     private ToStringConstants(){}

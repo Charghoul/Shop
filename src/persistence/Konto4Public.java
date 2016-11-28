@@ -7,6 +7,7 @@ public interface Konto4Public extends Anything, SubjInterface, AbstractPersisten
     
     public long getKontostand() throws PersistenceException ;
     public long getLimit() throws PersistenceException ;
+    public void setLimit(long newValue) throws PersistenceException ;
     public long getReserviert() throws PersistenceException ;
     
     public void accept(AnythingVisitor visitor) throws PersistenceException;
@@ -21,6 +22,8 @@ public interface Konto4Public extends Anything, SubjInterface, AbstractPersisten
     public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
 				throws PersistenceException;
     public void abbuchen(final long betrag) 
+				throws PersistenceException;
+    public void aendereLimit(final long limit) 
 				throws PersistenceException;
     public void auszahlen(final long betrag) 
 				throws model.ExcAuszahlungGroesserGutgaben, PersistenceException;

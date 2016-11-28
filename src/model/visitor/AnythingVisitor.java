@@ -21,6 +21,7 @@ public interface AnythingVisitor extends ArtikelstatusVisitor,BestellstatusVisit
     public void handleHerstellerManager(HerstellerManager4Public herstellerManager) throws PersistenceException;
     public void handleKonto(Konto4Public konto) throws PersistenceException;
     public void handleKunde(Kunde4Public kunde) throws PersistenceException;
+    public void handleKundenManager(KundenManager4Public kundenManager) throws PersistenceException;
     public void handleLieferart(Lieferart4Public lieferart) throws PersistenceException;
     public void handleLieferartManager(LieferartManager4Public lieferartManager) throws PersistenceException;
     public void handleNeuerArtikelCommand(NeuerArtikelCommand4Public neuerArtikelCommand) throws PersistenceException;
@@ -28,6 +29,7 @@ public interface AnythingVisitor extends ArtikelstatusVisitor,BestellstatusVisit
     public void handleProduktgruppeEntfernenCommand(ProduktgruppeEntfernenCommand4Public produktgruppeEntfernenCommand) throws PersistenceException;
     public void handleRegisterCommand(RegisterCommand4Public registerCommand) throws PersistenceException;
     public void handleServer(Server4Public server) throws PersistenceException;
+    public void handleServiceAdminKundenManager(ServiceAdminKundenManager4Public serviceAdminKundenManager) throws PersistenceException;
     public void handleServiceAdminZeitManager(ServiceAdminZeitManager4Public serviceAdminZeitManager) throws PersistenceException;
     public void handleServiceKundeBestellManager(ServiceKundeBestellManager4Public serviceKundeBestellManager) throws PersistenceException;
     public void handleServiceKundeWarenlager(ServiceKundeWarenlager4Public serviceKundeWarenlager) throws PersistenceException;

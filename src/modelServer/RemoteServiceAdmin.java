@@ -137,6 +137,17 @@ public  class RemoteServiceAdmin extends RemoteServiceShop {
         }
     }
     
+    public synchronized java.util.HashMap<?,?> aendereLimit(String kontoProxiString, String limitAsString){
+        try {
+            PersistentKonto konto = (PersistentKonto)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(kontoProxiString));
+            long limit = new Long(limitAsString).longValue();
+            ((PersistentServiceAdmin)this.server).aendereLimit(konto, limit);
+            return createOKResult();
+        }catch(PersistenceException pe){
+            return createExceptionResult(pe);
+        }
+    }
+    
     public synchronized java.util.HashMap<?,?> aendereMaxAnlieferungsVersuche(String zeitManagerProxiString, String maxAnlieferungsVersucheAsString){
         try {
             PersistentZeitManager zeitManager = (PersistentZeitManager)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(zeitManagerProxiString));
@@ -201,6 +212,28 @@ public  class RemoteServiceAdmin extends RemoteServiceShop {
             PersistentLieferartManager lieferartManager = (PersistentLieferartManager)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(lieferartManagerProxiString));
             long percent = new Long(percentAsString).longValue();
             ((PersistentServiceAdmin)this.server).aendereRueckversandGebuehr(lieferartManager, percent);
+            return createOKResult();
+        }catch(PersistenceException pe){
+            return createExceptionResult(pe);
+        }
+    }
+    
+    public synchronized java.util.HashMap<?,?> aendereStandardGuthaben(String kundenManagerProxiString, String guthabenAsString){
+        try {
+            PersistentKundenManager kundenManager = (PersistentKundenManager)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(kundenManagerProxiString));
+            long guthaben = new Long(guthabenAsString).longValue();
+            ((PersistentServiceAdmin)this.server).aendereStandardGuthaben(kundenManager, guthaben);
+            return createOKResult();
+        }catch(PersistenceException pe){
+            return createExceptionResult(pe);
+        }
+    }
+    
+    public synchronized java.util.HashMap<?,?> aendereStandardLimit(String kundenManagerProxiString, String limitAsString){
+        try {
+            PersistentKundenManager kundenManager = (PersistentKundenManager)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(kundenManagerProxiString));
+            long limit = new Long(limitAsString).longValue();
+            ((PersistentServiceAdmin)this.server).aendereStandardLimit(kundenManager, limit);
             return createOKResult();
         }catch(PersistenceException pe){
             return createExceptionResult(pe);

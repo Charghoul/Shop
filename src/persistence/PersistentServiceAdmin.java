@@ -3,6 +3,7 @@ package persistence;
 
 public interface PersistentServiceAdmin extends PersistentServiceShop, ServiceAdmin4Public {
     
+    public void setKundenManager(ServiceAdminKundenManager4Public newValue) throws PersistenceException ;
     public Warenlager4Public getWarenlager() throws PersistenceException ;
     public void setWarenlager(Warenlager4Public newValue) throws PersistenceException ;
     public ArtikelManager4Public getArtikelManager() throws PersistenceException ;
@@ -15,9 +16,15 @@ public interface PersistentServiceAdmin extends PersistentServiceShop, ServiceAd
     public PersistentServiceAdmin getThis() throws PersistenceException ;
     
     
+    public KundenManager4Public getKundenManager() 
+				throws PersistenceException;
     public ZeitManager4Public getZeitManager() 
 				throws PersistenceException;
+    public void setKundenManager(final KundenManager4Public kundenManager) 
+				throws PersistenceException;
     public void setZeitManager(final ZeitManager4Public zeitManager) 
+				throws PersistenceException;
+    public void kundenManager_update(final model.meta.KundenManagerMssgs event) 
 				throws PersistenceException;
     public void zeitManager_update(final model.meta.ZeitManagerMssgs event) 
 				throws PersistenceException;

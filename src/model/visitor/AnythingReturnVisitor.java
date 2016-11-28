@@ -21,6 +21,7 @@ public interface AnythingReturnVisitor<R> extends ArtikelstatusReturnVisitor<R> 
     public R handleHerstellerManager(HerstellerManager4Public herstellerManager) throws PersistenceException;
     public R handleKonto(Konto4Public konto) throws PersistenceException;
     public R handleKunde(Kunde4Public kunde) throws PersistenceException;
+    public R handleKundenManager(KundenManager4Public kundenManager) throws PersistenceException;
     public R handleLieferart(Lieferart4Public lieferart) throws PersistenceException;
     public R handleLieferartManager(LieferartManager4Public lieferartManager) throws PersistenceException;
     public R handleNeuerArtikelCommand(NeuerArtikelCommand4Public neuerArtikelCommand) throws PersistenceException;
@@ -28,6 +29,7 @@ public interface AnythingReturnVisitor<R> extends ArtikelstatusReturnVisitor<R> 
     public R handleProduktgruppeEntfernenCommand(ProduktgruppeEntfernenCommand4Public produktgruppeEntfernenCommand) throws PersistenceException;
     public R handleRegisterCommand(RegisterCommand4Public registerCommand) throws PersistenceException;
     public R handleServer(Server4Public server) throws PersistenceException;
+    public R handleServiceAdminKundenManager(ServiceAdminKundenManager4Public serviceAdminKundenManager) throws PersistenceException;
     public R handleServiceAdminZeitManager(ServiceAdminZeitManager4Public serviceAdminZeitManager) throws PersistenceException;
     public R handleServiceKundeBestellManager(ServiceKundeBestellManager4Public serviceKundeBestellManager) throws PersistenceException;
     public R handleServiceKundeWarenlager(ServiceKundeWarenlager4Public serviceKundeWarenlager) throws PersistenceException;

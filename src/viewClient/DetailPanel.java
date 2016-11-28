@@ -1266,6 +1266,9 @@ class DetailPanelFactory implements AnythingVisitor {
     public void handleBestellung(view.BestellungView object){
         result = new BestellungDefaultDetailPanel(handler, object);
     }
+    public void handleKundenManager(view.KundenManagerView object){
+        result = new KundenManagerDefaultDetailPanel(handler, object);
+    }
     public void handleGeliefert(view.GeliefertView object){
         result = new GeliefertDefaultDetailPanel(handler, object);
     }
@@ -1682,6 +1685,7 @@ class PositionDefaultDetailPanel extends DefaultDetailPanel{
 class ServiceAdminDefaultDetailPanel extends DefaultDetailPanel{
     
     protected static final String ServiceShop$$produktKatalog = "ServiceShop$$produktKatalog";
+    protected static final String ServiceAdmin$$kundenManager = "ServiceAdmin$$kundenManager";
     protected static final String ServiceAdmin$$warenlager = "ServiceAdmin$$warenlager";
     protected static final String ServiceAdmin$$artikelManager = "ServiceAdmin$$artikelManager";
     protected static final String ServiceAdmin$$lieferartManager = "ServiceAdmin$$lieferartManager";
@@ -1873,6 +1877,37 @@ class BestellungDefaultDetailPanel extends DefaultDetailPanel{
     }
 }
 
+class KundenManagerDefaultDetailPanel extends DefaultDetailPanel{
+    
+    protected static final String KundenManager$$kundenListe = "KundenManager$$kundenListe";
+    protected static final String KundenManager$$standardLimit = "KundenManager$$standardLimit";
+    protected static final String KundenManager$$standardGuthaben = "KundenManager$$standardGuthaben";
+    
+    protected KundenManagerDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
+        super(exceptionHandler, anything);
+    }
+    protected void addFields(){
+        try{
+            BaseTypePanel panel = new IntegerPanel(this, "standardLimit", this.getAnything().getStandardLimit());
+            this.getScrollablePane().getChildren().add(panel);
+            this.panels.put(KundenManager$$standardLimit, panel);
+        }catch(ModelException e){
+            this.getExceptionAndEventhandler().handleException(e);
+        }
+        try{
+            BaseTypePanel panel = new IntegerPanel(this, "standardGuthaben", this.getAnything().getStandardGuthaben());
+            this.getScrollablePane().getChildren().add(panel);
+            this.panels.put(KundenManager$$standardGuthaben, panel);
+        }catch(ModelException e){
+            this.getExceptionAndEventhandler().handleException(e);
+        }
+        
+    }
+    protected view.KundenManagerView getAnything(){
+        return (view.KundenManagerView)this.anything;
+    }
+}
+
 class GeliefertDefaultDetailPanel extends DefaultDetailPanel{
     
     protected GeliefertDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
@@ -1913,7 +1948,7 @@ class ZeitManagerDefaultDetailPanel extends DefaultDetailPanel{
     }
     protected void addFields(){
         try{
-            BaseTypePanel panel = new IntegerPanel(this, "annahmezeit", this.getAnything().getAnnahmezeit());
+            BaseTypePanel panel = new IntegerPanel(this, "AnnahmezeitInZeitEinheiten", this.getAnything().getAnnahmezeit());
             this.getScrollablePane().getChildren().add(panel);
             this.panels.put(ZeitManager$$annahmezeit, panel);
         }catch(ModelException e){
@@ -2033,7 +2068,7 @@ class LieferartManagerDefaultDetailPanel extends DefaultDetailPanel{
     }
     protected void addFields(){
         try{
-            BaseTypePanel panel = new IntegerPanel(this, "rueckversandGebuehr", this.getAnything().getRueckversandGebuehr());
+            BaseTypePanel panel = new IntegerPanel(this, "RueckversandgebuehrenInProzent", this.getAnything().getRueckversandGebuehr());
             this.getScrollablePane().getChildren().add(panel);
             this.panels.put(LieferartManager$$rueckversandGebuehr, panel);
         }catch(ModelException e){

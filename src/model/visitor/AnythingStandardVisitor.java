@@ -74,6 +74,9 @@ public abstract class AnythingStandardVisitor implements AnythingVisitor {
     public void handlePosition(Position4Public position) throws PersistenceException{
         this.standardHandling(position);
     }
+    public void handleServiceAdminKundenManager(ServiceAdminKundenManager4Public serviceAdminKundenManager) throws PersistenceException{
+        this.standardHandling(serviceAdminKundenManager);
+    }
     public void handleArtikelManager(ArtikelManager4Public artikelManager) throws PersistenceException{
         this.standardHandling(artikelManager);
     }
@@ -121,6 +124,9 @@ public abstract class AnythingStandardVisitor implements AnythingVisitor {
     }
     public void handleBestellung(Bestellung4Public bestellung) throws PersistenceException{
         this.standardHandling(bestellung);
+    }
+    public void handleKundenManager(KundenManager4Public kundenManager) throws PersistenceException{
+        this.standardHandling(kundenManager);
     }
     public void handleServiceKundeBestellManager(ServiceKundeBestellManager4Public serviceKundeBestellManager) throws PersistenceException{
         this.standardHandling(serviceKundeBestellManager);

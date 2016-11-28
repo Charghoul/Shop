@@ -96,6 +96,10 @@ public class KontoProxi extends PersistentProxi implements PersistentKonto{
 				throws PersistenceException{
         ((PersistentKonto)this.getTheObject()).abbuchen(betrag);
     }
+    public void aendereLimit(final long limit) 
+				throws PersistenceException{
+        ((PersistentKonto)this.getTheObject()).aendereLimit(limit);
+    }
     public void auszahlen(final long betrag) 
 				throws model.ExcAuszahlungGroesserGutgaben, PersistenceException{
         ((PersistentKonto)this.getTheObject()).auszahlen(betrag);

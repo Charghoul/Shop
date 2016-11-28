@@ -244,7 +244,8 @@ public class ServiceRegister extends model.Service implements PersistentServiceR
         if( kundeSearchList.iterator().hasNext() ) {
             throw new ExcUserAlreadyExists(ErrorMessages.DoubleDefinitionMessage);
         }
-        Kunde.createKunde(username, passwort);
+        Kunde4Public kunde = Kunde.createKunde(username, passwort);
+        KundenManager.getTheKundenManager().getKundenListe().add(kunde);
         Server.createServer(passwort,username, 3, new Timestamp(0));
     }
     
