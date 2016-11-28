@@ -1,5 +1,6 @@
 package viewClient;
 
+import model.Artikel;
 import view.*;
 import view.objects.ViewRoot;
 import view.objects.ViewObjectInTree;
@@ -229,6 +230,7 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
 				this.result = null;
 			}
 
+			//Artikelupdates im Detailpanel
 			@Override
 			public void handleArtikel(ArtikelView artikel) throws ModelException {
 				result = new ArtikelDefaultDetailPanel(ServiceAdminClientView.this,artikel);
@@ -238,7 +240,32 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
 						getConnection().aendereHstLieferzeit(artikel,Integer.parseInt(text));
 					}
 				});
+				result.registerUpdater(ArtikelDefaultDetailPanel.Artikel$$bezeichnung, new UpdaterForString() {
+					@Override
+					public void update(String text) throws ModelException {
+						getConnection().aendereBezeichnung(artikel,text);
+					}
+				});
+				result.registerUpdater(ArtikelDefaultDetailPanel.Artikel$$maxLagerbestand, new UpdaterForInteger() {
+					@Override
+					public void update(String text) throws ModelException {
+						getConnection().aendereMaxLagerbestand(artikel, Integer.parseInt(text));
+					}
+				});
+				result.registerUpdater(ArtikelDefaultDetailPanel.Artikel$$minLagerbestand, new UpdaterForInteger() {
+					@Override
+					public void update(String text) throws ModelException {
+						getConnection().aendereMinLagerbestand(artikel, Integer.parseInt(text));
+					}
+				});
+				result.registerUpdater(ArtikelDefaultDetailPanel.Artikel$$preis, new UpdaterForInteger() {
+					@Override
+					public void update(String text) throws ModelException {
+						getConnection().aenderePreis(artikel, Integer.parseInt(text));
+					}
+				});
 			}
+
 
 
 			//TODO Overwrite all handle methods for the types for which you intend to provide a special panel!
@@ -325,9 +352,7 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
 
     interface MenuItemVisitor{
         ImageView handle(AendereAnnahmezeitPRMTRZeitManagerPRMTRIntegerPRMTRMenuItem menuItem);
-        ImageView handle(AendereArtikelPRMTRArtikelPRMTRIntegerPRMTRIntegerPRMTRIntegerPRMTRIntegerPRMTRMenuItem menuItem);
         ImageView handle(AendereHerstellerPRMTRHerstellerPRMTRStringPRMTRMenuItem menuItem);
-        ImageView handle(AendereHstLieferzeitPRMTRArtikelPRMTRIntegerPRMTRMenuItem menuItem);
         ImageView handle(AendereLieferartPRMTRLieferartPRMTRStringPRMTRIntegerPRMTRIntegerPRMTRMenuItem menuItem);
         ImageView handle(AendereMaxAnlieferungsVersuchePRMTRZeitManagerPRMTRIntegerPRMTRMenuItem menuItem);
         ImageView handle(AendereMengePRMTRPositionPRMTRIntegerPRMTRMenuItem menuItem);
@@ -359,17 +384,7 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
             return visitor.handle(this);
         }
     }
-    private class AendereArtikelPRMTRArtikelPRMTRIntegerPRMTRIntegerPRMTRIntegerPRMTRIntegerPRMTRMenuItem extends ServiceAdminMenuItem{
-        protected ImageView accept(MenuItemVisitor visitor){
-            return visitor.handle(this);
-        }
-    }
     private class AendereHerstellerPRMTRHerstellerPRMTRStringPRMTRMenuItem extends ServiceAdminMenuItem{
-        protected ImageView accept(MenuItemVisitor visitor){
-            return visitor.handle(this);
-        }
-    }
-    private class AendereHstLieferzeitPRMTRArtikelPRMTRIntegerPRMTRMenuItem extends ServiceAdminMenuItem{
         protected ImageView accept(MenuItemVisitor visitor){
             return visitor.handle(this);
         }
@@ -618,87 +633,6 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
                 });
                 result.getItems().add(item);
             }
-            if (selected instanceof ArtikelView){
-                item = new AendereArtikelPRMTRArtikelPRMTRIntegerPRMTRIntegerPRMTRIntegerPRMTRIntegerPRMTRMenuItem();
-                item.setText("aendereArtikel ... ");
-                item.setOnAction(new EventHandler<ActionEvent>(){
-                    public void handle(javafx.event.ActionEvent e) {
-                        final ServiceAdminAendereArtikelArtikelIntegerIntegerIntegerIntegerMssgWizard wizard = new ServiceAdminAendereArtikelArtikelIntegerIntegerIntegerIntegerMssgWizard("aendereArtikel");
-                        wizard.setFirstArgument((ArtikelView)selected);
-                        wizard.setWidth(getNavigationPanel().getWidth());
-                        wizard.showAndWait();
-                    }
-                });
-                result.getItems().add(item);
-                item = new AendereHstLieferzeitPRMTRArtikelPRMTRIntegerPRMTRMenuItem();
-                item.setText("aendereHstLieferzeit ... ");
-                item.setOnAction(new EventHandler<ActionEvent>(){
-                    public void handle(javafx.event.ActionEvent e) {
-                        final ServiceAdminAendereHstLieferzeitArtikelIntegerMssgWizard wizard = new ServiceAdminAendereHstLieferzeitArtikelIntegerMssgWizard("aendereHstLieferzeit");
-                        wizard.setFirstArgument((ArtikelView)selected);
-                        wizard.setWidth(getNavigationPanel().getWidth());
-                        wizard.showAndWait();
-                    }
-                });
-                result.getItems().add(item);
-                if (filter_statusAuslauf((ArtikelView) selected)) {
-                    item = new StatusAuslaufPRMTRArtikelPRMTRMenuItem();
-                    item.setText("einstellen");
-                    item.setOnAction(new EventHandler<ActionEvent>(){
-                        public void handle(javafx.event.ActionEvent e) {
-                            Alert confirm = new Alert(AlertType.CONFIRMATION);
-                            confirm.setTitle(GUIConstants.ConfirmButtonText);
-                            confirm.setHeaderText(null);
-                            confirm.setContentText("einstellen" + GUIConstants.ConfirmQuestionMark);
-                            Optional<ButtonType> buttonResult = confirm.showAndWait();
-                            if (buttonResult.get() == ButtonType.OK) {
-                                try {
-                                    getConnection().statusAuslauf((ArtikelView)selected);
-                                    getConnection().setEagerRefresh();
-                                    
-                                }catch(ModelException me){
-                                    handleException(me);
-                                }
-                            }
-                        }
-                    });
-                    result.getItems().add(item);
-                }
-                if (filter_statusVerkauf((ArtikelView) selected)) {
-                    item = new StatusVerkaufPRMTRArtikelPRMTRMenuItem();
-                    item.setText("freigeben");
-                    item.setOnAction(new EventHandler<ActionEvent>(){
-                        public void handle(javafx.event.ActionEvent e) {
-                            Alert confirm = new Alert(AlertType.CONFIRMATION);
-                            confirm.setTitle(GUIConstants.ConfirmButtonText);
-                            confirm.setHeaderText(null);
-                            confirm.setContentText("freigeben" + GUIConstants.ConfirmQuestionMark);
-                            Optional<ButtonType> buttonResult = confirm.showAndWait();
-                            if (buttonResult.get() == ButtonType.OK) {
-                                try {
-                                    getConnection().statusVerkauf((ArtikelView)selected);
-                                    getConnection().setEagerRefresh();
-                                    
-                                }catch(ModelException me){
-                                    handleException(me);
-                                }
-                            }
-                        }
-                    });
-                    result.getItems().add(item);
-                }
-                item = new HerstellerHinzufuegenPRMTRArtikelPRMTRHerstellerPRMTRMenuItem();
-                item.setText("herstellerHinzufuegen ... ");
-                item.setOnAction(new EventHandler<ActionEvent>(){
-                    public void handle(javafx.event.ActionEvent e) {
-                        final ServiceAdminHerstellerHinzufuegenArtikelHerstellerMssgWizard wizard = new ServiceAdminHerstellerHinzufuegenArtikelHerstellerMssgWizard("herstellerHinzufuegen");
-                        wizard.setFirstArgument((ArtikelView)selected);
-                        wizard.setWidth(getNavigationPanel().getWidth());
-                        wizard.showAndWait();
-                    }
-                });
-                result.getItems().add(item);
-            }
             if (selected instanceof ProduktgruppeView){
                 item = new ArtikelAbhaengenPRMTRProduktgruppePRMTRArtikelPRMTRMenuItem();
                 item.setText("artikelAbhaengen ... ");
@@ -790,6 +724,65 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
                 });
                 result.getItems().add(item);
             }
+            if (selected instanceof ArtikelView){
+                if (filter_statusAuslauf((ArtikelView) selected)) {
+                    item = new StatusAuslaufPRMTRArtikelPRMTRMenuItem();
+                    item.setText("einstellen");
+                    item.setOnAction(new EventHandler<ActionEvent>(){
+                        public void handle(javafx.event.ActionEvent e) {
+                            Alert confirm = new Alert(AlertType.CONFIRMATION);
+                            confirm.setTitle(GUIConstants.ConfirmButtonText);
+                            confirm.setHeaderText(null);
+                            confirm.setContentText("einstellen" + GUIConstants.ConfirmQuestionMark);
+                            Optional<ButtonType> buttonResult = confirm.showAndWait();
+                            if (buttonResult.get() == ButtonType.OK) {
+                                try {
+                                    getConnection().statusAuslauf((ArtikelView)selected);
+                                    getConnection().setEagerRefresh();
+                                    
+                                }catch(ModelException me){
+                                    handleException(me);
+                                }
+                            }
+                        }
+                    });
+                    result.getItems().add(item);
+                }
+                if (filter_statusVerkauf((ArtikelView) selected)) {
+                    item = new StatusVerkaufPRMTRArtikelPRMTRMenuItem();
+                    item.setText("freigeben");
+                    item.setOnAction(new EventHandler<ActionEvent>(){
+                        public void handle(javafx.event.ActionEvent e) {
+                            Alert confirm = new Alert(AlertType.CONFIRMATION);
+                            confirm.setTitle(GUIConstants.ConfirmButtonText);
+                            confirm.setHeaderText(null);
+                            confirm.setContentText("freigeben" + GUIConstants.ConfirmQuestionMark);
+                            Optional<ButtonType> buttonResult = confirm.showAndWait();
+                            if (buttonResult.get() == ButtonType.OK) {
+                                try {
+                                    getConnection().statusVerkauf((ArtikelView)selected);
+                                    getConnection().setEagerRefresh();
+                                    
+                                }catch(ModelException me){
+                                    handleException(me);
+                                }
+                            }
+                        }
+                    });
+                    result.getItems().add(item);
+                }
+                item = new HerstellerHinzufuegenPRMTRArtikelPRMTRHerstellerPRMTRMenuItem();
+                item.setText("herstellerHinzufuegen ... ");
+                item.setOnAction(new EventHandler<ActionEvent>(){
+                    public void handle(javafx.event.ActionEvent e) {
+                        final ServiceAdminHerstellerHinzufuegenArtikelHerstellerMssgWizard wizard = new ServiceAdminHerstellerHinzufuegenArtikelHerstellerMssgWizard("herstellerHinzufuegen");
+                        wizard.setFirstArgument((ArtikelView)selected);
+                        wizard.setWidth(getNavigationPanel().getWidth());
+                        wizard.showAndWait();
+                    }
+                });
+                result.getItems().add(item);
+            }
             
         }
         this.addNotGeneratedItems(result,selected);
@@ -856,90 +849,6 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
 		
 	}
 
-	class ServiceAdminAendereArtikelArtikelIntegerIntegerIntegerIntegerMssgWizard extends Wizard {
-
-		protected ServiceAdminAendereArtikelArtikelIntegerIntegerIntegerIntegerMssgWizard(String operationName){
-			super(ServiceAdminClientView.this);
-			getOkButton().setText(operationName);
-			getOkButton().setGraphic(new AendereArtikelPRMTRArtikelPRMTRIntegerPRMTRIntegerPRMTRIntegerPRMTRIntegerPRMTRMenuItem ().getGraphic());
-		}
-		protected void initialize(){
-			this.helpFileName = "ServiceAdminAendereArtikelArtikelIntegerIntegerIntegerIntegerMssgWizard.help";
-			super.initialize();		
-		}
-				
-		protected void perform() {
-			try {
-				getConnection().aendereArtikel(firstArgument, ((IntegerSelectionPanel)getParametersPanel().getChildren().get(0)).getResult().longValue(),
-									((IntegerSelectionPanel)getParametersPanel().getChildren().get(1)).getResult().longValue(),
-									((IntegerSelectionPanel)getParametersPanel().getChildren().get(2)).getResult().longValue(),
-									((IntegerSelectionPanel)getParametersPanel().getChildren().get(3)).getResult().longValue());
-				getConnection().setEagerRefresh();
-				this.close();	
-			} catch(ModelException me){
-				handleException(me);
-				this.close();
-			}
-			catch(ExcAlreadyExists e) {
-				getStatusBar().setText(e.getMessage());
-			}
-			
-		}
-		protected String checkCompleteParameterSet(){
-			return null;
-		}
-		protected boolean isModifying () {
-			return false;
-		}
-		protected void addParameters(){
-			getParametersPanel().getChildren().add(new IntegerSelectionPanel("preis", this));
-			getParametersPanel().getChildren().add(new IntegerSelectionPanel("minLagerbestand", this));
-			getParametersPanel().getChildren().add(new IntegerSelectionPanel("maxLagerbestand", this));
-			getParametersPanel().getChildren().add(new IntegerSelectionPanel("hstLieferzeit", this));		
-		}	
-		protected void handleDependencies(int i) {
-		}
-		
-		
-		private ArtikelView firstArgument; 
-	
-		public void setFirstArgument(ArtikelView firstArgument){
-			this.firstArgument = firstArgument;
-			this.setTitle(this.firstArgument.toString());
-			try{
-				final SelectionPanel selectionPanel0 = (SelectionPanel)getParametersPanel().getChildren().get(0);
-				selectionPanel0.preset(firstArgument.getPreis());
-				if (!selectionPanel0.check()) selectionPanel0.preset("");
-			}catch(ModelException me){
-				 handleException(me);
-			}
-			try{
-				final SelectionPanel selectionPanel1 = (SelectionPanel)getParametersPanel().getChildren().get(1);
-				selectionPanel1.preset(firstArgument.getMinLagerbestand());
-				if (!selectionPanel1.check()) selectionPanel1.preset("");
-			}catch(ModelException me){
-				 handleException(me);
-			}
-			try{
-				final SelectionPanel selectionPanel2 = (SelectionPanel)getParametersPanel().getChildren().get(2);
-				selectionPanel2.preset(firstArgument.getMaxLagerbestand());
-				if (!selectionPanel2.check()) selectionPanel2.preset("");
-			}catch(ModelException me){
-				 handleException(me);
-			}
-			try{
-				final SelectionPanel selectionPanel3 = (SelectionPanel)getParametersPanel().getChildren().get(3);
-				selectionPanel3.preset(firstArgument.getHstLieferzeit());
-				if (!selectionPanel3.check()) selectionPanel3.preset("");
-			}catch(ModelException me){
-				 handleException(me);
-			}
-			this.check();
-		}
-		
-		
-	}
-
 	class ServiceAdminAendereHerstellerHerstellerStringMssgWizard extends Wizard {
 
 		protected ServiceAdminAendereHerstellerHerstellerStringMssgWizard(String operationName){
@@ -987,60 +896,6 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
 			try{
 				final SelectionPanel selectionPanel0 = (SelectionPanel)getParametersPanel().getChildren().get(0);
 				selectionPanel0.preset(firstArgument.getName());
-				if (!selectionPanel0.check()) selectionPanel0.preset("");
-			}catch(ModelException me){
-				 handleException(me);
-			}
-			this.check();
-		}
-		
-		
-	}
-
-	class ServiceAdminAendereHstLieferzeitArtikelIntegerMssgWizard extends Wizard {
-
-		protected ServiceAdminAendereHstLieferzeitArtikelIntegerMssgWizard(String operationName){
-			super(ServiceAdminClientView.this);
-			getOkButton().setText(operationName);
-			getOkButton().setGraphic(new AendereHstLieferzeitPRMTRArtikelPRMTRIntegerPRMTRMenuItem ().getGraphic());
-		}
-		protected void initialize(){
-			this.helpFileName = "ServiceAdminAendereHstLieferzeitArtikelIntegerMssgWizard.help";
-			super.initialize();		
-		}
-				
-		protected void perform() {
-			try {
-				getConnection().aendereHstLieferzeit(firstArgument, ((IntegerSelectionPanel)getParametersPanel().getChildren().get(0)).getResult().longValue());
-				getConnection().setEagerRefresh();
-				this.close();	
-			} catch(ModelException me){
-				handleException(me);
-				this.close();
-			}
-			
-		}
-		protected String checkCompleteParameterSet(){
-			return null;
-		}
-		protected boolean isModifying () {
-			return false;
-		}
-		protected void addParameters(){
-			getParametersPanel().getChildren().add(new IntegerSelectionPanel("hstLieferzeit", this));		
-		}	
-		protected void handleDependencies(int i) {
-		}
-		
-		
-		private ArtikelView firstArgument; 
-	
-		public void setFirstArgument(ArtikelView firstArgument){
-			this.firstArgument = firstArgument;
-			this.setTitle(this.firstArgument.toString());
-			try{
-				final SelectionPanel selectionPanel0 = (SelectionPanel)getParametersPanel().getChildren().get(0);
-				selectionPanel0.preset(firstArgument.getHstLieferzeit());
 				if (!selectionPanel0.check()) selectionPanel0.preset("");
 			}catch(ModelException me){
 				 handleException(me);

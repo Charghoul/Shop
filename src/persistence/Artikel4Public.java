@@ -9,7 +9,6 @@ public interface Artikel4Public extends Komponente4Public {
     public long getMinLagerbestand() throws PersistenceException ;
     public long getMaxLagerbestand() throws PersistenceException ;
     public long getHstLieferzeit() throws PersistenceException ;
-    public void setHstLieferzeit(long newValue) throws PersistenceException ;
     public Artikelstatus4Public getArtikelstatus() throws PersistenceException ;
     public Hersteller4Public getHersteller() throws PersistenceException ;
     
@@ -42,8 +41,16 @@ public interface Artikel4Public extends Komponente4Public {
 				throws PersistenceException;
     public void zuEinkaufswHinz(final long menge, final EinkaufsManager4Public einkaufsManager, final Invoker invoker) 
 				throws PersistenceException;
-    public void aendereArtikel(final long preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
-				throws model.ExcAlreadyExists, PersistenceException;
+    public void aendereBezeichnung(final String bezeichnung) 
+				throws PersistenceException;
+    public void aendereHstLieferzeit(final long hstLieferzeit) 
+				throws PersistenceException;
+    public void aendereMaxLagerbestand(final long maxLagerbestand) 
+				throws PersistenceException;
+    public void aendereMinLagerbestand(final long minLagerbestand) 
+				throws PersistenceException;
+    public void aenderePreis(final long preis) 
+				throws PersistenceException;
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException;
     public void herstellerHinzufuegen(final Hersteller4Public hersteller) 

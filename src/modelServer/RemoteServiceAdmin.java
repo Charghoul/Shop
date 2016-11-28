@@ -90,19 +90,13 @@ public  class RemoteServiceAdmin extends RemoteServiceShop {
         }
     }
     
-    public synchronized java.util.HashMap<?,?> aendereArtikel(String artikelProxiString, String preisAsString, String minLagerbestandAsString, String maxLagerbestandAsString, String hstLieferzeitAsString){
+    public synchronized java.util.HashMap<?,?> aendereBezeichnung(String artikelProxiString, String bezeichnung){
         try {
             PersistentArtikel artikel = (PersistentArtikel)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(artikelProxiString));
-            long preis = new Long(preisAsString).longValue();
-            long minLagerbestand = new Long(minLagerbestandAsString).longValue();
-            long maxLagerbestand = new Long(maxLagerbestandAsString).longValue();
-            long hstLieferzeit = new Long(hstLieferzeitAsString).longValue();
-            ((PersistentServiceAdmin)this.server).aendereArtikel(artikel, preis, minLagerbestand, maxLagerbestand, hstLieferzeit);
+            ((PersistentServiceAdmin)this.server).aendereBezeichnung(artikel, bezeichnung);
             return createOKResult();
         }catch(PersistenceException pe){
             return createExceptionResult(pe);
-        }catch(model.ExcAlreadyExists e0){
-            return createExceptionResult(e0, this);
         }
     }
     
@@ -154,6 +148,17 @@ public  class RemoteServiceAdmin extends RemoteServiceShop {
         }
     }
     
+    public synchronized java.util.HashMap<?,?> aendereMaxLagerbestand(String artikelProxiString, String maxLagerbestandAsString){
+        try {
+            PersistentArtikel artikel = (PersistentArtikel)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(artikelProxiString));
+            long maxLagerbestand = new Long(maxLagerbestandAsString).longValue();
+            ((PersistentServiceAdmin)this.server).aendereMaxLagerbestand(artikel, maxLagerbestand);
+            return createOKResult();
+        }catch(PersistenceException pe){
+            return createExceptionResult(pe);
+        }
+    }
+    
     public synchronized java.util.HashMap<?,?> aendereMenge(String positionProxiString, String mengeAsString){
         try {
             PersistentPosition position = (PersistentPosition)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(positionProxiString));
@@ -166,6 +171,28 @@ public  class RemoteServiceAdmin extends RemoteServiceShop {
             return createExceptionResult(e0, this);
         }catch(model.ExcLagerbestandOverMax e1){
             return createExceptionResult(e1, this);
+        }
+    }
+    
+    public synchronized java.util.HashMap<?,?> aendereMinLagerbestand(String artikelProxiString, String minLagerbestandAsString){
+        try {
+            PersistentArtikel artikel = (PersistentArtikel)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(artikelProxiString));
+            long minLagerbestand = new Long(minLagerbestandAsString).longValue();
+            ((PersistentServiceAdmin)this.server).aendereMinLagerbestand(artikel, minLagerbestand);
+            return createOKResult();
+        }catch(PersistenceException pe){
+            return createExceptionResult(pe);
+        }
+    }
+    
+    public synchronized java.util.HashMap<?,?> aenderePreis(String artikelProxiString, String preisAsString){
+        try {
+            PersistentArtikel artikel = (PersistentArtikel)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(artikelProxiString));
+            long preis = new Long(preisAsString).longValue();
+            ((PersistentServiceAdmin)this.server).aenderePreis(artikel, preis);
+            return createOKResult();
+        }catch(PersistenceException pe){
+            return createExceptionResult(pe);
         }
     }
     

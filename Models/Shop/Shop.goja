@@ -2,7 +2,6 @@ model Shop {
 
 server Server {
 	Service service;
-	ZeitManager zeitManager;
 }
 
 abstract server Service {
@@ -34,7 +33,11 @@ server ServiceAdmin extends ServiceShop {
 	LieferartManager lieferartManager;
 	one-to-one HerstellerManager herstellerManager;
 	observe ZeitManager zeitManager;
-	void aendereHstLieferzeit(Artikel artikel, Integer hstLieferzeit);
+	no-view void aendereHstLieferzeit(Artikel artikel, Integer hstLieferzeit);
+	no-view 	void aendereMinLagerbestand(Artikel artikel, Integer minLagerbestand);
+	no-view 	void aendereMaxLagerbestand(Artikel artikel, Integer maxLagerbestand);
+	no-view 	void aenderePreis(Artikel artikel, Integer preis);
+	no-view 	void aendereBezeichnung(Artikel artikel, String bezeichnung);
 	void neuerArtikel(ArtikelManager artikelManager, String artikelnummer, String bezeichnung, Integer preis, Integer minLagerbestand, 		Integer maxLagerbestand, Integer hstLieferzeit);
 	void produktgruppeHinzufuegen(Produktgruppe produktgruppe, String name)  throws ExcAlreadyExists, CycleException;
 	void produktgruppeEntfernen(Produktgruppe produktgruppe);
@@ -50,7 +53,6 @@ server ServiceAdmin extends ServiceShop {
 	void verringereMenge(Position position, Integer menge) throws ExcLagerbestandUnderZero;
 	void aendereMenge(Position position, Integer menge) throws ExcLagerbestandUnderZero, ExcLagerbestandOverMax;
 	void erhoeheMenge(Position position, Integer menge) throws ExcLagerbestandOverMax;
-	void aendereArtikel(Artikel artikel, Integer preis, Integer minLagerbestand, Integer maxLagerbestand, Integer hstLieferzeit) throws ExcAlreadyExists;
 	void neuerHersteller(HerstellerManager herstellerManager, String name) throws ExcAlreadyExists;
 	void aendereHersteller(Hersteller hersteller, String name) throws ExcAlreadyExists;
 	void herstellerHinzufuegen(Artikel artikel, Hersteller hersteller {herstellerManager});
@@ -58,26 +60,38 @@ server ServiceAdmin extends ServiceShop {
 	void aendereMaxAnlieferungsVersuche(ZeitManager zeitManager, Integer maxAnlieferungsVersuche);
 	void aendereRueckversandGebuehr(LieferartManager lieferartManager,Integer percent);
 }
+//Der Registrierservice ist notwendig, damit sich neue Kunden registrieren können. Man erreicht ihn indem man "Public" als Name einträgt und kein Passwort. In dem sich dann öffnenden Service kann der Kunde sich ein Benutzernamen und Passwort aussuchen und sich dann damit anmelden.
 server ServiceRegister extends Service {
+	//meldet den Kunden mit Benutzername und Passwort am Shop an
 	active void register(String username, String passwort) throws ExcUserAlreadyExists;
 }
+
+//Der Artikelmanager verwaltet alle Artikel des Shops
 singleton ArtikelManager{
 	Artikel ** artikelListe;
+	//Der Admin kann einen neuen Artikel mit einzigartiger Artikelnummer, Bezeichnung, Preis, minimalem und maximalem Lagerbestand und der Herstellerlieferzeit anlegen. 
 	active void neuerArtikel(String artikelnummer, String bezeichnung, Integer preis, Integer minLagerbestand, 		Integer maxLagerbestand, Integer hstLieferzeit) throws UserException;
+	//Außerdem kann einem Artikel ein Hersteller hinzugefügt werden. 
 	void herstellerHinzufuegen(Artikel artikel, Hersteller hersteller);
 }
 
+//Der Bestellmanager verwaltet die Bestellungen und Vorbestellungen des einzelnen Kunden. 
 class BestellManager{
 	public Bestellung ** bestellListe;
 	public Vorbestellung ** vorbestellListe;
 	Integer bestellID;
 	server-only prior	public Konto konto;
+	//Eine neue Bestellung wird mit den dazugehörigen Positionen, dem aktuellen warenwert und der vom Kunden gewählten Lieferart erstellt. Dazu kommt eine hochlaufende bestellID. Falls ein Artikel nicht vorhanden ist wird dies als Exception geworfen
 	Bestellung neueBestellung(Position ** positionsListe, Integer warenwert, Lieferart lieferart) throws ExcArtikelNichtVerfuegbar;
+	//Eine neue Vorbestellung wird mit den dazugehörigen Positionen, dem aktuellen warenwert und der vom Kunden gewählten Lieferart erstellt.
 	Vorbestellung neueVorbestellung(Position ** positionsListe, Integer warenwert, Lieferart lieferart);
+	//Interne Funktion um den BestellManager zu aktualisieren
 	event void benachrichtige();
+	//prüft, ob eine der Vorbestellungen bereit zum versenden ist
 	void pruefeVorbestellungen();	
 }
 
+//Der Produktkatalog wird beim Kunden angezeigt und vom Administrator gepflegt. Er dient nur zur Einordnung der Artikel in verschiedene Produktgruppen, um dem Kunden eine bessere Übersicht zu biete.
 singleton ProduktKatalog{
 	public Produktgruppe produktgruppen;
 	event void produktgruppeHinzufuegen(Produktgruppe produktgruppe, String name)  throws ExcAlreadyExists, CycleException;
@@ -87,6 +101,7 @@ singleton ProduktKatalog{
 	event void internalUpdate();
 }
 
+//Das Warenlager enthält alle Artikel mit den dazugehörigen aktuellen Beständen. 		
 singleton Warenlager{
 	public Position ** warenListe;
 	active void artikelEntnehmen##artEntf(Artikel artikel, Integer menge) throws ExcLagerbestandUnderZero, ExcArtikelHatKeinenHersteller;
@@ -165,10 +180,14 @@ class Artikel extends Komponente{
 	public prior Integer preis;
 	public prior Integer minLagerbestand;
 	public prior Integer maxLagerbestand;
-	public-write prior Integer hstLieferzeit;
+	public prior Integer hstLieferzeit;
 	public prior skip-view Artikelstatus artikelstatus;
 	public no-view Hersteller hersteller;
-	void aendereArtikel(Integer preis, Integer minLagerbestand, Integer maxLagerbestand, Integer hstLieferzeit) throws ExcAlreadyExists;
+	void aendereHstLieferzeit(Integer hstLieferzeit);
+	void aendereMinLagerbestand(Integer minLagerbestand);
+	void aendereMaxLagerbestand(Integer maxLagerbestand);
+	void aenderePreis(Integer preis);
+	void aendereBezeichnung(String bezeichnung);
 	active void statusVerkauf() throws ExcInconsistentStatusChange, ExcArtikelHatKeinenHersteller;
 	active void statusAuslauf() throws ExcInconsistentStatusChange;
 	active void zuEinkaufswHinz(Integer menge, EinkaufsManager einkaufsManager) throws UserException;
@@ -249,15 +268,18 @@ class Lieferart{
 	void aendereLieferart(Integer lieferzeit, Integer preis) throws ExcAlreadyExists;
 }
 
+//Ein Status für die Zeitobjekte, um sie nach Ablauf der Zeit zu deaktivieren
 abstract class Status {}
 singleton activated extends Status{}
 singleton deactivated extends Status{}
 
+//Der Artikelstatus bestimmt, ob ein Artikel verkauft oder nachbestellt wird 
 abstract class Artikelstatus{}
 singleton Neuanlage extends Artikelstatus{}
 singleton Verkauf extends Artikelstatus{}
 singleton Auslauf extends Artikelstatus{}
 
+//Der Bestellstatus ist als Information für den Kunden gedacht
 abstract class Bestellstatus{}
 singleton Verarbeitung extends Bestellstatus{}
 singleton Hinversand extends Bestellstatus{}

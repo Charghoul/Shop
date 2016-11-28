@@ -278,7 +278,7 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
         if(position != null) {
             position.verringereMenge(menge);
             long posM = position.getMenge();
-            if (posM < artikel.getMinLagerbestand() && artikel.getArtikelstatus().equals(Verkauf.getTheVerkauf())) {
+            if (posM < artikel.getMinLagerbestand() && !artikel.getArtikelstatus().equals(Auslauf.getTheAuslauf())) {
                 getThis().nachbestellen(artikel, artikel.getMaxLagerbestand() - posM);
             }
         }

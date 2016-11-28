@@ -10,6 +10,7 @@ public interface PersistentArtikel extends PersistentKomponente, Artikel4Public 
     public void setPreis(long newValue) throws PersistenceException ;
     public void setMinLagerbestand(long newValue) throws PersistenceException ;
     public void setMaxLagerbestand(long newValue) throws PersistenceException ;
+    public void setHstLieferzeit(long newValue) throws PersistenceException ;
     public void setArtikelstatus(Artikelstatus4Public newValue) throws PersistenceException ;
     public void setHersteller(Hersteller4Public newValue) throws PersistenceException ;
     public PersistentArtikel getThis() throws PersistenceException ;

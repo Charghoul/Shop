@@ -160,9 +160,25 @@ public class ArtikelProxi extends KomponenteProxi implements PersistentArtikel{
 				throws PersistenceException{
         ((PersistentArtikel)this.getTheObject()).zuEinkaufswHinz(menge, einkaufsManager, invoker);
     }
-    public void aendereArtikel(final long preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
-				throws model.ExcAlreadyExists, PersistenceException{
-        ((PersistentArtikel)this.getTheObject()).aendereArtikel(preis, minLagerbestand, maxLagerbestand, hstLieferzeit);
+    public void aendereBezeichnung(final String bezeichnung) 
+				throws PersistenceException{
+        ((PersistentArtikel)this.getTheObject()).aendereBezeichnung(bezeichnung);
+    }
+    public void aendereHstLieferzeit(final long hstLieferzeit) 
+				throws PersistenceException{
+        ((PersistentArtikel)this.getTheObject()).aendereHstLieferzeit(hstLieferzeit);
+    }
+    public void aendereMaxLagerbestand(final long maxLagerbestand) 
+				throws PersistenceException{
+        ((PersistentArtikel)this.getTheObject()).aendereMaxLagerbestand(maxLagerbestand);
+    }
+    public void aendereMinLagerbestand(final long minLagerbestand) 
+				throws PersistenceException{
+        ((PersistentArtikel)this.getTheObject()).aendereMinLagerbestand(minLagerbestand);
+    }
+    public void aenderePreis(final long preis) 
+				throws PersistenceException{
+        ((PersistentArtikel)this.getTheObject()).aenderePreis(preis);
     }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{
