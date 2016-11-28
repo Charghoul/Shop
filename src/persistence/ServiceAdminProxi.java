@@ -187,9 +187,9 @@ public class ServiceAdminProxi extends ServiceShopProxi implements PersistentSer
 				throws PersistenceException{
         ((PersistentServiceAdmin)this.getTheObject()).aendereAnnahmezeit(zeitManager, neueZeit);
     }
-    public void aendereArtikel(final Artikel4Public artikel, final long preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
-				throws model.ExcAlreadyExists, PersistenceException{
-        ((PersistentServiceAdmin)this.getTheObject()).aendereArtikel(artikel, preis, minLagerbestand, maxLagerbestand, hstLieferzeit);
+    public void aendereBezeichnung(final Artikel4Public artikel, final String bezeichnung) 
+				throws PersistenceException{
+        ((PersistentServiceAdmin)this.getTheObject()).aendereBezeichnung(artikel, bezeichnung);
     }
     public void aendereHersteller(final Hersteller4Public hersteller, final String name) 
 				throws model.ExcAlreadyExists, PersistenceException{
@@ -207,9 +207,21 @@ public class ServiceAdminProxi extends ServiceShopProxi implements PersistentSer
 				throws PersistenceException{
         ((PersistentServiceAdmin)this.getTheObject()).aendereMaxAnlieferungsVersuche(zeitManager, maxAnlieferungsVersuche);
     }
+    public void aendereMaxLagerbestand(final Artikel4Public artikel, final long maxLagerbestand) 
+				throws PersistenceException{
+        ((PersistentServiceAdmin)this.getTheObject()).aendereMaxLagerbestand(artikel, maxLagerbestand);
+    }
     public void aendereMenge(final Position4Public position, final long menge) 
 				throws model.ExcLagerbestandUnderZero, model.ExcLagerbestandOverMax, PersistenceException{
         ((PersistentServiceAdmin)this.getTheObject()).aendereMenge(position, menge);
+    }
+    public void aendereMinLagerbestand(final Artikel4Public artikel, final long minLagerbestand) 
+				throws PersistenceException{
+        ((PersistentServiceAdmin)this.getTheObject()).aendereMinLagerbestand(artikel, minLagerbestand);
+    }
+    public void aenderePreis(final Artikel4Public artikel, final long preis) 
+				throws PersistenceException{
+        ((PersistentServiceAdmin)this.getTheObject()).aenderePreis(artikel, preis);
     }
     public void aendereRueckversandGebuehr(final LieferartManager4Public lieferartManager, final long percent) 
 				throws PersistenceException{

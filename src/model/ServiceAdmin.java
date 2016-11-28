@@ -420,11 +420,11 @@ public class ServiceAdmin extends model.ServiceShop implements PersistentService
         getThis().signalChanged(true);
         
     }
-    public void aendereArtikel(final Artikel4Public artikel, final long preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
-				throws model.ExcAlreadyExists, PersistenceException{
-        artikel.aendereArtikel(preis, minLagerbestand, maxLagerbestand, hstLieferzeit);
+    public void aendereBezeichnung(final Artikel4Public artikel, final String bezeichnung) 
+				throws PersistenceException{
+        artikel.aendereBezeichnung(bezeichnung);
         getThis().signalChanged(true);
-
+        
     }
     public void aendereHersteller(final Hersteller4Public hersteller, final String name) 
 				throws model.ExcAlreadyExists, PersistenceException{
@@ -433,7 +433,8 @@ public class ServiceAdmin extends model.ServiceShop implements PersistentService
     }
     public void aendereHstLieferzeit(final Artikel4Public artikel, final long hstLieferzeit) 
 				throws PersistenceException{
-        artikel.setHstLieferzeit(hstLieferzeit);
+        artikel.aendereHstLieferzeit(hstLieferzeit);
+        getThis().signalChanged(true);
     }
     public void aendereLieferart(final Lieferart4Public lieferart, final String name, final long lieferzeit, final long preis) 
 				throws model.ExcAlreadyExists, PersistenceException{
@@ -447,10 +448,27 @@ public class ServiceAdmin extends model.ServiceShop implements PersistentService
         getThis().signalChanged(true);
         
     }
+    public void aendereMaxLagerbestand(final Artikel4Public artikel, final long maxLagerbestand) 
+				throws PersistenceException{
+        artikel.aendereMaxLagerbestand(maxLagerbestand);
+        getThis().signalChanged(true);
+    }
     public void aendereMenge(final Position4Public position, final long menge) 
 				throws model.ExcLagerbestandUnderZero, model.ExcLagerbestandOverMax, PersistenceException{
         position.aendereMenge(menge);
         getThis().signalChanged(true);
+    }
+    public void aendereMinLagerbestand(final Artikel4Public artikel, final long minLagerbestand) 
+				throws PersistenceException{
+        artikel.aendereMinLagerbestand(minLagerbestand);
+        getThis().signalChanged(true);
+        
+    }
+    public void aenderePreis(final Artikel4Public artikel, final long preis) 
+				throws PersistenceException{
+        artikel.aenderePreis(preis);
+        getThis().signalChanged(true);
+        
     }
     public void aendereRueckversandGebuehr(final LieferartManager4Public lieferartManager, final long percent) 
 				throws PersistenceException{

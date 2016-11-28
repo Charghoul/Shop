@@ -389,12 +389,29 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
     
     // Start of section that contains operations that must be implemented.
     
-    public void aendereArtikel(final long preis, final long minLagerbestand, final long maxLagerbestand, final long hstLieferzeit) 
-				throws model.ExcAlreadyExists, PersistenceException{
-        getThis().setPreis(preis);
-        getThis().setMinLagerbestand(minLagerbestand);
-        getThis().setMinLagerbestand(maxLagerbestand);
+    public void aendereBezeichnung(final String bezeichnung) 
+				throws PersistenceException{
+        getThis().setBezeichnung(bezeichnung);
+        
+    }
+    public void aendereHstLieferzeit(final long hstLieferzeit) 
+				throws PersistenceException{
         getThis().setHstLieferzeit(hstLieferzeit);
+        
+    }
+    public void aendereMaxLagerbestand(final long maxLagerbestand) 
+				throws PersistenceException{
+        getThis().setMaxLagerbestand(maxLagerbestand);
+        
+    }
+    public void aendereMinLagerbestand(final long minLagerbestand) 
+				throws PersistenceException{
+        getThis().setMinLagerbestand(minLagerbestand);
+        
+    }
+    public void aenderePreis(final long preis) 
+				throws PersistenceException{
+        getThis().setPreis(preis);
         
     }
     public void copyingPrivateUserAttributes(final Anything copy) 
