@@ -22,6 +22,9 @@ public class ServiceAdminICProxi extends ServiceShopICProxi implements Persisten
         return -182;
     }
     
+    public void setKundenManager(ServiceAdminKundenManager4Public newValue) throws PersistenceException {
+        ((PersistentServiceAdmin)this.getTheObject()).setKundenManager(newValue);
+    }
     public Warenlager4Public getWarenlager() throws PersistenceException {
         return ((PersistentServiceAdmin)this.getTheObject()).getWarenlager();
     }
@@ -143,6 +146,10 @@ public class ServiceAdminICProxi extends ServiceShopICProxi implements Persisten
 				throws PersistenceException{
         ((PersistentServiceAdmin)this.getTheObject()).deregister(observee);
     }
+    public KundenManager4Public getKundenManager() 
+				throws PersistenceException{
+        return ((PersistentServiceAdmin)this.getTheObject()).getKundenManager();
+    }
     public ProduktKatalog4Public getProduktKatalog() 
 				throws PersistenceException{
         return ((PersistentServiceAdmin)this.getTheObject()).getProduktKatalog();
@@ -170,6 +177,10 @@ public class ServiceAdminICProxi extends ServiceShopICProxi implements Persisten
     public String serviceAdmin_Menu_Filter(final Anything anything) 
 				throws PersistenceException{
         return ((PersistentServiceAdmin)this.getTheObject()).serviceAdmin_Menu_Filter(anything);
+    }
+    public void setKundenManager(final KundenManager4Public kundenManager) 
+				throws PersistenceException{
+        ((PersistentServiceAdmin)this.getTheObject()).setKundenManager(kundenManager);
     }
     public void setProduktKatalog(final ProduktKatalog4Public produktKatalog) 
 				throws PersistenceException{
@@ -207,6 +218,10 @@ public class ServiceAdminICProxi extends ServiceShopICProxi implements Persisten
 				throws model.ExcAlreadyExists, PersistenceException{
         ((PersistentServiceAdmin)this.getTheObject()).aendereLieferart(lieferart, name, lieferzeit, preis);
     }
+    public void aendereLimit(final Konto4Public konto, final long limit) 
+				throws PersistenceException{
+        ((PersistentServiceAdmin)this.getTheObject()).aendereLimit(konto, limit);
+    }
     public void aendereMaxAnlieferungsVersuche(final ZeitManager4Public zeitManager, final long maxAnlieferungsVersuche) 
 				throws PersistenceException{
         ((PersistentServiceAdmin)this.getTheObject()).aendereMaxAnlieferungsVersuche(zeitManager, maxAnlieferungsVersuche);
@@ -230,6 +245,14 @@ public class ServiceAdminICProxi extends ServiceShopICProxi implements Persisten
     public void aendereRueckversandGebuehr(final LieferartManager4Public lieferartManager, final long percent) 
 				throws PersistenceException{
         ((PersistentServiceAdmin)this.getTheObject()).aendereRueckversandGebuehr(lieferartManager, percent);
+    }
+    public void aendereStandardGuthaben(final KundenManager4Public kundenManager, final long guthaben) 
+				throws PersistenceException{
+        ((PersistentServiceAdmin)this.getTheObject()).aendereStandardGuthaben(kundenManager, guthaben);
+    }
+    public void aendereStandardLimit(final KundenManager4Public kundenManager, final long limit) 
+				throws PersistenceException{
+        ((PersistentServiceAdmin)this.getTheObject()).aendereStandardLimit(kundenManager, limit);
     }
     public void artikelAbhaengen(final Produktgruppe4Public produktgruppe, final Artikel4Public artikel) 
 				throws PersistenceException{
@@ -290,6 +313,10 @@ public class ServiceAdminICProxi extends ServiceShopICProxi implements Persisten
     public void initializeOnInstantiation() 
 				throws PersistenceException{
         ((PersistentServiceAdmin)this.getTheObject()).initializeOnInstantiation();
+    }
+    public void kundenManager_update(final model.meta.KundenManagerMssgs event) 
+				throws PersistenceException{
+        ((PersistentServiceAdmin)this.getTheObject()).kundenManager_update(event);
     }
     public void neueLieferArt(final LieferartManager4Public lieferartManager, final String name, final long lieferzeit, final long preis) 
 				throws model.ExcAlreadyExists, PersistenceException{

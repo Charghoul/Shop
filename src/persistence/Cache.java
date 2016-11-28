@@ -299,6 +299,7 @@ public class Cache {
 		this.number2NameMap.put(298, "KndLieferung");
 		this.number2NameMap.put(146, "Konto");
 		this.number2NameMap.put(349, "Kunde");
+		this.number2NameMap.put(366, "KundenManager");
 		this.number2NameMap.put(138, "Lieferart");
 		this.number2NameMap.put(198, "LieferartManager");
 		this.number2NameMap.put(214, "Neuanlage");
@@ -312,6 +313,7 @@ public class Cache {
 		this.number2NameMap.put(217, "Rueckversand");
 		this.number2NameMap.put(-103, "Server");
 		this.number2NameMap.put(-182, "ServiceAdmin");
+		this.number2NameMap.put(368, "ServiceAdminKundenManager");
 		this.number2NameMap.put(334, "ServiceAdminZeitManager");
 		this.number2NameMap.put(-181, "ServiceKunde");
 		this.number2NameMap.put(336, "ServiceKundeBestellManager");

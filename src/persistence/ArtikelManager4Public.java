@@ -21,8 +21,6 @@ public interface ArtikelManager4Public extends Anything, SubjInterface, Abstract
 				throws PersistenceException;
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException;
-    public void herstellerHinzufuegen(final Artikel4Public artikel, final Hersteller4Public hersteller) 
-				throws PersistenceException;
     public void initializeOnCreation() 
 				throws PersistenceException;
     public void initializeOnInstantiation() 

@@ -15,6 +15,7 @@ public abstract class Server$AuthoriseVisitor extends AnythingStandardVisitor{
     public abstract void handleLieferart(PersistentLieferart lieferart) throws PersistenceException;
     public abstract void handleHerstellerManager(PersistentHerstellerManager herstellerManager) throws PersistenceException;
     public abstract void handleNeuanlage(PersistentNeuanlage neuanlage) throws PersistenceException;
+    public abstract void handleKundenManager(PersistentKundenManager kundenManager) throws PersistenceException;
     public abstract void handleServiceRegister(PersistentServiceRegister serviceRegister) throws PersistenceException;
     public abstract void handleHstLieferung(PersistentHstLieferung hstLieferung) throws PersistenceException;
     public abstract void handleGeliefert(PersistentGeliefert geliefert) throws PersistenceException;
@@ -34,6 +35,7 @@ public abstract class Server$AuthoriseVisitor extends AnythingStandardVisitor{
     public abstract void handleVorbestellung(PersistentVorbestellung vorbestellung) throws PersistenceException;
     public abstract void handleHersteller(PersistentHersteller hersteller) throws PersistenceException;
     public abstract void handleRueckversand(PersistentRueckversand rueckversand) throws PersistenceException;
+    public abstract void handleKunde(PersistentKunde kunde) throws PersistenceException;
     public abstract void handleLieferartManager(PersistentLieferartManager lieferartManager) throws PersistenceException;
     public abstract void handleHinversand(PersistentHinversand hinversand) throws PersistenceException;
     public abstract void handleAngenommen(PersistentAngenommen angenommen) throws PersistenceException;

@@ -86,6 +86,7 @@ public class ConnectionHandler {
     public ProduktgruppeFacade theProduktgruppeFacade;
     public StatusFacade theStatusFacade;
     public PositionFacade thePositionFacade;
+    public ServiceAdminKundenManagerFacade theServiceAdminKundenManagerFacade;
     public ServiceAdminFacade theServiceAdminFacade;
     public ArtikelManagerFacade theArtikelManagerFacade;
     public ProduktgruppeEntfernenCommandFacade theProduktgruppeEntfernenCommandFacade;
@@ -103,6 +104,7 @@ public class ConnectionHandler {
     public AuslaufFacade theAuslaufFacade;
     public VerarbeitungFacade theVerarbeitungFacade;
     public BestellungFacade theBestellungFacade;
+    public KundenManagerFacade theKundenManagerFacade;
     public ServiceKundeBestellManagerFacade theServiceKundeBestellManagerFacade;
     public KomponenteFacade theKomponenteFacade;
     public ServiceShopFacade theServiceShopFacade;
@@ -157,6 +159,7 @@ public class ConnectionHandler {
             this.theProduktgruppeFacade= new ProduktgruppeFacade();
             this.theStatusFacade= new StatusFacade();
             this.thePositionFacade= new PositionFacade();
+            this.theServiceAdminKundenManagerFacade= new ServiceAdminKundenManagerFacade();
             this.theServiceAdminFacade= new ServiceAdminFacade();
             this.theArtikelManagerFacade= new ArtikelManagerFacade();
             this.theProduktgruppeEntfernenCommandFacade= new ProduktgruppeEntfernenCommandFacade();
@@ -174,6 +177,7 @@ public class ConnectionHandler {
             this.theAuslaufFacade= new AuslaufFacade();
             this.theVerarbeitungFacade= new VerarbeitungFacade();
             this.theBestellungFacade= new BestellungFacade();
+            this.theKundenManagerFacade= new KundenManagerFacade();
             this.theServiceKundeBestellManagerFacade= new ServiceKundeBestellManagerFacade();
             this.theKomponenteFacade= new KomponenteFacade();
             this.theServiceShopFacade= new ServiceShopFacade();

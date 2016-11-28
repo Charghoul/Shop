@@ -489,6 +489,29 @@ public class ServiceAdminConnection extends ServiceShopConnection {
         
     }
     
+    public synchronized void aendereLimit(KontoView konto, long limit) throws ModelException{
+        try {
+            Vector<Object> parameters = new Vector<Object>();
+            if (konto == null){
+                parameters.add(common.RPCConstantsAndServices.createFromClientNullProxiRepresentation());
+            } else {
+                parameters.add(((view.objects.ViewProxi)konto).createProxiInformation());
+            }
+            parameters.add(new Long(limit).toString());
+            java.util.HashMap<?,?> success = (java.util.HashMap<?,?>)this.execute(this.connectionName, "aendereLimit", parameters);
+            if(!((Boolean)success.get(common.RPCConstantsAndServices.OKOrNotOKResultFieldName)).booleanValue()){
+                if (((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == 0)
+                    throw new ModelException((String)success.get(common.RPCConstantsAndServices.ExceptionMessageFieldName), ((Integer)success.get(common.RPCConstantsAndServices.ExceptionNumberFieldName)).intValue());
+                throw new ModelException ("Fatal error (unknown exception code:" + (Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName) + ")",0);
+            }
+        }catch(IOException ioe){
+            throw new ModelException(ioe.getMessage(),0);
+        }catch(XmlRpcException xre){
+            throw new ModelException(xre.getMessage(),0);
+        }
+        
+    }
+    
     public synchronized void aendereMaxAnlieferungsVersuche(ZeitManagerView zeitManager, long maxAnlieferungsVersuche) throws ModelException{
         try {
             Vector<Object> parameters = new Vector<Object>();
@@ -619,6 +642,52 @@ public class ServiceAdminConnection extends ServiceShopConnection {
             }
             parameters.add(new Long(percent).toString());
             java.util.HashMap<?,?> success = (java.util.HashMap<?,?>)this.execute(this.connectionName, "aendereRueckversandGebuehr", parameters);
+            if(!((Boolean)success.get(common.RPCConstantsAndServices.OKOrNotOKResultFieldName)).booleanValue()){
+                if (((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == 0)
+                    throw new ModelException((String)success.get(common.RPCConstantsAndServices.ExceptionMessageFieldName), ((Integer)success.get(common.RPCConstantsAndServices.ExceptionNumberFieldName)).intValue());
+                throw new ModelException ("Fatal error (unknown exception code:" + (Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName) + ")",0);
+            }
+        }catch(IOException ioe){
+            throw new ModelException(ioe.getMessage(),0);
+        }catch(XmlRpcException xre){
+            throw new ModelException(xre.getMessage(),0);
+        }
+        
+    }
+    
+    public synchronized void aendereStandardGuthaben(KundenManagerView kundenManager, long guthaben) throws ModelException{
+        try {
+            Vector<Object> parameters = new Vector<Object>();
+            if (kundenManager == null){
+                parameters.add(common.RPCConstantsAndServices.createFromClientNullProxiRepresentation());
+            } else {
+                parameters.add(((view.objects.ViewProxi)kundenManager).createProxiInformation());
+            }
+            parameters.add(new Long(guthaben).toString());
+            java.util.HashMap<?,?> success = (java.util.HashMap<?,?>)this.execute(this.connectionName, "aendereStandardGuthaben", parameters);
+            if(!((Boolean)success.get(common.RPCConstantsAndServices.OKOrNotOKResultFieldName)).booleanValue()){
+                if (((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == 0)
+                    throw new ModelException((String)success.get(common.RPCConstantsAndServices.ExceptionMessageFieldName), ((Integer)success.get(common.RPCConstantsAndServices.ExceptionNumberFieldName)).intValue());
+                throw new ModelException ("Fatal error (unknown exception code:" + (Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName) + ")",0);
+            }
+        }catch(IOException ioe){
+            throw new ModelException(ioe.getMessage(),0);
+        }catch(XmlRpcException xre){
+            throw new ModelException(xre.getMessage(),0);
+        }
+        
+    }
+    
+    public synchronized void aendereStandardLimit(KundenManagerView kundenManager, long limit) throws ModelException{
+        try {
+            Vector<Object> parameters = new Vector<Object>();
+            if (kundenManager == null){
+                parameters.add(common.RPCConstantsAndServices.createFromClientNullProxiRepresentation());
+            } else {
+                parameters.add(((view.objects.ViewProxi)kundenManager).createProxiInformation());
+            }
+            parameters.add(new Long(limit).toString());
+            java.util.HashMap<?,?> success = (java.util.HashMap<?,?>)this.execute(this.connectionName, "aendereStandardLimit", parameters);
             if(!((Boolean)success.get(common.RPCConstantsAndServices.OKOrNotOKResultFieldName)).booleanValue()){
                 if (((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == 0)
                     throw new ModelException((String)success.get(common.RPCConstantsAndServices.ExceptionMessageFieldName), ((Integer)success.get(common.RPCConstantsAndServices.ExceptionNumberFieldName)).intValue());

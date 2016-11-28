@@ -10,15 +10,17 @@ import view.visitor.*;
 
 public class ServiceAdmin extends view.objects.ServiceShop implements ServiceAdminView{
     
+    protected KundenManagerView kundenManager;
     protected WarenlagerView warenlager;
     protected ArtikelManagerView artikelManager;
     protected LieferartManagerView lieferartManager;
     protected HerstellerManagerView herstellerManager;
     protected ZeitManagerView zeitManager;
     
-    public ServiceAdmin(java.util.Vector<ErrorDisplayView> errors,ProduktKatalogView produktKatalog,WarenlagerView warenlager,ArtikelManagerView artikelManager,LieferartManagerView lieferartManager,HerstellerManagerView herstellerManager,ZeitManagerView zeitManager,long id, long classId) {
+    public ServiceAdmin(java.util.Vector<ErrorDisplayView> errors,ProduktKatalogView produktKatalog,KundenManagerView kundenManager,WarenlagerView warenlager,ArtikelManagerView artikelManager,LieferartManagerView lieferartManager,HerstellerManagerView herstellerManager,ZeitManagerView zeitManager,long id, long classId) {
         /* Shall not be used. Objects are created on the server only */
         super(errors,(ProduktKatalogView)produktKatalog,id, classId);
+        this.kundenManager = kundenManager;
         this.warenlager = warenlager;
         this.artikelManager = artikelManager;
         this.lieferartManager = lieferartManager;
@@ -34,6 +36,12 @@ public class ServiceAdmin extends view.objects.ServiceShop implements ServiceAdm
         return getTypeId();
     }
     
+    public KundenManagerView getKundenManager()throws ModelException{
+        return this.kundenManager;
+    }
+    public void setKundenManager(KundenManagerView newValue) throws ModelException {
+        this.kundenManager = newValue;
+    }
     public WarenlagerView getWarenlager()throws ModelException{
         return this.warenlager;
     }
@@ -123,6 +131,10 @@ public class ServiceAdmin extends view.objects.ServiceShop implements ServiceAdm
         if (produktKatalog != null) {
             ((ViewProxi)produktKatalog).setObject((ViewObject)resultTable.get(common.RPCConstantsAndServices.createHashtableKey(produktKatalog.getClassId(), produktKatalog.getId())));
         }
+        KundenManagerView kundenManager = this.getKundenManager();
+        if (kundenManager != null) {
+            ((ViewProxi)kundenManager).setObject((ViewObject)resultTable.get(common.RPCConstantsAndServices.createHashtableKey(kundenManager.getClassId(), kundenManager.getId())));
+        }
         WarenlagerView warenlager = this.getWarenlager();
         if (warenlager != null) {
             ((ViewProxi)warenlager).setObject((ViewObject)resultTable.get(common.RPCConstantsAndServices.createHashtableKey(warenlager.getClassId(), warenlager.getId())));
@@ -152,6 +164,8 @@ public class ServiceAdmin extends view.objects.ServiceShop implements ServiceAdm
         int index = originalIndex;
         if(index == 0 && this.getProduktKatalog() != null) return new ProduktKatalogServiceShopWrapper(this, originalIndex, (ViewRoot)this.getProduktKatalog());
         if(this.getProduktKatalog() != null) index = index - 1;
+        if(index == 0 && this.getKundenManager() != null) return new KundenManagerServiceAdminWrapper(this, originalIndex, (ViewRoot)this.getKundenManager());
+        if(this.getKundenManager() != null) index = index - 1;
         if(index == 0 && this.getWarenlager() != null) return new WarenlagerServiceAdminWrapper(this, originalIndex, (ViewRoot)this.getWarenlager());
         if(this.getWarenlager() != null) index = index - 1;
         if(index == 0 && this.getArtikelManager() != null) return new ArtikelManagerServiceAdminWrapper(this, originalIndex, (ViewRoot)this.getArtikelManager());
@@ -167,6 +181,7 @@ public class ServiceAdmin extends view.objects.ServiceShop implements ServiceAdm
     public int getChildCount() throws ModelException {
         return 0 
             + (this.getProduktKatalog() == null ? 0 : 1)
+            + (this.getKundenManager() == null ? 0 : 1)
             + (this.getWarenlager() == null ? 0 : 1)
             + (this.getArtikelManager() == null ? 0 : 1)
             + (this.getLieferartManager() == null ? 0 : 1)
@@ -176,6 +191,7 @@ public class ServiceAdmin extends view.objects.ServiceShop implements ServiceAdm
     public boolean isLeaf() throws ModelException {
         return true 
             && (this.getProduktKatalog() == null ? true : false)
+            && (this.getKundenManager() == null ? true : false)
             && (this.getWarenlager() == null ? true : false)
             && (this.getArtikelManager() == null ? true : false)
             && (this.getLieferartManager() == null ? true : false)
@@ -186,6 +202,8 @@ public class ServiceAdmin extends view.objects.ServiceShop implements ServiceAdm
         int result = 0;
         if(this.getProduktKatalog() != null && this.getProduktKatalog().equals(child)) return result;
         if(this.getProduktKatalog() != null) result = result + 1;
+        if(this.getKundenManager() != null && this.getKundenManager().equals(child)) return result;
+        if(this.getKundenManager() != null) result = result + 1;
         if(this.getWarenlager() != null && this.getWarenlager().equals(child)) return result;
         if(this.getWarenlager() != null) result = result + 1;
         if(this.getArtikelManager() != null && this.getArtikelManager().equals(child)) return result;

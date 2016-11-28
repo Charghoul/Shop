@@ -13,6 +13,7 @@ public interface AnythingVisitor extends ArtikelstatusVisitor,BestellstatusVisit
     public void handleHerstellerManager(HerstellerManagerView herstellerManager) throws ModelException;
     public void handleKonto(KontoView konto) throws ModelException;
     public void handleKunde(KundeView kunde) throws ModelException;
+    public void handleKundenManager(KundenManagerView kundenManager) throws ModelException;
     public void handleLieferart(LieferartView lieferart) throws ModelException;
     public void handleLieferartManager(LieferartManagerView lieferartManager) throws ModelException;
     public void handleProduktKatalog(ProduktKatalogView produktKatalog) throws ModelException;

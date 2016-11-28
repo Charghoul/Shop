@@ -6,6 +6,8 @@ import view.visitor.*;
 
 public interface ServiceAdminView extends ServiceShopView {
     
+    public KundenManagerView getKundenManager()throws ModelException;
+    public void setKundenManager(KundenManagerView newValue) throws ModelException ;
     public WarenlagerView getWarenlager()throws ModelException;
     public void setWarenlager(WarenlagerView newValue) throws ModelException ;
     public ArtikelManagerView getArtikelManager()throws ModelException;

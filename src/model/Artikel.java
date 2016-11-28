@@ -465,9 +465,7 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
     public void statusVerkauf() 
 				throws model.ExcInconsistentStatusChange, model.ExcArtikelHatKeinenHersteller, PersistenceException{
 
-        if(getThis().getHersteller() != null || Warenlager.getTheWarenlager().getWarenListe().findFirst(x -> {
-            return x.getArtikel().equals(getThis()) && x.getMenge() > 0;
-        })!=null){
+        if(getThis().getHersteller() != null) {
             getThis().getArtikelstatus().accept(new ArtikelstatusExceptionVisitor<ExcInconsistentStatusChange>() {
                 @Override
                 public void handleAuslauf(Auslauf4Public auslauf) throws PersistenceException, ExcInconsistentStatusChange {

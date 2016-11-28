@@ -227,10 +227,6 @@ public class ArtikelManager extends PersistentObject implements PersistentArtike
 				throws PersistenceException{
         
     }
-    public void herstellerHinzufuegen(final Artikel4Public artikel, final Hersteller4Public hersteller) 
-				throws PersistenceException{
-       artikel.herstellerHinzufuegen(hersteller);
-    }
     public void initializeOnCreation() 
 				throws PersistenceException{
         

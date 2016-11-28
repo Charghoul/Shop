@@ -28,6 +28,7 @@ server ServiceKunde extends ServiceShop {
 	void auszahlen(Konto konto, Integer betrag) throws ExcAuszahlungGroesserGutgaben;
 }
 server ServiceAdmin extends ServiceShop {
+	observe KundenManager kundenManager;
 	Warenlager warenlager;
 	ArtikelManager artikelManager;
 	LieferartManager lieferartManager;
@@ -56,9 +57,12 @@ server ServiceAdmin extends ServiceShop {
 	void neuerHersteller(HerstellerManager herstellerManager, String name) throws ExcAlreadyExists;
 	void aendereHersteller(Hersteller hersteller, String name) throws ExcAlreadyExists;
 	void herstellerHinzufuegen(Artikel artikel, Hersteller hersteller {herstellerManager});
-	void aendereAnnahmezeit(ZeitManager zeitManager,Integer neueZeit);
-	void aendereMaxAnlieferungsVersuche(ZeitManager zeitManager, Integer maxAnlieferungsVersuche);
-	void aendereRueckversandGebuehr(LieferartManager lieferartManager,Integer percent);
+	no-view void aendereAnnahmezeit(ZeitManager zeitManager,Integer neueZeit);
+	no-view void aendereMaxAnlieferungsVersuche(ZeitManager zeitManager, Integer maxAnlieferungsVersuche);
+	no-view void aendereRueckversandGebuehr(LieferartManager lieferartManager,Integer percent);
+	no-view void aendereStandardGuthaben(KundenManager kundenManager, Integer guthaben);
+	no-view void aendereStandardLimit(KundenManager kundenManager, Integer limit);
+	no-view void aendereLimit(Konto konto, Integer limit);
 }
 //Der Registrierservice ist notwendig, damit sich neue Kunden registrieren können. Man erreicht ihn indem man "Public" als Name einträgt und kein Passwort. In dem sich dann öffnenden Service kann der Kunde sich ein Benutzernamen und Passwort aussuchen und sich dann damit anmelden.
 server ServiceRegister extends Service {
@@ -71,8 +75,6 @@ singleton ArtikelManager{
 	Artikel ** artikelListe;
 	//Der Admin kann einen neuen Artikel mit einzigartiger Artikelnummer, Bezeichnung, Preis, minimalem und maximalem Lagerbestand und der Herstellerlieferzeit anlegen. 
 	active void neuerArtikel(String artikelnummer, String bezeichnung, Integer preis, Integer minLagerbestand, 		Integer maxLagerbestand, Integer hstLieferzeit) throws UserException;
-	//Außerdem kann einem Artikel ein Hersteller hinzugefügt werden. 
-	void herstellerHinzufuegen(Artikel artikel, Hersteller hersteller);
 }
 
 //Der Bestellmanager verwaltet die Bestellungen und Vorbestellungen des einzelnen Kunden. 
@@ -81,13 +83,13 @@ class BestellManager{
 	public Vorbestellung ** vorbestellListe;
 	server-only Integer bestellID;
 	server-only prior	public Konto konto;
-	//Eine neue Bestellung wird mit den dazugehörigen Positionen, dem aktuellen warenwert und der vom Kunden gewählten Lieferart erstellt. Dazu kommt eine hochlaufende bestellID. Falls ein Artikel nicht vorhanden ist wird dies als Exception geworfen
+	//Eine neue Bestellung wird mit den dazugehörigen Positionen, dem aktuellen warenwert und der vom Kunden gewählten Lieferart erstellt. Dazu kommt eine hochlaufende bestellID. Falls ein Artikel nicht vorhanden ist wird dies als Exception geworfen. Auch wird eine neue KndLieferung im ZeitManager erstellt
 	Bestellung neueBestellung(Position ** positionsListe, Integer warenwert, Lieferart lieferart) throws ExcArtikelNichtVerfuegbar;
 	//Eine neue Vorbestellung wird mit den dazugehörigen Positionen, dem aktuellen warenwert und der vom Kunden gewählten Lieferart erstellt.
 	Vorbestellung neueVorbestellung(Position ** positionsListe, Integer warenwert, Lieferart lieferart);
 	//Interne Funktion um den BestellManager zu aktualisieren
 	event void benachrichtige();
-	//prüft, ob eine der Vorbestellungen bereit zum versenden ist
+	//prüft, ob eine der Vorbestellungen bereit zum versenden ist, wenn ja wird eine Bestellung mit den gleichen eigenschaften erstellt und die Vorbestellung gelöscht
 	void pruefeVorbestellungen();	
 }
 
@@ -114,7 +116,7 @@ singleton Warenlager{
 singleton ZeitManager {
 	observe ZeitObjekt ** zeitObjektListe;
 	server-only ZeitObjekt ** annahmeZeiten;
-	public Integer annahmezeit;
+	public Integer annahmezeit@@AnnahmezeitInZeitEinheiten;
 	public Integer maxAnlieferungsVersuche##maxAnl;
 	void handleTimeUnitElapsed() ;
 	event void neueHstLieferung(Artikel artikel, Integer menge);
@@ -149,10 +151,18 @@ class EinkaufsManager{
 }
 singleton LieferartManager{
 	public Lieferart ** lieferartenListe;
-	public prior Integer rueckversandGebuehr##rckG;
+	public prior Integer rueckversandGebuehr##rckG@@RueckversandgebuehrenInProzent;
 	void neueLieferart(String name, Integer lieferzeit, Integer preis) throws ExcAlreadyExists;
 	void aendereLieferart(Lieferart lieferart, String name, Integer lieferzeit, Integer preis) throws ExcAlreadyExists;
 	void aendereRueckversandGebuehr(Integer percent);
+}
+
+singleton KundenManager{
+	public Kunde**kundenListe;
+	public Integer standardLimit;
+	public Integer standardGuthaben;
+	void aendereStandardGuthaben(Integer guthaben);
+	void aendereStandardLimit(Integer limit);
 }
 
 class Kunde{
@@ -163,13 +173,14 @@ class Kunde{
 
 class Konto{
 	public prior Integer kontostand;
-	public prior Integer limit;
+	public-write prior Integer limit;
 	public prior Integer reserviert;
 	void abbuchen(Integer betrag);
 	void einzahlen(Integer betrag);
 	void auszahlen(Integer betrag) throws ExcAuszahlungGroesserGutgaben;
 	void reserviere(Integer betrag);
 	void verringereReserviert(Integer betrag);
+	void aendereLimit(Integer limit);
 }
 hierarchy Hierarchie;
 abstract class Komponente {

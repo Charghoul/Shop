@@ -96,7 +96,7 @@ public class LieferartManager extends ViewObject implements LieferartManagerView
     public Object getValueAt(int rowIndex, int columnIndex){
         try {
             if(columnIndex == 0){
-                if(rowIndex == 0) return "rueckversandGebuehr";
+                if(rowIndex == 0) return "RueckversandgebuehrenInProzent";
                 rowIndex = rowIndex - 1;
             } else {
                 if(rowIndex == 0) return new Long(getRueckversandGebuehr());

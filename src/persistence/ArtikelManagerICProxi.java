@@ -85,10 +85,6 @@ public class ArtikelManagerICProxi extends PersistentInCacheProxiOptimistic impl
 				throws PersistenceException{
         ((PersistentArtikelManager)this.getTheObject()).copyingPrivateUserAttributes(copy);
     }
-    public void herstellerHinzufuegen(final Artikel4Public artikel, final Hersteller4Public hersteller) 
-				throws PersistenceException{
-        ((PersistentArtikelManager)this.getTheObject()).herstellerHinzufuegen(artikel, hersteller);
-    }
     public void initializeOnCreation() 
 				throws PersistenceException{
         ((PersistentArtikelManager)this.getTheObject()).initializeOnCreation();

@@ -22,6 +22,13 @@ public class ServiceAdminProxi extends ServiceShopProxi implements ServiceAdminV
             produktKatalog = view.objects.ViewProxi.createProxi(produktKatalog$Info,connectionKey);
             produktKatalog.setToString(produktKatalog$Info.getToString());
         }
+        ViewProxi kundenManager = null;
+        String kundenManager$String = (String)resultTable.get("kundenManager");
+        if (kundenManager$String != null) {
+            common.ProxiInformation kundenManager$Info = common.RPCConstantsAndServices.createProxiInformation(kundenManager$String);
+            kundenManager = view.objects.ViewProxi.createProxi(kundenManager$Info,connectionKey);
+            kundenManager.setToString(kundenManager$Info.getToString());
+        }
         ViewProxi warenlager = null;
         String warenlager$String = (String)resultTable.get("warenlager");
         if (warenlager$String != null) {
@@ -57,7 +64,7 @@ public class ServiceAdminProxi extends ServiceShopProxi implements ServiceAdminV
             zeitManager = view.objects.ViewProxi.createProxi(zeitManager$Info,connectionKey);
             zeitManager.setToString(zeitManager$Info.getToString());
         }
-        ServiceAdminView result$$ = new ServiceAdmin(errors,(ProduktKatalogView)produktKatalog,(WarenlagerView)warenlager,(ArtikelManagerView)artikelManager,(LieferartManagerView)lieferartManager,(HerstellerManagerView)herstellerManager,(ZeitManagerView)zeitManager, this.getId(), this.getClassId());
+        ServiceAdminView result$$ = new ServiceAdmin(errors,(ProduktKatalogView)produktKatalog,(KundenManagerView)kundenManager,(WarenlagerView)warenlager,(ArtikelManagerView)artikelManager,(LieferartManagerView)lieferartManager,(HerstellerManagerView)herstellerManager,(ZeitManagerView)zeitManager, this.getId(), this.getClassId());
         ((ViewRoot)result$$).setToString((String) resultTable.get(common.RPCConstantsAndServices.RPCToStringFieldName));
         return result$$;
     }
@@ -69,6 +76,8 @@ public class ServiceAdminProxi extends ServiceShopProxi implements ServiceAdminV
         int index = originalIndex;
         if(index == 0 && this.getProduktKatalog() != null) return new ProduktKatalogServiceShopWrapper(this, originalIndex, (ViewRoot)this.getProduktKatalog());
         if(this.getProduktKatalog() != null) index = index - 1;
+        if(index == 0 && this.getKundenManager() != null) return new KundenManagerServiceAdminWrapper(this, originalIndex, (ViewRoot)this.getKundenManager());
+        if(this.getKundenManager() != null) index = index - 1;
         if(index == 0 && this.getWarenlager() != null) return new WarenlagerServiceAdminWrapper(this, originalIndex, (ViewRoot)this.getWarenlager());
         if(this.getWarenlager() != null) index = index - 1;
         if(index == 0 && this.getArtikelManager() != null) return new ArtikelManagerServiceAdminWrapper(this, originalIndex, (ViewRoot)this.getArtikelManager());
@@ -84,6 +93,7 @@ public class ServiceAdminProxi extends ServiceShopProxi implements ServiceAdminV
     public int getChildCount() throws ModelException {
         return 0 
             + (this.getProduktKatalog() == null ? 0 : 1)
+            + (this.getKundenManager() == null ? 0 : 1)
             + (this.getWarenlager() == null ? 0 : 1)
             + (this.getArtikelManager() == null ? 0 : 1)
             + (this.getLieferartManager() == null ? 0 : 1)
@@ -94,6 +104,7 @@ public class ServiceAdminProxi extends ServiceShopProxi implements ServiceAdminV
         if (this.object == null) return this.getLeafInfo() == 0;
         return true 
             && (this.getProduktKatalog() == null ? true : false)
+            && (this.getKundenManager() == null ? true : false)
             && (this.getWarenlager() == null ? true : false)
             && (this.getArtikelManager() == null ? true : false)
             && (this.getLieferartManager() == null ? true : false)
@@ -104,6 +115,8 @@ public class ServiceAdminProxi extends ServiceShopProxi implements ServiceAdminV
         int result = 0;
         if(this.getProduktKatalog() != null && this.getProduktKatalog().equals(child)) return result;
         if(this.getProduktKatalog() != null) result = result + 1;
+        if(this.getKundenManager() != null && this.getKundenManager().equals(child)) return result;
+        if(this.getKundenManager() != null) result = result + 1;
         if(this.getWarenlager() != null && this.getWarenlager().equals(child)) return result;
         if(this.getWarenlager() != null) result = result + 1;
         if(this.getArtikelManager() != null && this.getArtikelManager().equals(child)) return result;
@@ -117,6 +130,12 @@ public class ServiceAdminProxi extends ServiceShopProxi implements ServiceAdminV
         return -1;
     }
     
+    public KundenManagerView getKundenManager()throws ModelException{
+        return ((ServiceAdmin)this.getTheObject()).getKundenManager();
+    }
+    public void setKundenManager(KundenManagerView newValue) throws ModelException {
+        ((ServiceAdmin)this.getTheObject()).setKundenManager(newValue);
+    }
     public WarenlagerView getWarenlager()throws ModelException{
         return ((ServiceAdmin)this.getTheObject()).getWarenlager();
     }

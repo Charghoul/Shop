@@ -13,6 +13,7 @@ public interface AnythingExceptionVisitor<E extends view.UserException> extends 
     public void handleHerstellerManager(HerstellerManagerView herstellerManager) throws ModelException, E;
     public void handleKonto(KontoView konto) throws ModelException, E;
     public void handleKunde(KundeView kunde) throws ModelException, E;
+    public void handleKundenManager(KundenManagerView kundenManager) throws ModelException, E;
     public void handleLieferart(LieferartView lieferart) throws ModelException, E;
     public void handleLieferartManager(LieferartManagerView lieferartManager) throws ModelException, E;
     public void handleProduktKatalog(ProduktKatalogView produktKatalog) throws ModelException, E;

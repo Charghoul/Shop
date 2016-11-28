@@ -1,6 +1,7 @@
 package viewClient;
 
 import model.Artikel;
+import model.ServiceAdmin;
 import view.*;
 import view.objects.ViewRoot;
 import view.objects.ViewObjectInTree;
@@ -230,6 +231,63 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
 				this.result = null;
 			}
 
+			@Override
+			public void handleKonto(KontoView konto) throws ModelException {
+				result = new KontoDefaultDetailPanel(ServiceAdminClientView.this,konto);
+				result.registerUpdater(KontoDefaultDetailPanel.Konto$$limit, new UpdaterForInteger() {
+					@Override
+					public void update(String text) throws ModelException {
+						getConnection().aendereLimit(konto, Long.parseLong(text));
+					}
+				});
+
+			}
+
+			@Override
+			public void handleKundenManager(KundenManagerView kundenManager) throws ModelException {
+				result = new KundenManagerDefaultDetailPanel(ServiceAdminClientView.this,kundenManager);
+				result.registerUpdater(KundenManagerDefaultDetailPanel.KundenManager$$standardGuthaben, new UpdaterForInteger() {
+					@Override
+					public void update(String text) throws ModelException {
+						getConnection().aendereStandardGuthaben(kundenManager,Long.parseLong(text));
+					}
+				});
+				result.registerUpdater(KundenManagerDefaultDetailPanel.KundenManager$$standardLimit, new UpdaterForInteger() {
+					@Override
+					public void update(String text) throws ModelException {
+						
+					}
+				});
+			}
+
+			@Override
+			public void handleZeitManager(ZeitManagerView zeitManager) throws ModelException {
+				result = new ZeitManagerDefaultDetailPanel(ServiceAdminClientView.this,zeitManager);
+				result.registerUpdater(ZeitManagerDefaultDetailPanel.ZeitManager$$annahmezeit, new UpdaterForInteger() {
+					@Override
+					public void update(String text) throws ModelException {
+						getConnection().aendereAnnahmezeit(zeitManager,Long.parseLong(text));
+					}
+				});
+				result.registerUpdater(ZeitManagerDefaultDetailPanel.ZeitManager$$maxAnlieferungsVersuche, new UpdaterForInteger() {
+					@Override
+					public void update(String text) throws ModelException {
+						getConnection().aendereMaxAnlieferungsVersuche(zeitManager,Long.parseLong(text));
+					}
+				});
+			}
+
+			@Override
+			public void handleLieferartManager(LieferartManagerView lieferartManager) throws ModelException {
+				result = new LieferartManagerDefaultDetailPanel(ServiceAdminClientView.this, lieferartManager);
+				result.registerUpdater(LieferartManagerDefaultDetailPanel.LieferartManager$$rueckversandGebuehr, new UpdaterForInteger() {
+					@Override
+					public void update(String text) throws ModelException {
+						getConnection().aendereRueckversandGebuehr(lieferartManager,Long.parseLong(text));
+					}
+				});
+			}
+
 			//Artikelupdates im Detailpanel
 			@Override
 			public void handleArtikel(ArtikelView artikel) throws ModelException {
@@ -351,12 +409,9 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
 
 
     interface MenuItemVisitor{
-        ImageView handle(AendereAnnahmezeitPRMTRZeitManagerPRMTRIntegerPRMTRMenuItem menuItem);
         ImageView handle(AendereHerstellerPRMTRHerstellerPRMTRStringPRMTRMenuItem menuItem);
         ImageView handle(AendereLieferartPRMTRLieferartPRMTRStringPRMTRIntegerPRMTRIntegerPRMTRMenuItem menuItem);
-        ImageView handle(AendereMaxAnlieferungsVersuchePRMTRZeitManagerPRMTRIntegerPRMTRMenuItem menuItem);
         ImageView handle(AendereMengePRMTRPositionPRMTRIntegerPRMTRMenuItem menuItem);
-        ImageView handle(AendereRueckversandGebuehrPRMTRLieferartManagerPRMTRIntegerPRMTRMenuItem menuItem);
         ImageView handle(ArtikelAbhaengenPRMTRProduktgruppePRMTRArtikelPRMTRMenuItem menuItem);
         ImageView handle(ArtikelAnhaengenPRMTRProduktgruppePRMTRArtikelPRMTRMenuItem menuItem);
         ImageView handle(ArtikelEinlagernPRMTRWarenlagerPRMTRArtikelPRMTRIntegerPRMTRMenuItem menuItem);
@@ -379,11 +434,6 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
         }
         abstract protected ImageView accept(MenuItemVisitor visitor);
     }
-    private class AendereAnnahmezeitPRMTRZeitManagerPRMTRIntegerPRMTRMenuItem extends ServiceAdminMenuItem{
-        protected ImageView accept(MenuItemVisitor visitor){
-            return visitor.handle(this);
-        }
-    }
     private class AendereHerstellerPRMTRHerstellerPRMTRStringPRMTRMenuItem extends ServiceAdminMenuItem{
         protected ImageView accept(MenuItemVisitor visitor){
             return visitor.handle(this);
@@ -394,17 +444,7 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
             return visitor.handle(this);
         }
     }
-    private class AendereMaxAnlieferungsVersuchePRMTRZeitManagerPRMTRIntegerPRMTRMenuItem extends ServiceAdminMenuItem{
-        protected ImageView accept(MenuItemVisitor visitor){
-            return visitor.handle(this);
-        }
-    }
     private class AendereMengePRMTRPositionPRMTRIntegerPRMTRMenuItem extends ServiceAdminMenuItem{
-        protected ImageView accept(MenuItemVisitor visitor){
-            return visitor.handle(this);
-        }
-    }
-    private class AendereRueckversandGebuehrPRMTRLieferartManagerPRMTRIntegerPRMTRMenuItem extends ServiceAdminMenuItem{
         protected ImageView accept(MenuItemVisitor visitor){
             return visitor.handle(this);
         }
@@ -512,17 +552,6 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
                 result.getItems().add(item);
             }
             if (selected instanceof LieferartManagerView){
-                item = new AendereRueckversandGebuehrPRMTRLieferartManagerPRMTRIntegerPRMTRMenuItem();
-                item.setText("aendereRueckversandGebuehr ... ");
-                item.setOnAction(new EventHandler<ActionEvent>(){
-                    public void handle(javafx.event.ActionEvent e) {
-                        final ServiceAdminAendereRueckversandGebuehrLieferartManagerIntegerMssgWizard wizard = new ServiceAdminAendereRueckversandGebuehrLieferartManagerIntegerMssgWizard("aendereRueckversandGebuehr");
-                        wizard.setFirstArgument((LieferartManagerView)selected);
-                        wizard.setWidth(getNavigationPanel().getWidth());
-                        wizard.showAndWait();
-                    }
-                });
-                result.getItems().add(item);
                 item = new NeueLieferArtPRMTRLieferartManagerPRMTRStringPRMTRIntegerPRMTRIntegerPRMTRMenuItem();
                 item.setText("neueLieferArt ... ");
                 item.setOnAction(new EventHandler<ActionEvent>(){
@@ -577,30 +606,6 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
                     public void handle(javafx.event.ActionEvent e) {
                         final ServiceAdminNeuerArtikelArtikelManagerStringStringIntegerIntegerIntegerIntegerMssgWizard wizard = new ServiceAdminNeuerArtikelArtikelManagerStringStringIntegerIntegerIntegerIntegerMssgWizard("neuerArtikel");
                         wizard.setFirstArgument((ArtikelManagerView)selected);
-                        wizard.setWidth(getNavigationPanel().getWidth());
-                        wizard.showAndWait();
-                    }
-                });
-                result.getItems().add(item);
-            }
-            if (selected instanceof ZeitManagerView){
-                item = new AendereAnnahmezeitPRMTRZeitManagerPRMTRIntegerPRMTRMenuItem();
-                item.setText("aendereAnnahmezeit ... ");
-                item.setOnAction(new EventHandler<ActionEvent>(){
-                    public void handle(javafx.event.ActionEvent e) {
-                        final ServiceAdminAendereAnnahmezeitZeitManagerIntegerMssgWizard wizard = new ServiceAdminAendereAnnahmezeitZeitManagerIntegerMssgWizard("aendereAnnahmezeit");
-                        wizard.setFirstArgument((ZeitManagerView)selected);
-                        wizard.setWidth(getNavigationPanel().getWidth());
-                        wizard.showAndWait();
-                    }
-                });
-                result.getItems().add(item);
-                item = new AendereMaxAnlieferungsVersuchePRMTRZeitManagerPRMTRIntegerPRMTRMenuItem();
-                item.setText("aendereMaxAnlieferungsVersuche ... ");
-                item.setOnAction(new EventHandler<ActionEvent>(){
-                    public void handle(javafx.event.ActionEvent e) {
-                        final ServiceAdminAendereMaxAnlieferungsVersucheZeitManagerIntegerMssgWizard wizard = new ServiceAdminAendereMaxAnlieferungsVersucheZeitManagerIntegerMssgWizard("aendereMaxAnlieferungsVersuche");
-                        wizard.setFirstArgument((ZeitManagerView)selected);
                         wizard.setWidth(getNavigationPanel().getWidth());
                         wizard.showAndWait();
                     }
@@ -802,53 +807,6 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
         return this.getPreCalculatedFilters().contains("+++statusVerkaufPRMTRArtikelPRMTR");
     }
     
-	class ServiceAdminAendereAnnahmezeitZeitManagerIntegerMssgWizard extends Wizard {
-
-		protected ServiceAdminAendereAnnahmezeitZeitManagerIntegerMssgWizard(String operationName){
-			super(ServiceAdminClientView.this);
-			getOkButton().setText(operationName);
-			getOkButton().setGraphic(new AendereAnnahmezeitPRMTRZeitManagerPRMTRIntegerPRMTRMenuItem ().getGraphic());
-		}
-		protected void initialize(){
-			this.helpFileName = "ServiceAdminAendereAnnahmezeitZeitManagerIntegerMssgWizard.help";
-			super.initialize();		
-		}
-				
-		protected void perform() {
-			try {
-				getConnection().aendereAnnahmezeit(firstArgument, ((IntegerSelectionPanel)getParametersPanel().getChildren().get(0)).getResult().longValue());
-				getConnection().setEagerRefresh();
-				this.close();	
-			} catch(ModelException me){
-				handleException(me);
-				this.close();
-			}
-			
-		}
-		protected String checkCompleteParameterSet(){
-			return null;
-		}
-		protected boolean isModifying () {
-			return false;
-		}
-		protected void addParameters(){
-			getParametersPanel().getChildren().add(new IntegerSelectionPanel("neueZeit", this));		
-		}	
-		protected void handleDependencies(int i) {
-		}
-		
-		
-		private ZeitManagerView firstArgument; 
-	
-		public void setFirstArgument(ZeitManagerView firstArgument){
-			this.firstArgument = firstArgument;
-			this.setTitle(this.firstArgument.toString());
-			this.check();
-		}
-		
-		
-	}
-
 	class ServiceAdminAendereHerstellerHerstellerStringMssgWizard extends Wizard {
 
 		protected ServiceAdminAendereHerstellerHerstellerStringMssgWizard(String operationName){
@@ -981,60 +939,6 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
 		
 	}
 
-	class ServiceAdminAendereMaxAnlieferungsVersucheZeitManagerIntegerMssgWizard extends Wizard {
-
-		protected ServiceAdminAendereMaxAnlieferungsVersucheZeitManagerIntegerMssgWizard(String operationName){
-			super(ServiceAdminClientView.this);
-			getOkButton().setText(operationName);
-			getOkButton().setGraphic(new AendereMaxAnlieferungsVersuchePRMTRZeitManagerPRMTRIntegerPRMTRMenuItem ().getGraphic());
-		}
-		protected void initialize(){
-			this.helpFileName = "ServiceAdminAendereMaxAnlieferungsVersucheZeitManagerIntegerMssgWizard.help";
-			super.initialize();		
-		}
-				
-		protected void perform() {
-			try {
-				getConnection().aendereMaxAnlieferungsVersuche(firstArgument, ((IntegerSelectionPanel)getParametersPanel().getChildren().get(0)).getResult().longValue());
-				getConnection().setEagerRefresh();
-				this.close();	
-			} catch(ModelException me){
-				handleException(me);
-				this.close();
-			}
-			
-		}
-		protected String checkCompleteParameterSet(){
-			return null;
-		}
-		protected boolean isModifying () {
-			return false;
-		}
-		protected void addParameters(){
-			getParametersPanel().getChildren().add(new IntegerSelectionPanel("maxAnlieferungsVersuche", this));		
-		}	
-		protected void handleDependencies(int i) {
-		}
-		
-		
-		private ZeitManagerView firstArgument; 
-	
-		public void setFirstArgument(ZeitManagerView firstArgument){
-			this.firstArgument = firstArgument;
-			this.setTitle(this.firstArgument.toString());
-			try{
-				final SelectionPanel selectionPanel0 = (SelectionPanel)getParametersPanel().getChildren().get(0);
-				selectionPanel0.preset(firstArgument.getMaxAnlieferungsVersuche());
-				if (!selectionPanel0.check()) selectionPanel0.preset("");
-			}catch(ModelException me){
-				 handleException(me);
-			}
-			this.check();
-		}
-		
-		
-	}
-
 	class ServiceAdminAendereMengePositionIntegerMssgWizard extends Wizard {
 
 		protected ServiceAdminAendereMengePositionIntegerMssgWizard(String operationName){
@@ -1089,53 +993,6 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
 			}catch(ModelException me){
 				 handleException(me);
 			}
-			this.check();
-		}
-		
-		
-	}
-
-	class ServiceAdminAendereRueckversandGebuehrLieferartManagerIntegerMssgWizard extends Wizard {
-
-		protected ServiceAdminAendereRueckversandGebuehrLieferartManagerIntegerMssgWizard(String operationName){
-			super(ServiceAdminClientView.this);
-			getOkButton().setText(operationName);
-			getOkButton().setGraphic(new AendereRueckversandGebuehrPRMTRLieferartManagerPRMTRIntegerPRMTRMenuItem ().getGraphic());
-		}
-		protected void initialize(){
-			this.helpFileName = "ServiceAdminAendereRueckversandGebuehrLieferartManagerIntegerMssgWizard.help";
-			super.initialize();		
-		}
-				
-		protected void perform() {
-			try {
-				getConnection().aendereRueckversandGebuehr(firstArgument, ((IntegerSelectionPanel)getParametersPanel().getChildren().get(0)).getResult().longValue());
-				getConnection().setEagerRefresh();
-				this.close();	
-			} catch(ModelException me){
-				handleException(me);
-				this.close();
-			}
-			
-		}
-		protected String checkCompleteParameterSet(){
-			return null;
-		}
-		protected boolean isModifying () {
-			return false;
-		}
-		protected void addParameters(){
-			getParametersPanel().getChildren().add(new IntegerSelectionPanel("percent", this));		
-		}	
-		protected void handleDependencies(int i) {
-		}
-		
-		
-		private LieferartManagerView firstArgument; 
-	
-		public void setFirstArgument(LieferartManagerView firstArgument){
-			this.firstArgument = firstArgument;
-			this.setTitle(this.firstArgument.toString());
 			this.check();
 		}
 		
