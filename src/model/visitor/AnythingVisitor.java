@@ -5,6 +5,7 @@ import persistence.*;
 
 public interface AnythingVisitor extends ArtikelstatusVisitor,BestellstatusVisitor,BestellungAbstraktVisitor,CommonDateVisitor,KomponenteVisitor,PositionAbstraktVisitor,ServiceVisitor,StatusVisitor,ZeitObjektVisitor{
     
+    public void handleAendereLieferartNameCommand(AendereLieferartNameCommand4Public aendereLieferartNameCommand) throws PersistenceException;
     public void handleAllesZuruecksendenCommand(AllesZuruecksendenCommand4Public allesZuruecksendenCommand) throws PersistenceException;
     public void handleArtikelEinlagernCommand(ArtikelEinlagernCommand4Public artikelEinlagernCommand) throws PersistenceException;
     public void handleArtikelEntfernenCommand(ArtikelEntfernenCommand4Public artikelEntfernenCommand) throws PersistenceException;

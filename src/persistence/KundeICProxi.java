@@ -34,12 +34,6 @@ public class KundeICProxi extends PersistentInCacheProxiOptimistic implements Pe
     public void setPasswort(String newValue) throws PersistenceException {
         ((PersistentKunde)this.getTheObject()).setPasswort(newValue);
     }
-    public Konto4Public getKonto() throws PersistenceException {
-        return ((PersistentKunde)this.getTheObject()).getKonto();
-    }
-    public void setKonto(Konto4Public newValue) throws PersistenceException {
-        ((PersistentKunde)this.getTheObject()).setKonto(newValue);
-    }
     public SubjInterface getSubService() throws PersistenceException {
         return ((PersistentKunde)this.getTheObject()).getSubService();
     }

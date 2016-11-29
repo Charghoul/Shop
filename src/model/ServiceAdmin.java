@@ -477,15 +477,20 @@ public class ServiceAdmin extends model.ServiceShop implements PersistentService
         artikel.aendereHstLieferzeit(hstLieferzeit);
         getThis().signalChanged(true);
     }
-    public void aendereLieferart(final Lieferart4Public lieferart, final String name, final long lieferzeit, final long preis) 
-				throws model.ExcAlreadyExists, PersistenceException{
-        lieferart.aendereLieferart(lieferzeit, preis);
-        getThis().signalChanged(true);
-
-    }
-    public void aendereLimit(final Konto4Public konto, final long limit) 
+    public void aendereLieferartDauer(final Lieferart4Public lieferart, final long dauer) 
 				throws PersistenceException{
-        konto.aendereLimit(limit);
+       lieferart.aendereLieferartDauer(dauer);
+       getThis().signalChanged(true);
+    }
+    public void aendereLieferartName(final Lieferart4Public lieferart, final String name) 
+				throws PersistenceException{
+        lieferart.aendereLieferartName(name,getThis());
+        getThis().signalChanged(true);
+        
+    }
+    public void aendereLieferartPreis(final Lieferart4Public lieferart, final long preis) 
+				throws PersistenceException{
+        lieferart.aendereLieferartPreis(preis);
         getThis().signalChanged(true);
         
     }
@@ -603,7 +608,7 @@ public class ServiceAdmin extends model.ServiceShop implements PersistentService
         Hersteller4Public hst1 = Hersteller.createHersteller("Nintendo");
         Hersteller4Public hst2 = Hersteller.createHersteller("Sony");
         Lieferart4Public l1 = Lieferart.createLieferart("Standard", 3, 199);
-        Lieferart4Public l2 = Lieferart.createLieferart("Express", 3, 499);
+        Lieferart4Public l2 = Lieferart.createLieferart("Express", 1, 499);
         Artikel4Public art1 = Artikel.createArtikel("1234","Switch", 999,10,100,3, Verkauf.getTheVerkauf());
         Artikel4Public art2 = Artikel.createArtikel("31415626","Raspberry", 1999,5,200,4, Neuanlage.getTheNeuanlage());
         Artikel4Public art3 = Artikel.createArtikel("666","Teufel's Dreizack", 666,2,100,3,Verkauf.getTheVerkauf());

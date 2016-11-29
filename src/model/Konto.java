@@ -282,7 +282,6 @@ public class Konto extends PersistentObject implements PersistentKonto{
     public void aendereLimit(final long limit) 
 				throws PersistenceException{
        getThis().setLimit(limit);
-       //TODO: änderung vom Limit im Kunden realisieren
         
     }
     public void auszahlen(final long betrag) 

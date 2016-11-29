@@ -17,10 +17,16 @@ public interface Lieferart4Public extends Anything, SubjInterface, AbstractPersi
     public <E extends model.UserException>  void accept(SubjInterfaceExceptionVisitor<E> visitor) throws PersistenceException, E;
     public <R, E extends model.UserException> R accept(SubjInterfaceReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E;
     
+    public void aendereLieferartName(final String name, final Invoker invoker) 
+				throws PersistenceException;
     public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
 				throws PersistenceException;
-    public void aendereLieferart(final long lieferzeit, final long preis) 
+    public void aendereLieferartDauer(final long dauer) 
+				throws PersistenceException;
+    public void aendereLieferartName(final String name) 
 				throws model.ExcAlreadyExists, PersistenceException;
+    public void aendereLieferartPreis(final long preis) 
+				throws PersistenceException;
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException;
     public void initializeOnCreation() 

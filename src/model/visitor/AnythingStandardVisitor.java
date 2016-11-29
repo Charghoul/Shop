@@ -80,6 +80,9 @@ public abstract class AnythingStandardVisitor implements AnythingVisitor {
     public void handleArtikelManager(ArtikelManager4Public artikelManager) throws PersistenceException{
         this.standardHandling(artikelManager);
     }
+    public void handleAendereLieferartNameCommand(AendereLieferartNameCommand4Public aendereLieferartNameCommand) throws PersistenceException{
+        this.standardHandling(aendereLieferartNameCommand);
+    }
     public void handleProduktgruppeEntfernenCommand(ProduktgruppeEntfernenCommand4Public produktgruppeEntfernenCommand) throws PersistenceException{
         this.standardHandling(produktgruppeEntfernenCommand);
     }

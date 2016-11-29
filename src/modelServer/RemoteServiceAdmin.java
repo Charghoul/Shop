@@ -123,25 +123,32 @@ public  class RemoteServiceAdmin extends RemoteServiceShop {
         }
     }
     
-    public synchronized java.util.HashMap<?,?> aendereLieferart(String lieferartProxiString, String name, String lieferzeitAsString, String preisAsString){
+    public synchronized java.util.HashMap<?,?> aendereLieferartDauer(String lieferartProxiString, String dauerAsString){
         try {
             PersistentLieferart lieferart = (PersistentLieferart)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(lieferartProxiString));
-            long lieferzeit = new Long(lieferzeitAsString).longValue();
-            long preis = new Long(preisAsString).longValue();
-            ((PersistentServiceAdmin)this.server).aendereLieferart(lieferart, name, lieferzeit, preis);
+            long dauer = new Long(dauerAsString).longValue();
+            ((PersistentServiceAdmin)this.server).aendereLieferartDauer(lieferart, dauer);
             return createOKResult();
         }catch(PersistenceException pe){
             return createExceptionResult(pe);
-        }catch(model.ExcAlreadyExists e0){
-            return createExceptionResult(e0, this);
         }
     }
     
-    public synchronized java.util.HashMap<?,?> aendereLimit(String kontoProxiString, String limitAsString){
+    public synchronized java.util.HashMap<?,?> aendereLieferartName(String lieferartProxiString, String name){
         try {
-            PersistentKonto konto = (PersistentKonto)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(kontoProxiString));
-            long limit = new Long(limitAsString).longValue();
-            ((PersistentServiceAdmin)this.server).aendereLimit(konto, limit);
+            PersistentLieferart lieferart = (PersistentLieferart)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(lieferartProxiString));
+            ((PersistentServiceAdmin)this.server).aendereLieferartName(lieferart, name);
+            return createOKResult();
+        }catch(PersistenceException pe){
+            return createExceptionResult(pe);
+        }
+    }
+    
+    public synchronized java.util.HashMap<?,?> aendereLieferartPreis(String lieferartProxiString, String preisAsString){
+        try {
+            PersistentLieferart lieferart = (PersistentLieferart)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(lieferartProxiString));
+            long preis = new Long(preisAsString).longValue();
+            ((PersistentServiceAdmin)this.server).aendereLieferartPreis(lieferart, preis);
             return createOKResult();
         }catch(PersistenceException pe){
             return createExceptionResult(pe);

@@ -65,15 +65,6 @@ public class Kunde extends PersistentObject implements PersistentKunde{
             result = super.toHashtable(allResults, depth, essentialLevel, forGUI, false, tdObserver);
             result.put("benutzername", this.getBenutzername());
             result.put("passwort", this.getPasswort());
-            AbstractPersistentRoot konto = (AbstractPersistentRoot)this.getKonto();
-            if (konto != null) {
-                result.put("konto", konto.createProxiInformation(false, essentialLevel <= 1));
-                if(depth > 1) {
-                    konto.toHashtable(allResults, depth - 1, essentialLevel, forGUI, true , tdObserver);
-                }else{
-                    if(forGUI && konto.hasEssentialFields())konto.toHashtable(allResults, depth, essentialLevel + 1, false, true, tdObserver);
-                }
-            }
             String uniqueKey = common.RPCConstantsAndServices.createHashtableKey(this.getClassId(), this.getId());
             if (leaf && !allResults.containsKey(uniqueKey)) allResults.put(uniqueKey, result);
         }
@@ -89,7 +80,6 @@ public class Kunde extends PersistentObject implements PersistentKunde{
         Kunde result = this;
         result = new Kunde(this.benutzername, 
                            this.passwort, 
-                           this.konto, 
                            this.subService, 
                            this.This, 
                            this.getId());
@@ -102,16 +92,14 @@ public class Kunde extends PersistentObject implements PersistentKunde{
     }
     protected String benutzername;
     protected String passwort;
-    protected PersistentKonto konto;
     protected SubjInterface subService;
     protected PersistentKunde This;
     
-    public Kunde(String benutzername,String passwort,PersistentKonto konto,SubjInterface subService,PersistentKunde This,long id) throws PersistenceException {
+    public Kunde(String benutzername,String passwort,SubjInterface subService,PersistentKunde This,long id) throws PersistenceException {
         /* Shall not be used by clients for object construction! Use static create operation instead! */
         super(id);
         this.benutzername = benutzername;
         this.passwort = passwort;
-        this.konto = konto;
         this.subService = subService;
         if (This != null && !(this.isTheSameAs(This))) this.This = This;        
     }
@@ -129,10 +117,6 @@ public class Kunde extends PersistentObject implements PersistentKunde{
         if (this.getClassId() == 349) ConnectionHandler.getTheConnectionHandler().theKundeFacade
             .newKunde(benutzername,passwort,this.getId());
         super.store();
-        if(this.getKonto() != null){
-            this.getKonto().store();
-            ConnectionHandler.getTheConnectionHandler().theKundeFacade.kontoSet(this.getId(), getKonto());
-        }
         if(this.getSubService() != null){
             this.getSubService().store();
             ConnectionHandler.getTheConnectionHandler().theKundeFacade.subServiceSet(this.getId(), getSubService());
@@ -159,20 +143,6 @@ public class Kunde extends PersistentObject implements PersistentKunde{
         if (newValue == null) throw new PersistenceException("Null not allowed for persistent strings, since null = \"\" in Oracle!", 0);
         if(!this.isDelayed$Persistence()) ConnectionHandler.getTheConnectionHandler().theKundeFacade.passwortSet(this.getId(), newValue);
         this.passwort = newValue;
-    }
-    public Konto4Public getKonto() throws PersistenceException {
-        return this.konto;
-    }
-    public void setKonto(Konto4Public newValue) throws PersistenceException {
-        if (newValue == null) throw new PersistenceException("Null values not allowed!", 0);
-        if(newValue.isTheSameAs(this.konto)) return;
-        long objectId = newValue.getId();
-        long classId = newValue.getClassId();
-        this.konto = (PersistentKonto)PersistentProxi.createProxi(objectId, classId);
-        if(!this.isDelayed$Persistence()){
-            newValue.store();
-            ConnectionHandler.getTheConnectionHandler().theKundeFacade.kontoSet(this.getId(), newValue);
-        }
     }
     public SubjInterface getSubService() throws PersistenceException {
         return this.subService;
@@ -236,7 +206,6 @@ public class Kunde extends PersistentObject implements PersistentKunde{
          return visitor.handleKunde(this);
     }
     public int getLeafInfo() throws PersistenceException{
-        if (this.getKonto() != null) return 1;
         return 0;
     }
     

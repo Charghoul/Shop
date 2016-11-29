@@ -47,7 +47,6 @@ server ServiceAdmin extends ServiceShop {
 	void statusVerkauf@@freigeben(Artikel artikel checked);
 	void statusAuslauf@@einstellen(Artikel artikel checked);
 	void neueLieferArt(LieferartManager lieferartManager, String name, Integer lieferzeit, Integer preis) throws ExcAlreadyExists;
-	void aendereLieferart(Lieferart lieferart, String name, Integer lieferzeit, Integer preis) throws ExcAlreadyExists;
 	void artikelEinlagern(Warenlager warenlager, Artikel artikel {artikelManager}, Integer menge);
 	void artikelEntnehmen(Warenlager warenlager, Artikel artikel {artikelManager}, Integer menge);
 	void artikelEntfernen(Warenlager warenlager, Position position {warenlager});
@@ -62,7 +61,9 @@ server ServiceAdmin extends ServiceShop {
 	no-view void aendereRueckversandGebuehr(LieferartManager lieferartManager,Integer percent);
 	no-view void aendereStandardGuthaben(KundenManager kundenManager, Integer guthaben);
 	no-view void aendereStandardLimit(KundenManager kundenManager, Integer limit);
-	no-view void aendereLimit(Konto konto, Integer limit);
+	no-view void aendereLieferartPreis(Lieferart lieferart, Integer preis);
+	no-view void aendereLieferartName(Lieferart lieferart, String name) ;
+	no-view void aendereLieferartDauer(Lieferart lieferart, Integer dauer);
 }
 //Der Registrierservice ist notwendig, damit sich neue Kunden registrieren können. Man erreicht ihn indem man "Public" als Name einträgt und kein Passwort. In dem sich dann öffnenden Service kann der Kunde sich ein Benutzernamen und Passwort aussuchen und sich dann damit anmelden.
 server ServiceRegister extends Service {
@@ -153,7 +154,6 @@ singleton LieferartManager{
 	public Lieferart ** lieferartenListe;
 	public prior Integer rueckversandGebuehr##rckG@@RueckversandgebuehrenInProzent;
 	void neueLieferart(String name, Integer lieferzeit, Integer preis) throws ExcAlreadyExists;
-	void aendereLieferart(Lieferart lieferart, String name, Integer lieferzeit, Integer preis) throws ExcAlreadyExists;
 	void aendereRueckversandGebuehr(Integer percent);
 }
 
@@ -168,7 +168,6 @@ singleton KundenManager{
 class Kunde{
 	indexed prior String benutzername;
 	prior String passwort;
-	public Konto konto;
 }
 
 class Konto{
@@ -276,7 +275,9 @@ class Lieferart{
 	indexed prior String name;
 	public prior Integer lieferzeit;
 	public prior Integer preis;
-	void aendereLieferart(Integer lieferzeit, Integer preis) throws ExcAlreadyExists;
+	void aendereLieferartPreis(Integer preis);
+	active void aendereLieferartName(String name) throws ExcAlreadyExists;
+	void aendereLieferartDauer(Integer dauer);
 }
 
 //Ein Status für die Zeitobjekte, um sie nach Ablauf der Zeit zu deaktivieren

@@ -19,8 +19,6 @@ public interface LieferartManager4Public extends Anything, SubjInterface, Abstra
     
     public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
 				throws PersistenceException;
-    public void aendereLieferart(final Lieferart4Public lieferart, final String name, final long lieferzeit, final long preis) 
-				throws model.ExcAlreadyExists, PersistenceException;
     public void aendereRueckversandGebuehr(final long percent) 
 				throws PersistenceException;
     public void copyingPrivateUserAttributes(final Anything copy) 

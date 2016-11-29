@@ -221,6 +221,14 @@ public class Lieferart extends PersistentObject implements PersistentLieferart{
     }
     
     
+    public void aendereLieferartName(final String name, final Invoker invoker) 
+				throws PersistenceException{
+        java.sql.Date now = new java.sql.Date(new java.util.Date().getTime());
+		AendereLieferartNameCommand4Public command = model.meta.AendereLieferartNameCommand.createAendereLieferartNameCommand(name, now, now);
+		command.setInvoker(invoker);
+		command.setCommandReceiver(getThis());
+		model.meta.CommandCoordinator.getTheCommandCoordinator().coordinate(command);
+    }
     public synchronized void deregister(final ObsInterface observee) 
 				throws PersistenceException{
         SubjInterface subService = getThis().getSubService();
@@ -261,15 +269,20 @@ public class Lieferart extends PersistentObject implements PersistentLieferart{
     
     // Start of section that contains operations that must be implemented.
     
-    public void aendereLieferart(final long lieferzeit, final long preis) 
+    public void aendereLieferartDauer(final long dauer) 
+				throws PersistenceException{
+        getThis().setLieferzeit(dauer);
+    }
+    public void aendereLieferartName(final String name) 
 				throws model.ExcAlreadyExists, PersistenceException{
-        if(Lieferart.getLieferartByName(name) != null){
-            throw new ExcAlreadyExists(ErrorMessages.LieferArtAlreadyExists);
+        if( Lieferart.getLieferartByName(name) == null){
+            getThis().setName(name);
         }
-        else {
-            getThis().setPreis(preis);
-            getThis().setLieferzeit(lieferzeit);
-        }
+        else throw new ExcAlreadyExists(ErrorMessages.LieferArtAlreadyExists);
+    }
+    public void aendereLieferartPreis(final long preis) 
+				throws PersistenceException{
+        getThis().setPreis(preis);
         
     }
     public void copyingPrivateUserAttributes(final Anything copy) 

@@ -11,14 +11,12 @@ public class Kunde extends ViewObject implements KundeView{
     
     protected String benutzername;
     protected String passwort;
-    protected KontoView konto;
     
-    public Kunde(String benutzername,String passwort,KontoView konto,long id, long classId) {
+    public Kunde(String benutzername,String passwort,long id, long classId) {
         /* Shall not be used. Objects are created on the server only */
         super(id, classId);
         this.benutzername = benutzername;
-        this.passwort = passwort;
-        this.konto = konto;        
+        this.passwort = passwort;        
     }
     
     static public long getTypeId() {
@@ -41,12 +39,6 @@ public class Kunde extends ViewObject implements KundeView{
     public void setPasswort(String newValue) throws ModelException {
         this.passwort = newValue;
     }
-    public KontoView getKonto()throws ModelException{
-        return this.konto;
-    }
-    public void setKonto(KontoView newValue) throws ModelException {
-        this.konto = newValue;
-    }
     
     public void accept(AnythingVisitor visitor) throws ModelException {
         visitor.handleKunde(this);
@@ -62,33 +54,23 @@ public class Kunde extends ViewObject implements KundeView{
     }
     
     public void resolveProxies(java.util.HashMap<String,Object> resultTable) throws ModelException {
-        KontoView konto = this.getKonto();
-        if (konto != null) {
-            ((ViewProxi)konto).setObject((ViewObject)resultTable.get(common.RPCConstantsAndServices.createHashtableKey(konto.getClassId(), konto.getId())));
-        }
         
     }
     public void sortSetValuedFields() throws ModelException {
         
     }
     public ViewObjectInTree getChild(int originalIndex) throws ModelException{
-        int index = originalIndex;
-        if(index == 0 && this.getKonto() != null) return new KontoKundeWrapper(this, originalIndex, (ViewRoot)this.getKonto());
-        if(this.getKonto() != null) index = index - 1;
+        
         return null;
     }
     public int getChildCount() throws ModelException {
-        return 0 
-            + (this.getKonto() == null ? 0 : 1);
+        return 0 ;
     }
     public boolean isLeaf() throws ModelException {
-        return true 
-            && (this.getKonto() == null ? true : false);
+        return true;
     }
     public int getIndexOfChild(Object child) throws ModelException {
-        int result = 0;
-        if(this.getKonto() != null && this.getKonto().equals(child)) return result;
-        if(this.getKonto() != null) result = result + 1;
+        
         return -1;
     }
     public int getBenutzernameIndex() throws ModelException {

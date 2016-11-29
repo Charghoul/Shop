@@ -388,7 +388,9 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
     
     
     // Start of section that contains operations that must be implemented.
-    
+
+    //TODO: Artikel durchsuchbar machen im Kundenview
+
     public void aendereBezeichnung(final String bezeichnung) 
 				throws PersistenceException{
         getThis().setBezeichnung(bezeichnung);

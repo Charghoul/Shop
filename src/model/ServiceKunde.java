@@ -475,12 +475,11 @@ public class ServiceKunde extends model.ServiceShop implements PersistentService
 
         getThis().setProduktKatalog(ProduktKatalog.getTheProduktKatalog());
         getThis().setLieferartManager(LieferartManager.getTheLieferartManager());
-        Konto4Public k = Konto.createKonto(4999, 0, 0);
+        Konto4Public k = Konto.createKonto(KundenManager.getTheKundenManager().getStandardGuthaben(), KundenManager.getTheKundenManager().getStandardLimit(), 0);
         getThis().setKonto(k);
         BestellManager4Public temp = BestellManager.createBestellManager(k);
         getThis().setBestellManager(temp);
         getThis().setEinkaufsManager(EinkaufsManager.createEinkaufsManager(temp));
-        
     }
     public void initializeOnInstantiation() 
 				throws PersistenceException{

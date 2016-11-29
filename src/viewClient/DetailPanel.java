@@ -2018,7 +2018,6 @@ class KundeDefaultDetailPanel extends DefaultDetailPanel{
     
     protected static final String Kunde$$benutzername = "Kunde$$benutzername";
     protected static final String Kunde$$passwort = "Kunde$$passwort";
-    protected static final String Kunde$$konto = "Kunde$$konto";
     
     protected KundeDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
         super(exceptionHandler, anything);

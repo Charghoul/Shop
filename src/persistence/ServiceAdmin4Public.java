@@ -53,9 +53,11 @@ public interface ServiceAdmin4Public extends ServiceShop4Public {
 				throws model.ExcAlreadyExists, PersistenceException;
     public void aendereHstLieferzeit(final Artikel4Public artikel, final long hstLieferzeit) 
 				throws PersistenceException;
-    public void aendereLieferart(final Lieferart4Public lieferart, final String name, final long lieferzeit, final long preis) 
-				throws model.ExcAlreadyExists, PersistenceException;
-    public void aendereLimit(final Konto4Public konto, final long limit) 
+    public void aendereLieferartDauer(final Lieferart4Public lieferart, final long dauer) 
+				throws PersistenceException;
+    public void aendereLieferartName(final Lieferart4Public lieferart, final String name) 
+				throws PersistenceException;
+    public void aendereLieferartPreis(final Lieferart4Public lieferart, final long preis) 
 				throws PersistenceException;
     public void aendereMaxAnlieferungsVersuche(final ZeitManager4Public zeitManager, final long maxAnlieferungsVersuche) 
 				throws PersistenceException;

@@ -155,6 +155,7 @@ public class ToString$Visitor extends model.visitor.ToString$Visitor {
 
 	@Override
 	public void handleServiceKunde(ServiceKunde4Public serviceKunde) throws PersistenceException {
+		result = ToStringConstants.Kunde;
 	}
 
 
@@ -191,8 +192,7 @@ public class ToString$Visitor extends model.visitor.ToString$Visitor {
 
 	@Override
 	public void handleKunde(Kunde4Public kunde) throws PersistenceException {
-		result = ToStringConstants.Kunde  + ((PersistentKunde)kunde).getBenutzername();
-		//TODO: kundenlimit individuell ändern
+		result = ToStringConstants.Kunde + ((PersistentKunde)kunde).getBenutzername();
 	}
 
 	@Override

@@ -223,11 +223,6 @@ public class LieferartManager extends PersistentObject implements PersistentLief
     
     // Start of section that contains operations that must be implemented.
     
-    public void aendereLieferart(final Lieferart4Public lieferart, final String name, final long lieferzeit, final long preis) 
-				throws model.ExcAlreadyExists, PersistenceException{
-        lieferart.aendereLieferart(lieferzeit, preis);
-        
-    }
     public void aendereRueckversandGebuehr(final long percent) 
 				throws PersistenceException{
         getThis().setRueckversandGebuehr(percent);
