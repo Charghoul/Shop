@@ -522,6 +522,11 @@ public class ServiceAdmin extends model.ServiceShop implements PersistentService
         getThis().signalChanged(true);
         
     }
+    public void aendereRetoureZeit(final ZeitManager4Public zeitManager, final long retoureZeit) 
+				throws PersistenceException{
+        zeitManager.aendereRetoureZeit(retoureZeit);
+        getThis().signalChanged(true);
+    }
     public void aendereRueckversandGebuehr(final LieferartManager4Public lieferartManager, final long percent) 
 				throws PersistenceException{
         lieferartManager.aendereRueckversandGebuehr(percent);

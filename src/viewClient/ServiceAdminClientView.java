@@ -231,6 +231,8 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
 				this.result = null;
 			}
 
+
+
 			@Override
 			public void handleLieferart(LieferartView lieferart) throws ModelException {
 				result = new LieferartDefaultDetailPanel(ServiceAdminClientView.this,lieferart);
@@ -285,6 +287,12 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
 					@Override
 					public void update(String text) throws ModelException {
 						getConnection().aendereMaxAnlieferungsVersuche(zeitManager,Long.parseLong(text));
+					}
+				});
+				result.registerUpdater(ZeitManagerDefaultDetailPanel.ZeitManager$$retoureZeit, new UpdaterForInteger() {
+					@Override
+					public void update(String text) throws ModelException {
+						getConnection().aendereRetoureZeit(zeitManager,Long.parseLong(text));
 					}
 				});
 			}

@@ -214,6 +214,17 @@ public  class RemoteServiceAdmin extends RemoteServiceShop {
         }
     }
     
+    public synchronized java.util.HashMap<?,?> aendereRetoureZeit(String zeitManagerProxiString, String retoureZeitAsString){
+        try {
+            PersistentZeitManager zeitManager = (PersistentZeitManager)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(zeitManagerProxiString));
+            long retoureZeit = new Long(retoureZeitAsString).longValue();
+            ((PersistentServiceAdmin)this.server).aendereRetoureZeit(zeitManager, retoureZeit);
+            return createOKResult();
+        }catch(PersistenceException pe){
+            return createExceptionResult(pe);
+        }
+    }
+    
     public synchronized java.util.HashMap<?,?> aendereRueckversandGebuehr(String lieferartManagerProxiString, String percentAsString){
         try {
             PersistentLieferartManager lieferartManager = (PersistentLieferartManager)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(lieferartManagerProxiString));

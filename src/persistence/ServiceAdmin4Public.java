@@ -69,6 +69,8 @@ public interface ServiceAdmin4Public extends ServiceShop4Public {
 				throws PersistenceException;
     public void aenderePreis(final Artikel4Public artikel, final long preis) 
 				throws PersistenceException;
+    public void aendereRetoureZeit(final ZeitManager4Public zeitManager, final long retoureZeit) 
+				throws PersistenceException;
     public void aendereRueckversandGebuehr(final LieferartManager4Public lieferartManager, final long percent) 
 				throws PersistenceException;
     public void aendereStandardGuthaben(final KundenManager4Public kundenManager, final long guthaben) 
