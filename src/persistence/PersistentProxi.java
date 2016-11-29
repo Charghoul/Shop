@@ -19,7 +19,7 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
 	
   private static ListProxiFactory [] getTheListProxiFactories(){
 	if (listProxiFactories == null){
-		listProxiFactories = new ListProxiFactory[269];
+		listProxiFactories = new ListProxiFactory[270];
         listProxiFactories[2] = new ListProxiFactory(){
             AbstractPersistentRoot create(long objectId, long entryId){
                 return new ServerListEntryProxi(objectId, entryId);
@@ -148,6 +148,11 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
         listProxiFactories[127] = new ListProxiFactory(){
             AbstractPersistentRoot create(long objectId, long entryId){
                 return new ArtikelManagerListEntryProxi(objectId, entryId);
+            }
+        };
+        listProxiFactories[269] = new ListProxiFactory(){
+            AbstractPersistentRoot create(long objectId, long entryId){
+                return new AendereLieferartNameCommandListEntryProxi(objectId, entryId);
             }
         };
         listProxiFactories[228] = new ListProxiFactory(){
@@ -325,7 +330,7 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
   }
   private static ProxiFactory [] getTheProxiFactories(){
 	if (proxiFactories == null){
-		proxiFactories = new ProxiFactory [269];
+		proxiFactories = new ProxiFactory [270];
         proxiFactories[2] = new ProxiFactory(){
             AbstractPersistentRoot create(long objectId){
                 return new ServerProxi(objectId);
@@ -454,6 +459,11 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
         proxiFactories[127] = new ProxiFactory(){
             AbstractPersistentRoot create(long objectId){
                 return new ArtikelManagerProxi(objectId);
+            }
+        };
+        proxiFactories[269] = new ProxiFactory(){
+            AbstractPersistentRoot create(long objectId){
+                return new AendereLieferartNameCommandProxi(objectId);
             }
         };
         proxiFactories[228] = new ProxiFactory(){

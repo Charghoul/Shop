@@ -10,8 +10,6 @@ public interface KundeView extends Anything, AbstractViewRoot {
     public void setBenutzername(String newValue) throws ModelException ;
     public String getPasswort()throws ModelException;
     public void setPasswort(String newValue) throws ModelException ;
-    public KontoView getKonto()throws ModelException;
-    public void setKonto(KontoView newValue) throws ModelException ;
     
     public void accept(AnythingVisitor visitor) throws ModelException;
     public <R> R accept(AnythingReturnVisitor<R>  visitor) throws ModelException;

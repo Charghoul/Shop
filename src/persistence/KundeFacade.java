@@ -28,14 +28,14 @@ public class KundeFacade{
     public PersistentKunde newKunde(String benutzername,String passwort,long idCreateIfLessZero) throws PersistenceException {
         if(idCreateIfLessZero > 0) return (PersistentKunde)PersistentProxi.createProxi(idCreateIfLessZero, 349);
         long id = ConnectionHandler.getTheConnectionHandler().theKundeFacade.getNextId();
-        Kunde result = new Kunde(benutzername,passwort,null,null,null,id);
+        Kunde result = new Kunde(benutzername,passwort,null,null,id);
         Cache.getTheCache().put(result);
         return (PersistentKunde)PersistentProxi.createProxi(id, 349);
     }
     
     public PersistentKunde newDelayedKunde(String benutzername,String passwort) throws PersistenceException {
         long id = ConnectionHandler.getTheConnectionHandler().theKundeFacade.getNextId();
-        Kunde result = new Kunde(benutzername,passwort,null,null,null,id);
+        Kunde result = new Kunde(benutzername,passwort,null,null,id);
         Cache.getTheCache().put(result);
         return (PersistentKunde)PersistentProxi.createProxi(id, 349);
     }
@@ -66,9 +66,6 @@ public class KundeFacade{
         
     }
     public void passwortSet(long KundeId, String passwortVal) throws PersistenceException {
-        
-    }
-    public void kontoSet(long KundeId, Konto4Public kontoVal) throws PersistenceException {
         
     }
     public void subServiceSet(long KundeId, SubjInterface subServiceVal) throws PersistenceException {

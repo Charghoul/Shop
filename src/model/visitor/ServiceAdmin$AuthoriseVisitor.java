@@ -7,7 +7,6 @@ public abstract class ServiceAdmin$AuthoriseVisitor extends AnythingStandardVisi
     
     public abstract void handleVerkauf(PersistentVerkauf verkauf) throws PersistenceException;
     public abstract void handleAuslauf(PersistentAuslauf auslauf) throws PersistenceException;
-    public abstract void handleEinkaufsManager(PersistentEinkaufsManager einkaufsManager) throws PersistenceException;
     public abstract void handleVerarbeitung(PersistentVerarbeitung verarbeitung) throws PersistenceException;
     public abstract void handleErrorDisplay(PersistentErrorDisplay errorDisplay) throws PersistenceException;
     public abstract void handleBestellung(PersistentBestellung bestellung) throws PersistenceException;
@@ -18,7 +17,6 @@ public abstract class ServiceAdmin$AuthoriseVisitor extends AnythingStandardVisi
     public abstract void handleHstLieferung(PersistentHstLieferung hstLieferung) throws PersistenceException;
     public abstract void handleGeliefert(PersistentGeliefert geliefert) throws PersistenceException;
     public abstract void handleKndLieferung(PersistentKndLieferung kndLieferung) throws PersistenceException;
-    public abstract void handleServiceKunde(PersistentServiceKunde serviceKunde) throws PersistenceException;
     public abstract void handleKndAnnahme(PersistentKndAnnahme kndAnnahme) throws PersistenceException;
     public abstract void handleProduktKatalog(PersistentProduktKatalog produktKatalog) throws PersistenceException;
     public abstract void handleProduktgruppe(PersistentProduktgruppe produktgruppe) throws PersistenceException;
@@ -26,11 +24,8 @@ public abstract class ServiceAdmin$AuthoriseVisitor extends AnythingStandardVisi
     public abstract void handlePosition(PersistentPosition position) throws PersistenceException;
     public abstract void handleServiceAdmin(PersistentServiceAdmin serviceAdmin) throws PersistenceException;
     public abstract void handleArtikelManager(PersistentArtikelManager artikelManager) throws PersistenceException;
-    public abstract void handleBestellManager(PersistentBestellManager bestellManager) throws PersistenceException;
     public abstract void handleZeitManager(PersistentZeitManager zeitManager) throws PersistenceException;
-    public abstract void handleKonto(PersistentKonto konto) throws PersistenceException;
     public abstract void handlePositionInBestellung(PersistentPositionInBestellung positionInBestellung) throws PersistenceException;
-    public abstract void handleVorbestellung(PersistentVorbestellung vorbestellung) throws PersistenceException;
     public abstract void handleHersteller(PersistentHersteller hersteller) throws PersistenceException;
     public abstract void handleKunde(PersistentKunde kunde) throws PersistenceException;
     public abstract void handleRueckversand(PersistentRueckversand rueckversand) throws PersistenceException;

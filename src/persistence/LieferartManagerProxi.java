@@ -79,10 +79,6 @@ public class LieferartManagerProxi extends PersistentProxi implements Persistent
 				throws PersistenceException{
         ((PersistentLieferartManager)this.getTheObject()).updateObservers(event);
     }
-    public void aendereLieferart(final Lieferart4Public lieferart, final String name, final long lieferzeit, final long preis) 
-				throws model.ExcAlreadyExists, PersistenceException{
-        ((PersistentLieferartManager)this.getTheObject()).aendereLieferart(lieferart, name, lieferzeit, preis);
-    }
     public void aendereRueckversandGebuehr(final long percent) 
 				throws PersistenceException{
         ((PersistentLieferartManager)this.getTheObject()).aendereRueckversandGebuehr(percent);

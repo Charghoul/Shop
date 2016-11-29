@@ -89,6 +89,7 @@ public class ConnectionHandler {
     public ServiceAdminKundenManagerFacade theServiceAdminKundenManagerFacade;
     public ServiceAdminFacade theServiceAdminFacade;
     public ArtikelManagerFacade theArtikelManagerFacade;
+    public AendereLieferartNameCommandFacade theAendereLieferartNameCommandFacade;
     public ProduktgruppeEntfernenCommandFacade theProduktgruppeEntfernenCommandFacade;
     public StatusVerkaufCommandFacade theStatusVerkaufCommandFacade;
     public KontoFacade theKontoFacade;
@@ -162,6 +163,7 @@ public class ConnectionHandler {
             this.theServiceAdminKundenManagerFacade= new ServiceAdminKundenManagerFacade();
             this.theServiceAdminFacade= new ServiceAdminFacade();
             this.theArtikelManagerFacade= new ArtikelManagerFacade();
+            this.theAendereLieferartNameCommandFacade= new AendereLieferartNameCommandFacade();
             this.theProduktgruppeEntfernenCommandFacade= new ProduktgruppeEntfernenCommandFacade();
             this.theStatusVerkaufCommandFacade= new StatusVerkaufCommandFacade();
             this.theKontoFacade= new KontoFacade();

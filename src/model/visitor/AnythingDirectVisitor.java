@@ -130,6 +130,9 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     public void handleArtikelEntfernenCommand(ArtikelEntfernenCommand4Public artikelEntfernenCommand) throws PersistenceException{
         this.handleCommonDate(artikelEntfernenCommand);
     }
+    public void handleAendereLieferartNameCommand(AendereLieferartNameCommand4Public aendereLieferartNameCommand) throws PersistenceException{
+        this.handleCommonDate(aendereLieferartNameCommand);
+    }
     public void handleProduktgruppeEntfernenCommand(ProduktgruppeEntfernenCommand4Public produktgruppeEntfernenCommand) throws PersistenceException{
         this.handleCommonDate(produktgruppeEntfernenCommand);
     }

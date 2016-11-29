@@ -72,6 +72,10 @@ public class LieferartProxi extends PersistentProxi implements PersistentLiefera
     }
     
     
+    public void aendereLieferartName(final String name, final Invoker invoker) 
+				throws PersistenceException{
+        ((PersistentLieferart)this.getTheObject()).aendereLieferartName(name, invoker);
+    }
     public void deregister(final ObsInterface observee) 
 				throws PersistenceException{
         ((PersistentLieferart)this.getTheObject()).deregister(observee);
@@ -88,9 +92,17 @@ public class LieferartProxi extends PersistentProxi implements PersistentLiefera
 				throws PersistenceException{
         ((PersistentLieferart)this.getTheObject()).updateObservers(event);
     }
-    public void aendereLieferart(final long lieferzeit, final long preis) 
+    public void aendereLieferartDauer(final long dauer) 
+				throws PersistenceException{
+        ((PersistentLieferart)this.getTheObject()).aendereLieferartDauer(dauer);
+    }
+    public void aendereLieferartName(final String name) 
 				throws model.ExcAlreadyExists, PersistenceException{
-        ((PersistentLieferart)this.getTheObject()).aendereLieferart(lieferzeit, preis);
+        ((PersistentLieferart)this.getTheObject()).aendereLieferartName(name);
+    }
+    public void aendereLieferartPreis(final long preis) 
+				throws PersistenceException{
+        ((PersistentLieferart)this.getTheObject()).aendereLieferartPreis(preis);
     }
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException{
