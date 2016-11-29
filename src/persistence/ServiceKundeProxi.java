@@ -18,6 +18,12 @@ public class ServiceKundeProxi extends ServiceShopProxi implements PersistentSer
         return -181;
     }
     
+    public SuchManager4Public getSuchManager() throws PersistenceException {
+        return ((PersistentServiceKunde)this.getTheObject()).getSuchManager();
+    }
+    public void setSuchManager(SuchManager4Public newValue) throws PersistenceException {
+        ((PersistentServiceKunde)this.getTheObject()).setSuchManager(newValue);
+    }
     public void setWarenlager(ServiceKundeWarenlager4Public newValue) throws PersistenceException {
         ((PersistentServiceKunde)this.getTheObject()).setWarenlager(newValue);
     }
@@ -251,6 +257,10 @@ public class ServiceKundeProxi extends ServiceShopProxi implements PersistentSer
     public void produktKatalog_update(final model.meta.ProduktKatalogMssgs event) 
 				throws PersistenceException{
         ((PersistentServiceKunde)this.getTheObject()).produktKatalog_update(event);
+    }
+    public void suchen(final String bezeichnung) 
+				throws PersistenceException{
+        ((PersistentServiceKunde)this.getTheObject()).suchen(bezeichnung);
     }
     public void vorbestellen(final EinkaufsManager4Public einkaufsManager, final Lieferart4Public lieferart) 
 				throws PersistenceException{

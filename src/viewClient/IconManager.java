@@ -20,6 +20,7 @@ public class IconManager {
 			case 10: return new Image("/viewResources/Icons/clock.png");
 			case 11: return new Image("/viewResources/Icons/lieferartmanager.png");
 			case 12: return new Image("/viewResources/Icons/contact.png");
+			case 13: return new Image("/viewResources/Icons/search.png");
 		// TODO provide images for icon info numbers!
 			default:
 			return new Image("/viewResources/Icons/database.png");

@@ -277,6 +277,7 @@ public class Cache {
 		this.number2NameMap.put(370, "AendereLieferartNameCommand");
 		this.number2NameMap.put(357, "AllesZuruecksendenCommand");
 		this.number2NameMap.put(219, "Angenommen");
+		this.number2NameMap.put(375, "AnzeigenCommand");
 		this.number2NameMap.put(108, "Artikel");
 		this.number2NameMap.put(286, "ArtikelEinlagernCommand");
 		this.number2NameMap.put(287, "ArtikelEntfernenCommand");
@@ -325,6 +326,7 @@ public class Cache {
 		this.number2NameMap.put(261, "StatusAuslaufCommand");
 		this.number2NameMap.put(260, "StatusVerkaufCommand");
 		this.number2NameMap.put(315, "Subj");
+		this.number2NameMap.put(373, "SuchManager");
 		this.number2NameMap.put(311, "Verarbeitung");
 		this.number2NameMap.put(212, "Verkauf");
 		this.number2NameMap.put(352, "VorbestellenCommand");

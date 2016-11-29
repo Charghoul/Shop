@@ -53,6 +53,9 @@ public abstract class UserExceptionStandardVisitor implements UserExceptionVisit
     public void handleExcAlreadyExists(ExcAlreadyExists excAlreadyExists) throws ModelException{
         this.standardHandling(excAlreadyExists);
     }
+    public void handleExcArtikelDoesNotExist(ExcArtikelDoesNotExist excArtikelDoesNotExist) throws ModelException{
+        this.standardHandling(excArtikelDoesNotExist);
+    }
     public void handleRestrictionException(RestrictionException restrictionException) throws ModelException{
         this.standardHandling(restrictionException);
     }

@@ -7,6 +7,7 @@ public interface AnythingReturnExceptionVisitor<R, E extends model.UserException
     
     public R handleAendereLieferartNameCommand(AendereLieferartNameCommand4Public aendereLieferartNameCommand) throws PersistenceException, E;
     public R handleAllesZuruecksendenCommand(AllesZuruecksendenCommand4Public allesZuruecksendenCommand) throws PersistenceException, E;
+    public R handleAnzeigenCommand(AnzeigenCommand4Public anzeigenCommand) throws PersistenceException, E;
     public R handleArtikelEinlagernCommand(ArtikelEinlagernCommand4Public artikelEinlagernCommand) throws PersistenceException, E;
     public R handleArtikelEntfernenCommand(ArtikelEntfernenCommand4Public artikelEntfernenCommand) throws PersistenceException, E;
     public R handleArtikelEntnehmenCommand(ArtikelEntnehmenCommand4Public artikelEntnehmenCommand) throws PersistenceException, E;
@@ -38,6 +39,7 @@ public interface AnythingReturnExceptionVisitor<R, E extends model.UserException
     public R handleStatusAuslaufCommand(StatusAuslaufCommand4Public statusAuslaufCommand) throws PersistenceException, E;
     public R handleStatusVerkaufCommand(StatusVerkaufCommand4Public statusVerkaufCommand) throws PersistenceException, E;
     public R handleSubj(Subj4Public subj) throws PersistenceException, E;
+    public R handleSuchManager(SuchManager4Public suchManager) throws PersistenceException, E;
     public R handleVorbestellenCommand(VorbestellenCommand4Public vorbestellenCommand) throws PersistenceException, E;
     public R handleWarenlager(Warenlager4Public warenlager) throws PersistenceException, E;
     public R handleZeitManager(ZeitManager4Public zeitManager) throws PersistenceException, E;

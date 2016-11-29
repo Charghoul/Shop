@@ -8,6 +8,7 @@ public interface UserExceptionExceptionVisitor<E extends model.UserException> {
     public void handleCycleException(model.CycleException cycleException) throws PersistenceException, E;
     public void handleExcAlreadyExists(model.ExcAlreadyExists excAlreadyExists) throws PersistenceException, E;
     public void handleExcArtikelAlreadyExists(model.ExcArtikelAlreadyExists excArtikelAlreadyExists) throws PersistenceException, E;
+    public void handleExcArtikelDoesNotExist(model.ExcArtikelDoesNotExist excArtikelDoesNotExist) throws PersistenceException, E;
     public void handleExcArtikelHatKeinenHersteller(model.ExcArtikelHatKeinenHersteller excArtikelHatKeinenHersteller) throws PersistenceException, E;
     public void handleExcArtikelNichtVerfuegbar(model.ExcArtikelNichtVerfuegbar excArtikelNichtVerfuegbar) throws PersistenceException, E;
     public void handleExcArtikelNochNichtVerfuegbar(model.ExcArtikelNochNichtVerfuegbar excArtikelNochNichtVerfuegbar) throws PersistenceException, E;

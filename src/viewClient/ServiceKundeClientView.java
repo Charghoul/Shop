@@ -310,6 +310,7 @@ public class ServiceKundeClientView extends BorderPane implements ExceptionAndEv
         ImageView handle(EinzahlenPRMTRKontoPRMTRIntegerPRMTRMenuItem menuItem);
         ImageView handle(EntfernePositionPRMTRPositionPRMTRMenuItem menuItem);
         ImageView handle(NeuePositionPRMTREinkaufsManagerPRMTRArtikelPRMTRIntegerPRMTRMenuItem menuItem);
+        ImageView handle(SuchenPRMTRStringPRMTRMenuItem menuItem);
         ImageView handle(VorbestellenPRMTREinkaufsManagerPRMTRLieferartPRMTRMenuItem menuItem);
         ImageView handle(ZuEinkaufswagenHinzufuegenPRMTRArtikelPRMTRIntegerPRMTRMenuItem menuItem);
         ImageView handle(ZuruecksendenPRMTRPositionInBestellungPRMTRMenuItem menuItem);
@@ -360,6 +361,11 @@ public class ServiceKundeClientView extends BorderPane implements ExceptionAndEv
             return visitor.handle(this);
         }
     }
+    private class SuchenPRMTRStringPRMTRMenuItem extends ServiceKundeMenuItem{
+        protected ImageView accept(MenuItemVisitor visitor){
+            return visitor.handle(this);
+        }
+    }
     private class VorbestellenPRMTREinkaufsManagerPRMTRLieferartPRMTRMenuItem extends ServiceKundeMenuItem{
         protected ImageView accept(MenuItemVisitor visitor){
             return visitor.handle(this);
@@ -377,11 +383,32 @@ public class ServiceKundeClientView extends BorderPane implements ExceptionAndEv
     }
     private java.util.Vector<javafx.scene.control.Button> getToolButtonsForStaticOperations() {
         java.util.Vector<javafx.scene.control.Button> result = new java.util.Vector<javafx.scene.control.Button>();
+        javafx.scene.control.Button currentButton = null;
+        currentButton = new javafx.scene.control.Button("suchen ... ");
+        currentButton.setGraphic(new SuchenPRMTRStringPRMTRMenuItem().getGraphic());
+        currentButton.setOnAction(new EventHandler<ActionEvent>(){
+            public void handle(javafx.event.ActionEvent e) {
+                final ServiceKundeSuchenStringMssgWizard wizard = new ServiceKundeSuchenStringMssgWizard("suchen");
+                wizard.setWidth(getNavigationPanel().getWidth());
+                wizard.showAndWait();
+            }
+        });
+        result.add(currentButton);
         return result;
     }
     private ContextMenu getContextMenu(final ViewRoot selected, final boolean withStaticOperations, final Point2D menuPos) {
         final ContextMenu result = new ContextMenu();
         MenuItem item = null;
+        item = new SuchenPRMTRStringPRMTRMenuItem();
+        item.setText("(S) suchen ... ");
+        item.setOnAction(new EventHandler<ActionEvent>(){
+            public void handle(javafx.event.ActionEvent e) {
+                final ServiceKundeSuchenStringMssgWizard wizard = new ServiceKundeSuchenStringMssgWizard("suchen");
+                wizard.setWidth(getNavigationPanel().getWidth());
+                wizard.showAndWait();
+            }
+        });
+        if (withStaticOperations) result.getItems().add(item);
         if (selected != null){
             try {
                 this.setPreCalculatedFilters(this.getConnection().serviceKunde_Menu_Filter((Anything)selected));
@@ -875,6 +902,44 @@ public class ServiceKundeClientView extends BorderPane implements ExceptionAndEv
 			this.firstArgument = firstArgument;
 			this.setTitle(this.firstArgument.toString());
 			this.check();
+		}
+		
+		
+	}
+
+	class ServiceKundeSuchenStringMssgWizard extends Wizard {
+
+		protected ServiceKundeSuchenStringMssgWizard(String operationName){
+			super(ServiceKundeClientView.this);
+			getOkButton().setText(operationName);
+			getOkButton().setGraphic(new SuchenPRMTRStringPRMTRMenuItem ().getGraphic());
+		}
+		protected void initialize(){
+			this.helpFileName = "ServiceKundeSuchenStringMssgWizard.help";
+			super.initialize();		
+		}
+				
+		protected void perform() {
+			try {
+				getConnection().suchen(((StringSelectionPanel)getParametersPanel().getChildren().get(0)).getResult());
+				getConnection().setEagerRefresh();
+				this.close();	
+			} catch(ModelException me){
+				handleException(me);
+				this.close();
+			}
+			
+		}
+		protected String checkCompleteParameterSet(){
+			return null;
+		}
+		protected boolean isModifying () {
+			return false;
+		}
+		protected void addParameters(){
+			getParametersPanel().getChildren().add(new StringSelectionPanel("bezeichnung", this));		
+		}	
+		protected void handleDependencies(int i) {
 		}
 		
 		

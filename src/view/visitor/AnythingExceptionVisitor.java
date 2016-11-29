@@ -18,6 +18,7 @@ public interface AnythingExceptionVisitor<E extends view.UserException> extends 
     public void handleLieferartManager(LieferartManagerView lieferartManager) throws ModelException, E;
     public void handleProduktKatalog(ProduktKatalogView produktKatalog) throws ModelException, E;
     public void handleServer(ServerView server) throws ModelException, E;
+    public void handleSuchManager(SuchManagerView suchManager) throws ModelException, E;
     public void handleWarenlager(WarenlagerView warenlager) throws ModelException, E;
     public void handleZeitManager(ZeitManagerView zeitManager) throws ModelException, E;
     

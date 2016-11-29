@@ -115,6 +115,8 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     
     public abstract void handleSubj(Subj4Public subj) throws PersistenceException;
     
+    public abstract void handleSuchManager(SuchManager4Public suchManager) throws PersistenceException;
+    
     public abstract void handleKonto(Konto4Public konto) throws PersistenceException;
     
     public abstract void handleHersteller(Hersteller4Public hersteller) throws PersistenceException;
@@ -153,6 +155,9 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     }
     public void handleStatusVerkaufCommand(StatusVerkaufCommand4Public statusVerkaufCommand) throws PersistenceException{
         this.handleCommonDate(statusVerkaufCommand);
+    }
+    public void handleAnzeigenCommand(AnzeigenCommand4Public anzeigenCommand) throws PersistenceException{
+        this.handleCommonDate(anzeigenCommand);
     }
     public void handleArtikelEinlagernCommand(ArtikelEinlagernCommand4Public artikelEinlagernCommand) throws PersistenceException{
         this.handleCommonDate(artikelEinlagernCommand);

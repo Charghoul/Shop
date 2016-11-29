@@ -8,6 +8,7 @@ public interface UserExceptionReturnExceptionVisitor<R, E extends model.UserExce
     public R handleCycleException(model.CycleException cycleException) throws PersistenceException, E;
     public R handleExcAlreadyExists(model.ExcAlreadyExists excAlreadyExists) throws PersistenceException, E;
     public R handleExcArtikelAlreadyExists(model.ExcArtikelAlreadyExists excArtikelAlreadyExists) throws PersistenceException, E;
+    public R handleExcArtikelDoesNotExist(model.ExcArtikelDoesNotExist excArtikelDoesNotExist) throws PersistenceException, E;
     public R handleExcArtikelHatKeinenHersteller(model.ExcArtikelHatKeinenHersteller excArtikelHatKeinenHersteller) throws PersistenceException, E;
     public R handleExcArtikelNichtVerfuegbar(model.ExcArtikelNichtVerfuegbar excArtikelNichtVerfuegbar) throws PersistenceException, E;
     public R handleExcArtikelNochNichtVerfuegbar(model.ExcArtikelNochNichtVerfuegbar excArtikelNochNichtVerfuegbar) throws PersistenceException, E;

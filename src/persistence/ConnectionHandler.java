@@ -108,6 +108,7 @@ public class ConnectionHandler {
     public BestellungFacade theBestellungFacade;
     public KundenManagerFacade theKundenManagerFacade;
     public ServiceKundeBestellManagerFacade theServiceKundeBestellManagerFacade;
+    public AnzeigenCommandFacade theAnzeigenCommandFacade;
     public KomponenteFacade theKomponenteFacade;
     public ServiceShopFacade theServiceShopFacade;
     public ZeitManagerZeitObjektListeFacade theZeitManagerZeitObjektListeFacade;
@@ -122,6 +123,7 @@ public class ConnectionHandler {
     public NeuerArtikelCommandFacade theNeuerArtikelCommandFacade;
     public ZeitManagerFacade theZeitManagerFacade;
     public SubjFacade theSubjFacade;
+    public SuchManagerFacade theSuchManagerFacade;
     public VorbestellungFacade theVorbestellungFacade;
     public PositionInBestellungFacade thePositionInBestellungFacade;
     public KundeFacade theKundeFacade;
@@ -183,6 +185,7 @@ public class ConnectionHandler {
             this.theBestellungFacade= new BestellungFacade();
             this.theKundenManagerFacade= new KundenManagerFacade();
             this.theServiceKundeBestellManagerFacade= new ServiceKundeBestellManagerFacade();
+            this.theAnzeigenCommandFacade= new AnzeigenCommandFacade();
             this.theKomponenteFacade= new KomponenteFacade();
             this.theServiceShopFacade= new ServiceShopFacade();
             this.theZeitManagerZeitObjektListeFacade= new ZeitManagerZeitObjektListeFacade();
@@ -197,6 +200,7 @@ public class ConnectionHandler {
             this.theNeuerArtikelCommandFacade= new NeuerArtikelCommandFacade();
             this.theZeitManagerFacade= new ZeitManagerFacade();
             this.theSubjFacade= new SubjFacade();
+            this.theSuchManagerFacade= new SuchManagerFacade();
             this.theVorbestellungFacade= new VorbestellungFacade();
             this.thePositionInBestellungFacade= new PositionInBestellungFacade();
             this.theKundeFacade= new KundeFacade();

@@ -18,6 +18,7 @@ public interface AnythingReturnVisitor<R> extends ArtikelstatusReturnVisitor<R> 
     public R handleLieferartManager(LieferartManagerView lieferartManager) throws ModelException;
     public R handleProduktKatalog(ProduktKatalogView produktKatalog) throws ModelException;
     public R handleServer(ServerView server) throws ModelException;
+    public R handleSuchManager(SuchManagerView suchManager) throws ModelException;
     public R handleWarenlager(WarenlagerView warenlager) throws ModelException;
     public R handleZeitManager(ZeitManagerView zeitManager) throws ModelException;
     

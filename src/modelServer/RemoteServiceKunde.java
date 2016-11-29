@@ -151,6 +151,15 @@ public  class RemoteServiceKunde extends RemoteServiceShop {
         }
     }
     
+    public synchronized java.util.HashMap<?,?> suchen(String bezeichnung){
+        try {
+            ((PersistentServiceKunde)this.server).suchen(bezeichnung);
+            return createOKResult();
+        }catch(PersistenceException pe){
+            return createExceptionResult(pe);
+        }
+    }
+    
     public synchronized java.util.HashMap<?,?> vorbestellen(String einkaufsManagerProxiString, String lieferartProxiString){
         try {
             PersistentEinkaufsManager einkaufsManager = (PersistentEinkaufsManager)PersistentProxi.createProxi(common.RPCConstantsAndServices.createProxiInformation(einkaufsManagerProxiString));

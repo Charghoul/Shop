@@ -64,6 +64,8 @@ public interface ServiceKunde4Public extends ServiceShop4Public {
 				throws PersistenceException;
     public void neuePosition(final EinkaufsManager4Public einkaufsManager, final Artikel4Public artikel, final long menge) 
 				throws model.UserException, PersistenceException;
+    public void suchen(final String bezeichnung) 
+				throws PersistenceException;
     public void vorbestellen(final EinkaufsManager4Public einkaufsManager, final Lieferart4Public lieferart) 
 				throws PersistenceException;
     public void zuEinkaufswagenHinzufuegen(final Artikel4Public artikel, final long menge) 

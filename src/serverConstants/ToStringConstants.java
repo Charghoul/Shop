@@ -35,6 +35,7 @@ public class ToStringConstants {
     public static final String KndAnnahme = "Kundenannahmezeit: ";
     public static final String KundenManager = "Kundenliste";
     public static final String Kunde = "Kunde: ";
+    public static final String SuchManager = "Suchergebnisse";
 
 
     private ToStringConstants(){}

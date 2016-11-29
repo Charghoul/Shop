@@ -243,6 +243,11 @@ public class ToString$Visitor extends model.visitor.ToString$Visitor {
 		result = ToStringConstants.ZeitManager;
 	}
 
+	@Override
+	public void handleSuchManager(SuchManager4Public suchManager) throws PersistenceException {
+		result = ToStringConstants.SuchManager;
+	}
+
 
 }
 

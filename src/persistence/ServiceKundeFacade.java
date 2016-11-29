@@ -13,20 +13,23 @@ public class ServiceKundeFacade{
     public PersistentServiceKunde newServiceKunde(long idCreateIfLessZero) throws PersistenceException {
         if(idCreateIfLessZero > 0) return (PersistentServiceKunde)PersistentProxi.createProxi(idCreateIfLessZero, -181);
         long id = ConnectionHandler.getTheConnectionHandler().theServiceFacade.getNextId();
-        ServiceKunde result = new ServiceKunde(null,null,null,null,null,null,null,null,id);
+        ServiceKunde result = new ServiceKunde(null,null,null,null,null,null,null,null,null,id);
         Cache.getTheCache().put(result);
         return (PersistentServiceKunde)PersistentProxi.createProxi(id, -181);
     }
     
     public PersistentServiceKunde newDelayedServiceKunde() throws PersistenceException {
         long id = ConnectionHandler.getTheConnectionHandler().theServiceFacade.getNextId();
-        ServiceKunde result = new ServiceKunde(null,null,null,null,null,null,null,null,id);
+        ServiceKunde result = new ServiceKunde(null,null,null,null,null,null,null,null,null,id);
         Cache.getTheCache().put(result);
         return (PersistentServiceKunde)PersistentProxi.createProxi(id, -181);
     }
     
     public ServiceKunde getServiceKunde(long ServiceKundeId) throws PersistenceException{
         return null; //All data is in the cache!
+    }
+    public void suchManagerSet(long ServiceKundeId, SuchManager4Public suchManagerVal) throws PersistenceException {
+        
     }
     public void warenlagerSet(long ServiceKundeId, ServiceKundeWarenlager4Public warenlagerVal) throws PersistenceException {
         

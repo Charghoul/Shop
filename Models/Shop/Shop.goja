@@ -10,11 +10,13 @@ abstract server ServiceShop extends Service{
 	observe ProduktKatalog produktKatalog;
 }
 server ServiceKunde extends ServiceShop {
+	SuchManager suchManager;
 	observe no-view Warenlager warenlager;
 	public one-to-one (no-view myServiceKunde) Konto konto;
 	one-to-one (no-view myServiceKunde) EinkaufsManager einkaufsManager;
 	no-view LieferartManager lieferartManager;
 	observe BestellManager  bestellManager;
+
 	void neuePosition(EinkaufsManager einkaufsManager, Artikel artikel {produktKatalog}, Integer menge) throws UserException;
 	void vorbestellen(EinkaufsManager einkaufsManager checked, Lieferart lieferart {lieferartManager});
 	void bestellen(EinkaufsManager einkaufsManager checked, Lieferart lieferart {lieferartManager});
@@ -26,6 +28,7 @@ server ServiceKunde extends ServiceShop {
 	void entfernePosition(Position position);
 	void einzahlen(Konto konto, Integer betrag);
 	void auszahlen(Konto konto, Integer betrag) throws ExcAuszahlungGroesserGutgaben;
+	void suchen(String bezeichnung);
 }
 server ServiceAdmin extends ServiceShop {
 	observe KundenManager kundenManager;
@@ -64,11 +67,18 @@ server ServiceAdmin extends ServiceShop {
 	no-view void aendereLieferartPreis(Lieferart lieferart, Integer preis);
 	no-view void aendereLieferartName(Lieferart lieferart, String name) ;
 	no-view void aendereLieferartDauer(Lieferart lieferart, Integer dauer);
+	
 }
 //Der Registrierservice ist notwendig, damit sich neue Kunden registrieren können. Man erreicht ihn indem man "Public" als Name einträgt und kein Passwort. In dem sich dann öffnenden Service kann der Kunde sich ein Benutzernamen und Passwort aussuchen und sich dann damit anmelden.
 server ServiceRegister extends Service {
 	//meldet den Kunden mit Benutzername und Passwort am Shop an
 	active void register(String username, String passwort) throws ExcUserAlreadyExists;
+}
+
+class SuchManager{
+	Artikel ** suchListe;
+	void leeren();
+	active void anzeigen(String bezeichnung) throws UserException;
 }
 
 //Der Artikelmanager verwaltet alle Artikel des Shops
@@ -320,6 +330,6 @@ exception ExcLieferartAlreadyExists{}
 exception ExcArtikelAlreadyExists{}
 exception ExcUserAlreadyExists{}
 exception ExcStatusDidNotChange{}
-
+exception ExcArtikelDoesNotExist{}
 }
 

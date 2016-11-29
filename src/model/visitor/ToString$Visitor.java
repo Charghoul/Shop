@@ -35,6 +35,7 @@ public abstract class ToString$Visitor extends AnythingStandardVisitor{
     public abstract void handleGeliefert(Geliefert4Public geliefert) throws PersistenceException;
     public abstract void handleBestellManager(BestellManager4Public bestellManager) throws PersistenceException;
     public abstract void handleZeitManager(ZeitManager4Public zeitManager) throws PersistenceException;
+    public abstract void handleSuchManager(SuchManager4Public suchManager) throws PersistenceException;
     public abstract void handlePositionInBestellung(PositionInBestellung4Public positionInBestellung) throws PersistenceException;
     public abstract void handleVorbestellung(Vorbestellung4Public vorbestellung) throws PersistenceException;
     public abstract void handleRueckversand(Rueckversand4Public rueckversand) throws PersistenceException;
