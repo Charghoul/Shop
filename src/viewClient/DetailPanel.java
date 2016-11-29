@@ -1248,11 +1248,11 @@ class DetailPanelFactory implements AnythingVisitor {
     public void handleHersteller(view.HerstellerView object){
         result = new HerstellerDefaultDetailPanel(handler, object);
     }
-    public void handleRetoure(view.RetoureView object){
-        result = new RetoureDefaultDetailPanel(handler, object);
-    }
     public void handleAngenommen(view.AngenommenView object){
         result = new AngenommenDefaultDetailPanel(handler, object);
+    }
+    public void handleRetourePosition(view.RetourePositionView object){
+        result = new RetourePositionDefaultDetailPanel(handler, object);
     }
     public void handleWarenlager(view.WarenlagerView object){
         result = new WarenlagerDefaultDetailPanel(handler, object);
@@ -1274,6 +1274,9 @@ class DetailPanelFactory implements AnythingVisitor {
     }
     public void handleGeliefert(view.GeliefertView object){
         result = new GeliefertDefaultDetailPanel(handler, object);
+    }
+    public void handleRetoureLieferung(view.RetoureLieferungView object){
+        result = new RetoureLieferungDefaultDetailPanel(handler, object);
     }
     public void handleBestellManager(view.BestellManagerView object){
         result = new BestellManagerDefaultDetailPanel(handler, object);
@@ -1785,11 +1788,25 @@ class HerstellerDefaultDetailPanel extends DefaultDetailPanel{
     }
 }
 
-class RetoureDefaultDetailPanel extends DefaultDetailPanel{
+class AngenommenDefaultDetailPanel extends DefaultDetailPanel{
+    
+    protected AngenommenDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
+        super(exceptionHandler, anything);
+    }
+    protected void addFields(){
+        
+    }
+    protected view.AngenommenView getAnything(){
+        return (view.AngenommenView)this.anything;
+    }
+}
+
+class RetourePositionDefaultDetailPanel extends DefaultDetailPanel{
     
     protected static final String ZeitObjekt$$remainingTime = "ZeitObjekt$$remainingTime";
+    protected static final String RetourePosition$$position = "RetourePosition$$position";
     
-    protected RetoureDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
+    protected RetourePositionDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
         super(exceptionHandler, anything);
     }
     protected void addFields(){
@@ -1802,21 +1819,8 @@ class RetoureDefaultDetailPanel extends DefaultDetailPanel{
         }
         
     }
-    protected view.RetoureView getAnything(){
-        return (view.RetoureView)this.anything;
-    }
-}
-
-class AngenommenDefaultDetailPanel extends DefaultDetailPanel{
-    
-    protected AngenommenDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
-        super(exceptionHandler, anything);
-    }
-    protected void addFields(){
-        
-    }
-    protected view.AngenommenView getAnything(){
-        return (view.AngenommenView)this.anything;
+    protected view.RetourePositionView getAnything(){
+        return (view.RetourePositionView)this.anything;
     }
 }
 
@@ -1950,6 +1954,29 @@ class GeliefertDefaultDetailPanel extends DefaultDetailPanel{
     }
 }
 
+class RetoureLieferungDefaultDetailPanel extends DefaultDetailPanel{
+    
+    protected static final String ZeitObjekt$$remainingTime = "ZeitObjekt$$remainingTime";
+    protected static final String RetoureLieferung$$kndLieferung = "RetoureLieferung$$kndLieferung";
+    
+    protected RetoureLieferungDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
+        super(exceptionHandler, anything);
+    }
+    protected void addFields(){
+        try{
+            BaseTypePanel panel = new IntegerPanel(this, "remainingTime", this.getAnything().getRemainingTime());
+            this.getScrollablePane().getChildren().add(panel);
+            this.panels.put(ZeitObjekt$$remainingTime, panel);
+        }catch(ModelException e){
+            this.getExceptionAndEventhandler().handleException(e);
+        }
+        
+    }
+    protected view.RetoureLieferungView getAnything(){
+        return (view.RetoureLieferungView)this.anything;
+    }
+}
+
 class BestellManagerDefaultDetailPanel extends DefaultDetailPanel{
     
     protected static final String BestellManager$$bestellListe = "BestellManager$$bestellListe";
@@ -1971,6 +1998,7 @@ class ZeitManagerDefaultDetailPanel extends DefaultDetailPanel{
     protected static final String ZeitManager$$zeitObjektListe = "ZeitManager$$zeitObjektListe";
     protected static final String ZeitManager$$annahmezeit = "ZeitManager$$annahmezeit";
     protected static final String ZeitManager$$maxAnlieferungsVersuche = "ZeitManager$$maxAnlieferungsVersuche";
+    protected static final String ZeitManager$$retoureZeit = "ZeitManager$$retoureZeit";
     
     protected ZeitManagerDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
         super(exceptionHandler, anything);
@@ -1987,6 +2015,13 @@ class ZeitManagerDefaultDetailPanel extends DefaultDetailPanel{
             BaseTypePanel panel = new IntegerPanel(this, "maxAnlieferungsVersuche", this.getAnything().getMaxAnlieferungsVersuche());
             this.getScrollablePane().getChildren().add(panel);
             this.panels.put(ZeitManager$$maxAnlieferungsVersuche, panel);
+        }catch(ModelException e){
+            this.getExceptionAndEventhandler().handleException(e);
+        }
+        try{
+            BaseTypePanel panel = new IntegerPanel(this, "standardRetourenZeitInZE", this.getAnything().getRetoureZeit());
+            this.getScrollablePane().getChildren().add(panel);
+            this.panels.put(ZeitManager$$retoureZeit, panel);
         }catch(ModelException e){
             this.getExceptionAndEventhandler().handleException(e);
         }

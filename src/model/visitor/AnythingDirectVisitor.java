@@ -50,14 +50,14 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     public void handleRueckversand(Rueckversand4Public rueckversand) throws PersistenceException{
         this.handleBestellstatus(rueckversand);
     }
+    public void handleAngenommen(Angenommen4Public angenommen) throws PersistenceException{
+        this.handleBestellstatus(angenommen);
+    }
     public void handleGeliefert(Geliefert4Public geliefert) throws PersistenceException{
         this.handleBestellstatus(geliefert);
     }
     public void handleHinversand(Hinversand4Public hinversand) throws PersistenceException{
         this.handleBestellstatus(hinversand);
-    }
-    public void handleAngenommen(Angenommen4Public angenommen) throws PersistenceException{
-        this.handleBestellstatus(angenommen);
     }
     public void handleVerarbeitung(Verarbeitung4Public verarbeitung) throws PersistenceException{
         this.handleBestellstatus(verarbeitung);
@@ -79,8 +79,11 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     public void handleHstLieferung(HstLieferung4Public hstLieferung) throws PersistenceException{
         this.handleZeitObjekt(hstLieferung);
     }
-    public void handleRetoure(Retoure4Public retoure) throws PersistenceException{
-        this.handleZeitObjekt(retoure);
+    public void handleRetourePosition(RetourePosition4Public retourePosition) throws PersistenceException{
+        this.handleZeitObjekt(retourePosition);
+    }
+    public void handleRetoureLieferung(RetoureLieferung4Public retoureLieferung) throws PersistenceException{
+        this.handleZeitObjekt(retoureLieferung);
     }
     public void handleKndLieferung(KndLieferung4Public kndLieferung) throws PersistenceException{
         this.handleZeitObjekt(kndLieferung);

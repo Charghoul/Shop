@@ -497,7 +497,7 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
     
 
     /* Start of protected part that is not overridden by persistence generator */
-
+    //TODO: Hersteller bei erstellen direkt mit übergeben ?
     
     /* End of protected part that is not overridden by persistence generator */
     

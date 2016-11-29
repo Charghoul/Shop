@@ -21,7 +21,7 @@ public class ToStringConstants {
     public static final String Verarbeitung = "Verarbeitung";
     public static final String Hinversand = "Hinversand";
     public static final String Geliefert = "Geliefert";
-    public static final String Rückversand = "Rückversand";
+    public static final String Rückversand = "Rueckversand";
     public static final String Vorbestellung  = "Vorbestellung";
     public static final String Angenommen = "Angenommen";
     public static final String BestellManager = "Bestellungen";
@@ -36,6 +36,8 @@ public class ToStringConstants {
     public static final String KundenManager = "Kundenliste";
     public static final String Kunde = "Kunde: ";
     public static final String SuchManager = "Suchergebnisse";
+    public static final String RetourePosition = "Positionsretoure";
+    public static final String RetoureLieferung = "Lieferungsretoure";
 
 
     private ToStringConstants(){}

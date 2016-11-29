@@ -94,8 +94,8 @@ public class ConnectionHandler {
     public StatusVerkaufCommandFacade theStatusVerkaufCommandFacade;
     public KontoFacade theKontoFacade;
     public HerstellerFacade theHerstellerFacade;
-    public RetoureFacade theRetoureFacade;
     public AngenommenFacade theAngenommenFacade;
+    public RetourePositionFacade theRetourePositionFacade;
     public ZuruecksendenCommandFacade theZuruecksendenCommandFacade;
     public BestellenCommandFacade theBestellenCommandFacade;
     public WarenlagerFacade theWarenlagerFacade;
@@ -115,6 +115,7 @@ public class ConnectionHandler {
     public ArtikelEinlagernCommandFacade theArtikelEinlagernCommandFacade;
     public GeliefertFacade theGeliefertFacade;
     public ServiceKundeWarenlagerFacade theServiceKundeWarenlagerFacade;
+    public RetoureLieferungFacade theRetoureLieferungFacade;
     public ZeitObjektFacade theZeitObjektFacade;
     public ServiceFacade theServiceFacade;
     public BestellungAbstraktFacade theBestellungAbstraktFacade;
@@ -171,8 +172,8 @@ public class ConnectionHandler {
             this.theStatusVerkaufCommandFacade= new StatusVerkaufCommandFacade();
             this.theKontoFacade= new KontoFacade();
             this.theHerstellerFacade= new HerstellerFacade();
-            this.theRetoureFacade= new RetoureFacade();
             this.theAngenommenFacade= new AngenommenFacade();
+            this.theRetourePositionFacade= new RetourePositionFacade();
             this.theZuruecksendenCommandFacade= new ZuruecksendenCommandFacade();
             this.theBestellenCommandFacade= new BestellenCommandFacade();
             this.theWarenlagerFacade= new WarenlagerFacade();
@@ -192,6 +193,7 @@ public class ConnectionHandler {
             this.theArtikelEinlagernCommandFacade= new ArtikelEinlagernCommandFacade();
             this.theGeliefertFacade= new GeliefertFacade();
             this.theServiceKundeWarenlagerFacade= new ServiceKundeWarenlagerFacade();
+            this.theRetoureLieferungFacade= new RetoureLieferungFacade();
             this.theZeitObjektFacade= new ZeitObjektFacade();
             this.theServiceFacade= new ServiceFacade();
             this.theBestellungAbstraktFacade= new BestellungAbstraktFacade();

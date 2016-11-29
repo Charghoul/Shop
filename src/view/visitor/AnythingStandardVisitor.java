@@ -68,8 +68,8 @@ public abstract class AnythingStandardVisitor implements AnythingVisitor {
     public void handleAngenommen(AngenommenView angenommen) throws ModelException{
         this.standardHandling(angenommen);
     }
-    public void handleRetoure(RetoureView retoure) throws ModelException{
-        this.standardHandling(retoure);
+    public void handleRetourePosition(RetourePositionView retourePosition) throws ModelException{
+        this.standardHandling(retourePosition);
     }
     public void handleWarenlager(WarenlagerView warenlager) throws ModelException{
         this.standardHandling(warenlager);
@@ -91,6 +91,9 @@ public abstract class AnythingStandardVisitor implements AnythingVisitor {
     }
     public void handleGeliefert(GeliefertView geliefert) throws ModelException{
         this.standardHandling(geliefert);
+    }
+    public void handleRetoureLieferung(RetoureLieferungView retoureLieferung) throws ModelException{
+        this.standardHandling(retoureLieferung);
     }
     public void handleBestellManager(BestellManagerView bestellManager) throws ModelException{
         this.standardHandling(bestellManager);

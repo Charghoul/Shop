@@ -27,8 +27,8 @@ public abstract class ServiceKunde$AuthoriseVisitor extends AnythingStandardVisi
     public abstract void handleHersteller(PersistentHersteller hersteller) throws PersistenceException;
     public abstract void handleRueckversand(PersistentRueckversand rueckversand) throws PersistenceException;
     public abstract void handleLieferartManager(PersistentLieferartManager lieferartManager) throws PersistenceException;
-    public abstract void handleHinversand(PersistentHinversand hinversand) throws PersistenceException;
     public abstract void handleAngenommen(PersistentAngenommen angenommen) throws PersistenceException;
+    public abstract void handleHinversand(PersistentHinversand hinversand) throws PersistenceException;
     public abstract void handleWarenlager(PersistentWarenlager warenlager) throws PersistenceException;
     
 }
