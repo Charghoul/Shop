@@ -68,6 +68,9 @@ public abstract class AnythingStandardVisitor implements AnythingVisitor {
     public void handleAngenommen(AngenommenView angenommen) throws ModelException{
         this.standardHandling(angenommen);
     }
+    public void handleRetoure(RetoureView retoure) throws ModelException{
+        this.standardHandling(retoure);
+    }
     public void handleWarenlager(WarenlagerView warenlager) throws ModelException{
         this.standardHandling(warenlager);
     }

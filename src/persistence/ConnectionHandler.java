@@ -94,6 +94,7 @@ public class ConnectionHandler {
     public StatusVerkaufCommandFacade theStatusVerkaufCommandFacade;
     public KontoFacade theKontoFacade;
     public HerstellerFacade theHerstellerFacade;
+    public RetoureFacade theRetoureFacade;
     public AngenommenFacade theAngenommenFacade;
     public ZuruecksendenCommandFacade theZuruecksendenCommandFacade;
     public BestellenCommandFacade theBestellenCommandFacade;
@@ -168,6 +169,7 @@ public class ConnectionHandler {
             this.theStatusVerkaufCommandFacade= new StatusVerkaufCommandFacade();
             this.theKontoFacade= new KontoFacade();
             this.theHerstellerFacade= new HerstellerFacade();
+            this.theRetoureFacade= new RetoureFacade();
             this.theAngenommenFacade= new AngenommenFacade();
             this.theZuruecksendenCommandFacade= new ZuruecksendenCommandFacade();
             this.theBestellenCommandFacade= new BestellenCommandFacade();

@@ -3,7 +3,6 @@ package persistence;
 
 public interface PersistentEinkaufsManager extends Anything, SubjInterface, AbstractPersistentProxi, EinkaufsManager4Public {
     
-    public EinkaufsManager_EinkaufsListeProxi getEinkaufsListe() throws PersistenceException ;
     public BestellManager4Public getBestellManager() throws PersistenceException ;
     public void setBestellManager(BestellManager4Public newValue) throws PersistenceException ;
     public SubjInterface getSubService() throws PersistenceException ;

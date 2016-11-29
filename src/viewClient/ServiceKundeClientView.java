@@ -473,17 +473,19 @@ public class ServiceKundeClientView extends BorderPane implements ExceptionAndEv
                 result.getItems().add(item);
             }
             if (selected instanceof EinkaufsManagerView){
-                item = new BestellenPRMTREinkaufsManagerPRMTRLieferartPRMTRMenuItem();
-                item.setText("bestellen ... ");
-                item.setOnAction(new EventHandler<ActionEvent>(){
-                    public void handle(javafx.event.ActionEvent e) {
-                        final ServiceKundeBestellenEinkaufsManagerLieferartMssgWizard wizard = new ServiceKundeBestellenEinkaufsManagerLieferartMssgWizard("bestellen");
-                        wizard.setFirstArgument((EinkaufsManagerView)selected);
-                        wizard.setWidth(getNavigationPanel().getWidth());
-                        wizard.showAndWait();
-                    }
-                });
-                result.getItems().add(item);
+                if (filter_bestellen((EinkaufsManagerView) selected)) {
+                    item = new BestellenPRMTREinkaufsManagerPRMTRLieferartPRMTRMenuItem();
+                    item.setText("bestellen ... ");
+                    item.setOnAction(new EventHandler<ActionEvent>(){
+                        public void handle(javafx.event.ActionEvent e) {
+                            final ServiceKundeBestellenEinkaufsManagerLieferartMssgWizard wizard = new ServiceKundeBestellenEinkaufsManagerLieferartMssgWizard("bestellen");
+                            wizard.setFirstArgument((EinkaufsManagerView)selected);
+                            wizard.setWidth(getNavigationPanel().getWidth());
+                            wizard.showAndWait();
+                        }
+                    });
+                    result.getItems().add(item);
+                }
                 item = new NeuePositionPRMTREinkaufsManagerPRMTRArtikelPRMTRIntegerPRMTRMenuItem();
                 item.setText("neuePosition ... ");
                 item.setOnAction(new EventHandler<ActionEvent>(){
@@ -495,17 +497,19 @@ public class ServiceKundeClientView extends BorderPane implements ExceptionAndEv
                     }
                 });
                 result.getItems().add(item);
-                item = new VorbestellenPRMTREinkaufsManagerPRMTRLieferartPRMTRMenuItem();
-                item.setText("vorbestellen ... ");
-                item.setOnAction(new EventHandler<ActionEvent>(){
-                    public void handle(javafx.event.ActionEvent e) {
-                        final ServiceKundeVorbestellenEinkaufsManagerLieferartMssgWizard wizard = new ServiceKundeVorbestellenEinkaufsManagerLieferartMssgWizard("vorbestellen");
-                        wizard.setFirstArgument((EinkaufsManagerView)selected);
-                        wizard.setWidth(getNavigationPanel().getWidth());
-                        wizard.showAndWait();
-                    }
-                });
-                result.getItems().add(item);
+                if (filter_vorbestellen((EinkaufsManagerView) selected)) {
+                    item = new VorbestellenPRMTREinkaufsManagerPRMTRLieferartPRMTRMenuItem();
+                    item.setText("vorbestellen ... ");
+                    item.setOnAction(new EventHandler<ActionEvent>(){
+                        public void handle(javafx.event.ActionEvent e) {
+                            final ServiceKundeVorbestellenEinkaufsManagerLieferartMssgWizard wizard = new ServiceKundeVorbestellenEinkaufsManagerLieferartMssgWizard("vorbestellen");
+                            wizard.setFirstArgument((EinkaufsManagerView)selected);
+                            wizard.setWidth(getNavigationPanel().getWidth());
+                            wizard.showAndWait();
+                        }
+                    });
+                    result.getItems().add(item);
+                }
             }
             if (selected instanceof BestellungView){
                 if (filter_allesZuruecksenden((BestellungView) selected)) {
@@ -585,6 +589,12 @@ public class ServiceKundeClientView extends BorderPane implements ExceptionAndEv
     }
     private boolean filter_annehmen(BestellungView argument){
         return this.getPreCalculatedFilters().contains("+++annehmenPRMTRBestellungPRMTR");
+    }
+    private boolean filter_bestellen(EinkaufsManagerView argument){
+        return this.getPreCalculatedFilters().contains("+++bestellenPRMTREinkaufsManagerPRMTRLieferartPRMTR");
+    }
+    private boolean filter_vorbestellen(EinkaufsManagerView argument){
+        return this.getPreCalculatedFilters().contains("+++vorbestellenPRMTREinkaufsManagerPRMTRLieferartPRMTR");
     }
     private boolean filter_zuruecksenden(PositionInBestellungView argument){
         return this.getPreCalculatedFilters().contains("+++zuruecksendenPRMTRPositionInBestellungPRMTR");

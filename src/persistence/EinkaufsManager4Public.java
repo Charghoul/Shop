@@ -5,6 +5,7 @@ import model.visitor.*;
 
 public interface EinkaufsManager4Public extends Anything, SubjInterface, AbstractPersistentProxi {
     
+    public EinkaufsManager_EinkaufsListeProxi getEinkaufsListe() throws PersistenceException ;
     
     public void accept(AnythingVisitor visitor) throws PersistenceException;
     public <R> R accept(AnythingReturnVisitor<R>  visitor) throws PersistenceException;

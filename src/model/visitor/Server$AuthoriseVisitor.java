@@ -39,6 +39,7 @@ public abstract class Server$AuthoriseVisitor extends AnythingStandardVisitor{
     public abstract void handleLieferartManager(PersistentLieferartManager lieferartManager) throws PersistenceException;
     public abstract void handleHinversand(PersistentHinversand hinversand) throws PersistenceException;
     public abstract void handleAngenommen(PersistentAngenommen angenommen) throws PersistenceException;
+    public abstract void handleRetoure(PersistentRetoure retoure) throws PersistenceException;
     public abstract void handleWarenlager(PersistentWarenlager warenlager) throws PersistenceException;
     
 }
