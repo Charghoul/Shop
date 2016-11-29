@@ -539,11 +539,11 @@ public class ServiceKunde extends model.ServiceShop implements PersistentService
     }
 
     private boolean filter_bestellen(EinkaufsManager4Public anything) throws PersistenceException {
-        return anything.getEinkaufsListe().iterator().hasNext();
+        return Warenlager.getTheWarenlager().nichtVerfPruefen(anything.getEinkaufsListe().getList())==null && anything.getEinkaufsListe().iterator().hasNext();
     }
 
     private boolean filter_vorbestellen(EinkaufsManager4Public anything) throws PersistenceException {
-        return anything.getEinkaufsListe().iterator().hasNext();
+        return anything.getEinkaufsListe().iterator().hasNext() && Warenlager.getTheWarenlager().nichtVerfPruefen(anything.getEinkaufsListe().getList())!=null;
     }
     /* End of protected part that is not overridden by persistence generator */
     
