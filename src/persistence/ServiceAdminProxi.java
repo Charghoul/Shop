@@ -242,6 +242,10 @@ public class ServiceAdminProxi extends ServiceShopProxi implements PersistentSer
 				throws PersistenceException{
         ((PersistentServiceAdmin)this.getTheObject()).aenderePreis(artikel, preis);
     }
+    public void aendereRetoureZeit(final ZeitManager4Public zeitManager, final long retoureZeit) 
+				throws PersistenceException{
+        ((PersistentServiceAdmin)this.getTheObject()).aendereRetoureZeit(zeitManager, retoureZeit);
+    }
     public void aendereRueckversandGebuehr(final LieferartManager4Public lieferartManager, final long percent) 
 				throws PersistenceException{
         ((PersistentServiceAdmin)this.getTheObject()).aendereRueckversandGebuehr(lieferartManager, percent);

@@ -60,12 +60,14 @@ server ServiceAdmin extends ServiceShop {
 	void herstellerHinzufuegen(Artikel artikel, Hersteller hersteller {herstellerManager});
 	no-view void aendereAnnahmezeit(ZeitManager zeitManager,Integer neueZeit);
 	no-view void aendereMaxAnlieferungsVersuche(ZeitManager zeitManager, Integer maxAnlieferungsVersuche);
+	no-view void aendereRetoureZeit(ZeitManager zeitManager, Integer retoureZeit);
 	no-view void aendereRueckversandGebuehr(LieferartManager lieferartManager,Integer percent);
 	no-view void aendereStandardGuthaben(KundenManager kundenManager, Integer guthaben);
 	no-view void aendereStandardLimit(KundenManager kundenManager, Integer limit);
 	no-view void aendereLieferartPreis(Lieferart lieferart, Integer preis);
 	no-view void aendereLieferartName(Lieferart lieferart, String name) ;
 	no-view void aendereLieferartDauer(Lieferart lieferart, Integer dauer);
+	
 	
 }
 //Der Registrierservice ist notwendig, damit sich neue Kunden registrieren können. Man erreicht ihn indem man "Public" als Name einträgt und kein Passwort. In dem sich dann öffnenden Service kann der Kunde sich ein Benutzernamen und Passwort aussuchen und sich dann damit anmelden.
