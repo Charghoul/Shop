@@ -51,7 +51,17 @@ public class GetIconInfo$Visitor extends model.visitor.AnythingStandardVisitor {
 
 	@Override
 	public void handleZeitManager(ZeitManager4Public zeitManager) throws PersistenceException {
-		result = 9;
+		result = 10;
+	}
+
+	@Override
+	public void handleLieferartManager(LieferartManager4Public lieferartManager) throws PersistenceException {
+		result = 11;
+	}
+
+	@Override
+	public void handleKundenManager(KundenManager4Public kundenManager) throws PersistenceException {
+		result = 12;
 	}
 
 	public int getIconInfo(Anything anything) throws PersistenceException {

@@ -207,7 +207,7 @@ public class Position extends model.PositionAbstrakt implements PersistentPositi
     public void erhoeheMenge(final long menge) 
 				throws model.ExcLagerbestandOverMax, PersistenceException{
         long newMenge = getThis().getMenge() + menge;
-        if( getArtikel().getMaxLagerbestand() < menge){
+        if( getThis().getArtikel().getMaxLagerbestand() < newMenge){
             throw new ExcLagerbestandOverMax(ErrorMessages.LagerbestandOverMax);
         }
         getThis().setMenge(newMenge);
