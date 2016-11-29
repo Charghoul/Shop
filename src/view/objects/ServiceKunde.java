@@ -10,15 +10,17 @@ import view.visitor.*;
 
 public class ServiceKunde extends view.objects.ServiceShop implements ServiceKundeView{
     
+    protected SuchManagerView suchManager;
     protected WarenlagerView warenlager;
     protected KontoView konto;
     protected EinkaufsManagerView einkaufsManager;
     protected LieferartManagerView lieferartManager;
     protected BestellManagerView bestellManager;
     
-    public ServiceKunde(java.util.Vector<ErrorDisplayView> errors,ProduktKatalogView produktKatalog,WarenlagerView warenlager,KontoView konto,EinkaufsManagerView einkaufsManager,LieferartManagerView lieferartManager,BestellManagerView bestellManager,long id, long classId) {
+    public ServiceKunde(java.util.Vector<ErrorDisplayView> errors,ProduktKatalogView produktKatalog,SuchManagerView suchManager,WarenlagerView warenlager,KontoView konto,EinkaufsManagerView einkaufsManager,LieferartManagerView lieferartManager,BestellManagerView bestellManager,long id, long classId) {
         /* Shall not be used. Objects are created on the server only */
         super(errors,(ProduktKatalogView)produktKatalog,id, classId);
+        this.suchManager = suchManager;
         this.warenlager = warenlager;
         this.konto = konto;
         this.einkaufsManager = einkaufsManager;
@@ -34,6 +36,12 @@ public class ServiceKunde extends view.objects.ServiceShop implements ServiceKun
         return getTypeId();
     }
     
+    public SuchManagerView getSuchManager()throws ModelException{
+        return this.suchManager;
+    }
+    public void setSuchManager(SuchManagerView newValue) throws ModelException {
+        this.suchManager = newValue;
+    }
     public WarenlagerView getWarenlager()throws ModelException{
         return this.warenlager;
     }
@@ -123,6 +131,10 @@ public class ServiceKunde extends view.objects.ServiceShop implements ServiceKun
         if (produktKatalog != null) {
             ((ViewProxi)produktKatalog).setObject((ViewObject)resultTable.get(common.RPCConstantsAndServices.createHashtableKey(produktKatalog.getClassId(), produktKatalog.getId())));
         }
+        SuchManagerView suchManager = this.getSuchManager();
+        if (suchManager != null) {
+            ((ViewProxi)suchManager).setObject((ViewObject)resultTable.get(common.RPCConstantsAndServices.createHashtableKey(suchManager.getClassId(), suchManager.getId())));
+        }
         WarenlagerView warenlager = this.getWarenlager();
         if (warenlager != null) {
             ((ViewProxi)warenlager).setObject((ViewObject)resultTable.get(common.RPCConstantsAndServices.createHashtableKey(warenlager.getClassId(), warenlager.getId())));
@@ -152,6 +164,8 @@ public class ServiceKunde extends view.objects.ServiceShop implements ServiceKun
         int index = originalIndex;
         if(index == 0 && this.getProduktKatalog() != null) return new ProduktKatalogServiceShopWrapper(this, originalIndex, (ViewRoot)this.getProduktKatalog());
         if(this.getProduktKatalog() != null) index = index - 1;
+        if(index == 0 && this.getSuchManager() != null) return new SuchManagerServiceKundeWrapper(this, originalIndex, (ViewRoot)this.getSuchManager());
+        if(this.getSuchManager() != null) index = index - 1;
         if(index == 0 && this.getKonto() != null) return new KontoServiceKundeWrapper(this, originalIndex, (ViewRoot)this.getKonto());
         if(this.getKonto() != null) index = index - 1;
         if(index == 0 && this.getEinkaufsManager() != null) return new EinkaufsManagerServiceKundeWrapper(this, originalIndex, (ViewRoot)this.getEinkaufsManager());
@@ -163,6 +177,7 @@ public class ServiceKunde extends view.objects.ServiceShop implements ServiceKun
     public int getChildCount() throws ModelException {
         return 0 
             + (this.getProduktKatalog() == null ? 0 : 1)
+            + (this.getSuchManager() == null ? 0 : 1)
             + (this.getKonto() == null ? 0 : 1)
             + (this.getEinkaufsManager() == null ? 0 : 1)
             + (this.getBestellManager() == null ? 0 : 1);
@@ -170,6 +185,7 @@ public class ServiceKunde extends view.objects.ServiceShop implements ServiceKun
     public boolean isLeaf() throws ModelException {
         return true 
             && (this.getProduktKatalog() == null ? true : false)
+            && (this.getSuchManager() == null ? true : false)
             && (this.getKonto() == null ? true : false)
             && (this.getEinkaufsManager() == null ? true : false)
             && (this.getBestellManager() == null ? true : false);
@@ -178,6 +194,8 @@ public class ServiceKunde extends view.objects.ServiceShop implements ServiceKun
         int result = 0;
         if(this.getProduktKatalog() != null && this.getProduktKatalog().equals(child)) return result;
         if(this.getProduktKatalog() != null) result = result + 1;
+        if(this.getSuchManager() != null && this.getSuchManager().equals(child)) return result;
+        if(this.getSuchManager() != null) result = result + 1;
         if(this.getKonto() != null && this.getKonto().equals(child)) return result;
         if(this.getKonto() != null) result = result + 1;
         if(this.getEinkaufsManager() != null && this.getEinkaufsManager().equals(child)) return result;

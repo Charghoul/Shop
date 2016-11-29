@@ -18,6 +18,7 @@ public interface AnythingReturnExceptionVisitor<R, E extends view.UserException>
     public R handleLieferartManager(LieferartManagerView lieferartManager) throws ModelException, E;
     public R handleProduktKatalog(ProduktKatalogView produktKatalog) throws ModelException, E;
     public R handleServer(ServerView server) throws ModelException, E;
+    public R handleSuchManager(SuchManagerView suchManager) throws ModelException, E;
     public R handleWarenlager(WarenlagerView warenlager) throws ModelException, E;
     public R handleZeitManager(ZeitManagerView zeitManager) throws ModelException, E;
     

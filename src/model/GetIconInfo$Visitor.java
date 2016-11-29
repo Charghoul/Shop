@@ -64,6 +64,11 @@ public class GetIconInfo$Visitor extends model.visitor.AnythingStandardVisitor {
 		result = 12;
 	}
 
+	@Override
+	public void handleSuchManager(SuchManager4Public suchManager) throws PersistenceException {
+		result = 13;
+	}
+
 	public int getIconInfo(Anything anything) throws PersistenceException {
 		anything.accept(this);
 		return result;

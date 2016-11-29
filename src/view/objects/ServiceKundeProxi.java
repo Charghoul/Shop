@@ -22,6 +22,13 @@ public class ServiceKundeProxi extends ServiceShopProxi implements ServiceKundeV
             produktKatalog = view.objects.ViewProxi.createProxi(produktKatalog$Info,connectionKey);
             produktKatalog.setToString(produktKatalog$Info.getToString());
         }
+        ViewProxi suchManager = null;
+        String suchManager$String = (String)resultTable.get("suchManager");
+        if (suchManager$String != null) {
+            common.ProxiInformation suchManager$Info = common.RPCConstantsAndServices.createProxiInformation(suchManager$String);
+            suchManager = view.objects.ViewProxi.createProxi(suchManager$Info,connectionKey);
+            suchManager.setToString(suchManager$Info.getToString());
+        }
         ViewProxi warenlager = null;
         String warenlager$String = (String)resultTable.get("warenlager");
         if (warenlager$String != null) {
@@ -57,7 +64,7 @@ public class ServiceKundeProxi extends ServiceShopProxi implements ServiceKundeV
             bestellManager = view.objects.ViewProxi.createProxi(bestellManager$Info,connectionKey);
             bestellManager.setToString(bestellManager$Info.getToString());
         }
-        ServiceKundeView result$$ = new ServiceKunde(errors,(ProduktKatalogView)produktKatalog,(WarenlagerView)warenlager,(KontoView)konto,(EinkaufsManagerView)einkaufsManager,(LieferartManagerView)lieferartManager,(BestellManagerView)bestellManager, this.getId(), this.getClassId());
+        ServiceKundeView result$$ = new ServiceKunde(errors,(ProduktKatalogView)produktKatalog,(SuchManagerView)suchManager,(WarenlagerView)warenlager,(KontoView)konto,(EinkaufsManagerView)einkaufsManager,(LieferartManagerView)lieferartManager,(BestellManagerView)bestellManager, this.getId(), this.getClassId());
         ((ViewRoot)result$$).setToString((String) resultTable.get(common.RPCConstantsAndServices.RPCToStringFieldName));
         return result$$;
     }
@@ -69,6 +76,8 @@ public class ServiceKundeProxi extends ServiceShopProxi implements ServiceKundeV
         int index = originalIndex;
         if(index == 0 && this.getProduktKatalog() != null) return new ProduktKatalogServiceShopWrapper(this, originalIndex, (ViewRoot)this.getProduktKatalog());
         if(this.getProduktKatalog() != null) index = index - 1;
+        if(index == 0 && this.getSuchManager() != null) return new SuchManagerServiceKundeWrapper(this, originalIndex, (ViewRoot)this.getSuchManager());
+        if(this.getSuchManager() != null) index = index - 1;
         if(index == 0 && this.getKonto() != null) return new KontoServiceKundeWrapper(this, originalIndex, (ViewRoot)this.getKonto());
         if(this.getKonto() != null) index = index - 1;
         if(index == 0 && this.getEinkaufsManager() != null) return new EinkaufsManagerServiceKundeWrapper(this, originalIndex, (ViewRoot)this.getEinkaufsManager());
@@ -80,6 +89,7 @@ public class ServiceKundeProxi extends ServiceShopProxi implements ServiceKundeV
     public int getChildCount() throws ModelException {
         return 0 
             + (this.getProduktKatalog() == null ? 0 : 1)
+            + (this.getSuchManager() == null ? 0 : 1)
             + (this.getKonto() == null ? 0 : 1)
             + (this.getEinkaufsManager() == null ? 0 : 1)
             + (this.getBestellManager() == null ? 0 : 1);
@@ -88,6 +98,7 @@ public class ServiceKundeProxi extends ServiceShopProxi implements ServiceKundeV
         if (this.object == null) return this.getLeafInfo() == 0;
         return true 
             && (this.getProduktKatalog() == null ? true : false)
+            && (this.getSuchManager() == null ? true : false)
             && (this.getKonto() == null ? true : false)
             && (this.getEinkaufsManager() == null ? true : false)
             && (this.getBestellManager() == null ? true : false);
@@ -96,6 +107,8 @@ public class ServiceKundeProxi extends ServiceShopProxi implements ServiceKundeV
         int result = 0;
         if(this.getProduktKatalog() != null && this.getProduktKatalog().equals(child)) return result;
         if(this.getProduktKatalog() != null) result = result + 1;
+        if(this.getSuchManager() != null && this.getSuchManager().equals(child)) return result;
+        if(this.getSuchManager() != null) result = result + 1;
         if(this.getKonto() != null && this.getKonto().equals(child)) return result;
         if(this.getKonto() != null) result = result + 1;
         if(this.getEinkaufsManager() != null && this.getEinkaufsManager().equals(child)) return result;
@@ -105,6 +118,12 @@ public class ServiceKundeProxi extends ServiceShopProxi implements ServiceKundeV
         return -1;
     }
     
+    public SuchManagerView getSuchManager()throws ModelException{
+        return ((ServiceKunde)this.getTheObject()).getSuchManager();
+    }
+    public void setSuchManager(SuchManagerView newValue) throws ModelException {
+        ((ServiceKunde)this.getTheObject()).setSuchManager(newValue);
+    }
     public WarenlagerView getWarenlager()throws ModelException{
         return ((ServiceKunde)this.getTheObject()).getWarenlager();
     }

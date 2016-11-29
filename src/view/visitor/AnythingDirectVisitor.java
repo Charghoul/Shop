@@ -99,6 +99,8 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     
     public abstract void handleZeitManager(ZeitManagerView zeitManager) throws ModelException;
     
+    public abstract void handleSuchManager(SuchManagerView suchManager) throws ModelException;
+    
     public abstract void handleKonto(KontoView konto) throws ModelException;
     
     public abstract void handleHersteller(HerstellerView hersteller) throws ModelException;

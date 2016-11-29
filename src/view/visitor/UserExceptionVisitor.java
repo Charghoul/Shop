@@ -8,6 +8,7 @@ public interface UserExceptionVisitor {
     public void handleCycleException(CycleException cycleException) throws ModelException;
     public void handleExcAlreadyExists(ExcAlreadyExists excAlreadyExists) throws ModelException;
     public void handleExcArtikelAlreadyExists(ExcArtikelAlreadyExists excArtikelAlreadyExists) throws ModelException;
+    public void handleExcArtikelDoesNotExist(ExcArtikelDoesNotExist excArtikelDoesNotExist) throws ModelException;
     public void handleExcArtikelHatKeinenHersteller(ExcArtikelHatKeinenHersteller excArtikelHatKeinenHersteller) throws ModelException;
     public void handleExcArtikelNichtVerfuegbar(ExcArtikelNichtVerfuegbar excArtikelNichtVerfuegbar) throws ModelException;
     public void handleExcArtikelNochNichtVerfuegbar(ExcArtikelNochNichtVerfuegbar excArtikelNochNichtVerfuegbar) throws ModelException;

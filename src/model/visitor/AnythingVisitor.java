@@ -7,6 +7,7 @@ public interface AnythingVisitor extends ArtikelstatusVisitor,BestellstatusVisit
     
     public void handleAendereLieferartNameCommand(AendereLieferartNameCommand4Public aendereLieferartNameCommand) throws PersistenceException;
     public void handleAllesZuruecksendenCommand(AllesZuruecksendenCommand4Public allesZuruecksendenCommand) throws PersistenceException;
+    public void handleAnzeigenCommand(AnzeigenCommand4Public anzeigenCommand) throws PersistenceException;
     public void handleArtikelEinlagernCommand(ArtikelEinlagernCommand4Public artikelEinlagernCommand) throws PersistenceException;
     public void handleArtikelEntfernenCommand(ArtikelEntfernenCommand4Public artikelEntfernenCommand) throws PersistenceException;
     public void handleArtikelEntnehmenCommand(ArtikelEntnehmenCommand4Public artikelEntnehmenCommand) throws PersistenceException;
@@ -38,6 +39,7 @@ public interface AnythingVisitor extends ArtikelstatusVisitor,BestellstatusVisit
     public void handleStatusAuslaufCommand(StatusAuslaufCommand4Public statusAuslaufCommand) throws PersistenceException;
     public void handleStatusVerkaufCommand(StatusVerkaufCommand4Public statusVerkaufCommand) throws PersistenceException;
     public void handleSubj(Subj4Public subj) throws PersistenceException;
+    public void handleSuchManager(SuchManager4Public suchManager) throws PersistenceException;
     public void handleVorbestellenCommand(VorbestellenCommand4Public vorbestellenCommand) throws PersistenceException;
     public void handleWarenlager(Warenlager4Public warenlager) throws PersistenceException;
     public void handleZeitManager(ZeitManager4Public zeitManager) throws PersistenceException;

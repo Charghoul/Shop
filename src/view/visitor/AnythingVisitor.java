@@ -18,6 +18,7 @@ public interface AnythingVisitor extends ArtikelstatusVisitor,BestellstatusVisit
     public void handleLieferartManager(LieferartManagerView lieferartManager) throws ModelException;
     public void handleProduktKatalog(ProduktKatalogView produktKatalog) throws ModelException;
     public void handleServer(ServerView server) throws ModelException;
+    public void handleSuchManager(SuchManagerView suchManager) throws ModelException;
     public void handleWarenlager(WarenlagerView warenlager) throws ModelException;
     public void handleZeitManager(ZeitManagerView zeitManager) throws ModelException;
     

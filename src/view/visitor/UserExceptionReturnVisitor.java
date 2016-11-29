@@ -8,6 +8,7 @@ public interface UserExceptionReturnVisitor<R> {
     public R handleCycleException(CycleException cycleException) throws ModelException;
     public R handleExcAlreadyExists(ExcAlreadyExists excAlreadyExists) throws ModelException;
     public R handleExcArtikelAlreadyExists(ExcArtikelAlreadyExists excArtikelAlreadyExists) throws ModelException;
+    public R handleExcArtikelDoesNotExist(ExcArtikelDoesNotExist excArtikelDoesNotExist) throws ModelException;
     public R handleExcArtikelHatKeinenHersteller(ExcArtikelHatKeinenHersteller excArtikelHatKeinenHersteller) throws ModelException;
     public R handleExcArtikelNichtVerfuegbar(ExcArtikelNichtVerfuegbar excArtikelNichtVerfuegbar) throws ModelException;
     public R handleExcArtikelNochNichtVerfuegbar(ExcArtikelNochNichtVerfuegbar excArtikelNochNichtVerfuegbar) throws ModelException;

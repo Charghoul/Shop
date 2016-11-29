@@ -1281,6 +1281,9 @@ class DetailPanelFactory implements AnythingVisitor {
     public void handleZeitManager(view.ZeitManagerView object){
         result = new ZeitManagerDefaultDetailPanel(handler, object);
     }
+    public void handleSuchManager(view.SuchManagerView object){
+        result = new SuchManagerDefaultDetailPanel(handler, object);
+    }
     public void handleVorbestellung(view.VorbestellungView object){
         result = new VorbestellungDefaultDetailPanel(handler, object);
     }
@@ -1524,6 +1527,7 @@ class KndLieferungDefaultDetailPanel extends DefaultDetailPanel{
 class ServiceKundeDefaultDetailPanel extends DefaultDetailPanel{
     
     protected static final String ServiceShop$$produktKatalog = "ServiceShop$$produktKatalog";
+    protected static final String ServiceKunde$$suchManager = "ServiceKunde$$suchManager";
     protected static final String ServiceKunde$$konto = "ServiceKunde$$konto";
     protected static final String ServiceKunde$$einkaufsManager = "ServiceKunde$$einkaufsManager";
     protected static final String ServiceKunde$$bestellManager = "ServiceKunde$$bestellManager";
@@ -1990,6 +1994,21 @@ class ZeitManagerDefaultDetailPanel extends DefaultDetailPanel{
     }
     protected view.ZeitManagerView getAnything(){
         return (view.ZeitManagerView)this.anything;
+    }
+}
+
+class SuchManagerDefaultDetailPanel extends DefaultDetailPanel{
+    
+    protected static final String SuchManager$$suchListe = "SuchManager$$suchListe";
+    
+    protected SuchManagerDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
+        super(exceptionHandler, anything);
+    }
+    protected void addFields(){
+        
+    }
+    protected view.SuchManagerView getAnything(){
+        return (view.SuchManagerView)this.anything;
     }
 }
 

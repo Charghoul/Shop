@@ -19,7 +19,7 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
 	
   private static ListProxiFactory [] getTheListProxiFactories(){
 	if (listProxiFactories == null){
-		listProxiFactories = new ListProxiFactory[272];
+		listProxiFactories = new ListProxiFactory[276];
         listProxiFactories[2] = new ListProxiFactory(){
             AbstractPersistentRoot create(long objectId, long entryId){
                 return new ServerListEntryProxi(objectId, entryId);
@@ -240,6 +240,11 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
                 return new ServiceKundeBestellManagerListEntryProxi(objectId, entryId);
             }
         };
+        listProxiFactories[274] = new ListProxiFactory(){
+            AbstractPersistentRoot create(long objectId, long entryId){
+                return new AnzeigenCommandListEntryProxi(objectId, entryId);
+            }
+        };
         listProxiFactories[245] = new ListProxiFactory(){
             AbstractPersistentRoot create(long objectId, long entryId){
                 return new ZeitManagerZeitObjektListeListEntryProxi(objectId, entryId);
@@ -283,6 +288,11 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
         listProxiFactories[214] = new ListProxiFactory(){
             AbstractPersistentRoot create(long objectId, long entryId){
                 return new SubjListEntryProxi(objectId, entryId);
+            }
+        };
+        listProxiFactories[272] = new ListProxiFactory(){
+            AbstractPersistentRoot create(long objectId, long entryId){
+                return new SuchManagerListEntryProxi(objectId, entryId);
             }
         };
         listProxiFactories[115] = new ListProxiFactory(){
@@ -335,7 +345,7 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
   }
   private static ProxiFactory [] getTheProxiFactories(){
 	if (proxiFactories == null){
-		proxiFactories = new ProxiFactory [272];
+		proxiFactories = new ProxiFactory [276];
         proxiFactories[2] = new ProxiFactory(){
             AbstractPersistentRoot create(long objectId){
                 return new ServerProxi(objectId);
@@ -556,6 +566,11 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
                 return new ServiceKundeBestellManagerProxi(objectId);
             }
         };
+        proxiFactories[274] = new ProxiFactory(){
+            AbstractPersistentRoot create(long objectId){
+                return new AnzeigenCommandProxi(objectId);
+            }
+        };
         proxiFactories[245] = new ProxiFactory(){
             AbstractPersistentRoot create(long objectId){
                 return new ZeitManagerZeitObjektListeProxi(objectId);
@@ -599,6 +614,11 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
         proxiFactories[214] = new ProxiFactory(){
             AbstractPersistentRoot create(long objectId){
                 return new SubjProxi(objectId);
+            }
+        };
+        proxiFactories[272] = new ProxiFactory(){
+            AbstractPersistentRoot create(long objectId){
+                return new SuchManagerProxi(objectId);
             }
         };
         proxiFactories[115] = new ProxiFactory(){

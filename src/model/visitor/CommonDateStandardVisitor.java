@@ -32,6 +32,9 @@ public abstract class CommonDateStandardVisitor implements CommonDateVisitor {
     public void handleStatusVerkaufCommand(StatusVerkaufCommand4Public statusVerkaufCommand) throws PersistenceException{
         this.standardHandling(statusVerkaufCommand);
     }
+    public void handleAnzeigenCommand(AnzeigenCommand4Public anzeigenCommand) throws PersistenceException{
+        this.standardHandling(anzeigenCommand);
+    }
     public void handleArtikelEinlagernCommand(ArtikelEinlagernCommand4Public artikelEinlagernCommand) throws PersistenceException{
         this.standardHandling(artikelEinlagernCommand);
     }

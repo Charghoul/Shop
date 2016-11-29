@@ -24,6 +24,7 @@ public class ErrorMessages {
     public static final String WarenwertUeberKontoguthaben = "Der Warenwert der Bestellung (zzgl. Vorbestellungen) liegt ueber ihrem Kontoguthaben";
     public static final String AuszahlungGroesserGuthaben= "Die Auszahlungssumme ist groesser als ihr aktuelles Guthaben";
     public static final String LagerbestandMinGroesserMax = "Der minimale Lagerbestand darf nicht groesser als der maximale sein";
+    public static final String ArtikelDoesNotExist = "Ein Artikel mit dieser Bezeichung existiert nicht";
 
     private ErrorMessages(){}
 }
