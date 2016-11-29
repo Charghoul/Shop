@@ -13,10 +13,13 @@ public class IconManager {
 			case 3: return new Image("/viewResources/Icons/bag_color.png");
 			case 4: return new Image("/viewResources/Icons/Bestellung_transit.png");
 			case 5: return new Image("/viewResources/Icons/Bestellung_finished.png");
-			case 6: return new Image("/viewResources/Icons/shop_color.png");
+			case 6: return new Image("/viewResources/Icons/shop.png");
 			case 7: return new Image("/viewResources/Icons/hersteller.png");
 			case 8: return new Image("/viewResources/Icons/konto1.png");
 			case 9: return new Image("/viewResources/Icons/time.png");
+			case 10: return new Image("/viewResources/Icons/clock.png");
+			case 11: return new Image("/viewResources/Icons/lieferartmanager.png");
+			case 12: return new Image("/viewResources/Icons/contact.png");
 		// TODO provide images for icon info numbers!
 			default:
 			return new Image("/viewResources/Icons/database.png");
