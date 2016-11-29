@@ -74,6 +74,7 @@ server ServiceRegister extends Service {
 	active void register(String username, String passwort) throws ExcUserAlreadyExists;
 }
 
+//Der SuchManager zeigt die Suchergebnisse des Kunden an
 class SuchManager{
 	Artikel ** suchListe;
 	void leeren();
@@ -128,14 +129,18 @@ singleton ZeitManager {
 	server-only ZeitObjekt ** annahmeZeiten;
 	public Integer annahmezeit@@AnnahmezeitInZeitEinheiten;
 	public Integer maxAnlieferungsVersuche##maxAnl;
+	public Integer retoureZeit@@standardRetourenZeitInZE;
 	void handleTimeUnitElapsed() ;
 	event void neueHstLieferung(Artikel artikel, Integer menge);
 	event void neueKndLieferung(Bestellung bestellung);
 	event void neueKndAnnahme(KndLieferung kndLieferung);
+	event void neueRetourePosition(PositionInBestellung position);
+	event void neueRetoureLieferung(KndLieferung kndLieferung);
 	event void forwardInternalEvent();
 	void removeZeitObjekt(ZeitObjekt zeitObjekt);
 	void aendereAnnahmezeit(Integer neueZeit);
 	void aendereMaxAnlieferungsVersuche(Integer maxAnlieferungsVersuche);
+	void aendereRetoureZeit(Integer retoureZeit);
 }
 
 abstract class ZeitObjekt{
@@ -162,6 +167,7 @@ class EinkaufsManager{
 singleton LieferartManager{
 	public Lieferart ** lieferartenListe;
 	public prior Integer rueckversandGebuehr##rckG@@RueckversandgebuehrenInProzent;
+	
 	void neueLieferart(String name, Integer lieferzeit, Integer preis) throws ExcAlreadyExists;
 	void aendereRueckversandGebuehr(Integer percent);
 }
@@ -264,8 +270,12 @@ class KndAnnahme extends ZeitObjekt{
 	prior KndLieferung kndLieferung;
 }
 
-class Retoure extends ZeitObjekt{
-	
+class RetoureLieferung extends ZeitObjekt{
+	prior KndLieferung kndLieferung;
+}
+
+class RetourePosition extends ZeitObjekt{
+	prior PositionInBestellung position;
 }
 
 abstract class PositionAbstrakt {

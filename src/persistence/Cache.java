@@ -312,7 +312,8 @@ public class Cache {
 		this.number2NameMap.put(267, "Produktgruppe");
 		this.number2NameMap.put(329, "ProduktgruppeEntfernenCommand");
 		this.number2NameMap.put(200, "RegisterCommand");
-		this.number2NameMap.put(371, "Retoure");
+		this.number2NameMap.put(378, "RetoureLieferung");
+		this.number2NameMap.put(377, "RetourePosition");
 		this.number2NameMap.put(217, "Rueckversand");
 		this.number2NameMap.put(-103, "Server");
 		this.number2NameMap.put(-182, "ServiceAdmin");

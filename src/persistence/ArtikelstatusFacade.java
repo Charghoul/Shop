@@ -25,9 +25,9 @@ public class ArtikelstatusFacade{
 	}
 
     public long getClass(long objectId) throws PersistenceException{
+        if(Cache.getTheCache().contains(objectId, 214)) return 214;
         if(Cache.getTheCache().contains(objectId, 212)) return 212;
         if(Cache.getTheCache().contains(objectId, 213)) return 213;
-        if(Cache.getTheCache().contains(objectId, 214)) return 214;
         
         throw new PersistenceException("No such object: " + new Long(objectId).toString(), 0);
         

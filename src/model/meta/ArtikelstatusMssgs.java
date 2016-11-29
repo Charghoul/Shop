@@ -5,4 +5,4 @@ public interface ArtikelstatusMssgs {
 }
 
 interface ArtikelstatusDOWNMssgs extends Mssgs, ArtikelstatusMssgs{}
-interface ArtikelstatusUPMssgs extends VerkaufUPMssgs, AuslaufUPMssgs, NeuanlageUPMssgs, ArtikelstatusMssgs{}
+interface ArtikelstatusUPMssgs extends NeuanlageUPMssgs, VerkaufUPMssgs, AuslaufUPMssgs, ArtikelstatusMssgs{}

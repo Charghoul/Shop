@@ -53,10 +53,9 @@ public class ToString$Visitor extends model.visitor.ToString$Visitor {
 	}
 
 	@Override
-	public void handleRetoure(Retoure4Public retoure) throws PersistenceException {
-
+	public void handleRetourePosition(RetourePosition4Public retourePosition) throws PersistenceException {
+		result = ToStringConstants.RetourePosition;
 	}
-
 
 	@Override
 	public void handleactivated(activated4Public activated) throws PersistenceException {
@@ -144,6 +143,11 @@ public class ToString$Visitor extends model.visitor.ToString$Visitor {
 	@Override
 	public void handleGeliefert(Geliefert4Public geliefert) throws PersistenceException {
 		result = ToStringConstants.Geliefert;
+	}
+
+	@Override
+	public void handleRetoureLieferung(RetoureLieferung4Public retoureLieferung) throws PersistenceException {
+		result = ToStringConstants.RetoureLieferung;
 	}
 
 	@Override

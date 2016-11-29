@@ -25,7 +25,7 @@ public abstract class ToString$Visitor extends AnythingStandardVisitor{
     public abstract void handleKonto(Konto4Public konto) throws PersistenceException;
     public abstract void handleHersteller(Hersteller4Public hersteller) throws PersistenceException;
     public abstract void handleAngenommen(Angenommen4Public angenommen) throws PersistenceException;
-    public abstract void handleRetoure(Retoure4Public retoure) throws PersistenceException;
+    public abstract void handleRetourePosition(RetourePosition4Public retourePosition) throws PersistenceException;
     public abstract void handleWarenlager(Warenlager4Public warenlager) throws PersistenceException;
     public abstract void handleVerkauf(Verkauf4Public verkauf) throws PersistenceException;
     public abstract void handleVerarbeitung(Verarbeitung4Public verarbeitung) throws PersistenceException;
@@ -33,6 +33,7 @@ public abstract class ToString$Visitor extends AnythingStandardVisitor{
     public abstract void handleBestellung(Bestellung4Public bestellung) throws PersistenceException;
     public abstract void handleKundenManager(KundenManager4Public kundenManager) throws PersistenceException;
     public abstract void handleGeliefert(Geliefert4Public geliefert) throws PersistenceException;
+    public abstract void handleRetoureLieferung(RetoureLieferung4Public retoureLieferung) throws PersistenceException;
     public abstract void handleBestellManager(BestellManager4Public bestellManager) throws PersistenceException;
     public abstract void handleZeitManager(ZeitManager4Public zeitManager) throws PersistenceException;
     public abstract void handleSuchManager(SuchManager4Public suchManager) throws PersistenceException;
