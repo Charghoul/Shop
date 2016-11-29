@@ -65,6 +65,9 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     public void handleHstLieferung(HstLieferungView hstLieferung) throws ModelException{
         this.handleZeitObjekt(hstLieferung);
     }
+    public void handleRetoure(RetoureView retoure) throws ModelException{
+        this.handleZeitObjekt(retoure);
+    }
     public void handleKndLieferung(KndLieferungView kndLieferung) throws ModelException{
         this.handleZeitObjekt(kndLieferung);
     }

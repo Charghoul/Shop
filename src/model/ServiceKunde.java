@@ -382,6 +382,10 @@ public class ServiceKunde extends model.ServiceShop implements PersistentService
 		if(anything instanceof PositionInBestellung4Public) {
 			if(this.filter_zuruecksenden((PositionInBestellung4Public)anything)) result = result + "zuruecksendenPRMTRPositionInBestellungPRMTR+++";
 		}
+		if(anything instanceof EinkaufsManager4Public) {
+			if(this.filter_bestellen((EinkaufsManager4Public)anything)) result = result + "bestellenPRMTREinkaufsManagerPRMTRLieferartPRMTR+++";
+			if(this.filter_vorbestellen((EinkaufsManager4Public)anything)) result = result + "vorbestellenPRMTREinkaufsManagerPRMTRLieferartPRMTR+++";
+		}
 		if(anything instanceof Bestellung4Public) {
 			if(this.filter_allesZuruecksenden((Bestellung4Public)anything)) result = result + "allesZuruecksendenPRMTRBestellungPRMTR+++";
 			if(this.filter_annehmen((Bestellung4Public)anything)) result = result + "annehmenPRMTRBestellungPRMTR+++";
@@ -533,7 +537,14 @@ public class ServiceKunde extends model.ServiceShop implements PersistentService
     private boolean filter_allesZuruecksenden(Bestellung4Public anything) throws PersistenceException {
         return anything.getBestellstatus().equals(Geliefert.getTheGeliefert());
     }
-    
+
+    private boolean filter_bestellen(EinkaufsManager4Public anything) throws PersistenceException {
+        return anything.getEinkaufsListe().iterator().hasNext();
+    }
+
+    private boolean filter_vorbestellen(EinkaufsManager4Public anything) throws PersistenceException {
+        return anything.getEinkaufsListe().iterator().hasNext();
+    }
     /* End of protected part that is not overridden by persistence generator */
     
 }

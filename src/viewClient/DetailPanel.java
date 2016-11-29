@@ -1248,6 +1248,9 @@ class DetailPanelFactory implements AnythingVisitor {
     public void handleHersteller(view.HerstellerView object){
         result = new HerstellerDefaultDetailPanel(handler, object);
     }
+    public void handleRetoure(view.RetoureView object){
+        result = new RetoureDefaultDetailPanel(handler, object);
+    }
     public void handleAngenommen(view.AngenommenView object){
         result = new AngenommenDefaultDetailPanel(handler, object);
     }
@@ -1775,6 +1778,28 @@ class HerstellerDefaultDetailPanel extends DefaultDetailPanel{
     }
     protected view.HerstellerView getAnything(){
         return (view.HerstellerView)this.anything;
+    }
+}
+
+class RetoureDefaultDetailPanel extends DefaultDetailPanel{
+    
+    protected static final String ZeitObjekt$$remainingTime = "ZeitObjekt$$remainingTime";
+    
+    protected RetoureDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
+        super(exceptionHandler, anything);
+    }
+    protected void addFields(){
+        try{
+            BaseTypePanel panel = new IntegerPanel(this, "remainingTime", this.getAnything().getRemainingTime());
+            this.getScrollablePane().getChildren().add(panel);
+            this.panels.put(ZeitObjekt$$remainingTime, panel);
+        }catch(ModelException e){
+            this.getExceptionAndEventhandler().handleException(e);
+        }
+        
+    }
+    protected view.RetoureView getAnything(){
+        return (view.RetoureView)this.anything;
     }
 }
 

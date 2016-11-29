@@ -379,7 +379,7 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
     
 
     /* Start of protected part that is not overridden by persistence generator */
-    
+    //TODO: keine vorbestellung oder bestellung erlauben, wenn nichts im einkaufswagen ist!
     /* End of protected part that is not overridden by persistence generator */
     
 }

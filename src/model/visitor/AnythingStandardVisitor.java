@@ -101,6 +101,9 @@ public abstract class AnythingStandardVisitor implements AnythingVisitor {
     public void handleAngenommen(Angenommen4Public angenommen) throws PersistenceException{
         this.standardHandling(angenommen);
     }
+    public void handleRetoure(Retoure4Public retoure) throws PersistenceException{
+        this.standardHandling(retoure);
+    }
     public void handleZuruecksendenCommand(ZuruecksendenCommand4Public zuruecksendenCommand) throws PersistenceException{
         this.standardHandling(zuruecksendenCommand);
     }

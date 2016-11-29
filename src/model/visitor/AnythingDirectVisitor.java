@@ -79,6 +79,9 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     public void handleHstLieferung(HstLieferung4Public hstLieferung) throws PersistenceException{
         this.handleZeitObjekt(hstLieferung);
     }
+    public void handleRetoure(Retoure4Public retoure) throws PersistenceException{
+        this.handleZeitObjekt(retoure);
+    }
     public void handleKndLieferung(KndLieferung4Public kndLieferung) throws PersistenceException{
         this.handleZeitObjekt(kndLieferung);
     }

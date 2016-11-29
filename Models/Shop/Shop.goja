@@ -16,8 +16,8 @@ server ServiceKunde extends ServiceShop {
 	no-view LieferartManager lieferartManager;
 	observe BestellManager  bestellManager;
 	void neuePosition(EinkaufsManager einkaufsManager, Artikel artikel {produktKatalog}, Integer menge) throws UserException;
-	void vorbestellen(EinkaufsManager einkaufsManager, Lieferart lieferart {lieferartManager});
-	void bestellen(EinkaufsManager einkaufsManager, Lieferart lieferart {lieferartManager});
+	void vorbestellen(EinkaufsManager einkaufsManager checked, Lieferart lieferart {lieferartManager});
+	void bestellen(EinkaufsManager einkaufsManager checked, Lieferart lieferart {lieferartManager});
 	void aendereMenge(Position position, Integer menge) throws ExcLagerbestandUnderZero, ExcLagerbestandOverMax;
 	void zuEinkaufswagenHinzufuegen(Artikel artikel, Integer menge);
 	void zuruecksenden(PositionInBestellung position checked);
@@ -142,7 +142,7 @@ class HerstellerManager{
 	void neuerHersteller(String name) throws ExcAlreadyExists;
 }
 class EinkaufsManager{
-	Position ** einkaufsListe;
+	public Position ** einkaufsListe;
 	prior no-view BestellManager bestellManager;
 	active void bestellen(Lieferart lieferart) throws ExcArtikelNichtVerfuegbar, ExcWarenwertUeberKontoguthaben;
 	active void vorbestellen(Lieferart lieferart) throws ExcWarenwertUeberKontoguthaben;
@@ -253,6 +253,10 @@ class HstLieferung extends ZeitObjekt{
 
 class KndAnnahme extends ZeitObjekt{
 	prior KndLieferung kndLieferung;
+}
+
+class Retoure extends ZeitObjekt{
+	
 }
 
 abstract class PositionAbstrakt {

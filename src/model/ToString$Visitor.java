@@ -52,6 +52,11 @@ public class ToString$Visitor extends model.visitor.ToString$Visitor {
 		result = ToStringConstants.Angenommen;
 	}
 
+	@Override
+	public void handleRetoure(Retoure4Public retoure) throws PersistenceException {
+
+	}
+
 
 	@Override
 	public void handleactivated(activated4Public activated) throws PersistenceException {
