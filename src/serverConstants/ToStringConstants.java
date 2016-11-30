@@ -29,7 +29,7 @@ public class ToStringConstants {
     public static final String deactived = "inactive";
     public static final String activated = "active";
     public static final String HstLieferung = "Herstellerlieferung";
-    public static final String Konto = "Konto";
+    public static final String Konto = "Konto: ";
     public static final String Kundenlieferung = "Lieferung: ";
     public static final String Bestellung = "Bestellung Nr. ";
     public static final String KndAnnahme = "Kundenannahmezeit: ";
