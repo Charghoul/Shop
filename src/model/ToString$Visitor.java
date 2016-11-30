@@ -181,7 +181,7 @@ public class ToString$Visitor extends model.visitor.ToString$Visitor {
 
 	@Override
 	public void handleKonto(Konto4Public konto) throws PersistenceException {
-		result = ToStringConstants.Konto + " - " + konto.getKontostand()/100 + "." + konto.getKontostand()%100 +" Euro (" + (+ konto.getReserviert()/100 + "." + konto.getReserviert()%100 +" Euro)");
+		result = ToStringConstants.Konto + konto.getKontostand()/100 + "." + konto.getKontostand()%100 +" Euro (" + (+ konto.getReserviert()/100 + "." + konto.getReserviert()%100 +" Euro)");
 	}
 
 	@Override
