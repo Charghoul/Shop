@@ -162,6 +162,9 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     public void handleAnzeigenCommand(AnzeigenCommand4Public anzeigenCommand) throws PersistenceException{
         this.handleCommonDate(anzeigenCommand);
     }
+    public void handleAendereMaxLagerbestandCommand(AendereMaxLagerbestandCommand4Public aendereMaxLagerbestandCommand) throws PersistenceException{
+        this.handleCommonDate(aendereMaxLagerbestandCommand);
+    }
     public void handleArtikelEinlagernCommand(ArtikelEinlagernCommand4Public artikelEinlagernCommand) throws PersistenceException{
         this.handleCommonDate(artikelEinlagernCommand);
     }
@@ -176,6 +179,9 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     }
     public void handleZuEinkaufswHinzCommand(ZuEinkaufswHinzCommand4Public zuEinkaufswHinzCommand) throws PersistenceException{
         this.handleCommonDate(zuEinkaufswHinzCommand);
+    }
+    public void handleAendereMinLagerbestandCommand(AendereMinLagerbestandCommand4Public aendereMinLagerbestandCommand) throws PersistenceException{
+        this.handleCommonDate(aendereMinLagerbestandCommand);
     }
     public abstract void handleCommandExecuter(CommandExecuter4Public commandExecuter) throws PersistenceException;
     

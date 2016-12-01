@@ -124,6 +124,14 @@ public class ArtikelICProxi extends KomponenteICProxi implements PersistentArtik
     }
     
     
+    public void aendereMaxLagerbestand(final long maxLagerbestand, final Invoker invoker) 
+				throws PersistenceException{
+        ((PersistentArtikel)this.getTheObject()).aendereMaxLagerbestand(maxLagerbestand, invoker);
+    }
+    public void aendereMinLagerbestand(final long minLagerbestand, final Invoker invoker) 
+				throws PersistenceException{
+        ((PersistentArtikel)this.getTheObject()).aendereMinLagerbestand(minLagerbestand, invoker);
+    }
     public boolean containsHierarchie(final HierarchieHIERARCHY part) 
 				throws PersistenceException{
         return ((PersistentArtikel)this.getTheObject()).containsHierarchie(part);
@@ -173,11 +181,11 @@ public class ArtikelICProxi extends KomponenteICProxi implements PersistentArtik
         ((PersistentArtikel)this.getTheObject()).aendereHstLieferzeit(hstLieferzeit);
     }
     public void aendereMaxLagerbestand(final long maxLagerbestand) 
-				throws PersistenceException{
+				throws model.ExcIllogicalDataEntry, PersistenceException{
         ((PersistentArtikel)this.getTheObject()).aendereMaxLagerbestand(maxLagerbestand);
     }
     public void aendereMinLagerbestand(final long minLagerbestand) 
-				throws PersistenceException{
+				throws model.ExcIllogicalDataEntry, PersistenceException{
         ((PersistentArtikel)this.getTheObject()).aendereMinLagerbestand(minLagerbestand);
     }
     public void aenderePreis(final long preis) 

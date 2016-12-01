@@ -211,8 +211,8 @@ class Artikel extends Komponente{
 	public prior skip-view Artikelstatus artikelstatus;
 	public no-view Hersteller hersteller;
 	void aendereHstLieferzeit(Integer hstLieferzeit);
-	void aendereMinLagerbestand(Integer minLagerbestand);
-	void aendereMaxLagerbestand(Integer maxLagerbestand);
+	active void aendereMinLagerbestand##aendMin(Integer minLagerbestand) throws ExcIllogicalDataEntry;
+	active void aendereMaxLagerbestand##aendMax(Integer maxLagerbestand) throws ExcIllogicalDataEntry;
 	void aenderePreis(Integer preis);
 	void aendereBezeichnung(String bezeichnung);
 	active void statusVerkauf() throws ExcInconsistentStatusChange, ExcArtikelHatKeinenHersteller;

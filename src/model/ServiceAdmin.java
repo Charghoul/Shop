@@ -502,7 +502,7 @@ public class ServiceAdmin extends model.ServiceShop implements PersistentService
     }
     public void aendereMaxLagerbestand(final Artikel4Public artikel, final long maxLagerbestand) 
 				throws PersistenceException{
-        artikel.aendereMaxLagerbestand(maxLagerbestand);
+        artikel.aendereMaxLagerbestand(maxLagerbestand,getThis());
         getThis().signalChanged(true);
     }
     public void aendereMenge(final Position4Public position, final long menge) 
@@ -512,7 +512,7 @@ public class ServiceAdmin extends model.ServiceShop implements PersistentService
     }
     public void aendereMinLagerbestand(final Artikel4Public artikel, final long minLagerbestand) 
 				throws PersistenceException{
-        artikel.aendereMinLagerbestand(minLagerbestand);
+        artikel.aendereMinLagerbestand(minLagerbestand,getThis());
         getThis().signalChanged(true);
         
     }

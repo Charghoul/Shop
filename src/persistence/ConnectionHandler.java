@@ -98,6 +98,7 @@ public class ConnectionHandler {
     public RetourePositionFacade theRetourePositionFacade;
     public ZuruecksendenCommandFacade theZuruecksendenCommandFacade;
     public BestellenCommandFacade theBestellenCommandFacade;
+    public AendereMinLagerbestandCommandFacade theAendereMinLagerbestandCommandFacade;
     public WarenlagerFacade theWarenlagerFacade;
     public CommonDateFacade theCommonDateFacade;
     public VorbestellenCommandFacade theVorbestellenCommandFacade;
@@ -129,6 +130,7 @@ public class ConnectionHandler {
     public PositionInBestellungFacade thePositionInBestellungFacade;
     public KundeFacade theKundeFacade;
     public RueckversandFacade theRueckversandFacade;
+    public AendereMaxLagerbestandCommandFacade theAendereMaxLagerbestandCommandFacade;
     public LieferartManagerFacade theLieferartManagerFacade;
     public HinversandFacade theHinversandFacade;
     public AllesZuruecksendenCommandFacade theAllesZuruecksendenCommandFacade;
@@ -176,6 +178,7 @@ public class ConnectionHandler {
             this.theRetourePositionFacade= new RetourePositionFacade();
             this.theZuruecksendenCommandFacade= new ZuruecksendenCommandFacade();
             this.theBestellenCommandFacade= new BestellenCommandFacade();
+            this.theAendereMinLagerbestandCommandFacade= new AendereMinLagerbestandCommandFacade();
             this.theWarenlagerFacade= new WarenlagerFacade();
             this.theCommonDateFacade= new CommonDateFacade();
             this.theVorbestellenCommandFacade= new VorbestellenCommandFacade();
@@ -207,6 +210,7 @@ public class ConnectionHandler {
             this.thePositionInBestellungFacade= new PositionInBestellungFacade();
             this.theKundeFacade= new KundeFacade();
             this.theRueckversandFacade= new RueckversandFacade();
+            this.theAendereMaxLagerbestandCommandFacade= new AendereMaxLagerbestandCommandFacade();
             this.theLieferartManagerFacade= new LieferartManagerFacade();
             this.theHinversandFacade= new HinversandFacade();
             this.theAllesZuruecksendenCommandFacade= new AllesZuruecksendenCommandFacade();

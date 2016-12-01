@@ -29,6 +29,10 @@ public interface Artikel4Public extends Komponente4Public {
     public <E extends model.UserException>  void accept(HierarchieHIERARCHYExceptionVisitor<E> visitor) throws PersistenceException, E;
     public <R, E extends model.UserException> R accept(HierarchieHIERARCHYReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E;
     
+    public void aendereMaxLagerbestand(final long maxLagerbestand, final Invoker invoker) 
+				throws PersistenceException;
+    public void aendereMinLagerbestand(final long minLagerbestand, final Invoker invoker) 
+				throws PersistenceException;
     public boolean containsHierarchie(final HierarchieHIERARCHY part) 
 				throws PersistenceException;
     public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
@@ -46,9 +50,9 @@ public interface Artikel4Public extends Komponente4Public {
     public void aendereHstLieferzeit(final long hstLieferzeit) 
 				throws PersistenceException;
     public void aendereMaxLagerbestand(final long maxLagerbestand) 
-				throws PersistenceException;
+				throws model.ExcIllogicalDataEntry, PersistenceException;
     public void aendereMinLagerbestand(final long minLagerbestand) 
-				throws PersistenceException;
+				throws model.ExcIllogicalDataEntry, PersistenceException;
     public void aenderePreis(final long preis) 
 				throws PersistenceException;
     public void copyingPrivateUserAttributes(final Anything copy) 

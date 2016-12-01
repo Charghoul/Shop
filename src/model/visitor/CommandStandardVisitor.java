@@ -35,6 +35,9 @@ public abstract class CommandStandardVisitor implements CommandVisitor {
     public void handleAnzeigenCommand(AnzeigenCommand4Public anzeigenCommand) throws PersistenceException{
         this.standardHandling(anzeigenCommand);
     }
+    public void handleAendereMaxLagerbestandCommand(AendereMaxLagerbestandCommand4Public aendereMaxLagerbestandCommand) throws PersistenceException{
+        this.standardHandling(aendereMaxLagerbestandCommand);
+    }
     public void handleArtikelEinlagernCommand(ArtikelEinlagernCommand4Public artikelEinlagernCommand) throws PersistenceException{
         this.standardHandling(artikelEinlagernCommand);
     }
@@ -49,6 +52,9 @@ public abstract class CommandStandardVisitor implements CommandVisitor {
     }
     public void handleZuEinkaufswHinzCommand(ZuEinkaufswHinzCommand4Public zuEinkaufswHinzCommand) throws PersistenceException{
         this.standardHandling(zuEinkaufswHinzCommand);
+    }
+    public void handleAendereMinLagerbestandCommand(AendereMinLagerbestandCommand4Public aendereMinLagerbestandCommand) throws PersistenceException{
+        this.standardHandling(aendereMinLagerbestandCommand);
     }
     protected abstract void standardHandling(Command command) throws PersistenceException;
 }

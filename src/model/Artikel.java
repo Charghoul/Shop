@@ -310,6 +310,22 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
     }
     
     
+    public void aendereMaxLagerbestand(final long maxLagerbestand, final Invoker invoker) 
+				throws PersistenceException{
+        java.sql.Date now = new java.sql.Date(new java.util.Date().getTime());
+		AendereMaxLagerbestandCommand4Public command = model.meta.AendereMaxLagerbestandCommand.createAendereMaxLagerbestandCommand(maxLagerbestand, now, now);
+		command.setInvoker(invoker);
+		command.setCommandReceiver(getThis());
+		model.meta.CommandCoordinator.getTheCommandCoordinator().coordinate(command);
+    }
+    public void aendereMinLagerbestand(final long minLagerbestand, final Invoker invoker) 
+				throws PersistenceException{
+        java.sql.Date now = new java.sql.Date(new java.util.Date().getTime());
+		AendereMinLagerbestandCommand4Public command = model.meta.AendereMinLagerbestandCommand.createAendereMinLagerbestandCommand(minLagerbestand, now, now);
+		command.setInvoker(invoker);
+		command.setCommandReceiver(getThis());
+		model.meta.CommandCoordinator.getTheCommandCoordinator().coordinate(command);
+    }
     public boolean containsHierarchie(final HierarchieHIERARCHY part) 
 				throws PersistenceException{
         if(getThis().equals(part)) return true;
@@ -400,13 +416,19 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
         
     }
     public void aendereMaxLagerbestand(final long maxLagerbestand) 
-				throws PersistenceException{
-        getThis().setMaxLagerbestand(maxLagerbestand);
+				throws model.ExcIllogicalDataEntry, PersistenceException{
+        if(getThis().getMinLagerbestand() < maxLagerbestand){
+            getThis().setMaxLagerbestand(maxLagerbestand);
+        }
+        else throw new ExcIllogicalDataEntry(ErrorMessages.LagerbestandMinGroesserMax);
         
     }
     public void aendereMinLagerbestand(final long minLagerbestand) 
-				throws PersistenceException{
-        getThis().setMinLagerbestand(minLagerbestand);
+				throws model.ExcIllogicalDataEntry, PersistenceException{
+        if(getThis().getMaxLagerbestand() > minLagerbestand){
+            getThis().setMinLagerbestand(minLagerbestand);
+        }
+        else throw new ExcIllogicalDataEntry(ErrorMessages.LagerbestandMinGroesserMax);
         
     }
     public void aenderePreis(final long preis) 
@@ -498,7 +520,7 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
 
     /* Start of protected part that is not overridden by persistence generator */
     //TODO: Hersteller bei erstellen direkt mit übergeben ?
-    
+    //TODO: Min Max bei nachträglicher Änderung prüfen
     /* End of protected part that is not overridden by persistence generator */
     
 }
