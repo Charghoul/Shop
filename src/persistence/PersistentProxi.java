@@ -19,7 +19,7 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
 	
   private static ListProxiFactory [] getTheListProxiFactories(){
 	if (listProxiFactories == null){
-		listProxiFactories = new ListProxiFactory[171];
+		listProxiFactories = new ListProxiFactory[172];
         listProxiFactories[0] = new ListProxiFactory(){
             AbstractPersistentRoot create(long objectId, long entryId){
                 return new ServerListEntryProxi(objectId, entryId);
@@ -210,6 +210,11 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
                 return new CommonDateListEntryProxi(objectId, entryId);
             }
         };
+        listProxiFactories[171] = new ListProxiFactory(){
+            AbstractPersistentRoot create(long objectId, long entryId){
+                return new AendereBezeichnungCommandListEntryProxi(objectId, entryId);
+            }
+        };
         listProxiFactories[40] = new ListProxiFactory(){
             AbstractPersistentRoot create(long objectId, long entryId){
                 return new VorbestellenCommandListEntryProxi(objectId, entryId);
@@ -360,7 +365,7 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
   }
   private static ProxiFactory [] getTheProxiFactories(){
 	if (proxiFactories == null){
-		proxiFactories = new ProxiFactory [171];
+		proxiFactories = new ProxiFactory [172];
         proxiFactories[0] = new ProxiFactory(){
             AbstractPersistentRoot create(long objectId){
                 return new ServerProxi(objectId);
@@ -549,6 +554,11 @@ public abstract class PersistentProxi extends PersistentRoot implements Persiste
         proxiFactories[39] = new ProxiFactory(){
             AbstractPersistentRoot create(long objectId){
                 return new CommonDateProxi(objectId);
+            }
+        };
+        proxiFactories[171] = new ProxiFactory(){
+            AbstractPersistentRoot create(long objectId){
+                return new AendereBezeichnungCommandProxi(objectId);
             }
         };
         proxiFactories[40] = new ProxiFactory(){

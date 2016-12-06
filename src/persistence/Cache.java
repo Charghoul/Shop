@@ -274,6 +274,7 @@ public class Cache {
 	
 	private void initializeNumber2NameMap() {
 		this.number2NameMap = new Hashtable<Integer,String>();
+		this.number2NameMap.put(272, "AendereBezeichnungCommand");
 		this.number2NameMap.put(129, "AendereLieferartNameCommand");
 		this.number2NameMap.put(170, "AendereMaxLagerbestandCommand");
 		this.number2NameMap.put(138, "AendereMinLagerbestandCommand");

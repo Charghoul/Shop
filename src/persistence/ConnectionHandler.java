@@ -101,6 +101,7 @@ public class ConnectionHandler {
     public AendereMinLagerbestandCommandFacade theAendereMinLagerbestandCommandFacade;
     public WarenlagerFacade theWarenlagerFacade;
     public CommonDateFacade theCommonDateFacade;
+    public AendereBezeichnungCommandFacade theAendereBezeichnungCommandFacade;
     public VorbestellenCommandFacade theVorbestellenCommandFacade;
     public VerkaufFacade theVerkaufFacade;
     public PositionAbstraktFacade thePositionAbstraktFacade;
@@ -181,6 +182,7 @@ public class ConnectionHandler {
             this.theAendereMinLagerbestandCommandFacade= new AendereMinLagerbestandCommandFacade();
             this.theWarenlagerFacade= new WarenlagerFacade();
             this.theCommonDateFacade= new CommonDateFacade();
+            this.theAendereBezeichnungCommandFacade= new AendereBezeichnungCommandFacade();
             this.theVorbestellenCommandFacade= new VorbestellenCommandFacade();
             this.theVerkaufFacade= new VerkaufFacade();
             this.thePositionAbstraktFacade= new PositionAbstraktFacade();

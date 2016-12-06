@@ -132,6 +132,9 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     
     public abstract void handleCommonDate(CommonDate4Public commonDate) throws PersistenceException;
     
+    public void handleAendereBezeichnungCommand(AendereBezeichnungCommand4Public aendereBezeichnungCommand) throws PersistenceException{
+        this.handleCommonDate(aendereBezeichnungCommand);
+    }
     public void handleVorbestellenCommand(VorbestellenCommand4Public vorbestellenCommand) throws PersistenceException{
         this.handleCommonDate(vorbestellenCommand);
     }

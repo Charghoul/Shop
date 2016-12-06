@@ -281,19 +281,30 @@ abstract class Komponente {
 class Artikel extends Komponente{
 	//Artikelnummer zum eindeutigen identifizieren des Artikels, diese ist unique
 	prior indexed String artikelnummer;
-	//Bezeichung des 
+	//Bezeichung des Artikels ist zusammen mit dem Hersteller unique
 	prior indexed String bezeichnung;
+	//Preis des Artikels in Cent
 	public prior Integer preis;
+	//minimaler Lagerbestand des Artikels
 	public prior Integer minLagerbestand;
+	//maximaler Lagerbestand des Artikels
 	public prior Integer maxLagerbestand;
+	//Lieferzeit des Herstellers für diesen Artikel
 	public prior Integer hstLieferzeit;
+	//Verkaufsstatus des Artikels, wichtig dafür ob nachbestellt wird und ob der Kunde den Artikel in den Einkaufswagen legen kann kann
 	public prior skip-view Artikelstatus artikelstatus;
+	//Hersteller des Artikels, zusammen mit der Bezeichnung ist der Artikel unique
 	public no-view Hersteller hersteller;
+	//ändert die HerstellerLieferzeit des Artikels auf #hstLieferzeit
 	void aendereHstLieferzeit(Integer hstLieferzeit);
+	//ändert den minimalen Lagerbestand des Artikels auf #minLagerbestand. Wirft eine Exception, wenn #minLagerbestand größer ist als  der aktuelle #maxLagerbestand
 	active void aendereMinLagerbestand##aendMin(Integer minLagerbestand) throws ExcIllogicalDataEntry;
+	//ändert den maximalen Lagerbestand des Artikels auf #maxLagerbestand. Wirft eine Exception, wenn der #maxLagerbestand kleiner ist als der aktuelle #minLagerbestand des Artikels
 	active void aendereMaxLagerbestand##aendMax(Integer maxLagerbestand) throws ExcIllogicalDataEntry;
+	//ändert den Preis des Artikels auf #preis
 	void aenderePreis(Integer preis);
-	void aendereBezeichnung(String bezeichnung);
+	//ändert die Bezeichnung des Artikels auf #bezeichnung
+	active void aendereBezeichnung(String bezeichnung) throws ExcAlreadyExists;
 	active void statusVerkauf() throws ExcInconsistentStatusChange, ExcArtikelHatKeinenHersteller;
 	active void statusAuslauf() throws ExcInconsistentStatusChange;
 	active void zuEinkaufswHinz(Integer menge, EinkaufsManager einkaufsManager) throws UserException;

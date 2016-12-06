@@ -463,7 +463,7 @@ public class ServiceAdmin extends model.ServiceShop implements PersistentService
     }
     public void aendereBezeichnung(final Artikel4Public artikel, final String bezeichnung) 
 				throws PersistenceException{
-        artikel.aendereBezeichnung(bezeichnung);
+        artikel.aendereBezeichnung(bezeichnung,getThis());
         getThis().signalChanged(true);
         
     }

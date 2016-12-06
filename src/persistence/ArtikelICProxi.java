@@ -124,6 +124,10 @@ public class ArtikelICProxi extends KomponenteICProxi implements PersistentArtik
     }
     
     
+    public void aendereBezeichnung(final String bezeichnung, final Invoker invoker) 
+				throws PersistenceException{
+        ((PersistentArtikel)this.getTheObject()).aendereBezeichnung(bezeichnung, invoker);
+    }
     public void aendereMaxLagerbestand(final long maxLagerbestand, final Invoker invoker) 
 				throws PersistenceException{
         ((PersistentArtikel)this.getTheObject()).aendereMaxLagerbestand(maxLagerbestand, invoker);
@@ -173,7 +177,7 @@ public class ArtikelICProxi extends KomponenteICProxi implements PersistentArtik
         ((PersistentArtikel)this.getTheObject()).zuEinkaufswHinz(menge, einkaufsManager, invoker);
     }
     public void aendereBezeichnung(final String bezeichnung) 
-				throws PersistenceException{
+				throws model.ExcAlreadyExists, PersistenceException{
         ((PersistentArtikel)this.getTheObject()).aendereBezeichnung(bezeichnung);
     }
     public void aendereHstLieferzeit(final long hstLieferzeit) 

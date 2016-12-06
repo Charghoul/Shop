@@ -29,6 +29,8 @@ public interface Artikel4Public extends Komponente4Public {
     public <E extends model.UserException>  void accept(HierarchieHIERARCHYExceptionVisitor<E> visitor) throws PersistenceException, E;
     public <R, E extends model.UserException> R accept(HierarchieHIERARCHYReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E;
     
+    public void aendereBezeichnung(final String bezeichnung, final Invoker invoker) 
+				throws PersistenceException;
     public void aendereMaxLagerbestand(final long maxLagerbestand, final Invoker invoker) 
 				throws PersistenceException;
     public void aendereMinLagerbestand(final long minLagerbestand, final Invoker invoker) 
@@ -46,7 +48,7 @@ public interface Artikel4Public extends Komponente4Public {
     public void zuEinkaufswHinz(final long menge, final EinkaufsManager4Public einkaufsManager, final Invoker invoker) 
 				throws PersistenceException;
     public void aendereBezeichnung(final String bezeichnung) 
-				throws PersistenceException;
+				throws model.ExcAlreadyExists, PersistenceException;
     public void aendereHstLieferzeit(final long hstLieferzeit) 
 				throws PersistenceException;
     public void aendereMaxLagerbestand(final long maxLagerbestand) 
