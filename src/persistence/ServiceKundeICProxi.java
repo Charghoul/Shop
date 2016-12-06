@@ -19,7 +19,7 @@ public class ServiceKundeICProxi extends ServiceShopICProxi implements Persisten
     }
     
     public long getClassId() {
-        return -181;
+        return -116;
     }
     
     public SuchManager4Public getSuchManager() throws PersistenceException {

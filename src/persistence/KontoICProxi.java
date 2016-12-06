@@ -19,7 +19,7 @@ public class KontoICProxi extends PersistentInCacheProxiOptimistic implements Pe
     }
     
     public long getClassId() {
-        return 146;
+        return 132;
     }
     
     public long getKontostand() throws PersistenceException {

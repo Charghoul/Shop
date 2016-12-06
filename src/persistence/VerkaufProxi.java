@@ -15,7 +15,7 @@ public class VerkaufProxi extends ArtikelstatusProxi implements PersistentVerkau
     
     
     public long getClassId() {
-        return 212;
+        return 142;
     }
     
     public PersistentVerkauf getThis() throws PersistenceException {

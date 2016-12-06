@@ -15,7 +15,7 @@ public class ServiceAdminProxi extends ServiceShopProxi implements PersistentSer
     
     
     public long getClassId() {
-        return -182;
+        return -127;
     }
     
     public void setKundenManager(ServiceAdminKundenManager4Public newValue) throws PersistenceException {
@@ -307,7 +307,7 @@ public class ServiceAdminProxi extends ServiceShopProxi implements PersistentSer
         return ((PersistentServiceAdmin)this.getTheObject()).hasChanged();
     }
     public void herstellerHinzufuegen(final Artikel4Public artikel, final Hersteller4Public hersteller) 
-				throws PersistenceException{
+				throws model.ExcAlreadyExists, PersistenceException{
         ((PersistentServiceAdmin)this.getTheObject()).herstellerHinzufuegen(artikel, hersteller);
     }
     public void initializeOnCreation() 

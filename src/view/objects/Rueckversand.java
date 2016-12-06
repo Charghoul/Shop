@@ -16,7 +16,7 @@ public class Rueckversand extends view.objects.Bestellstatus implements Rueckver
     }
     
     static public long getTypeId() {
-        return 217;
+        return 169;
     }
     
     public long getClassId() {

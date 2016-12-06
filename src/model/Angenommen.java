@@ -84,7 +84,7 @@ public class Angenommen extends model.Bestellstatus implements PersistentAngenom
     }
     
     static public long getTypeId() {
-        return 219;
+        return 134;
     }
     
     public long getClassId() {

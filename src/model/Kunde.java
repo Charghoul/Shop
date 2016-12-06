@@ -105,7 +105,7 @@ public class Kunde extends PersistentObject implements PersistentKunde{
     }
     
     static public long getTypeId() {
-        return 349;
+        return 168;
     }
     
     public long getClassId() {
@@ -114,7 +114,7 @@ public class Kunde extends PersistentObject implements PersistentKunde{
     
     public void store() throws PersistenceException {
         if(!this.isDelayed$Persistence()) return;
-        if (this.getClassId() == 349) ConnectionHandler.getTheConnectionHandler().theKundeFacade
+        if (this.getClassId() == 168) ConnectionHandler.getTheConnectionHandler().theKundeFacade
             .newKunde(benutzername,passwort,this.getId());
         super.store();
         if(this.getSubService() != null){

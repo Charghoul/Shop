@@ -15,7 +15,7 @@ public class EinkaufsManagerProxi extends PersistentProxi implements PersistentE
     
     
     public long getClassId() {
-        return 191;
+        return 103;
     }
     
     public EinkaufsManager_EinkaufsListeProxi getEinkaufsListe() throws PersistenceException {

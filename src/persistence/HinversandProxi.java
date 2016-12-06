@@ -15,7 +15,7 @@ public class HinversandProxi extends BestellstatusProxi implements PersistentHin
     
     
     public long getClassId() {
-        return 218;
+        return 172;
     }
     
     public PersistentHinversand getThis() throws PersistenceException {

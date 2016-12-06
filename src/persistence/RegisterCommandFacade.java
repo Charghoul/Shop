@@ -26,25 +26,25 @@ public class RegisterCommandFacade{
 
     /* If idCreateIfLessZero is negative, a new id is generated. */
     public PersistentRegisterCommand newRegisterCommand(String username,String passwort,long idCreateIfLessZero) throws PersistenceException {
-        if(idCreateIfLessZero > 0) return (PersistentRegisterCommand)PersistentProxi.createProxi(idCreateIfLessZero, 200);
+        if(idCreateIfLessZero > 0) return (PersistentRegisterCommand)PersistentProxi.createProxi(idCreateIfLessZero, 109);
         long id = ConnectionHandler.getTheConnectionHandler().theRegisterCommandFacade.getNextId();
         RegisterCommand result = new RegisterCommand(username,passwort,null,null,null,id);
         Cache.getTheCache().put(result);
-        return (PersistentRegisterCommand)PersistentProxi.createProxi(id, 200);
+        return (PersistentRegisterCommand)PersistentProxi.createProxi(id, 109);
     }
     
     public PersistentRegisterCommand newDelayedRegisterCommand(String username,String passwort) throws PersistenceException {
         long id = ConnectionHandler.getTheConnectionHandler().theRegisterCommandFacade.getNextId();
         RegisterCommand result = new RegisterCommand(username,passwort,null,null,null,id);
         Cache.getTheCache().put(result);
-        return (PersistentRegisterCommand)PersistentProxi.createProxi(id, 200);
+        return (PersistentRegisterCommand)PersistentProxi.createProxi(id, 109);
     }
     
     public RegisterCommand getRegisterCommand(long RegisterCommandId) throws PersistenceException{
         return null; //All data is in the cache!
     }
     public long getClass(long objectId) throws PersistenceException{
-        if(Cache.getTheCache().contains(objectId, 200)) return 200;
+        if(Cache.getTheCache().contains(objectId, 109)) return 109;
         
         throw new PersistenceException("No such object: " + new Long(objectId).toString(), 0);
         

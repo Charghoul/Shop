@@ -15,7 +15,7 @@ public class ArtikelManagerProxi extends PersistentProxi implements PersistentAr
     
     
     public long getClassId() {
-        return 228;
+        return 128;
     }
     
     public ArtikelManager_ArtikelListeProxi getArtikelListe() throws PersistenceException {

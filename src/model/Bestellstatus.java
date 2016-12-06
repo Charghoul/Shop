@@ -40,7 +40,7 @@ public abstract class Bestellstatus extends PersistentObject implements Persiste
     }
     
     static public long getTypeId() {
-        return 140;
+        return 120;
     }
     
     public long getClassId() {

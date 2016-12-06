@@ -114,7 +114,7 @@ public class Bestellung extends model.BestellungAbstrakt implements PersistentBe
     }
     
     static public long getTypeId() {
-        return 136;
+        return 146;
     }
     
     public long getClassId() {
@@ -123,7 +123,7 @@ public class Bestellung extends model.BestellungAbstrakt implements PersistentBe
     
     public void store() throws PersistenceException {
         if(!this.isDelayed$Persistence()) return;
-        if (this.getClassId() == 136) ConnectionHandler.getTheConnectionHandler().theBestellungFacade
+        if (this.getClassId() == 146) ConnectionHandler.getTheConnectionHandler().theBestellungFacade
             .newBestellung(warenwert,bestellID,this.getId());
         super.store();
         this.getPositionsListe().store();

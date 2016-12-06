@@ -15,7 +15,7 @@ public class GeliefertProxi extends BestellstatusProxi implements PersistentGeli
     
     
     public long getClassId() {
-        return 215;
+        return 154;
     }
     
     public PersistentGeliefert getThis() throws PersistenceException {

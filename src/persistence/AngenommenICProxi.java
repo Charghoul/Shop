@@ -19,7 +19,7 @@ public class AngenommenICProxi extends BestellstatusICProxi implements Persisten
     }
     
     public long getClassId() {
-        return 219;
+        return 134;
     }
     
     public PersistentAngenommen getThis() throws PersistenceException {

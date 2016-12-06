@@ -33,7 +33,7 @@ public class ExcArtikelAlreadyExists extends model.UserException{
     }
     
     static public long getTypeId() {
-        return -230;
+        return -264;
     }
     
     public long getClassId() {

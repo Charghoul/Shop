@@ -32,7 +32,7 @@ public class Artikel extends view.objects.Komponente implements ArtikelView{
     }
     
     static public long getTypeId() {
-        return 108;
+        return 122;
     }
     
     public long getClassId() {

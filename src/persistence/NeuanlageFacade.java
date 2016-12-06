@@ -13,7 +13,7 @@ public class NeuanlageFacade{
         long id = ConnectionHandler.getTheConnectionHandler().theArtikelstatusFacade.getNextId();
         Neuanlage result = new Neuanlage(null, null, id);
         PersistentInCacheProxi cached = Cache.getTheCache().putSingleton(result);
-        return (PersistentNeuanlage)PersistentProxi.createProxi(cached.getId()  * (cached.getTheObject().isTheSameAs(result) ? -1 : 1), 214);
+        return (PersistentNeuanlage)PersistentProxi.createProxi(cached.getId()  * (cached.getTheObject().isTheSameAs(result) ? -1 : 1), 111);
     }
     
     public Neuanlage getNeuanlage(long NeuanlageId) throws PersistenceException{

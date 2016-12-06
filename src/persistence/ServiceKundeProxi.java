@@ -15,7 +15,7 @@ public class ServiceKundeProxi extends ServiceShopProxi implements PersistentSer
     
     
     public long getClassId() {
-        return -181;
+        return -116;
     }
     
     public SuchManager4Public getSuchManager() throws PersistenceException {

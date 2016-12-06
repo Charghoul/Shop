@@ -11,18 +11,18 @@ public class BestellungFacade{
 
     /* If idCreateIfLessZero is negative, a new id is generated. */
     public PersistentBestellung newBestellung(long warenwert,long bestellID,long idCreateIfLessZero) throws PersistenceException {
-        if(idCreateIfLessZero > 0) return (PersistentBestellung)PersistentProxi.createProxi(idCreateIfLessZero, 136);
+        if(idCreateIfLessZero > 0) return (PersistentBestellung)PersistentProxi.createProxi(idCreateIfLessZero, 146);
         long id = ConnectionHandler.getTheConnectionHandler().theBestellungAbstraktFacade.getNextId();
         Bestellung result = new Bestellung(null,warenwert,null,null,null,null,bestellID,null,id);
         Cache.getTheCache().put(result);
-        return (PersistentBestellung)PersistentProxi.createProxi(id, 136);
+        return (PersistentBestellung)PersistentProxi.createProxi(id, 146);
     }
     
     public PersistentBestellung newDelayedBestellung(long warenwert,long bestellID) throws PersistenceException {
         long id = ConnectionHandler.getTheConnectionHandler().theBestellungAbstraktFacade.getNextId();
         Bestellung result = new Bestellung(null,warenwert,null,null,null,null,bestellID,null,id);
         Cache.getTheCache().put(result);
-        return (PersistentBestellung)PersistentProxi.createProxi(id, 136);
+        return (PersistentBestellung)PersistentProxi.createProxi(id, 146);
     }
     
     public Bestellung getBestellung(long BestellungId) throws PersistenceException{
@@ -31,7 +31,7 @@ public class BestellungFacade{
     public BestellungSearchList getBestellungByBestellID(long bestellID) throws PersistenceException {
         BestellungSearchList result = new BestellungSearchList();
         java.util.Iterator<?> candidates;
-        candidates = Cache.getTheCache().iterator(136);
+        candidates = Cache.getTheCache().iterator(146);
         while (candidates.hasNext()){
             PersistentBestellung current = (PersistentBestellung)((PersistentRoot)candidates.next()).getTheObject();
             if (current != null && !current.isDltd() && !current.isDelayed$Persistence() && current.getBestellID() == bestellID)

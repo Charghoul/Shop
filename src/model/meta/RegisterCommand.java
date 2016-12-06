@@ -57,7 +57,7 @@ public class RegisterCommand extends PersistentObject implements PersistentRegis
     }
     
     static public long getTypeId() {
-        return 200;
+        return 109;
     }
     
     public long getClassId() {
@@ -66,7 +66,7 @@ public class RegisterCommand extends PersistentObject implements PersistentRegis
     
     public void store() throws PersistenceException {
         if(!this.isDelayed$Persistence()) return;
-        if (this.getClassId() == 200) ConnectionHandler.getTheConnectionHandler().theRegisterCommandFacade
+        if (this.getClassId() == 109) ConnectionHandler.getTheConnectionHandler().theRegisterCommandFacade
             .newRegisterCommand(username,passwort,this.getId());
         super.store();
         if(this.getInvoker() != null){

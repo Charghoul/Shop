@@ -11,18 +11,18 @@ public class ArtikelFacade{
 
     /* If idCreateIfLessZero is negative, a new id is generated. */
     public PersistentArtikel newArtikel(String artikelnummer,String bezeichnung,long preis,long minLagerbestand,long maxLagerbestand,long hstLieferzeit,long idCreateIfLessZero) throws PersistenceException {
-        if(idCreateIfLessZero > 0) return (PersistentArtikel)PersistentProxi.createProxi(idCreateIfLessZero, 108);
+        if(idCreateIfLessZero > 0) return (PersistentArtikel)PersistentProxi.createProxi(idCreateIfLessZero, 122);
         long id = ConnectionHandler.getTheConnectionHandler().theKomponenteFacade.getNextId();
         Artikel result = new Artikel(null,null,artikelnummer,bezeichnung,preis,minLagerbestand,maxLagerbestand,hstLieferzeit,null,null,id);
         Cache.getTheCache().put(result);
-        return (PersistentArtikel)PersistentProxi.createProxi(id, 108);
+        return (PersistentArtikel)PersistentProxi.createProxi(id, 122);
     }
     
     public PersistentArtikel newDelayedArtikel(String artikelnummer,String bezeichnung,long preis,long minLagerbestand,long maxLagerbestand,long hstLieferzeit) throws PersistenceException {
         long id = ConnectionHandler.getTheConnectionHandler().theKomponenteFacade.getNextId();
         Artikel result = new Artikel(null,null,artikelnummer,bezeichnung,preis,minLagerbestand,maxLagerbestand,hstLieferzeit,null,null,id);
         Cache.getTheCache().put(result);
-        return (PersistentArtikel)PersistentProxi.createProxi(id, 108);
+        return (PersistentArtikel)PersistentProxi.createProxi(id, 122);
     }
     
     public Artikel getArtikel(long ArtikelId) throws PersistenceException{
@@ -33,7 +33,7 @@ public class ArtikelFacade{
         artikelnummer = artikelnummer.replaceAll("_", ".");
         ArtikelSearchList result = new ArtikelSearchList();
         java.util.Iterator<?> candidates;
-        candidates = Cache.getTheCache().iterator(108);
+        candidates = Cache.getTheCache().iterator(122);
         while (candidates.hasNext()){
             PersistentArtikel current = (PersistentArtikel)((PersistentRoot)candidates.next()).getTheObject();
             if (current != null && !current.isDltd() && !current.isDelayed$Persistence() && current.getArtikelnummer().matches(artikelnummer))
@@ -46,7 +46,7 @@ public class ArtikelFacade{
         bezeichnung = bezeichnung.replaceAll("_", ".");
         ArtikelSearchList result = new ArtikelSearchList();
         java.util.Iterator<?> candidates;
-        candidates = Cache.getTheCache().iterator(108);
+        candidates = Cache.getTheCache().iterator(122);
         while (candidates.hasNext()){
             PersistentArtikel current = (PersistentArtikel)((PersistentRoot)candidates.next()).getTheObject();
             if (current != null && !current.isDltd() && !current.isDelayed$Persistence() && current.getBezeichnung().matches(bezeichnung))

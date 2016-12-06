@@ -84,7 +84,7 @@ public class Auslauf extends model.Artikelstatus implements PersistentAuslauf{
     }
     
     static public long getTypeId() {
-        return 213;
+        return 144;
     }
     
     public long getClassId() {

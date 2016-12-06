@@ -84,7 +84,7 @@ public class Verkauf extends model.Artikelstatus implements PersistentVerkauf{
     }
     
     static public long getTypeId() {
-        return 212;
+        return 142;
     }
     
     public long getClassId() {

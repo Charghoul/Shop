@@ -112,7 +112,7 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
     }
     
     static public long getTypeId() {
-        return 191;
+        return 103;
     }
     
     public long getClassId() {
@@ -121,7 +121,7 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
     
     public void store() throws PersistenceException {
         if(!this.isDelayed$Persistence()) return;
-        if (this.getClassId() == 191) ConnectionHandler.getTheConnectionHandler().theEinkaufsManagerFacade
+        if (this.getClassId() == 103) ConnectionHandler.getTheConnectionHandler().theEinkaufsManagerFacade
             .newEinkaufsManager(this.getId());
         super.store();
         this.getEinkaufsListe().store();

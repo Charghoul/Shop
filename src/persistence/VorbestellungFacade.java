@@ -11,18 +11,18 @@ public class VorbestellungFacade{
 
     /* If idCreateIfLessZero is negative, a new id is generated. */
     public PersistentVorbestellung newVorbestellung(long warenwert,long idCreateIfLessZero) throws PersistenceException {
-        if(idCreateIfLessZero > 0) return (PersistentVorbestellung)PersistentProxi.createProxi(idCreateIfLessZero, 216);
+        if(idCreateIfLessZero > 0) return (PersistentVorbestellung)PersistentProxi.createProxi(idCreateIfLessZero, 166);
         long id = ConnectionHandler.getTheConnectionHandler().theBestellungAbstraktFacade.getNextId();
         Vorbestellung result = new Vorbestellung(null,warenwert,null,null,null,id);
         Cache.getTheCache().put(result);
-        return (PersistentVorbestellung)PersistentProxi.createProxi(id, 216);
+        return (PersistentVorbestellung)PersistentProxi.createProxi(id, 166);
     }
     
     public PersistentVorbestellung newDelayedVorbestellung(long warenwert) throws PersistenceException {
         long id = ConnectionHandler.getTheConnectionHandler().theBestellungAbstraktFacade.getNextId();
         Vorbestellung result = new Vorbestellung(null,warenwert,null,null,null,id);
         Cache.getTheCache().put(result);
-        return (PersistentVorbestellung)PersistentProxi.createProxi(id, 216);
+        return (PersistentVorbestellung)PersistentProxi.createProxi(id, 166);
     }
     
     public Vorbestellung getVorbestellung(long VorbestellungId) throws PersistenceException{

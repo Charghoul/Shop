@@ -113,7 +113,7 @@ public class ZeitManager extends PersistentObject implements PersistentZeitManag
     }
     
     static public long getTypeId() {
-        return 291;
+        return 163;
     }
     
     public long getClassId() {

@@ -58,7 +58,7 @@ public interface Artikel4Public extends Komponente4Public {
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException;
     public void herstellerHinzufuegen(final Hersteller4Public hersteller) 
-				throws PersistenceException;
+				throws model.ExcAlreadyExists, PersistenceException;
     public void initializeOnCreation() 
 				throws PersistenceException;
     public void initializeOnInstantiation() 

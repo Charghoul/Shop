@@ -19,7 +19,7 @@ public class RueckversandICProxi extends BestellstatusICProxi implements Persist
     }
     
     public long getClassId() {
-        return 217;
+        return 169;
     }
     
     public PersistentRueckversand getThis() throws PersistenceException {

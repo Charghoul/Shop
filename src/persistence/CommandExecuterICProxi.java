@@ -19,7 +19,7 @@ public class CommandExecuterICProxi extends PersistentInCacheProxi implements Pe
     }
     
     public long getClassId() {
-        return -110;
+        return -175;
     }
     
     public CommandExecuter_CommandsProxi getCommands() throws PersistenceException {

@@ -22,7 +22,7 @@ public class Lieferart extends ViewObject implements LieferartView{
     }
     
     static public long getTypeId() {
-        return 138;
+        return 108;
     }
     
     public long getClassId() {

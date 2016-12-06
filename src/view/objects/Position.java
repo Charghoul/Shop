@@ -16,7 +16,7 @@ public class Position extends view.objects.PositionAbstrakt implements PositionV
     }
     
     static public long getTypeId() {
-        return 144;
+        return 125;
     }
     
     public long getClassId() {

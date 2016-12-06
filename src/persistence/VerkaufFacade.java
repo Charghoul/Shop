@@ -13,7 +13,7 @@ public class VerkaufFacade{
         long id = ConnectionHandler.getTheConnectionHandler().theArtikelstatusFacade.getNextId();
         Verkauf result = new Verkauf(null, null, id);
         PersistentInCacheProxi cached = Cache.getTheCache().putSingleton(result);
-        return (PersistentVerkauf)PersistentProxi.createProxi(cached.getId()  * (cached.getTheObject().isTheSameAs(result) ? -1 : 1), 212);
+        return (PersistentVerkauf)PersistentProxi.createProxi(cached.getId()  * (cached.getTheObject().isTheSameAs(result) ? -1 : 1), 142);
     }
     
     public Verkauf getVerkauf(long VerkaufId) throws PersistenceException{

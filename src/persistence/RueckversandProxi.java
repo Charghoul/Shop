@@ -15,7 +15,7 @@ public class RueckversandProxi extends BestellstatusProxi implements PersistentR
     
     
     public long getClassId() {
-        return 217;
+        return 169;
     }
     
     public PersistentRueckversand getThis() throws PersistenceException {

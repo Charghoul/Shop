@@ -28,14 +28,14 @@ public class LieferartManagerFacade{
         long id = ConnectionHandler.getTheConnectionHandler().theLieferartManagerFacade.getNextId();
         LieferartManager result = new LieferartManager(0, null, null, id);
         PersistentInCacheProxi cached = Cache.getTheCache().putSingleton(result);
-        return (PersistentLieferartManager)PersistentProxi.createProxi(cached.getId()  * (cached.getTheObject().isTheSameAs(result) ? -1 : 1), 198);
+        return (PersistentLieferartManager)PersistentProxi.createProxi(cached.getId()  * (cached.getTheObject().isTheSameAs(result) ? -1 : 1), 171);
     }
     
     public LieferartManager getLieferartManager(long LieferartManagerId) throws PersistenceException{
         return null; //All data is in the cache!
     }
     public long getClass(long objectId) throws PersistenceException{
-        if(Cache.getTheCache().contains(objectId, 198)) return 198;
+        if(Cache.getTheCache().contains(objectId, 171)) return 171;
         
         throw new PersistenceException("No such object: " + new Long(objectId).toString(), 0);
         

@@ -15,7 +15,7 @@ public class KundeProxi extends PersistentProxi implements PersistentKunde{
     
     
     public long getClassId() {
-        return 349;
+        return 168;
     }
     
     public String getBenutzername() throws PersistenceException {

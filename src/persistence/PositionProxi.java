@@ -15,7 +15,7 @@ public class PositionProxi extends PositionAbstraktProxi implements PersistentPo
     
     
     public long getClassId() {
-        return 144;
+        return 125;
     }
     
     public PersistentPosition getThis() throws PersistenceException {

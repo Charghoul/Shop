@@ -57,7 +57,7 @@ server ServiceAdmin extends ServiceShop {
 	void erhoeheMenge(Position position, Integer menge) throws ExcLagerbestandOverMax;
 	void neuerHersteller(HerstellerManager herstellerManager, String name) throws ExcAlreadyExists;
 	void aendereHersteller(Hersteller hersteller, String name) throws ExcAlreadyExists;
-	void herstellerHinzufuegen(Artikel artikel, Hersteller hersteller {herstellerManager});
+	void herstellerHinzufuegen(Artikel artikel, Hersteller hersteller {herstellerManager}) throws ExcAlreadyExists;
 	no-view void aendereAnnahmezeit(ZeitManager zeitManager,Integer neueZeit);
 	no-view void aendereMaxAnlieferungsVersuche(ZeitManager zeitManager, Integer maxAnlieferungsVersuche);
 	no-view void aendereRetoureZeit(ZeitManager zeitManager, Integer retoureZeit);
@@ -79,7 +79,9 @@ server ServiceRegister extends Service {
 //Der SuchManager zeigt die Suchergebnisse des Kunden an
 class SuchManager{
 	Artikel ** suchListe;
+	//leert die suchListe
 	void leeren();
+	//zeigt den Artikel mit dem Namen bezeichnung in der Liste suchListe an. 
 	active void anzeigen(String bezeichnung) throws ExcArtikelDoesNotExist;
 }
 
@@ -90,10 +92,11 @@ singleton ArtikelManager{
 	active void neuerArtikel(String artikelnummer, String bezeichnung, Integer preis, Integer minLagerbestand, 		Integer maxLagerbestand, Integer hstLieferzeit) throws UserException;
 }
 
-//Der Bestellmanager verwaltet die Bestellungen und Vorbestellungen des einzelnen Kunden. 
+//Jedem ServiceKunde ist ein BestellManager zugeordnet, mit dem der Kunde seine Vorbestellungen und Lieferungen verwalten kann
 class BestellManager{
 	public Bestellung ** bestellListe;
 	public Vorbestellung ** vorbestellListe;
+	//von 0 hochlaufende BestellID, die dem Kunden angezeigt wird zu Unterscheidung der Bestellungen
 	server-only Integer bestellID;
 	server-only prior	public Konto konto;
 	//Eine neue Bestellung wird mit den dazugehörigen Positionen, dem aktuellen warenwert und der vom Kunden gewählten Lieferart erstellt. Dazu kommt eine hochlaufende bestellID. Falls ein Artikel nicht vorhanden ist wird dies als Exception geworfen. Auch wird eine neue KndLieferung im ZeitManager erstellt
@@ -108,101 +111,177 @@ class BestellManager{
 
 //Der Produktkatalog wird beim Kunden angezeigt und vom Administrator gepflegt. Er dient nur zur Einordnung der Artikel in verschiedene Produktgruppen, um dem Kunden eine bessere Übersicht zu biete.
 singleton ProduktKatalog{
+	//#produktgruppen fungiert als root aller produktgruppen und wird beim erstellen des Produktkataloges angelegt.
 	public Produktgruppe produktgruppen;
+	//produktgruppehinzufuegen hängt der bestehenden Produktgruppe #produktgruppe eine neue Produktgruppe mit dem Namen #name an. 
 	event void produktgruppeHinzufuegen(Produktgruppe produktgruppe, String name)  throws ExcAlreadyExists, CycleException;
+	//löscht die Produktgruppe #produktgruppe aus ihrer Parent Produktgruppe, alle Child Artikel und Produktgruppen werden ebenfalls entfernt
 	event active void produktgruppeEntfernen##prodEntf(Produktgruppe produktgruppe) throws ExcHasNoParent;
+	//hängt an die Produktgruppe #produktgruppe den Artikel #artikel an. Wirft eine Exception wenn #artikel schon in #produktgruppe vorhanden ist
 	event void artikelAnhaengen( Produktgruppe produktgruppe, Artikel artikel )  throws ExcAlreadyExists, CycleException;
+	//entfernt #artikel aus #produktgruppe, löscht jedoch nicht den Artikel selbst
 	event void artikelAbhaengen(Produktgruppe produktgruppe, Artikel artikel);
+	//eine Methode die genutzt wird um Updates der Artikel und Produktgruppen vom Admin dem Kunden anzuzeigen
 	event void internalUpdate();
 }
 
 //Das Warenlager enthält alle Artikel mit den dazugehörigen aktuellen Beständen. 		
 singleton Warenlager{
 	public Position ** warenListe;
+	//Entnimmt den Artikel #artikel #menge mal aus dem Warenlager. Bei einer Entnahme die den Lagerbestand unter Null senken würden wird eine Exception geworfen, ebenso wenn ein Artikel keinen Hersteller hat, da dann nicht nachbestellt werden kann, wenn der Lagerbestand unter den minimalen Lagerbestand fällt. Liegt der Lagerbestand des Artikels nach der Entnahme unter dem minimalen Lagerbestand des Artikels wird die Funktion "nachbestellen" im Warenlager auf.
 	active void artikelEntnehmen##artEntf(Artikel artikel, Integer menge) throws ExcLagerbestandUnderZero, ExcArtikelHatKeinenHersteller;
+	//Lagert den Artikel #artikel #menge mal ein. Wenn die Einlagerung den maximalen Lagerbestand überschreiten würde wird eine Exception geworfen. Wenn der Artikel noch nicht im Warenlager vorhanden ist wird eine neue Position erstellt mit #artikel und #menge.
 	event active void artikelEinlagern(Artikel artikel, Integer menge) throws ExcLagerbestandOverMax;
+	//löscht eine Position aus dem Warenlager
 	active void artikelEntfernen##artEntn(Position position);
+	//eine Funktion um einfach zu prüfen, ob eine Position der #positionsListe nicht ausreichend verfügbar ist. Ist dies der Fall wird die erste nicht ausreichend verfügbare Position zurückgegeben, sonst wird null zurück gegeben.
 	Position nichtVerfPruefen(Position ** positionsListe);
+	//erzeugt eine HstLieferung im Zeitmanager mit dem Artikel #artikel und der Menge #menge.
 	void nachbestellen(Artikel artikel, Integer menge) throws ExcArtikelHatKeinenHersteller;
 }
 
+//Der ZeitManager verwaltet alles was mit der zeitlichen Abfolge von Ereignissen zu tun hat
 singleton ZeitManager {
+	//eine Liste aller erstellten ZeitObjekte außer AnnahmeZeiten, diese werden in einer seperaten Liste gepflegt
 	observe ZeitObjekt ** zeitObjektListe;
+	//eine Liste aller AnnahmeZeitenObjekte, welche seperat angelegt werden, da sonst beim Durchlauf der ZeitObjekte ein Problem entsteht
 	server-only ZeitObjekt ** annahmeZeiten;
+	
 	public Integer annahmezeit@@AnnahmezeitInZeitEinheiten;
 	public Integer maxAnlieferungsVersuche##maxAnl;
 	public Integer retoureZeit@@standardRetourenZeitInZE;
+	//Methode die aufgerufen wird, wenn eine ZeitEinheit abgelaufen ist und dann in jedem ZeitObjekt die Methode reduceTime aufruft
 	void handleTimeUnitElapsed() ;
+	//erstellt eine neue HerstellerLieferung mit dem Artikel #artikel und der Menge #menge und fügt sie der Liste #zeitObjektListe hinzu
 	event void neueHstLieferung(Artikel artikel, Integer menge);
+	//erstellt eine neue KundenLieferung die die Bestellung #bestellung enthält und fügt sie der Liste #zeitObjektListe hinzu
 	event void neueKndLieferung(Bestellung bestellung);
+	//erstellt eine neue KundenAnnnahme mit der KundenLieferung #kndLieferung und fügt sie der Liste #annahmeZeiten hinzu
 	event void neueKndAnnahme(KndLieferung kndLieferung);
+	//erstellt eine neue PositionsRetoure mit der PositionInBestellung #position und fügt sie der Liste #zeitObjektListe hinzu
 	event void neueRetourePosition(PositionInBestellung position);
+	//erstellt eine neue LieferungsRetoure mit der KundenLieferung #kndLieferung und fügt sie der Liste #zeitObjektListe hinzu
 	event void neueRetoureLieferung(KndLieferung kndLieferung);
+	//Methode die genutzt wird um Updates innerhalb der ZeitObjekte an die Oberfläche weiterzuleiten
 	event void forwardInternalEvent();
+	//entfernt ein ZeitObjekt aus der Liste 
 	void removeZeitObjekt(ZeitObjekt zeitObjekt);
+	//ermöglicht es dem Admin die AnnahmeZeit zu ändern
 	void aendereAnnahmezeit(Integer neueZeit);
+	//ermöglicht es dem Admin die maximalen Anlieferungsversuche zu ändern
 	void aendereMaxAnlieferungsVersuche(Integer maxAnlieferungsVersuche);
+	//ermöglicht es dem Admin die RetourenZeit zu ändern
 	void aendereRetoureZeit(Integer retoureZeit);
 }
 
+//ZeitObjekte sind alle Objekte die für die zeitliche Abfolge von Ereignissen nötig sind
 abstract class ZeitObjekt{
+	//#remainingTime enthält die noch verbliebene Zeit des ZeitObjekts in ZeitEinheiten. Die Länge einer ZeitEinheit lässt sich im Code beliebig anpassen.
 	public prior Integer remainingTime;
+	//Status des ZeitObjekts, der in reduceTime() 
+	//dafür genutzt wird zu überprüfen, ob auf ein ZeitObjekt handleTimeElapsed() ausgeführt werden soll
 	server-only public prior Status status;
+	//ruft, wenn die remainingTime mit dem Aufruf auf 0 sink,t die Methode handleTimeElapsed() im zeitObjekt auf
 	event void reduceTime();
+	//ruft die Methode zeitAbgelaufen() in den einzelnen ZeitObjekten auf
 	void handleTimeElapsed();
+	//implementiert die jeweiligen Aufgaben der einzelnen ZeitObjekte, siehe KndLieferung, HstLieferung, etc
 	event void zeitAbgelaufen();
 }
 
+//lässt den Admin die Hersteller verwalten
 class HerstellerManager{
+	//Liste aller Hersteller
 	Hersteller ** herstellerListe;
+	//legt einen neuen Hersteller mit dem Namen #name an und fügt ihn der Liste #herstellerListe hinzu
 	void neuerHersteller(String name) throws ExcAlreadyExists;
 }
+
+//Jedem ServiceKunde ist ein EinkaufsManager zugeordnet, der als Einkaufswagen fungiert. 
 class EinkaufsManager{
+	//Die Liste enthält alle Positionen die der Kunde kaufen möchte
 	public Position ** einkaufsListe;
+	//dem EinkaufsManager ist der BestellManager zugeordnet, damit die Bestellung in den richigen Bestellmanager gelegt werden kann, wenn der Kunde die einkaufsListe bestellt oder vorbestellt
 	prior no-view BestellManager bestellManager;
+	//Die Methode bestellen() erstellt eine KndLieferung im ZeitManager aus der #einkaufsListe mit der Lieferart #lieferart und eine Bestellung im BestellManager mit den gleichen Parametern. Es wird eine Exception geworfen, falls der zu bestellende Warenwert inklusive Lieferkosten über dem Kontoguthaben des Kunden liegt oder wenn ein Artikel aus der #einkaufsListe nicht verfügbar ist
 	active void bestellen(Lieferart lieferart) throws ExcArtikelNichtVerfuegbar, ExcWarenwertUeberKontoguthaben;
+	//Die Methode vorbestellen() erzeugt eine Vorbestellung im BestellManager. Es wird eine Exception geworfen, falls der Warenwert der inklusive Lieferkosten über dem Kontoguthaben des Kunden liegt
 	active void vorbestellen(Lieferart lieferart) throws ExcWarenwertUeberKontoguthaben;
+	//fügt der #einkaufsListe eine neue Position hinzu, bestehend aus #artikel und #menge. Es wird eine Exception geworfen, falls schon eine Position mit dem Artikel #artikel in der #einkaufsListe vorhanden ist, wenn der #artikel im Status Neuanlage ist, oder wenn #menge über dem maximalen Lagerbestand des Artikels liegt.
 	void neuePosition(Artikel artikel, Integer menge) throws ExcArtikelAlreadyExists, ExcLagerbestandOverMax, ExcArtikelNochNichtVerfuegbar;
+	//löscht die Position #position aus der #einkaufsListe
 	void entfernePosition(Position position);
+	//gibt den gesamten Warenwert der #einkaufsListe wieder
 	Integer gibGesamtPreis();
 }
+
+//Der LieferartManager ermöglicht es dem Admin die verschiedenen Lieferarten zu verwalten
 singleton LieferartManager{
+	//Liste aller Lieferarten
 	public Lieferart ** lieferartenListe;
+	//im LieferartManager wird auch die Standard Rückversandgebühr in Prozent gepflegt
 	public prior Integer rueckversandGebuehr##rckG@@RueckversandgebuehrenInProzent;
-	
+	//legt eine neue Lieferart mit dem Namen #name, der Lieferzeit #lieferzeit in Zeiteinheiten und dem Preis #preis in Cent an und fügt sie der #lieferartenListe hinzu. Es wird eine Exception geworfen, falls eine Lieferart mit dem Namen bereits existiert
 	void neueLieferart(String name, Integer lieferzeit, Integer preis) throws ExcAlreadyExists;
+	//ermöglicht dem Admin das ändern der Standard Rückversandgebühr
 	void aendereRueckversandGebuehr(Integer percent);
 }
 
+//der KundenManager zeigt dem Admin eine Liste aller Kunden, die sich registriert haben.
 singleton KundenManager{
+	//Liste aller Kunden die sich registriert haben
 	public Kunde**kundenListe;
+	//das untere Standard Limit eines Kunden, was beim Erstellen des Kunden übernommen wird
 	public Integer standardLimit;
+	//das Standard Guthaben eines Kunden, was beim Erstellen des Kunden übernommen wird
 	public Integer standardGuthaben;
+	//ändert das Standardguthaben zu #guthaben
 	void aendereStandardGuthaben(Integer guthaben);
+	//ändert das StandardLimit zu #limit
 	void aendereStandardLimit(Integer limit);
 }
 
+//Diese Klasse wird genutzt um Benutzernamen und Passwort von Kunden zu speichern und nachher zu prüfen, ob schon ein Kunde mit diesem Namen existiert. Er wird angelegt wenn sich der Kunde im ServiceRegister registriert
 class Kunde{
+	//Name des Kunden
 	indexed prior String benutzername;
+	//Passwort des Kunden
 	prior String passwort;
 }
 
+//Jedem ServiceKunde ist ein Konto zugeordnet, um sein Guthaben zu verwalten
 class Konto{
+	//Der aktuelle Kontostand des Kontos wird in #kontostand gespeichert
 	public prior Integer kontostand;
+	//Das untere Limit des Kontos, also bis wohin der Kunde das Guthaben verringern darf, wird in #limit gespeichert
 	public-write prior Integer limit;
+	//Speichert den aktuell reservierten Warenwert des Kunden. Das heißt der Wert alle Bestellungen und Vorbestellungen inklusive Lieferkosten die noch nicht bezahlt wurden wird hier gespeichert, um einfacher prüfen zu können, ob der Kunde eine neue Bestellung aufgeben darf oder sich damit unter das Limit fallen würde
 	public prior Integer reserviert;
+	//bucht den Betrag #betrag vom #kontostand ab
 	void abbuchen(Integer betrag);
+	//erhöhrt den #kontostand um den Betrag #betrag
 	void einzahlen(Integer betrag);
+	//erlaubt dem Kunden sich Geld vom Konto wieder auszahlen zu lassen. #betrag wird dann vom #kontostand abgebucht. Wirft eine Exception wenn #betrag > #kontostand ist.
 	void auszahlen(Integer betrag) throws ExcAuszahlungGroesserGutgaben;
+	//erhöht #reserviert um den Betrag #betrag
 	void reserviere(Integer betrag);
+	//verringert #reserviert um den Betrag #betrag
 	void verringereReserviert(Integer betrag);
+	//ändert #limit des Kontos auf #limit
 	void aendereLimit(Integer limit);
 }
+//Hierarchie die für die Produktgruppen nötig ist
 hierarchy Hierarchie;
+
+//Abstrakte Klasse die alle Komponenten beinhaltet, also Artikel und Produktgruppen
 abstract class Komponente {
 }
+
+//Artikel können vom Kunden bestellt werden und erben von der abstrakten Klasse Komponente. Sie werden im ArtikelManager gepflegt und für den Kunden im ProduktKatalog angezeigt
 class Artikel extends Komponente{
+	//Artikelnummer zum eindeutigen identifizieren des Artikels, diese ist unique
 	prior indexed String artikelnummer;
+	//Bezeichung des 
 	prior indexed String bezeichnung;
 	public prior Integer preis;
 	public prior Integer minLagerbestand;
@@ -218,7 +297,7 @@ class Artikel extends Komponente{
 	active void statusVerkauf() throws ExcInconsistentStatusChange, ExcArtikelHatKeinenHersteller;
 	active void statusAuslauf() throws ExcInconsistentStatusChange;
 	active void zuEinkaufswHinz(Integer menge, EinkaufsManager einkaufsManager) throws UserException;
-	void herstellerHinzufuegen(Hersteller hersteller);
+	void herstellerHinzufuegen(Hersteller hersteller) throws ExcAlreadyExists;
 }
 class Produktgruppe extends Komponente{
 	symmetric Komponente**komponentenListe hierarchy Hierarchie;

@@ -13,7 +13,7 @@ public class AuslaufFacade{
         long id = ConnectionHandler.getTheConnectionHandler().theArtikelstatusFacade.getNextId();
         Auslauf result = new Auslauf(null, null, id);
         PersistentInCacheProxi cached = Cache.getTheCache().putSingleton(result);
-        return (PersistentAuslauf)PersistentProxi.createProxi(cached.getId()  * (cached.getTheObject().isTheSameAs(result) ? -1 : 1), 213);
+        return (PersistentAuslauf)PersistentProxi.createProxi(cached.getId()  * (cached.getTheObject().isTheSameAs(result) ? -1 : 1), 144);
     }
     
     public Auslauf getAuslauf(long AuslaufId) throws PersistenceException{

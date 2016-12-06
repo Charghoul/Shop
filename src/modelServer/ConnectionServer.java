@@ -59,10 +59,10 @@ public class ConnectionServer extends RemoteServerMaster {
 
 	public RemoteServerMaster createRemoteServer(String connectionName, String userName, long objectId, long classId){
 		try {
-			if(classId == -189)return new RemoteServiceRegister(connectionName, userName, (PersistentServiceRegister)PersistentProxi.createProxi(objectId, classId));
-			if(classId == -103)return new RemoteServer(connectionName, userName, (PersistentServer)PersistentProxi.createProxi(objectId, classId));
-			if(classId == -181)return new RemoteServiceKunde(connectionName, userName, (PersistentServiceKunde)PersistentProxi.createProxi(objectId, classId));
-			if(classId == -182)return new RemoteServiceAdmin(connectionName, userName, (PersistentServiceAdmin)PersistentProxi.createProxi(objectId, classId));
+			if(classId == -112)return new RemoteServiceRegister(connectionName, userName, (PersistentServiceRegister)PersistentProxi.createProxi(objectId, classId));
+			if(classId == -101)return new RemoteServer(connectionName, userName, (PersistentServer)PersistentProxi.createProxi(objectId, classId));
+			if(classId == -116)return new RemoteServiceKunde(connectionName, userName, (PersistentServiceKunde)PersistentProxi.createProxi(objectId, classId));
+			if(classId == -127)return new RemoteServiceAdmin(connectionName, userName, (PersistentServiceAdmin)PersistentProxi.createProxi(objectId, classId));
 			
 		}catch(PersistenceException pe){
 			return null;

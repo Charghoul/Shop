@@ -33,7 +33,7 @@ public class ExcLieferartAlreadyExists extends model.UserException{
     }
     
     static public long getTypeId() {
-        return -233;
+        return -254;
     }
     
     public long getClassId() {

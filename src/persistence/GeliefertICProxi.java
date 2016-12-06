@@ -19,7 +19,7 @@ public class GeliefertICProxi extends BestellstatusICProxi implements Persistent
     }
     
     public long getClassId() {
-        return 215;
+        return 154;
     }
     
     public PersistentGeliefert getThis() throws PersistenceException {

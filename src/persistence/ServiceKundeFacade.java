@@ -11,18 +11,18 @@ public class ServiceKundeFacade{
 
     /* If idCreateIfLessZero is negative, a new id is generated. */
     public PersistentServiceKunde newServiceKunde(long idCreateIfLessZero) throws PersistenceException {
-        if(idCreateIfLessZero > 0) return (PersistentServiceKunde)PersistentProxi.createProxi(idCreateIfLessZero, -181);
+        if(idCreateIfLessZero > 0) return (PersistentServiceKunde)PersistentProxi.createProxi(idCreateIfLessZero, -116);
         long id = ConnectionHandler.getTheConnectionHandler().theServiceFacade.getNextId();
         ServiceKunde result = new ServiceKunde(null,null,null,null,null,null,null,null,null,id);
         Cache.getTheCache().put(result);
-        return (PersistentServiceKunde)PersistentProxi.createProxi(id, -181);
+        return (PersistentServiceKunde)PersistentProxi.createProxi(id, -116);
     }
     
     public PersistentServiceKunde newDelayedServiceKunde() throws PersistenceException {
         long id = ConnectionHandler.getTheConnectionHandler().theServiceFacade.getNextId();
         ServiceKunde result = new ServiceKunde(null,null,null,null,null,null,null,null,null,id);
         Cache.getTheCache().put(result);
-        return (PersistentServiceKunde)PersistentProxi.createProxi(id, -181);
+        return (PersistentServiceKunde)PersistentProxi.createProxi(id, -116);
     }
     
     public ServiceKunde getServiceKunde(long ServiceKundeId) throws PersistenceException{
@@ -49,7 +49,7 @@ public class ServiceKundeFacade{
     public ServiceKundeSearchList inverseGetKonto(long objectId, long classId)throws PersistenceException{
         ServiceKundeSearchList result = new ServiceKundeSearchList();
         java.util.Iterator<PersistentInCacheProxi> candidates;
-        candidates = Cache.getTheCache().iterator(-181);
+        candidates = Cache.getTheCache().iterator(-116);
         while (candidates.hasNext()){
             PersistentServiceKunde current = (PersistentServiceKunde)((PersistentRoot)candidates.next()).getTheObject();
             if (current != null && !current.isDltd() && !current.isDelayed$Persistence() && current.getKonto() != null){
@@ -64,7 +64,7 @@ public class ServiceKundeFacade{
     public ServiceKundeSearchList inverseGetEinkaufsManager(long objectId, long classId)throws PersistenceException{
         ServiceKundeSearchList result = new ServiceKundeSearchList();
         java.util.Iterator<PersistentInCacheProxi> candidates;
-        candidates = Cache.getTheCache().iterator(-181);
+        candidates = Cache.getTheCache().iterator(-116);
         while (candidates.hasNext()){
             PersistentServiceKunde current = (PersistentServiceKunde)((PersistentRoot)candidates.next()).getTheObject();
             if (current != null && !current.isDltd() && !current.isDelayed$Persistence() && current.getEinkaufsManager() != null){

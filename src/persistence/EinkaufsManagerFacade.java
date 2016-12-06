@@ -26,25 +26,25 @@ public class EinkaufsManagerFacade{
 
     /* If idCreateIfLessZero is negative, a new id is generated. */
     public PersistentEinkaufsManager newEinkaufsManager(long idCreateIfLessZero) throws PersistenceException {
-        if(idCreateIfLessZero > 0) return (PersistentEinkaufsManager)PersistentProxi.createProxi(idCreateIfLessZero, 191);
+        if(idCreateIfLessZero > 0) return (PersistentEinkaufsManager)PersistentProxi.createProxi(idCreateIfLessZero, 103);
         long id = ConnectionHandler.getTheConnectionHandler().theEinkaufsManagerFacade.getNextId();
         EinkaufsManager result = new EinkaufsManager(null,null,null,id);
         Cache.getTheCache().put(result);
-        return (PersistentEinkaufsManager)PersistentProxi.createProxi(id, 191);
+        return (PersistentEinkaufsManager)PersistentProxi.createProxi(id, 103);
     }
     
     public PersistentEinkaufsManager newDelayedEinkaufsManager() throws PersistenceException {
         long id = ConnectionHandler.getTheConnectionHandler().theEinkaufsManagerFacade.getNextId();
         EinkaufsManager result = new EinkaufsManager(null,null,null,id);
         Cache.getTheCache().put(result);
-        return (PersistentEinkaufsManager)PersistentProxi.createProxi(id, 191);
+        return (PersistentEinkaufsManager)PersistentProxi.createProxi(id, 103);
     }
     
     public EinkaufsManager getEinkaufsManager(long EinkaufsManagerId) throws PersistenceException{
         return null; //All data is in the cache!
     }
     public long getClass(long objectId) throws PersistenceException{
-        if(Cache.getTheCache().contains(objectId, 191)) return 191;
+        if(Cache.getTheCache().contains(objectId, 103)) return 103;
         
         throw new PersistenceException("No such object: " + new Long(objectId).toString(), 0);
         

@@ -82,7 +82,7 @@ public class Position extends model.PositionAbstrakt implements PersistentPositi
     }
     
     static public long getTypeId() {
-        return 144;
+        return 125;
     }
     
     public long getClassId() {
@@ -91,7 +91,7 @@ public class Position extends model.PositionAbstrakt implements PersistentPositi
     
     public void store() throws PersistenceException {
         if(!this.isDelayed$Persistence()) return;
-        if (this.getClassId() == 144) ConnectionHandler.getTheConnectionHandler().thePositionFacade
+        if (this.getClassId() == 125) ConnectionHandler.getTheConnectionHandler().thePositionFacade
             .newPosition(menge,this.getId());
         super.store();
         

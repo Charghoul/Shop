@@ -28,14 +28,14 @@ public class WarenlagerFacade{
         long id = ConnectionHandler.getTheConnectionHandler().theWarenlagerFacade.getNextId();
         Warenlager result = new Warenlager(null, null, id);
         PersistentInCacheProxi cached = Cache.getTheCache().putSingleton(result);
-        return (PersistentWarenlager)PersistentProxi.createProxi(cached.getId()  * (cached.getTheObject().isTheSameAs(result) ? -1 : 1), 193);
+        return (PersistentWarenlager)PersistentProxi.createProxi(cached.getId()  * (cached.getTheObject().isTheSameAs(result) ? -1 : 1), 139);
     }
     
     public Warenlager getWarenlager(long WarenlagerId) throws PersistenceException{
         return null; //All data is in the cache!
     }
     public long getClass(long objectId) throws PersistenceException{
-        if(Cache.getTheCache().contains(objectId, 193)) return 193;
+        if(Cache.getTheCache().contains(objectId, 139)) return 139;
         
         throw new PersistenceException("No such object: " + new Long(objectId).toString(), 0);
         

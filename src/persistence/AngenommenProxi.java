@@ -15,7 +15,7 @@ public class AngenommenProxi extends BestellstatusProxi implements PersistentAng
     
     
     public long getClassId() {
-        return 219;
+        return 134;
     }
     
     public PersistentAngenommen getThis() throws PersistenceException {

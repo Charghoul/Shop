@@ -16,7 +16,7 @@ public class Verkauf extends view.objects.Artikelstatus implements VerkaufView{
     }
     
     static public long getTypeId() {
-        return 212;
+        return 142;
     }
     
     public long getClassId() {

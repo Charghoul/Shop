@@ -15,7 +15,7 @@ public class RegisterCommandProxi extends PersistentProxi implements PersistentR
     
     
     public long getClassId() {
-        return 200;
+        return 109;
     }
     
     public String getUsername() throws PersistenceException {

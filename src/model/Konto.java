@@ -112,7 +112,7 @@ public class Konto extends PersistentObject implements PersistentKonto{
     }
     
     static public long getTypeId() {
-        return 146;
+        return 132;
     }
     
     public long getClassId() {
@@ -121,7 +121,7 @@ public class Konto extends PersistentObject implements PersistentKonto{
     
     public void store() throws PersistenceException {
         if(!this.isDelayed$Persistence()) return;
-        if (this.getClassId() == 146) ConnectionHandler.getTheConnectionHandler().theKontoFacade
+        if (this.getClassId() == 132) ConnectionHandler.getTheConnectionHandler().theKontoFacade
             .newKonto(kontostand,limit,reserviert,this.getId());
         super.store();
         if(this.getSubService() != null){

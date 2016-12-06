@@ -19,7 +19,7 @@ public class NeuanlageICProxi extends ArtikelstatusICProxi implements Persistent
     }
     
     public long getClassId() {
-        return 214;
+        return 111;
     }
     
     public PersistentNeuanlage getThis() throws PersistenceException {

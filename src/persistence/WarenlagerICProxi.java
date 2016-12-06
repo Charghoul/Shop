@@ -19,7 +19,7 @@ public class WarenlagerICProxi extends PersistentInCacheProxiOptimistic implemen
     }
     
     public long getClassId() {
-        return 193;
+        return 139;
     }
     
     public Warenlager_WarenListeProxi getWarenListe() throws PersistenceException {

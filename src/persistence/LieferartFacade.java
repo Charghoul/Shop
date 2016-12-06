@@ -26,25 +26,25 @@ public class LieferartFacade{
 
     /* If idCreateIfLessZero is negative, a new id is generated. */
     public PersistentLieferart newLieferart(String name,long lieferzeit,long preis,long idCreateIfLessZero) throws PersistenceException {
-        if(idCreateIfLessZero > 0) return (PersistentLieferart)PersistentProxi.createProxi(idCreateIfLessZero, 138);
+        if(idCreateIfLessZero > 0) return (PersistentLieferart)PersistentProxi.createProxi(idCreateIfLessZero, 108);
         long id = ConnectionHandler.getTheConnectionHandler().theLieferartFacade.getNextId();
         Lieferart result = new Lieferart(name,lieferzeit,preis,null,null,id);
         Cache.getTheCache().put(result);
-        return (PersistentLieferart)PersistentProxi.createProxi(id, 138);
+        return (PersistentLieferart)PersistentProxi.createProxi(id, 108);
     }
     
     public PersistentLieferart newDelayedLieferart(String name,long lieferzeit,long preis) throws PersistenceException {
         long id = ConnectionHandler.getTheConnectionHandler().theLieferartFacade.getNextId();
         Lieferart result = new Lieferart(name,lieferzeit,preis,null,null,id);
         Cache.getTheCache().put(result);
-        return (PersistentLieferart)PersistentProxi.createProxi(id, 138);
+        return (PersistentLieferart)PersistentProxi.createProxi(id, 108);
     }
     
     public Lieferart getLieferart(long LieferartId) throws PersistenceException{
         return null; //All data is in the cache!
     }
     public long getClass(long objectId) throws PersistenceException{
-        if(Cache.getTheCache().contains(objectId, 138)) return 138;
+        if(Cache.getTheCache().contains(objectId, 108)) return 108;
         
         throw new PersistenceException("No such object: " + new Long(objectId).toString(), 0);
         
@@ -54,7 +54,7 @@ public class LieferartFacade{
         name = name.replaceAll("_", ".");
         LieferartSearchList result = new LieferartSearchList();
         java.util.Iterator<?> candidates;
-        candidates = Cache.getTheCache().iterator(138);
+        candidates = Cache.getTheCache().iterator(108);
         while (candidates.hasNext()){
             PersistentLieferart current = (PersistentLieferart)((PersistentRoot)candidates.next()).getTheObject();
             if (current != null && !current.isDltd() && !current.isDelayed$Persistence() && current.getName().matches(name))

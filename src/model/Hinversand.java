@@ -84,7 +84,7 @@ public class Hinversand extends model.Bestellstatus implements PersistentHinvers
     }
     
     static public long getTypeId() {
-        return 218;
+        return 172;
     }
     
     public long getClassId() {

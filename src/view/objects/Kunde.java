@@ -20,7 +20,7 @@ public class Kunde extends ViewObject implements KundeView{
     }
     
     static public long getTypeId() {
-        return 349;
+        return 168;
     }
     
     public long getClassId() {

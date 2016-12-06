@@ -97,7 +97,7 @@ public class Warenlager extends PersistentObject implements PersistentWarenlager
     }
     
     static public long getTypeId() {
-        return 193;
+        return 139;
     }
     
     public long getClassId() {

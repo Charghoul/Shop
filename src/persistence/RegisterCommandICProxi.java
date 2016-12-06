@@ -19,7 +19,7 @@ public class RegisterCommandICProxi extends PersistentInCacheProxi implements Pe
     }
     
     public long getClassId() {
-        return 200;
+        return 109;
     }
     
     public String getUsername() throws PersistenceException {

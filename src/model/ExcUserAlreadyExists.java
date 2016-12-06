@@ -33,7 +33,7 @@ public class ExcUserAlreadyExists extends model.UserException{
     }
     
     static public long getTypeId() {
-        return -195;
+        return -259;
     }
     
     public long getClassId() {

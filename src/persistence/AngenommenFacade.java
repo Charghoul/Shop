@@ -13,7 +13,7 @@ public class AngenommenFacade{
         long id = ConnectionHandler.getTheConnectionHandler().theBestellstatusFacade.getNextId();
         Angenommen result = new Angenommen(null, null, id);
         PersistentInCacheProxi cached = Cache.getTheCache().putSingleton(result);
-        return (PersistentAngenommen)PersistentProxi.createProxi(cached.getId()  * (cached.getTheObject().isTheSameAs(result) ? -1 : 1), 219);
+        return (PersistentAngenommen)PersistentProxi.createProxi(cached.getId()  * (cached.getTheObject().isTheSameAs(result) ? -1 : 1), 134);
     }
     
     public Angenommen getAngenommen(long AngenommenId) throws PersistenceException{

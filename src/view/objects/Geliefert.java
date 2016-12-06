@@ -16,7 +16,7 @@ public class Geliefert extends view.objects.Bestellstatus implements GeliefertVi
     }
     
     static public long getTypeId() {
-        return 215;
+        return 154;
     }
     
     public long getClassId() {

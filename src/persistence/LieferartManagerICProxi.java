@@ -19,7 +19,7 @@ public class LieferartManagerICProxi extends PersistentInCacheProxiOptimistic im
     }
     
     public long getClassId() {
-        return 198;
+        return 171;
     }
     
     public LieferartManager_LieferartenListeProxi getLieferartenListe() throws PersistenceException {

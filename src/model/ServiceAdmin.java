@@ -154,7 +154,7 @@ public class ServiceAdmin extends model.ServiceShop implements PersistentService
     }
     
     static public long getTypeId() {
-        return -182;
+        return -127;
     }
     
     public long getClassId() {
@@ -163,7 +163,7 @@ public class ServiceAdmin extends model.ServiceShop implements PersistentService
     
     public void store() throws PersistenceException {
         if(!this.isDelayed$Persistence()) return;
-        if (this.getClassId() == -182) ConnectionHandler.getTheConnectionHandler().theServiceAdminFacade
+        if (this.getClassId() == -127) ConnectionHandler.getTheConnectionHandler().theServiceAdminFacade
             .newServiceAdmin(this.getId());
         super.store();
         if(this.kundenManager != null){
@@ -592,7 +592,7 @@ public class ServiceAdmin extends model.ServiceShop implements PersistentService
         
     }
     public void herstellerHinzufuegen(final Artikel4Public artikel, final Hersteller4Public hersteller) 
-				throws PersistenceException{
+				throws model.ExcAlreadyExists, PersistenceException{
         artikel.herstellerHinzufuegen(hersteller);
         getThis().signalChanged(true);
 

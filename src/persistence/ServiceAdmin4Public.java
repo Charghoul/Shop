@@ -92,7 +92,7 @@ public interface ServiceAdmin4Public extends ServiceShop4Public {
     public void erhoeheMenge(final Position4Public position, final long menge) 
 				throws model.ExcLagerbestandOverMax, PersistenceException;
     public void herstellerHinzufuegen(final Artikel4Public artikel, final Hersteller4Public hersteller) 
-				throws PersistenceException;
+				throws model.ExcAlreadyExists, PersistenceException;
     public void initializeOnCreation() 
 				throws PersistenceException;
     public void initializeOnInstantiation() 

@@ -19,7 +19,7 @@ public class BestellungICProxi extends BestellungAbstraktICProxi implements Pers
     }
     
     public long getClassId() {
-        return 136;
+        return 146;
     }
     
     public Bestellung_PositionsListeProxi getPositionsListe() throws PersistenceException {

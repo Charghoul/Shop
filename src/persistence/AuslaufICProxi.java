@@ -19,7 +19,7 @@ public class AuslaufICProxi extends ArtikelstatusICProxi implements PersistentAu
     }
     
     public long getClassId() {
-        return 213;
+        return 144;
     }
     
     public PersistentAuslauf getThis() throws PersistenceException {

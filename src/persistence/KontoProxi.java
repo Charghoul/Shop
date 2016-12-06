@@ -15,7 +15,7 @@ public class KontoProxi extends PersistentProxi implements PersistentKonto{
     
     
     public long getClassId() {
-        return 146;
+        return 132;
     }
     
     public long getKontostand() throws PersistenceException {

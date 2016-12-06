@@ -29,7 +29,7 @@ public class ServiceKunde extends view.objects.ServiceShop implements ServiceKun
     }
     
     static public long getTypeId() {
-        return -181;
+        return -116;
     }
     
     public long getClassId() {

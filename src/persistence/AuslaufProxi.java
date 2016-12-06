@@ -15,7 +15,7 @@ public class AuslaufProxi extends ArtikelstatusProxi implements PersistentAuslau
     
     
     public long getClassId() {
-        return 213;
+        return 144;
     }
     
     public PersistentAuslauf getThis() throws PersistenceException {

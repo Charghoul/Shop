@@ -15,7 +15,7 @@ public class ArtikelProxi extends KomponenteProxi implements PersistentArtikel{
     
     
     public long getClassId() {
-        return 108;
+        return 122;
     }
     
     public String getArtikelnummer() throws PersistenceException {
@@ -193,7 +193,7 @@ public class ArtikelProxi extends KomponenteProxi implements PersistentArtikel{
         ((PersistentArtikel)this.getTheObject()).copyingPrivateUserAttributes(copy);
     }
     public void herstellerHinzufuegen(final Hersteller4Public hersteller) 
-				throws PersistenceException{
+				throws model.ExcAlreadyExists, PersistenceException{
         ((PersistentArtikel)this.getTheObject()).herstellerHinzufuegen(hersteller);
     }
     public void initializeOnCreation() 

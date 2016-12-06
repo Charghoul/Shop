@@ -154,7 +154,7 @@ public class ServiceKunde extends model.ServiceShop implements PersistentService
     }
     
     static public long getTypeId() {
-        return -181;
+        return -116;
     }
     
     public long getClassId() {
@@ -163,7 +163,7 @@ public class ServiceKunde extends model.ServiceShop implements PersistentService
     
     public void store() throws PersistenceException {
         if(!this.isDelayed$Persistence()) return;
-        if (this.getClassId() == -181) ConnectionHandler.getTheConnectionHandler().theServiceKundeFacade
+        if (this.getClassId() == -116) ConnectionHandler.getTheConnectionHandler().theServiceKundeFacade
             .newServiceKunde(this.getId());
         super.store();
         if(this.getSuchManager() != null){

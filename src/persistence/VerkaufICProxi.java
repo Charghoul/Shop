@@ -19,7 +19,7 @@ public class VerkaufICProxi extends ArtikelstatusICProxi implements PersistentVe
     }
     
     public long getClassId() {
-        return 212;
+        return 142;
     }
     
     public PersistentVerkauf getThis() throws PersistenceException {

@@ -15,7 +15,7 @@ public class LieferartProxi extends PersistentProxi implements PersistentLiefera
     
     
     public long getClassId() {
-        return 138;
+        return 108;
     }
     
     public String getName() throws PersistenceException {

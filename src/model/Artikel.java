@@ -153,7 +153,7 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
     }
     
     static public long getTypeId() {
-        return 108;
+        return 122;
     }
     
     public long getClassId() {
@@ -162,7 +162,7 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
     
     public void store() throws PersistenceException {
         if(!this.isDelayed$Persistence()) return;
-        if (this.getClassId() == 108) ConnectionHandler.getTheConnectionHandler().theArtikelFacade
+        if (this.getClassId() == 122) ConnectionHandler.getTheConnectionHandler().theArtikelFacade
             .newArtikel(artikelnummer,bezeichnung,preis,minLagerbestand,maxLagerbestand,hstLieferzeit,this.getId());
         super.store();
         if(this.getArtikelstatus() != null){
@@ -441,7 +441,16 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
         
     }
     public void herstellerHinzufuegen(final Hersteller4Public hersteller) 
-				throws PersistenceException{
+				throws model.ExcAlreadyExists, PersistenceException{
+        Artikel4Public art = Artikel.getArtikelByBezeichnung(getThis().getBezeichnung()).findFirst(new Predcate<Artikel4Public>() {
+            @Override
+            public boolean test(Artikel4Public argument) throws PersistenceException {
+                return argument.getHersteller().equals(hersteller);
+            }
+        });
+        if(art!=null){
+            throw new ExcAlreadyExists(ErrorMessages.ArtikelMitDiesemHerstellerExistiertBereits);
+        }
         getThis().setHersteller(hersteller);
         //überprüft ob Artikelbestand 0 ist und bestellt dann nach
         Position4Public position = Warenlager.getTheWarenlager().getWarenListe().findFirst(argument -> {

@@ -18,7 +18,7 @@ public class ArtikelManager extends ViewObject implements ArtikelManagerView{
     }
     
     static public long getTypeId() {
-        return 228;
+        return 128;
     }
     
     public long getClassId() {

@@ -20,7 +20,7 @@ public class LieferartManager extends ViewObject implements LieferartManagerView
     }
     
     static public long getTypeId() {
-        return 198;
+        return 171;
     }
     
     public long getClassId() {

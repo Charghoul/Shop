@@ -15,7 +15,7 @@ public class LieferartManagerProxi extends PersistentProxi implements Persistent
     
     
     public long getClassId() {
-        return 198;
+        return 171;
     }
     
     public LieferartManager_LieferartenListeProxi getLieferartenListe() throws PersistenceException {

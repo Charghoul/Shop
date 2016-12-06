@@ -24,7 +24,7 @@ public class Konto extends ViewObject implements KontoView{
     }
     
     static public long getTypeId() {
-        return 146;
+        return 132;
     }
     
     public long getClassId() {

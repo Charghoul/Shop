@@ -17,7 +17,7 @@ public class ServiceRegister extends view.objects.Service implements ServiceRegi
     }
     
     static public long getTypeId() {
-        return -189;
+        return -112;
     }
     
     public long getClassId() {

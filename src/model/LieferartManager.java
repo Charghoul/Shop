@@ -98,7 +98,7 @@ public class LieferartManager extends PersistentObject implements PersistentLief
     }
     
     static public long getTypeId() {
-        return 198;
+        return 171;
     }
     
     public long getClassId() {

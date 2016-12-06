@@ -84,7 +84,7 @@ public class Rueckversand extends model.Bestellstatus implements PersistentRueck
     }
     
     static public long getTypeId() {
-        return 217;
+        return 169;
     }
     
     public long getClassId() {

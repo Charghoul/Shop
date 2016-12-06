@@ -22,7 +22,7 @@ public class Bestellung extends view.objects.BestellungAbstrakt implements Beste
     }
     
     static public long getTypeId() {
-        return 136;
+        return 146;
     }
     
     public long getClassId() {

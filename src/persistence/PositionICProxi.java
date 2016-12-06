@@ -19,7 +19,7 @@ public class PositionICProxi extends PositionAbstraktICProxi implements Persiste
     }
     
     public long getClassId() {
-        return 144;
+        return 125;
     }
     
     public PersistentPosition getThis() throws PersistenceException {

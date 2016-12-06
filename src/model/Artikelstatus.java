@@ -40,7 +40,7 @@ public abstract class Artikelstatus extends PersistentObject implements Persiste
     }
     
     static public long getTypeId() {
-        return 152;
+        return 174;
     }
     
     public long getClassId() {

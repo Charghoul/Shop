@@ -28,14 +28,14 @@ public class ArtikelManagerFacade{
         long id = ConnectionHandler.getTheConnectionHandler().theArtikelManagerFacade.getNextId();
         ArtikelManager result = new ArtikelManager(null, null, id);
         PersistentInCacheProxi cached = Cache.getTheCache().putSingleton(result);
-        return (PersistentArtikelManager)PersistentProxi.createProxi(cached.getId()  * (cached.getTheObject().isTheSameAs(result) ? -1 : 1), 228);
+        return (PersistentArtikelManager)PersistentProxi.createProxi(cached.getId()  * (cached.getTheObject().isTheSameAs(result) ? -1 : 1), 128);
     }
     
     public ArtikelManager getArtikelManager(long ArtikelManagerId) throws PersistenceException{
         return null; //All data is in the cache!
     }
     public long getClass(long objectId) throws PersistenceException{
-        if(Cache.getTheCache().contains(objectId, 228)) return 228;
+        if(Cache.getTheCache().contains(objectId, 128)) return 128;
         
         throw new PersistenceException("No such object: " + new Long(objectId).toString(), 0);
         

@@ -11,18 +11,18 @@ public class ServiceAdminFacade{
 
     /* If idCreateIfLessZero is negative, a new id is generated. */
     public PersistentServiceAdmin newServiceAdmin(long idCreateIfLessZero) throws PersistenceException {
-        if(idCreateIfLessZero > 0) return (PersistentServiceAdmin)PersistentProxi.createProxi(idCreateIfLessZero, -182);
+        if(idCreateIfLessZero > 0) return (PersistentServiceAdmin)PersistentProxi.createProxi(idCreateIfLessZero, -127);
         long id = ConnectionHandler.getTheConnectionHandler().theServiceFacade.getNextId();
         ServiceAdmin result = new ServiceAdmin(null,null,null,null,null,null,null,null,null,id);
         Cache.getTheCache().put(result);
-        return (PersistentServiceAdmin)PersistentProxi.createProxi(id, -182);
+        return (PersistentServiceAdmin)PersistentProxi.createProxi(id, -127);
     }
     
     public PersistentServiceAdmin newDelayedServiceAdmin() throws PersistenceException {
         long id = ConnectionHandler.getTheConnectionHandler().theServiceFacade.getNextId();
         ServiceAdmin result = new ServiceAdmin(null,null,null,null,null,null,null,null,null,id);
         Cache.getTheCache().put(result);
-        return (PersistentServiceAdmin)PersistentProxi.createProxi(id, -182);
+        return (PersistentServiceAdmin)PersistentProxi.createProxi(id, -127);
     }
     
     public ServiceAdmin getServiceAdmin(long ServiceAdminId) throws PersistenceException{
@@ -49,7 +49,7 @@ public class ServiceAdminFacade{
     public ServiceAdminSearchList inverseGetHerstellerManager(long objectId, long classId)throws PersistenceException{
         ServiceAdminSearchList result = new ServiceAdminSearchList();
         java.util.Iterator<PersistentInCacheProxi> candidates;
-        candidates = Cache.getTheCache().iterator(-182);
+        candidates = Cache.getTheCache().iterator(-127);
         while (candidates.hasNext()){
             PersistentServiceAdmin current = (PersistentServiceAdmin)((PersistentRoot)candidates.next()).getTheObject();
             if (current != null && !current.isDltd() && !current.isDelayed$Persistence() && current.getHerstellerManager() != null){

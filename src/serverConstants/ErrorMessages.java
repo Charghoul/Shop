@@ -25,6 +25,7 @@ public class ErrorMessages {
     public static final String AuszahlungGroesserGuthaben= "Die Auszahlungssumme ist grösser als ihr aktuelles Guthaben";
     public static final String LagerbestandMinGroesserMax = "Der minimale Lagerbestand darf nicht grösser als der maximale sein";
     public static final String ArtikelDoesNotExist = "Ein Artikel mit dieser Bezeichung existiert nicht";
+    public static final String ArtikelMitDiesemHerstellerExistiertBereits = "Ein Artikel mit dieser Bezeichung und diesem Hersteller existiert bereits";
 
     private ErrorMessages(){}
 }

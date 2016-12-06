@@ -19,7 +19,7 @@ public class LieferartICProxi extends PersistentInCacheProxiOptimistic implement
     }
     
     public long getClassId() {
-        return 138;
+        return 108;
     }
     
     public String getName() throws PersistenceException {

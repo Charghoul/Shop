@@ -29,7 +29,7 @@ public class ServiceAdmin extends view.objects.ServiceShop implements ServiceAdm
     }
     
     static public long getTypeId() {
-        return -182;
+        return -127;
     }
     
     public long getClassId() {

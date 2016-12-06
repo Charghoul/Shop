@@ -15,7 +15,7 @@ public class VorbestellungProxi extends BestellungAbstraktProxi implements Persi
     
     
     public long getClassId() {
-        return 216;
+        return 166;
     }
     
     public Vorbestellung_PositionsListeProxi getPositionsListe() throws PersistenceException {

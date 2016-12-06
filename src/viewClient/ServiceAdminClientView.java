@@ -1298,6 +1298,9 @@ public class ServiceAdminClientView extends BorderPane implements ExceptionAndEv
 				handleException(me);
 				this.close();
 			}
+			catch(ExcAlreadyExists e) {
+				getStatusBar().setText(e.getMessage());
+			}
 			
 		}
 		protected String checkCompleteParameterSet(){

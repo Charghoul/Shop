@@ -84,7 +84,7 @@ public class Geliefert extends model.Bestellstatus implements PersistentGeliefer
     }
     
     static public long getTypeId() {
-        return 215;
+        return 154;
     }
     
     public long getClassId() {

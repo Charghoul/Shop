@@ -16,7 +16,7 @@ public class Auslauf extends view.objects.Artikelstatus implements AuslaufView{
     }
     
     static public long getTypeId() {
-        return 213;
+        return 144;
     }
     
     public long getClassId() {

@@ -16,7 +16,7 @@ public class Neuanlage extends view.objects.Artikelstatus implements NeuanlageVi
     }
     
     static public long getTypeId() {
-        return 214;
+        return 111;
     }
     
     public long getClassId() {

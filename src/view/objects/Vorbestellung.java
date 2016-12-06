@@ -18,7 +18,7 @@ public class Vorbestellung extends view.objects.BestellungAbstrakt implements Vo
     }
     
     static public long getTypeId() {
-        return 216;
+        return 166;
     }
     
     public long getClassId() {

@@ -88,7 +88,7 @@ public class Vorbestellung extends model.BestellungAbstrakt implements Persisten
     }
     
     static public long getTypeId() {
-        return 216;
+        return 166;
     }
     
     public long getClassId() {
@@ -97,7 +97,7 @@ public class Vorbestellung extends model.BestellungAbstrakt implements Persisten
     
     public void store() throws PersistenceException {
         if(!this.isDelayed$Persistence()) return;
-        if (this.getClassId() == 216) ConnectionHandler.getTheConnectionHandler().theVorbestellungFacade
+        if (this.getClassId() == 166) ConnectionHandler.getTheConnectionHandler().theVorbestellungFacade
             .newVorbestellung(warenwert,this.getId());
         super.store();
         this.getPositionsListe().store();

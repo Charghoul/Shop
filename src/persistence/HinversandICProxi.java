@@ -19,7 +19,7 @@ public class HinversandICProxi extends BestellstatusICProxi implements Persisten
     }
     
     public long getClassId() {
-        return 218;
+        return 172;
     }
     
     public PersistentHinversand getThis() throws PersistenceException {

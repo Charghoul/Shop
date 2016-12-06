@@ -84,7 +84,7 @@ public class Neuanlage extends model.Artikelstatus implements PersistentNeuanlag
     }
     
     static public long getTypeId() {
-        return 214;
+        return 111;
     }
     
     public long getClassId() {

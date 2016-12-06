@@ -16,7 +16,7 @@ public class Hinversand extends view.objects.Bestellstatus implements Hinversand
     }
     
     static public long getTypeId() {
-        return 218;
+        return 172;
     }
     
     public long getClassId() {

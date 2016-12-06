@@ -22,7 +22,7 @@ public class EinkaufsManager extends ViewObject implements EinkaufsManagerView{
     }
     
     static public long getTypeId() {
-        return 191;
+        return 103;
     }
     
     public long getClassId() {
