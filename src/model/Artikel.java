@@ -460,15 +460,20 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
     }
     public void herstellerHinzufuegen(final Hersteller4Public hersteller) 
 				throws model.ExcAlreadyExists, PersistenceException{
-        Artikel4Public art = Artikel.getArtikelByBezeichnung(getThis().getBezeichnung()).findFirst(new Predcate<Artikel4Public>() {
-            @Override
-            public boolean test(Artikel4Public argument) throws PersistenceException {
-                return argument.getHersteller().equals(hersteller);
+
+        ArtikelSearchList artikelSearchList = Artikel.getArtikelByBezeichnung(getThis().getBezeichnung());
+            artikelSearchList.filter(argument -> {
+                if(argument.getHersteller()!=null){
+                    return argument.getHersteller().equals(hersteller);
+                }
+                else {
+                    return false;
+                }
+            });
+            if(artikelSearchList.iterator().hasNext()){
+                throw new ExcAlreadyExists(ErrorMessages.ArtikelMitDiesemHerstellerExistiertBereits);
             }
-        });
-        if(art!=null){
-            throw new ExcAlreadyExists(ErrorMessages.ArtikelMitDiesemHerstellerExistiertBereits);
-        }
+
         getThis().setHersteller(hersteller);
         //überprüft ob Artikelbestand 0 ist und bestellt dann nach
         Position4Public position = Warenlager.getTheWarenlager().getWarenListe().findFirst(argument -> {

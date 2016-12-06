@@ -113,13 +113,13 @@ class BestellManager{
 singleton ProduktKatalog{
 	//#produktgruppen fungiert als root aller produktgruppen und wird beim erstellen des Produktkataloges angelegt.
 	public Produktgruppe produktgruppen;
-	//produktgruppehinzufuegen hängt der bestehenden Produktgruppe #produktgruppe eine neue Produktgruppe mit dem Namen #name an. 
+	//ruft die Funktion produktgruppeHinzufuegen() in der #produktgruppe auf und übergibt #name 
 	event void produktgruppeHinzufuegen(Produktgruppe produktgruppe, String name)  throws ExcAlreadyExists, CycleException;
-	//löscht die Produktgruppe #produktgruppe aus ihrer Parent Produktgruppe, alle Child Artikel und Produktgruppen werden ebenfalls entfernt
-	event active void produktgruppeEntfernen##prodEntf(Produktgruppe produktgruppe) throws ExcHasNoParent;
-	//hängt an die Produktgruppe #produktgruppe den Artikel #artikel an. Wirft eine Exception wenn #artikel schon in #produktgruppe vorhanden ist
-	event void artikelAnhaengen( Produktgruppe produktgruppe, Artikel artikel )  throws ExcAlreadyExists, CycleException;
-	//entfernt #artikel aus #produktgruppe, löscht jedoch nicht den Artikel selbst
+	//ruft prodGEntfernen() in der #produktgruppe auf
+	event active void produktgruppeEntfernen##prodEntf(Produktgruppe produktgruppe) throws ExcHasNoParent;	
+	//ruft artikelAnhaengen() in der #produktgruppe auf und übergibt #artikel
+	event void artikelAnhaengen( Produktgruppe produktgruppe, Artikel artikel )  throws ExcAlreadyExists, CycleException;	
+	//ruft artikelAbhaengen() in der #produktgruppe auf und übergibt den #artikel
 	event void artikelAbhaengen(Produktgruppe produktgruppe, Artikel artikel);
 	//eine Methode die genutzt wird um Updates der Artikel und Produktgruppen vom Admin dem Kunden anzuzeigen
 	event void internalUpdate();
@@ -146,7 +146,6 @@ singleton ZeitManager {
 	observe ZeitObjekt ** zeitObjektListe;
 	//eine Liste aller AnnahmeZeitenObjekte, welche seperat angelegt werden, da sonst beim Durchlauf der ZeitObjekte ein Problem entsteht
 	server-only ZeitObjekt ** annahmeZeiten;
-	
 	public Integer annahmezeit@@AnnahmezeitInZeitEinheiten;
 	public Integer maxAnlieferungsVersuche##maxAnl;
 	public Integer retoureZeit@@standardRetourenZeitInZE;
@@ -303,42 +302,75 @@ class Artikel extends Komponente{
 	active void aendereMaxLagerbestand##aendMax(Integer maxLagerbestand) throws ExcIllogicalDataEntry;
 	//ändert den Preis des Artikels auf #preis
 	void aenderePreis(Integer preis);
-	//ändert die Bezeichnung des Artikels auf #bezeichnung
+	//ändert die Bezeichnung des Artikels auf #bezeichnung, wirft eine Exception wenn schon ein Artikel mit der Bezeichnung #bezeichnung und dem gleichen Hersteller exisitert
 	active void aendereBezeichnung(String bezeichnung) throws ExcAlreadyExists;
+	//ändert den #artikelstatus auf Verkauf. Wirft eine Exception wenn dem Artikel kein Hersteller zugeordnet wurde oder der Status vorher schon Verkauf war
 	active void statusVerkauf() throws ExcInconsistentStatusChange, ExcArtikelHatKeinenHersteller;
+	//ändern den #artikelstatus auf Auslauf. Wirft eine Exception wenn der Status schon Auslauf war, oder der Status Verkauf übersprungen wird
 	active void statusAuslauf() throws ExcInconsistentStatusChange;
+	//fügt einen Artikel zum Einkaufswagen #einkaufsManager des Kunden hinzu, indem die Funktion neuePosition() des #einkaufsManager aufgerufen wird, Wirft alle Exceptions der Funktion neuePosition()
 	active void zuEinkaufswHinz(Integer menge, EinkaufsManager einkaufsManager) throws UserException;
+	//fügt dem Artikel den Hersteller #hersteller hinzu. Wirft eine Exception wenn schon ein Artikel mit #bezeichnung und dem neuen #hersteller existiert
 	void herstellerHinzufuegen(Hersteller hersteller) throws ExcAlreadyExists;
 }
+
+//Wird benutzt um die Artikel einzuordnen im Produktkatalog. Jede Produktgruppe kann weitere Produktgruppen oder Artikel enthalten
 class Produktgruppe extends Komponente{
+	//#komponentenliste enthält die Komponenten (also Artikel und Produktgruppen) dieser Produktgruppe
 	symmetric Komponente**komponentenListe hierarchy Hierarchie;
+	//Name der Produktgruppe, der unique ist
 	prior indexed String name;
+	//erstellt eine neue Produktgruppe mit nem Namen #name und fügt sie der #komponentenListe hinzu. Wirft eine Exception, wenn der schon eine Produktgruppe mit dem Namen #name besteht
 	void produktgruppeHinzufuegen(String name) throws ExcAlreadyExists, CycleException;
+	//ruft removeChild() in der Parent Produktgruppe dieser Produktgruppe auf. Wirft eine Exception wenn die Produktgruppe keinen Parent besitzt
 	void prodGEntfernen() throws ExcHasNoParent;
+	//entfernt die Produktgruppe #child aus der #komponentenListe
 	void removeChild(Produktgruppe child);
+	//fügt den Artikel #artikel zu der #komponentenListe dieser Produktgruppe hinzu. Wirft eine Exception wenn der Artikel schon in der #komponentenListe vorhanden ist
 	void artikelAnhaengen(Artikel artikel) throws ExcAlreadyExists, CycleException;
+	//entfernt den Artikel #artikel aus der #komponentenListe
 	void artikelAbhaengen(Artikel artikel);
 }
+
+//Hersteller werden Artikeln zugeordnet, fungieren nur als Dummy
 class Hersteller{
+	//Der Name des Herstellers ist unique
 	prior indexed String name;
+	//ändert den Namen des Herstellers zu #name. Wirft eine Exception wenn schon ein Hersteller mit diesem Namen existiert
 	void aendereHersteller(String name) throws ExcAlreadyExists;
 }
+
+//Abstrakte Klasse, die Vorbestellungen und  Bestellungen beinhaltet
 abstract class BestellungAbstrakt##BstAbstr{
+	//Bestellmanager der der Bestellung oder Vorbestellung zugeordnet ist, um zum Beispiel das Entfernen einer Bestellung aus dem BestellManager des Kunden zu ermöglichen und eine eindeutige der Bestellung zum Kunden zu gewährleisten
 	public prior server-only BestellManager bestellManager;
+	//Warenwert der Bestellung oder Vorbestellung wird zwischengespeichert, damit sie nicht immer neu abgefragt werden muss
 	public prior Integer warenwert;
+	//Lieferart der Bestellung oder Vorbestellung, die der Kunde ausgewählt hat
 	public prior Lieferart lieferart;
+	//fügt einer Bestellung oder Vorbestellung die#positionsListe hinzu, wird genutzt wenn eine Bestellung oder Vorbestellung neu erstellt wird
 	void listeHinzufuegen(Position ** positionsListe);
 }
 
+//Bestellungen werden im Bestellmanager des Kunden angezeigt, zeigen aktuelle Lieferinformationen an und der Kunde kann mit ihnen agieren wenn sie geliefert wurden
 class Bestellung extends BestellungAbstrakt{
+	//enthält die Positionen der Bestellung
 	public PositionInBestellung ** positionsListe;
+	//enthält die KndLieferung des ZeitManagers um die Lieferinformationen anzuzeigen
 	server-only public KndLieferung kndLieferung;
+	//bestellID damit der Kunde die Bestellungen auseinander halten kann
 	prior indexed Integer bestellID;
+	//Bestellstatus, damit der Kunde weiß ob er die Bestellung annehmen kann und ob sie gerade hin oder zurück geschickt wird
 	public no-view Bestellstatus bestellstatus;
+	//ändert den Status den bestellstatus der Bestellung auf #bestellstatus
 	void aendereStatus(Bestellstatus bestellstatus);
+	//nimmt die Bestellung an, ist nur möglich wenn sich die Bestellung im #bestellstatus geliefert befindet. Ändert den #bestellstatus auf angenommen, verringert #reserviert und #kontostand des ServiceKunde um den #warenwert der KndLieferung. Ebenfalls wird der Status der KndLieferung auf deactivated gesetzt
 	void annehmen();
+	//sendet die ganze Bestellung zurück. Dabei wird die Bestellung aus dem BestellManager entfernt, #reserviert um den Warenwert der KndLieferung verringert und die Rücksendegebühr vom Konto abgezogen
 	active void allesZuruecksenden##allZrck();
+	//berechnet den aktuellen Warenwert der Bestellung
 	Integer berechneWarenwert();
+	//fügt 
 	void lieferungHinzufuegen(KndLieferung lieferung);
 	
 }
