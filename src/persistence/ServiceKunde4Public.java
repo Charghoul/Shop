@@ -49,7 +49,7 @@ public interface ServiceKunde4Public extends ServiceShop4Public {
     public void annehmen(final Bestellung4Public bestellung) 
 				throws PersistenceException;
     public void auszahlen(final Konto4Public konto, final long betrag) 
-				throws model.ExcAuszahlungGroesserGutgaben, PersistenceException;
+				throws PersistenceException;
     public void bestellen(final EinkaufsManager4Public einkaufsManager, final Lieferart4Public lieferart) 
 				throws PersistenceException;
     public void copyingPrivateUserAttributes(final Anything copy) 

@@ -85,6 +85,10 @@ public class BestellungProxi extends BestellungAbstraktProxi implements Persiste
 				throws PersistenceException{
         ((PersistentBestellung)this.getTheObject()).allesZuruecksenden(invoker);
     }
+    public void annehmen(final Invoker invoker) 
+				throws PersistenceException{
+        ((PersistentBestellung)this.getTheObject()).annehmen(invoker);
+    }
     public void deregister(final ObsInterface observee) 
 				throws PersistenceException{
         ((PersistentBestellung)this.getTheObject()).deregister(observee);
@@ -110,7 +114,7 @@ public class BestellungProxi extends BestellungAbstraktProxi implements Persiste
         ((PersistentBestellung)this.getTheObject()).allesZuruecksenden();
     }
     public void annehmen() 
-				throws PersistenceException{
+				throws model.ExcIllogicalDataEntry, PersistenceException{
         ((PersistentBestellung)this.getTheObject()).annehmen();
     }
     public long berechneWarenwert() 

@@ -76,9 +76,21 @@ public class KontoICProxi extends PersistentInCacheProxiOptimistic implements Pe
     }
     
     
+    public void abbuchen(final long betrag, final Invoker invoker) 
+				throws PersistenceException{
+        ((PersistentKonto)this.getTheObject()).abbuchen(betrag, invoker);
+    }
+    public void auszahlen(final long betrag, final Invoker invoker) 
+				throws PersistenceException{
+        ((PersistentKonto)this.getTheObject()).auszahlen(betrag, invoker);
+    }
     public void deregister(final ObsInterface observee) 
 				throws PersistenceException{
         ((PersistentKonto)this.getTheObject()).deregister(observee);
+    }
+    public void einzahlen(final long betrag, final Invoker invoker) 
+				throws PersistenceException{
+        ((PersistentKonto)this.getTheObject()).einzahlen(betrag, invoker);
     }
     public ServiceKunde4Public getMyServiceKunde() 
 				throws PersistenceException{
@@ -91,6 +103,10 @@ public class KontoICProxi extends PersistentInCacheProxiOptimistic implements Pe
     public void register(final ObsInterface observee) 
 				throws PersistenceException{
         ((PersistentKonto)this.getTheObject()).register(observee);
+    }
+    public void reserviere(final long betrag, final Invoker invoker) 
+				throws PersistenceException{
+        ((PersistentKonto)this.getTheObject()).reserviere(betrag, invoker);
     }
     public void updateObservers(final model.meta.Mssgs event) 
 				throws PersistenceException{
@@ -105,7 +121,7 @@ public class KontoICProxi extends PersistentInCacheProxiOptimistic implements Pe
         ((PersistentKonto)this.getTheObject()).aendereLimit(limit);
     }
     public void auszahlen(final long betrag) 
-				throws model.ExcAuszahlungGroesserGutgaben, PersistenceException{
+				throws model.ExcAuszahlungGroesserGutgaben, model.ExcIllogicalDataEntry, PersistenceException{
         ((PersistentKonto)this.getTheObject()).auszahlen(betrag);
     }
     public void copyingPrivateUserAttributes(final Anything copy) 

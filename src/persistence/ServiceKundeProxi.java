@@ -199,7 +199,7 @@ public class ServiceKundeProxi extends ServiceShopProxi implements PersistentSer
         ((PersistentServiceKunde)this.getTheObject()).annehmen(bestellung);
     }
     public void auszahlen(final Konto4Public konto, final long betrag) 
-				throws model.ExcAuszahlungGroesserGutgaben, PersistenceException{
+				throws PersistenceException{
         ((PersistentServiceKunde)this.getTheObject()).auszahlen(konto, betrag);
     }
     public void bestellManager_update(final model.meta.BestellManagerMssgs event) 

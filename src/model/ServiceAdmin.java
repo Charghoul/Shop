@@ -474,7 +474,7 @@ public class ServiceAdmin extends model.ServiceShop implements PersistentService
     }
     public void aendereHstLieferzeit(final Artikel4Public artikel, final long hstLieferzeit) 
 				throws PersistenceException{
-        artikel.aendereHstLieferzeit(hstLieferzeit);
+        artikel.aendereHstLieferzeit(hstLieferzeit,getThis());
         getThis().signalChanged(true);
     }
     public void aendereLieferartDauer(final Lieferart4Public lieferart, final long dauer) 

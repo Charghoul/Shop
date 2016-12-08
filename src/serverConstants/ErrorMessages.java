@@ -26,6 +26,10 @@ public class ErrorMessages {
     public static final String LagerbestandMinGroesserMax = "Der minimale Lagerbestand darf nicht grösser als der maximale sein";
     public static final String ArtikelDoesNotExist = "Ein Artikel mit dieser Bezeichung existiert nicht";
     public static final String ArtikelMitDiesemHerstellerExistiertBereits = "Ein Artikel mit dieser Bezeichung und diesem Hersteller existiert bereits";
+    public static final String HstLieferzeitKleinerNull = "Die Herstelllerlieferzeit darf nicht unter 0 liegen";
+    public static final String LimitUnterschritten = "Diese Buchung würde Ihr Limit unterschreiten und ist daher nicht möglich.";
+    public static final String ReserviertUnterNull = "Mit dieser Verringerung würde #reserviert unter 0 fallen";
+    public static final String AuszahlungGroesserReserviert = "Nach dieser Auszahlung könnten sie die schon aufgegebenen Bestellungen nicht mehr annehmen";
 
     private ErrorMessages(){}
 }

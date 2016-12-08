@@ -318,6 +318,14 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
 		command.setCommandReceiver(getThis());
 		model.meta.CommandCoordinator.getTheCommandCoordinator().coordinate(command);
     }
+    public void aendereHstLieferzeit(final long hstLieferzeit, final Invoker invoker) 
+				throws PersistenceException{
+        java.sql.Date now = new java.sql.Date(new java.util.Date().getTime());
+		AendereHstLieferzeitCommand4Public command = model.meta.AendereHstLieferzeitCommand.createAendereHstLieferzeitCommand(hstLieferzeit, now, now);
+		command.setInvoker(invoker);
+		command.setCommandReceiver(getThis());
+		model.meta.CommandCoordinator.getTheCommandCoordinator().coordinate(command);
+    }
     public void aendereMaxLagerbestand(final long maxLagerbestand, final Invoker invoker) 
 				throws PersistenceException{
         java.sql.Date now = new java.sql.Date(new java.util.Date().getTime());
@@ -415,7 +423,6 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
     
     public void aendereBezeichnung(final String bezeichnung) 
 				throws model.ExcAlreadyExists, PersistenceException{
-        //TODO: überprüfen ob schon ein Artikel mit der neuen Bezeichnung und diesem Hersteller existiert
         Artikel4Public art = Artikel.getArtikelByBezeichnung(bezeichnung).findFirst(new Predcate<Artikel4Public>() {
             @Override
             public boolean test(Artikel4Public argument) throws PersistenceException {
@@ -429,7 +436,10 @@ public class Artikel extends model.Komponente implements PersistentArtikel{
         
     }
     public void aendereHstLieferzeit(final long hstLieferzeit) 
-				throws PersistenceException{
+				throws model.ExcIllogicalDataEntry, PersistenceException{
+        if(hstLieferzeit < 0) {
+            throw new ExcIllogicalDataEntry(ErrorMessages.HstLieferzeitKleinerNull);
+        }
         getThis().setHstLieferzeit(hstLieferzeit);
         
     }

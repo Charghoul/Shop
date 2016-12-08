@@ -19,14 +19,22 @@ public interface Konto4Public extends Anything, SubjInterface, AbstractPersisten
     public <E extends model.UserException>  void accept(SubjInterfaceExceptionVisitor<E> visitor) throws PersistenceException, E;
     public <R, E extends model.UserException> R accept(SubjInterfaceReturnExceptionVisitor<R, E>  visitor) throws PersistenceException, E;
     
+    public void abbuchen(final long betrag, final Invoker invoker) 
+				throws PersistenceException;
+    public void auszahlen(final long betrag, final Invoker invoker) 
+				throws PersistenceException;
+    public void einzahlen(final long betrag, final Invoker invoker) 
+				throws PersistenceException;
     public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
+				throws PersistenceException;
+    public void reserviere(final long betrag, final Invoker invoker) 
 				throws PersistenceException;
     public void abbuchen(final long betrag) 
 				throws PersistenceException;
     public void aendereLimit(final long limit) 
 				throws PersistenceException;
     public void auszahlen(final long betrag) 
-				throws model.ExcAuszahlungGroesserGutgaben, PersistenceException;
+				throws model.ExcAuszahlungGroesserGutgaben, model.ExcIllogicalDataEntry, PersistenceException;
     public void copyingPrivateUserAttributes(final Anything copy) 
 				throws PersistenceException;
     public void einzahlen(final long betrag) 

@@ -31,6 +31,8 @@ public interface Artikel4Public extends Komponente4Public {
     
     public void aendereBezeichnung(final String bezeichnung, final Invoker invoker) 
 				throws PersistenceException;
+    public void aendereHstLieferzeit(final long hstLieferzeit, final Invoker invoker) 
+				throws PersistenceException;
     public void aendereMaxLagerbestand(final long maxLagerbestand, final Invoker invoker) 
 				throws PersistenceException;
     public void aendereMinLagerbestand(final long minLagerbestand, final Invoker invoker) 
@@ -50,7 +52,7 @@ public interface Artikel4Public extends Komponente4Public {
     public void aendereBezeichnung(final String bezeichnung) 
 				throws model.ExcAlreadyExists, PersistenceException;
     public void aendereHstLieferzeit(final long hstLieferzeit) 
-				throws PersistenceException;
+				throws model.ExcIllogicalDataEntry, PersistenceException;
     public void aendereMaxLagerbestand(final long maxLagerbestand) 
 				throws model.ExcIllogicalDataEntry, PersistenceException;
     public void aendereMinLagerbestand(final long minLagerbestand) 

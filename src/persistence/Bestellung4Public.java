@@ -24,6 +24,8 @@ public interface Bestellung4Public extends BestellungAbstrakt4Public {
     
     public void allesZuruecksenden(final Invoker invoker) 
 				throws PersistenceException;
+    public void annehmen(final Invoker invoker) 
+				throws PersistenceException;
     public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
 				throws PersistenceException;
     public void aendereStatus(final Bestellstatus4Public bestellstatus) 
@@ -31,7 +33,7 @@ public interface Bestellung4Public extends BestellungAbstrakt4Public {
     public void allesZuruecksenden() 
 				throws PersistenceException;
     public void annehmen() 
-				throws PersistenceException;
+				throws model.ExcIllogicalDataEntry, PersistenceException;
     public long berechneWarenwert() 
 				throws PersistenceException;
     public void copyingPrivateUserAttributes(final Anything copy) 

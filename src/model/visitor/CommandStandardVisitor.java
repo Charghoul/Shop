@@ -8,11 +8,17 @@ public abstract class CommandStandardVisitor implements CommandVisitor {
     public void handleAendereBezeichnungCommand(AendereBezeichnungCommand4Public aendereBezeichnungCommand) throws PersistenceException{
         this.standardHandling(aendereBezeichnungCommand);
     }
+    public void handleAendereHstLieferzeitCommand(AendereHstLieferzeitCommand4Public aendereHstLieferzeitCommand) throws PersistenceException{
+        this.standardHandling(aendereHstLieferzeitCommand);
+    }
     public void handleVorbestellenCommand(VorbestellenCommand4Public vorbestellenCommand) throws PersistenceException{
         this.standardHandling(vorbestellenCommand);
     }
     public void handleArtikelEntfernenCommand(ArtikelEntfernenCommand4Public artikelEntfernenCommand) throws PersistenceException{
         this.standardHandling(artikelEntfernenCommand);
+    }
+    public void handleReserviereCommand(ReserviereCommand4Public reserviereCommand) throws PersistenceException{
+        this.standardHandling(reserviereCommand);
     }
     public void handleProduktgruppeEntfernenCommand(ProduktgruppeEntfernenCommand4Public produktgruppeEntfernenCommand) throws PersistenceException{
         this.standardHandling(produktgruppeEntfernenCommand);
@@ -26,17 +32,26 @@ public abstract class CommandStandardVisitor implements CommandVisitor {
     public void handleNeuerArtikelCommand(NeuerArtikelCommand4Public neuerArtikelCommand) throws PersistenceException{
         this.standardHandling(neuerArtikelCommand);
     }
+    public void handleAnnehmenCommand(AnnehmenCommand4Public annehmenCommand) throws PersistenceException{
+        this.standardHandling(annehmenCommand);
+    }
     public void handleArtikelEntnehmenCommand(ArtikelEntnehmenCommand4Public artikelEntnehmenCommand) throws PersistenceException{
         this.standardHandling(artikelEntnehmenCommand);
     }
     public void handleRegisterCommand(RegisterCommand4Public registerCommand) throws PersistenceException{
         this.standardHandling(registerCommand);
     }
+    public void handleEinzahlenCommand(EinzahlenCommand4Public einzahlenCommand) throws PersistenceException{
+        this.standardHandling(einzahlenCommand);
+    }
     public void handleStatusVerkaufCommand(StatusVerkaufCommand4Public statusVerkaufCommand) throws PersistenceException{
         this.standardHandling(statusVerkaufCommand);
     }
     public void handleAnzeigenCommand(AnzeigenCommand4Public anzeigenCommand) throws PersistenceException{
         this.standardHandling(anzeigenCommand);
+    }
+    public void handleAuszahlenCommand(AuszahlenCommand4Public auszahlenCommand) throws PersistenceException{
+        this.standardHandling(auszahlenCommand);
     }
     public void handleAendereMaxLagerbestandCommand(AendereMaxLagerbestandCommand4Public aendereMaxLagerbestandCommand) throws PersistenceException{
         this.standardHandling(aendereMaxLagerbestandCommand);
@@ -46,6 +61,9 @@ public abstract class CommandStandardVisitor implements CommandVisitor {
     }
     public void handleAllesZuruecksendenCommand(AllesZuruecksendenCommand4Public allesZuruecksendenCommand) throws PersistenceException{
         this.standardHandling(allesZuruecksendenCommand);
+    }
+    public void handleAbbuchenCommand(AbbuchenCommand4Public abbuchenCommand) throws PersistenceException{
+        this.standardHandling(abbuchenCommand);
     }
     public void handleZuruecksendenCommand(ZuruecksendenCommand4Public zuruecksendenCommand) throws PersistenceException{
         this.standardHandling(zuruecksendenCommand);

@@ -314,8 +314,7 @@ public class ServiceKundeConnection extends ServiceShopConnection {
         
     }
     
-    @SuppressWarnings("unchecked")
-    public synchronized void auszahlen(KontoView konto, long betrag) throws ModelException, ExcAuszahlungGroesserGutgaben{
+    public synchronized void auszahlen(KontoView konto, long betrag) throws ModelException{
         try {
             Vector<Object> parameters = new Vector<Object>();
             if (konto == null){
@@ -328,8 +327,6 @@ public class ServiceKundeConnection extends ServiceShopConnection {
             if(!((Boolean)success.get(common.RPCConstantsAndServices.OKOrNotOKResultFieldName)).booleanValue()){
                 if (((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == 0)
                     throw new ModelException((String)success.get(common.RPCConstantsAndServices.ExceptionMessageFieldName), ((Integer)success.get(common.RPCConstantsAndServices.ExceptionNumberFieldName)).intValue());
-                if(((Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName)).intValue() == -256)
-                    throw ExcAuszahlungGroesserGutgaben.fromHashtableToExcAuszahlungGroesserGutgaben((java.util.HashMap<String,Object>)success.get(common.RPCConstantsAndServices.ResultFieldName), this.getHandler());
                 throw new ModelException ("Fatal error (unknown exception code:" + (Integer)success.get(common.RPCConstantsAndServices.ErrorNumberFieldName) + ")",0);
             }
         }catch(IOException ioe){

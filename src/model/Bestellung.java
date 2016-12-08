@@ -235,6 +235,14 @@ public class Bestellung extends model.BestellungAbstrakt implements PersistentBe
 		command.setCommandReceiver(getThis());
 		model.meta.CommandCoordinator.getTheCommandCoordinator().coordinate(command);
     }
+    public void annehmen(final Invoker invoker) 
+				throws PersistenceException{
+        java.sql.Date now = new java.sql.Date(new java.util.Date().getTime());
+		AnnehmenCommand4Public command = model.meta.AnnehmenCommand.createAnnehmenCommand(now, now);
+		command.setInvoker(invoker);
+		command.setCommandReceiver(getThis());
+		model.meta.CommandCoordinator.getTheCommandCoordinator().coordinate(command);
+    }
     public synchronized void deregister(final ObsInterface observee) 
 				throws PersistenceException{
         SubjInterface subService = getThis().getSubService();
@@ -297,7 +305,7 @@ public class Bestellung extends model.BestellungAbstrakt implements PersistentBe
 
     }
     public void annehmen() 
-				throws PersistenceException{
+				throws model.ExcIllogicalDataEntry, PersistenceException{
         getThis().setBestellstatus(Angenommen.getTheAngenommen());
         getThis().getBestellManager().getKonto().verringereReserviert(getThis().berechneWarenwert());
         getThis().getBestellManager().getKonto().abbuchen(getThis().getWarenwert());

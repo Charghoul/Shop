@@ -295,7 +295,7 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
 				throws model.ExcWarenwertUeberKontoguthaben, model.ExcArtikelNichtVerfuegbar, PersistenceException{
         //überprüfen ob der Kunde genügend nicht reserviertes Guthaben hat
         long bestellungswert = getThis().gibGesamtPreis();
-        if(bestellungswert + getThis().getBestellManager().getKonto().getReserviert() > getThis().getMyServiceKunde().getKonto().getKontostand()) {
+        if(bestellungswert + getThis().getBestellManager().getKonto().getReserviert() > getThis().getMyServiceKunde().getKonto().getKontostand() - getThis().getMyServiceKunde().getKonto().getLimit()) {
             throw new ExcWarenwertUeberKontoguthaben(ErrorMessages.WarenwertUeberKontoguthaben);
         }
         Bestellung4Public bestellung = getThis().getBestellManager().neueBestellung(getThis().getEinkaufsListe().getList(), bestellungswert, lieferart);
@@ -366,7 +366,7 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
 				throws model.ExcWarenwertUeberKontoguthaben, PersistenceException{
 
         long bestellungswert = getThis().gibGesamtPreis();
-        if(bestellungswert + getThis().getBestellManager().getKonto().getReserviert() > getThis().getMyServiceKunde().getKonto().getKontostand()){
+        if(bestellungswert + getThis().getBestellManager().getKonto().getReserviert() > getThis().getMyServiceKunde().getKonto().getKontostand() - getThis().getMyServiceKunde().getKonto().getLimit()){
            throw new ExcWarenwertUeberKontoguthaben(ErrorMessages.WarenwertUeberKontoguthaben);
         }
         getThis().getMyServiceKunde().getKonto().reserviere(bestellungswert);

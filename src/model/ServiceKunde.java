@@ -459,18 +459,18 @@ public class ServiceKunde extends model.ServiceShop implements PersistentService
     }
     public void allesZuruecksenden(final Bestellung4Public bestellung) 
 				throws PersistenceException{
-        bestellung.allesZuruecksenden();
+        bestellung.allesZuruecksenden(getThis());
         getThis().signalChanged(true);
     }
     public void annehmen(final Bestellung4Public bestellung) 
 				throws PersistenceException{
-        bestellung.annehmen();
-        getThis().getKonto().abbuchen(bestellung.getWarenwert());
+        bestellung.annehmen(getThis());
+        getThis().getKonto().abbuchen(bestellung.getWarenwert(),getThis());
         getThis().signalChanged(true);
     }
     public void auszahlen(final Konto4Public konto, final long betrag) 
-				throws model.ExcAuszahlungGroesserGutgaben, PersistenceException{
-        konto.auszahlen(betrag);
+				throws PersistenceException{
+        konto.auszahlen(betrag,getThis());
         getThis().signalChanged(true);
     }
     public void bestellManager_update(final model.meta.BestellManagerMssgs event) 

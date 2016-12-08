@@ -26,7 +26,7 @@ server ServiceKunde extends ServiceShop {
 	void annehmen(Bestellung bestellung checked);
 	void entfernePosition(Position position);
 	void einzahlen(Konto konto, Integer betrag);
-	void auszahlen(Konto konto, Integer betrag) throws ExcAuszahlungGroesserGutgaben;
+	void auszahlen(Konto konto, Integer betrag);
 	void suchen(String bezeichnung);
 }
 server ServiceAdmin extends ServiceShop {
@@ -257,13 +257,13 @@ class Konto{
 	//Speichert den aktuell reservierten Warenwert des Kunden. Das heißt der Wert alle Bestellungen und Vorbestellungen inklusive Lieferkosten die noch nicht bezahlt wurden wird hier gespeichert, um einfacher prüfen zu können, ob der Kunde eine neue Bestellung aufgeben darf oder sich damit unter das Limit fallen würde
 	public prior Integer reserviert;
 	//bucht den Betrag #betrag vom #kontostand ab
-	void abbuchen(Integer betrag);
+	active void abbuchen(Integer betrag);
 	//erhöhrt den #kontostand um den Betrag #betrag
-	void einzahlen(Integer betrag);
+	active void einzahlen(Integer betrag);
 	//erlaubt dem Kunden sich Geld vom Konto wieder auszahlen zu lassen. #betrag wird dann vom #kontostand abgebucht. Wirft eine Exception wenn #betrag > #kontostand ist.
-	void auszahlen(Integer betrag) throws ExcAuszahlungGroesserGutgaben;
+	active void auszahlen(Integer betrag) throws ExcAuszahlungGroesserGutgaben, ExcIllogicalDataEntry;
 	//erhöht #reserviert um den Betrag #betrag
-	void reserviere(Integer betrag);
+	active void reserviere(Integer betrag);
 	//verringert #reserviert um den Betrag #betrag
 	void verringereReserviert(Integer betrag);
 	//ändert #limit des Kontos auf #limit
@@ -295,7 +295,7 @@ class Artikel extends Komponente{
 	//Hersteller des Artikels, zusammen mit der Bezeichnung ist der Artikel unique
 	public no-view Hersteller hersteller;
 	//ändert die HerstellerLieferzeit des Artikels auf #hstLieferzeit
-	void aendereHstLieferzeit(Integer hstLieferzeit);
+	active void aendereHstLieferzeit##aendHstLief(Integer hstLieferzeit) throws ExcIllogicalDataEntry;
 	//ändert den minimalen Lagerbestand des Artikels auf #minLagerbestand. Wirft eine Exception, wenn #minLagerbestand größer ist als  der aktuelle #maxLagerbestand
 	active void aendereMinLagerbestand##aendMin(Integer minLagerbestand) throws ExcIllogicalDataEntry;
 	//ändert den maximalen Lagerbestand des Artikels auf #maxLagerbestand. Wirft eine Exception, wenn der #maxLagerbestand kleiner ist als der aktuelle #minLagerbestand des Artikels
@@ -365,65 +365,91 @@ class Bestellung extends BestellungAbstrakt{
 	//ändert den Status den bestellstatus der Bestellung auf #bestellstatus
 	void aendereStatus(Bestellstatus bestellstatus);
 	//nimmt die Bestellung an, ist nur möglich wenn sich die Bestellung im #bestellstatus geliefert befindet. Ändert den #bestellstatus auf angenommen, verringert #reserviert und #kontostand des ServiceKunde um den #warenwert der KndLieferung. Ebenfalls wird der Status der KndLieferung auf deactivated gesetzt
-	void annehmen();
+	active void annehmen() throws ExcIllogicalDataEntry;
 	//sendet die ganze Bestellung zurück. Dabei wird die Bestellung aus dem BestellManager entfernt, #reserviert um den Warenwert der KndLieferung verringert und die Rücksendegebühr vom Konto abgezogen
 	active void allesZuruecksenden##allZrck();
 	//berechnet den aktuellen Warenwert der Bestellung
 	Integer berechneWarenwert();
-	//fügt 
+	//fügt der aktuellen Bestellung die #kndLieferung hinzu, um eine symmetrische Beziehung zu ermöglichen 
 	void lieferungHinzufuegen(KndLieferung lieferung);
-	
 }
+
+//Eine Vorbestellung kann vom Kunden erstellt werden, wenn nicht alles in seinem Einkaufswagen verfügbar ist.
 class Vorbestellung extends BestellungAbstrakt{
+	//#positionsListe enthält die Positionen aus dem Einkaufswagen
 	public Position ** positionsListe;
+	//stornieren löscht die Vorbestellung
 	void stornieren();
 }
-
+//Eine KndLieferung ist eine Lieferung der #bestellung zum Kunden. 
 class KndLieferung extends ZeitObjekt{
+	//#bestellung enthält die Bestellung des Kunden
 	prior public Bestellung bestellung;
+	//in #lieferversuche wird die Anzahl der bisherigen Lieferversuche gespeichert
 	public Integer lieferversuche;
+	//nachdem ein Kunde die Lieferung nicht angenommen hat und sie wieder zurückgesendet wurde, wird die KndLieferung so oft neu gesendet, wie die #lieferversuche kleiner ist als die maximalen Anlieferungsversuche. Hierbei wird der Status wieder auf activated gesetzt, die Bestellung des Kunden auf "Hinversand" und #lieferversuche hochgezählt
 	event void erneutSenden();
 }
-
+//eine Hersteller Lieferung ist die Lieferung vom Hersteller an den Shop. Sie wird für Nachbestellungen von Artikeln genutzt, deren Bestand unter den minimalen Lagerbestand gefallen sind
 class HstLieferung extends ZeitObjekt{
+	//#artikel enthält den nachzubestellenden Artikel
 	prior Artikel artikel;
+	//#menge enthält die Menge in der der Artikel nachbestelllt werden soll, also der maximale Lagerbestand minus dem aktuellen Lagerbestand
 	prior Integer menge;
 }
 
+//Spiegelt den Zeitraum wieder den der Kunde hat um die Bestellung anzunehmen
 class KndAnnahme extends ZeitObjekt{
 	prior KndLieferung kndLieferung;
 }
 
+//Spiegelt den Zeitraum wieder die die ganze Lieferung benötigt um zurückgesendet zu werden
 class RetoureLieferung extends ZeitObjekt{
 	prior KndLieferung kndLieferung;
 }
-
+//Wird genutzt, wenn der Kunde eine einzelne Position bei zurücksenden möchte
 class RetourePosition extends ZeitObjekt{
 	prior PositionInBestellung position;
 }
 
+//Positionen enthalten immer einen Artikel und eine Menge. Sie werden je nach Art im Einkaufswagen, in Bestellungen und im Warenlager genutzt
 abstract class PositionAbstrakt {
 	public no-view prior Artikel artikel;
 	public prior Integer menge;
 }
+
+//die normale Position wird im Warenlager und im Einkaufswagen des Kunden genutzt. 
 class Position extends PositionAbstrakt{
+	//verringert die Menge der Position um #menge. Wirft eine Exception, wenn dadurch die Menge der Position unter null sinken würde
 	void verringereMenge(Integer menge) throws ExcLagerbestandUnderZero;
+	//ändert die Menge der Position auf #menge, indem je nach Veränderung verringereMenge() oder erhoeheMenge() aufgerufen wird.  Wirft Exception der beiden Methoden
 	void aendereMenge(Integer menge) throws ExcLagerbestandUnderZero, ExcLagerbestandOverMax;
+	//erhöht die Menge der Position um #menge. Wirft eine Exception, wenn dadurch die Menge über den maxLagerbestand des Artikels steigen würde.
 	void erhoeheMenge(Integer menge) throws ExcLagerbestandOverMax;
+	//entfernt die Position aus dem #einkaufsManager, wird beim Kunden genutzt für den Einkaufswagen
 	void entfernePosition(EinkaufsManager einkaufsManager);
 }
 
+//stellt eine Position in einer Bestellung dar, diese zweite Klasse ist nötig, um eine Verbindung zwischen der Position und der Bestellung herzustellen, da der Kunde einzelne Positionen seiner Bestellung zurücksenden können soll
 class PositionInBestellung##posInBest extends PositionAbstrakt{
 	public prior server-only Bestellung bestellung;
+	//entfernt die Position aus der Bestellung #bestellung und startet erstellt eine RetourePosition.
 	active void zuruecksenden();
 }
 
+//Lieferarten die der Kunde auswählen kann
 class Lieferart{
+	//Name der Lieferart
 	indexed prior String name;
+	//Dauert der Lieferart in Zeiteinheiten
 	public prior Integer lieferzeit;
+	//Preis der Lieferart in Cent
 	public prior Integer preis;
+	//ändert den Preis der Lieferart zu #preis
 	void aendereLieferartPreis(Integer preis);
+	//ändert den Namen der Lieferart zu #name. Wirft eine Exception, wenn schon eine Lieferart mit dem Namen #name exisitert.
 	active void aendereLieferartName(String name) throws ExcAlreadyExists;
+	//ändert die lieferzeit zu #dauer in ZeitEinheiten.
 	void aendereLieferartDauer(Integer dauer);
 }
 

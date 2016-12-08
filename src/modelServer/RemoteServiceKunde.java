@@ -100,8 +100,6 @@ public  class RemoteServiceKunde extends RemoteServiceShop {
             return createOKResult();
         }catch(PersistenceException pe){
             return createExceptionResult(pe);
-        }catch(model.ExcAuszahlungGroesserGutgaben e0){
-            return createExceptionResult(e0, this);
         }
     }
     

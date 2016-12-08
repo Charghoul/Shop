@@ -138,8 +138,14 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     public void handleVorbestellenCommand(VorbestellenCommand4Public vorbestellenCommand) throws PersistenceException{
         this.handleCommonDate(vorbestellenCommand);
     }
+    public void handleAendereHstLieferzeitCommand(AendereHstLieferzeitCommand4Public aendereHstLieferzeitCommand) throws PersistenceException{
+        this.handleCommonDate(aendereHstLieferzeitCommand);
+    }
     public void handleArtikelEntfernenCommand(ArtikelEntfernenCommand4Public artikelEntfernenCommand) throws PersistenceException{
         this.handleCommonDate(artikelEntfernenCommand);
+    }
+    public void handleReserviereCommand(ReserviereCommand4Public reserviereCommand) throws PersistenceException{
+        this.handleCommonDate(reserviereCommand);
     }
     public void handleAendereLieferartNameCommand(AendereLieferartNameCommand4Public aendereLieferartNameCommand) throws PersistenceException{
         this.handleCommonDate(aendereLieferartNameCommand);
@@ -150,6 +156,9 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     public void handleArtikelEntnehmenCommand(ArtikelEntnehmenCommand4Public artikelEntnehmenCommand) throws PersistenceException{
         this.handleCommonDate(artikelEntnehmenCommand);
     }
+    public void handleAnnehmenCommand(AnnehmenCommand4Public annehmenCommand) throws PersistenceException{
+        this.handleCommonDate(annehmenCommand);
+    }
     public void handleStatusAuslaufCommand(StatusAuslaufCommand4Public statusAuslaufCommand) throws PersistenceException{
         this.handleCommonDate(statusAuslaufCommand);
     }
@@ -159,8 +168,14 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     public void handleRegisterCommand(RegisterCommand4Public registerCommand) throws PersistenceException{
         this.handleCommonDate(registerCommand);
     }
+    public void handleEinzahlenCommand(EinzahlenCommand4Public einzahlenCommand) throws PersistenceException{
+        this.handleCommonDate(einzahlenCommand);
+    }
     public void handleStatusVerkaufCommand(StatusVerkaufCommand4Public statusVerkaufCommand) throws PersistenceException{
         this.handleCommonDate(statusVerkaufCommand);
+    }
+    public void handleAuszahlenCommand(AuszahlenCommand4Public auszahlenCommand) throws PersistenceException{
+        this.handleCommonDate(auszahlenCommand);
     }
     public void handleAnzeigenCommand(AnzeigenCommand4Public anzeigenCommand) throws PersistenceException{
         this.handleCommonDate(anzeigenCommand);
@@ -170,6 +185,9 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     }
     public void handleArtikelEinlagernCommand(ArtikelEinlagernCommand4Public artikelEinlagernCommand) throws PersistenceException{
         this.handleCommonDate(artikelEinlagernCommand);
+    }
+    public void handleAbbuchenCommand(AbbuchenCommand4Public abbuchenCommand) throws PersistenceException{
+        this.handleCommonDate(abbuchenCommand);
     }
     public void handleAllesZuruecksendenCommand(AllesZuruecksendenCommand4Public allesZuruecksendenCommand) throws PersistenceException{
         this.handleCommonDate(allesZuruecksendenCommand);

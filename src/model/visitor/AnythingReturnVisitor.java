@@ -5,22 +5,27 @@ import persistence.*;
 
 public interface AnythingReturnVisitor<R> extends ArtikelstatusReturnVisitor<R> ,BestellstatusReturnVisitor<R> ,BestellungAbstraktReturnVisitor<R> ,CommonDateReturnVisitor<R> ,KomponenteReturnVisitor<R> ,PositionAbstraktReturnVisitor<R> ,ServiceReturnVisitor<R> ,StatusReturnVisitor<R> ,ZeitObjektReturnVisitor<R> {
     
+    public R handleAbbuchenCommand(AbbuchenCommand4Public abbuchenCommand) throws PersistenceException;
     public R handleAendereBezeichnungCommand(AendereBezeichnungCommand4Public aendereBezeichnungCommand) throws PersistenceException;
+    public R handleAendereHstLieferzeitCommand(AendereHstLieferzeitCommand4Public aendereHstLieferzeitCommand) throws PersistenceException;
     public R handleAendereLieferartNameCommand(AendereLieferartNameCommand4Public aendereLieferartNameCommand) throws PersistenceException;
     public R handleAendereMaxLagerbestandCommand(AendereMaxLagerbestandCommand4Public aendereMaxLagerbestandCommand) throws PersistenceException;
     public R handleAendereMinLagerbestandCommand(AendereMinLagerbestandCommand4Public aendereMinLagerbestandCommand) throws PersistenceException;
     public R handleAllesZuruecksendenCommand(AllesZuruecksendenCommand4Public allesZuruecksendenCommand) throws PersistenceException;
+    public R handleAnnehmenCommand(AnnehmenCommand4Public annehmenCommand) throws PersistenceException;
     public R handleAnzeigenCommand(AnzeigenCommand4Public anzeigenCommand) throws PersistenceException;
     public R handleArtikelEinlagernCommand(ArtikelEinlagernCommand4Public artikelEinlagernCommand) throws PersistenceException;
     public R handleArtikelEntfernenCommand(ArtikelEntfernenCommand4Public artikelEntfernenCommand) throws PersistenceException;
     public R handleArtikelEntnehmenCommand(ArtikelEntnehmenCommand4Public artikelEntnehmenCommand) throws PersistenceException;
     public R handleArtikelManager(ArtikelManager4Public artikelManager) throws PersistenceException;
+    public R handleAuszahlenCommand(AuszahlenCommand4Public auszahlenCommand) throws PersistenceException;
     public R handleBestellManager(BestellManager4Public bestellManager) throws PersistenceException;
     public R handleBestellenCommand(BestellenCommand4Public bestellenCommand) throws PersistenceException;
     public R handleCommandCoordinator(CommandCoordinator4Public commandCoordinator) throws PersistenceException;
     public R handleCommandExecuter(CommandExecuter4Public commandExecuter) throws PersistenceException;
     public R handleCommonDate(CommonDate4Public commonDate) throws PersistenceException;
     public R handleEinkaufsManager(EinkaufsManager4Public einkaufsManager) throws PersistenceException;
+    public R handleEinzahlenCommand(EinzahlenCommand4Public einzahlenCommand) throws PersistenceException;
     public R handleErrorDisplay(ErrorDisplay4Public errorDisplay) throws PersistenceException;
     public R handleHersteller(Hersteller4Public hersteller) throws PersistenceException;
     public R handleHerstellerManager(HerstellerManager4Public herstellerManager) throws PersistenceException;
@@ -33,6 +38,7 @@ public interface AnythingReturnVisitor<R> extends ArtikelstatusReturnVisitor<R> 
     public R handleProduktKatalog(ProduktKatalog4Public produktKatalog) throws PersistenceException;
     public R handleProduktgruppeEntfernenCommand(ProduktgruppeEntfernenCommand4Public produktgruppeEntfernenCommand) throws PersistenceException;
     public R handleRegisterCommand(RegisterCommand4Public registerCommand) throws PersistenceException;
+    public R handleReserviereCommand(ReserviereCommand4Public reserviereCommand) throws PersistenceException;
     public R handleServer(Server4Public server) throws PersistenceException;
     public R handleServiceAdminKundenManager(ServiceAdminKundenManager4Public serviceAdminKundenManager) throws PersistenceException;
     public R handleServiceAdminZeitManager(ServiceAdminZeitManager4Public serviceAdminZeitManager) throws PersistenceException;

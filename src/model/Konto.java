@@ -222,6 +222,22 @@ public class Konto extends PersistentObject implements PersistentKonto{
     }
     
     
+    public void abbuchen(final long betrag, final Invoker invoker) 
+				throws PersistenceException{
+        java.sql.Date now = new java.sql.Date(new java.util.Date().getTime());
+		AbbuchenCommand4Public command = model.meta.AbbuchenCommand.createAbbuchenCommand(betrag, now, now);
+		command.setInvoker(invoker);
+		command.setCommandReceiver(getThis());
+		model.meta.CommandCoordinator.getTheCommandCoordinator().coordinate(command);
+    }
+    public void auszahlen(final long betrag, final Invoker invoker) 
+				throws PersistenceException{
+        java.sql.Date now = new java.sql.Date(new java.util.Date().getTime());
+		AuszahlenCommand4Public command = model.meta.AuszahlenCommand.createAuszahlenCommand(betrag, now, now);
+		command.setInvoker(invoker);
+		command.setCommandReceiver(getThis());
+		model.meta.CommandCoordinator.getTheCommandCoordinator().coordinate(command);
+    }
     public synchronized void deregister(final ObsInterface observee) 
 				throws PersistenceException{
         SubjInterface subService = getThis().getSubService();
@@ -230,6 +246,14 @@ public class Konto extends PersistentObject implements PersistentKonto{
 			getThis().setSubService(subService);
 		}
 		subService.deregister(observee);
+    }
+    public void einzahlen(final long betrag, final Invoker invoker) 
+				throws PersistenceException{
+        java.sql.Date now = new java.sql.Date(new java.util.Date().getTime());
+		EinzahlenCommand4Public command = model.meta.EinzahlenCommand.createEinzahlenCommand(betrag, now, now);
+		command.setInvoker(invoker);
+		command.setCommandReceiver(getThis());
+		model.meta.CommandCoordinator.getTheCommandCoordinator().coordinate(command);
     }
     public ServiceKunde4Public getMyServiceKunde() 
 				throws PersistenceException{
@@ -260,6 +284,14 @@ public class Konto extends PersistentObject implements PersistentKonto{
 		}
 		subService.register(observee);
     }
+    public void reserviere(final long betrag, final Invoker invoker) 
+				throws PersistenceException{
+        java.sql.Date now = new java.sql.Date(new java.util.Date().getTime());
+		ReserviereCommand4Public command = model.meta.ReserviereCommand.createReserviereCommand(betrag, now, now);
+		command.setInvoker(invoker);
+		command.setCommandReceiver(getThis());
+		model.meta.CommandCoordinator.getTheCommandCoordinator().coordinate(command);
+    }
     public synchronized void updateObservers(final model.meta.Mssgs event) 
 				throws PersistenceException{
         SubjInterface subService = getThis().getSubService();
@@ -285,9 +317,12 @@ public class Konto extends PersistentObject implements PersistentKonto{
         
     }
     public void auszahlen(final long betrag) 
-				throws model.ExcAuszahlungGroesserGutgaben, PersistenceException{
-        if(betrag > getThis().getKontostand()){
+				throws model.ExcAuszahlungGroesserGutgaben, model.ExcIllogicalDataEntry, PersistenceException{
+        if(betrag > getThis().getKontostand() - getThis().getLimit()){
             throw new ExcAuszahlungGroesserGutgaben(ErrorMessages.AuszahlungGroesserGuthaben);
+        }
+        if(getThis().getKontostand() - getThis().getLimit() - betrag  < getThis().getReserviert()) {
+            throw new ExcAuszahlungGroesserGutgaben(ErrorMessages.AuszahlungGroesserReserviert);
         }
         getThis().abbuchen(betrag);
         
