@@ -31,8 +31,6 @@ public interface Konto4Public extends Anything, SubjInterface, AbstractPersisten
 				throws PersistenceException;
     public void abbuchen(final long betrag) 
 				throws PersistenceException;
-    public void aendereLimit(final long limit) 
-				throws PersistenceException;
     public void auszahlen(final long betrag) 
 				throws model.ExcAuszahlungGroesserGutgaben, model.ExcIllogicalDataEntry, PersistenceException;
     public void copyingPrivateUserAttributes(final Anything copy) 

@@ -275,7 +275,7 @@ public class Lieferart extends PersistentObject implements PersistentLieferart{
     }
     public void aendereLieferartName(final String name) 
 				throws model.ExcAlreadyExists, PersistenceException{
-        if( Lieferart.getLieferartByName(name) == null){
+        if( !Lieferart.getLieferartByName(name).iterator().hasNext()){
             getThis().setName(name);
         }
         else throw new ExcAlreadyExists(ErrorMessages.LieferArtAlreadyExists);

@@ -311,11 +311,6 @@ public class Konto extends PersistentObject implements PersistentKonto{
         getThis().getMyServiceKunde().signalChanged(true);
         
     }
-    public void aendereLimit(final long limit) 
-				throws PersistenceException{
-       getThis().setLimit(limit);
-        
-    }
     public void auszahlen(final long betrag) 
 				throws model.ExcAuszahlungGroesserGutgaben, model.ExcIllogicalDataEntry, PersistenceException{
         if(betrag > getThis().getKontostand() - getThis().getLimit()){
