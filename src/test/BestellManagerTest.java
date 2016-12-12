@@ -106,7 +106,7 @@ public class BestellManagerTest {
                 return argument.getBestellManager().equals(bestellMan);
             }
         });
-        Assert.assertEquals(vorbestellung, temp);
+        Assert.assertEquals(vorbestellung.getWarenwert(), temp.getWarenwert());
     }
 
     /**

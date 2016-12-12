@@ -76,7 +76,7 @@ public class Kontotest {
 
     /**
      * versucht den Kontostand+1 abzubuchen
-     * In Liveumgebung nicht möglich
+     * In Liveumgebung nicht möglich!!!
      * @throws PersistenceException
      * @throws UserException
      */
@@ -166,7 +166,7 @@ public class Kontotest {
     /**
      * Ändert den reservierten Betrag auf den Wert des Kontostandes plus 1
      * Ist in der Liveumgebung eine Operation, die vom System aus läuft und nicht manuell geändert werden kann
-     * geht also live nicht über den Kontostand hinaus
+     * geht also live nicht über den Kontostand hinaus!!!!!
      * @throws PersistenceException
      */
     @Test
@@ -200,7 +200,7 @@ public class Kontotest {
     /**
      * Versucht den reservierten Betrag zu verringern um den reserviert+1
      * Ist in der Liveumgebung eine Operation, die vom System aus läuft und nicht manuell geändert werden kann
-     * geht also live nicht unter null
+     * geht also live nicht unter null!!!!
      * @throws PersistenceException
      */
     @Test
