@@ -74,10 +74,6 @@ public class ToString$Visitor extends model.visitor.ToString$Visitor {
 		result = ToStringConstants.Artikelstatus +ToStringConstants.Verkauf;
 	}
 
-	@Override
-	public void handleVerarbeitung(Verarbeitung4Public verarbeitung) throws PersistenceException {
-		result = ToStringConstants.Verarbeitung;
-	}
 
 	@Override
 	public void handleServer(Server4Public server) throws PersistenceException {

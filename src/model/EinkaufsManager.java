@@ -260,6 +260,15 @@ public class EinkaufsManager extends PersistentObject implements PersistentEinka
 			this.setBestellManager((PersistentBestellManager)final$$Fields.get("bestellManager"));
 		}
     }
+    public void neuePosition(final Artikel4Public artikel, final long menge, final Invoker invoker) 
+				throws PersistenceException{
+        java.sql.Date now = new java.sql.Date(new java.util.Date().getTime());
+		NeuePositionCommand4Public command = model.meta.NeuePositionCommand.createNeuePositionCommand(menge, now, now);
+		command.setArtikel(artikel);
+		command.setInvoker(invoker);
+		command.setCommandReceiver(getThis());
+		model.meta.CommandCoordinator.getTheCommandCoordinator().coordinate(command);
+    }
     public synchronized void register(final ObsInterface observee) 
 				throws PersistenceException{
         SubjInterface subService = getThis().getSubService();

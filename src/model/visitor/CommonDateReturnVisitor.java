@@ -19,11 +19,10 @@ public interface CommonDateReturnVisitor<R> {
     public R handleArtikelEntnehmenCommand(ArtikelEntnehmenCommand4Public artikelEntnehmenCommand) throws PersistenceException;
     public R handleAuszahlenCommand(AuszahlenCommand4Public auszahlenCommand) throws PersistenceException;
     public R handleBestellenCommand(BestellenCommand4Public bestellenCommand) throws PersistenceException;
-    public R handleEinzahlenCommand(EinzahlenCommand4Public einzahlenCommand) throws PersistenceException;
+    public R handleNeuePositionCommand(NeuePositionCommand4Public neuePositionCommand) throws PersistenceException;
     public R handleNeuerArtikelCommand(NeuerArtikelCommand4Public neuerArtikelCommand) throws PersistenceException;
     public R handleProduktgruppeEntfernenCommand(ProduktgruppeEntfernenCommand4Public produktgruppeEntfernenCommand) throws PersistenceException;
     public R handleRegisterCommand(RegisterCommand4Public registerCommand) throws PersistenceException;
-    public R handleReserviereCommand(ReserviereCommand4Public reserviereCommand) throws PersistenceException;
     public R handleStatusAuslaufCommand(StatusAuslaufCommand4Public statusAuslaufCommand) throws PersistenceException;
     public R handleStatusVerkaufCommand(StatusVerkaufCommand4Public statusVerkaufCommand) throws PersistenceException;
     public R handleVorbestellenCommand(VorbestellenCommand4Public vorbestellenCommand) throws PersistenceException;

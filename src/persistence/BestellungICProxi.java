@@ -118,7 +118,7 @@ public class BestellungICProxi extends BestellungAbstraktICProxi implements Pers
         ((PersistentBestellung)this.getTheObject()).allesZuruecksenden();
     }
     public void annehmen() 
-				throws model.ExcIllogicalDataEntry, PersistenceException{
+				throws PersistenceException{
         ((PersistentBestellung)this.getTheObject()).annehmen();
     }
     public long berechneWarenwert() 

@@ -25,7 +25,6 @@ public interface AnythingReturnVisitor<R> extends ArtikelstatusReturnVisitor<R> 
     public R handleCommandExecuter(CommandExecuter4Public commandExecuter) throws PersistenceException;
     public R handleCommonDate(CommonDate4Public commonDate) throws PersistenceException;
     public R handleEinkaufsManager(EinkaufsManager4Public einkaufsManager) throws PersistenceException;
-    public R handleEinzahlenCommand(EinzahlenCommand4Public einzahlenCommand) throws PersistenceException;
     public R handleErrorDisplay(ErrorDisplay4Public errorDisplay) throws PersistenceException;
     public R handleHersteller(Hersteller4Public hersteller) throws PersistenceException;
     public R handleHerstellerManager(HerstellerManager4Public herstellerManager) throws PersistenceException;
@@ -34,16 +33,15 @@ public interface AnythingReturnVisitor<R> extends ArtikelstatusReturnVisitor<R> 
     public R handleKundenManager(KundenManager4Public kundenManager) throws PersistenceException;
     public R handleLieferart(Lieferart4Public lieferart) throws PersistenceException;
     public R handleLieferartManager(LieferartManager4Public lieferartManager) throws PersistenceException;
+    public R handleNeuePositionCommand(NeuePositionCommand4Public neuePositionCommand) throws PersistenceException;
     public R handleNeuerArtikelCommand(NeuerArtikelCommand4Public neuerArtikelCommand) throws PersistenceException;
     public R handleProduktKatalog(ProduktKatalog4Public produktKatalog) throws PersistenceException;
     public R handleProduktgruppeEntfernenCommand(ProduktgruppeEntfernenCommand4Public produktgruppeEntfernenCommand) throws PersistenceException;
     public R handleRegisterCommand(RegisterCommand4Public registerCommand) throws PersistenceException;
-    public R handleReserviereCommand(ReserviereCommand4Public reserviereCommand) throws PersistenceException;
     public R handleServer(Server4Public server) throws PersistenceException;
     public R handleServiceAdminKundenManager(ServiceAdminKundenManager4Public serviceAdminKundenManager) throws PersistenceException;
     public R handleServiceAdminZeitManager(ServiceAdminZeitManager4Public serviceAdminZeitManager) throws PersistenceException;
     public R handleServiceKundeBestellManager(ServiceKundeBestellManager4Public serviceKundeBestellManager) throws PersistenceException;
-    public R handleServiceKundeWarenlager(ServiceKundeWarenlager4Public serviceKundeWarenlager) throws PersistenceException;
     public R handleServiceShopProduktKatalog(ServiceShopProduktKatalog4Public serviceShopProduktKatalog) throws PersistenceException;
     public R handleStatusAuslaufCommand(StatusAuslaufCommand4Public statusAuslaufCommand) throws PersistenceException;
     public R handleStatusVerkaufCommand(StatusVerkaufCommand4Public statusVerkaufCommand) throws PersistenceException;

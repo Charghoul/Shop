@@ -77,9 +77,6 @@ public abstract class AnythingStandardVisitor implements AnythingVisitor {
     public void handleVerkauf(VerkaufView verkauf) throws ModelException{
         this.standardHandling(verkauf);
     }
-    public void handleVerarbeitung(VerarbeitungView verarbeitung) throws ModelException{
-        this.standardHandling(verarbeitung);
-    }
     public void handleAuslauf(AuslaufView auslauf) throws ModelException{
         this.standardHandling(auslauf);
     }

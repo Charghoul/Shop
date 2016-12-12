@@ -25,7 +25,6 @@ public interface AnythingExceptionVisitor<E extends model.UserException> extends
     public void handleCommandExecuter(CommandExecuter4Public commandExecuter) throws PersistenceException, E;
     public void handleCommonDate(CommonDate4Public commonDate) throws PersistenceException, E;
     public void handleEinkaufsManager(EinkaufsManager4Public einkaufsManager) throws PersistenceException, E;
-    public void handleEinzahlenCommand(EinzahlenCommand4Public einzahlenCommand) throws PersistenceException, E;
     public void handleErrorDisplay(ErrorDisplay4Public errorDisplay) throws PersistenceException, E;
     public void handleHersteller(Hersteller4Public hersteller) throws PersistenceException, E;
     public void handleHerstellerManager(HerstellerManager4Public herstellerManager) throws PersistenceException, E;
@@ -34,16 +33,15 @@ public interface AnythingExceptionVisitor<E extends model.UserException> extends
     public void handleKundenManager(KundenManager4Public kundenManager) throws PersistenceException, E;
     public void handleLieferart(Lieferart4Public lieferart) throws PersistenceException, E;
     public void handleLieferartManager(LieferartManager4Public lieferartManager) throws PersistenceException, E;
+    public void handleNeuePositionCommand(NeuePositionCommand4Public neuePositionCommand) throws PersistenceException, E;
     public void handleNeuerArtikelCommand(NeuerArtikelCommand4Public neuerArtikelCommand) throws PersistenceException, E;
     public void handleProduktKatalog(ProduktKatalog4Public produktKatalog) throws PersistenceException, E;
     public void handleProduktgruppeEntfernenCommand(ProduktgruppeEntfernenCommand4Public produktgruppeEntfernenCommand) throws PersistenceException, E;
     public void handleRegisterCommand(RegisterCommand4Public registerCommand) throws PersistenceException, E;
-    public void handleReserviereCommand(ReserviereCommand4Public reserviereCommand) throws PersistenceException, E;
     public void handleServer(Server4Public server) throws PersistenceException, E;
     public void handleServiceAdminKundenManager(ServiceAdminKundenManager4Public serviceAdminKundenManager) throws PersistenceException, E;
     public void handleServiceAdminZeitManager(ServiceAdminZeitManager4Public serviceAdminZeitManager) throws PersistenceException, E;
     public void handleServiceKundeBestellManager(ServiceKundeBestellManager4Public serviceKundeBestellManager) throws PersistenceException, E;
-    public void handleServiceKundeWarenlager(ServiceKundeWarenlager4Public serviceKundeWarenlager) throws PersistenceException, E;
     public void handleServiceShopProduktKatalog(ServiceShopProduktKatalog4Public serviceShopProduktKatalog) throws PersistenceException, E;
     public void handleStatusAuslaufCommand(StatusAuslaufCommand4Public statusAuslaufCommand) throws PersistenceException, E;
     public void handleStatusVerkaufCommand(StatusVerkaufCommand4Public statusVerkaufCommand) throws PersistenceException, E;

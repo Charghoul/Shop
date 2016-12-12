@@ -9,25 +9,41 @@ abstract server Service {
 abstract server ServiceShop extends Service{
 	observe ProduktKatalog produktKatalog;
 }
+//Der ServiceKunde entspricht dem View den der Kunde sieht und in dem er mit dem Shop interagiert.
 server ServiceKunde extends ServiceShop {
+	//Im SuchManager wird in einer Liste das Ergebnis der Funktion suchen() angezeigt. 
 	SuchManager suchManager;
-	observe no-view Warenlager warenlager;
+	//Konto das dem Kunden zugeordnet ist, um seine Finanzen zu verwalten
 	public one-to-one (no-view myServiceKunde) Konto konto;
+	//EinkaufsManager der dem Kunden zugeordnet ist, der als Einkaufswagen fungiert, damit der Kunde einkaufen kann
 	one-to-one (no-view myServiceKunde) EinkaufsManager einkaufsManager;
+	//LieferartManager, damit der Kunde die Lieferart auswählen kann welche er nutzen möchte
 	no-view LieferartManager lieferartManager;
+	//BestellManager, damit der Kunde seine Bestellungen und Vorbestellungen verwalten kann
 	observe BestellManager  bestellManager;
-	void neuePosition(EinkaufsManager einkaufsManager, Artikel artikel {produktKatalog}, Integer menge) throws UserException;
+	//lässt den Kunden über den EinkaufsManager einen neuen Artikel zum EinkaufsManager hinzufügen, indem er aus dem Produktkatalog einen Artikel auswählt
+	void neuePosition(EinkaufsManager einkaufsManager, Artikel artikel {produktKatalog}, Integer menge);
+	//vorbestellen() wird angezeigt, wenn die Positionen im Einkaufswagen nicht verfügbar sind - erstellt eine Vorbestellung
 	void vorbestellen(EinkaufsManager einkaufsManager checked, Lieferart lieferart {lieferartManager});
+	//bestellen() wird angezeigt, wenn die Positionen im Einkaufswagen verfügbar sind - erstellt eine Bestellung
 	void bestellen(EinkaufsManager einkaufsManager checked, Lieferart lieferart {lieferartManager});
+	//ändert die Menge der Position zu #menge
 	void aendereMenge(Position position, Integer menge) throws ExcLagerbestandUnderZero, ExcLagerbestandOverMax;
+	//fügt den Artikel zum EinkaufsManager hinzu - vom Artikel aus
 	void zuEinkaufswagenHinzufuegen(Artikel artikel, Integer menge);
+	//sendet eine einzelne Position in einer Bestellung zurück - wird nur angezeigt, wenn der Lieferstatus "Geliefert" ist 
 	void zuruecksenden(PositionInBestellung position checked);
+	//sendet die gesamte Bestellung zurück - wird nur angezeigt, wenn der Lieferstatus "Geliefert" ist
 	void allesZuruecksenden(Bestellung bestellung checked);
+	//nimmt die Bestellung an - wird nur angezeigt, wenn der Lieferstatus "Geliefert" ist
 	void annehmen(Bestellung bestellung checked);
+	//entfernt die Position #position aus dem EinkaufsManager
 	void entfernePosition(Position position);
+	//zahlt den Betrag #betrag in das Konto des Kunden ein
 	void einzahlen(Konto konto, Integer betrag);
-	//TODO: Guthaben Tippfehler in der Exception anpassen
+	//zahlt den Betrag #betrag vom Konto aus, wirft eine Exception wenn der auszuzahlende Betrag größer ist als (aktuelles Guthaben - reserviertes Guthaben)
 	void auszahlen(Konto konto, Integer betrag) throws ExcAuszahlungGroesserGutgaben;
+	//zeigt den Artikle mit der Bezeichnung #bezeichnung im SuchManager an
 	void suchen(String bezeichnung);
 }
 server ServiceAdmin extends ServiceShop {
@@ -208,7 +224,7 @@ class EinkaufsManager{
 	//Die Methode vorbestellen() erzeugt eine Vorbestellung im BestellManager. Es wird eine Exception geworfen, falls der Warenwert der inklusive Lieferkosten über dem Kontoguthaben des Kunden liegt
 	active void vorbestellen(Lieferart lieferart) throws ExcWarenwertUeberKontoguthaben;
 	//fügt der #einkaufsListe eine neue Position hinzu, bestehend aus #artikel und #menge. Es wird eine Exception geworfen, falls schon eine Position mit dem Artikel #artikel in der #einkaufsListe vorhanden ist, wenn der #artikel im Status Neuanlage ist, oder wenn #menge über dem maximalen Lagerbestand des Artikels liegt.
-	void neuePosition(Artikel artikel, Integer menge) throws ExcArtikelAlreadyExists, ExcLagerbestandOverMax, ExcArtikelNochNichtVerfuegbar;
+	active void neuePosition(Artikel artikel, Integer menge) throws ExcArtikelAlreadyExists, ExcLagerbestandOverMax, ExcArtikelNochNichtVerfuegbar;
 	//löscht die Position #position aus der #einkaufsListe
 	void entfernePosition(Position position);
 	//gibt den gesamten Warenwert der #einkaufsListe wieder
@@ -258,17 +274,15 @@ class Konto{
 	//Speichert den aktuell reservierten Warenwert des Kunden. Das heißt der Wert aller Bestellungen und Vorbestellungen inklusive Lieferkosten welche noch nicht bezahlt wurden wird hier gespeichert, um einfacher prüfen zu können, ob der Kunde eine neue Bestellung aufgeben darf oder damit unter das Limit fallen würde.
 	public prior Integer reserviert;
 	//bucht den Betrag #betrag vom #kontostand ab
-	void abbuchen(Integer betrag);
+	active void abbuchen(Integer betrag);
 	//erhöhrt den #kontostand um den Betrag #betrag
 	void einzahlen(Integer betrag);
 	//erlaubt dem Kunden sich Geld vom Konto wieder auszahlen zu lassen. #betrag wird dann vom #kontostand abgebucht. Wirft eine Exception wenn #betrag > #kontostand ist.
-	void auszahlen(Integer betrag) throws ExcAuszahlungGroesserGutgaben;
+	active void auszahlen(Integer betrag) throws ExcAuszahlungGroesserGutgaben;
 	//erhöht #reserviert um den Betrag #betrag
 	void reserviere(Integer betrag);
 	//verringert #reserviert um den Betrag #betrag
 	void verringereReserviert(Integer betrag);
-	//ändert #limit des Kontos auf #limit
-	void aendereLimit(Integer limit);
 }
 //Hierarchie die für die Produktgruppen nötig ist
 hierarchy Hierarchie;
@@ -296,7 +310,7 @@ class Artikel extends Komponente{
 	//Hersteller des Artikels, zusammen mit der Bezeichnung ist der Artikel unique
 	public no-view Hersteller hersteller;
 	//ändert die HerstellerLieferzeit des Artikels auf #hstLieferzeit
-	void aendereHstLieferzeit(Integer hstLieferzeit);
+	active void aendereHstLieferzeit##aendHst(Integer hstLieferzeit) throws ExcIllogicalDataEntry;
 	//ändert den minimalen Lagerbestand des Artikels auf #minLagerbestand. Wirft eine Exception, wenn #minLagerbestand größer ist als  der aktuelle #maxLagerbestand
 	active void aendereMinLagerbestand##aendMin(Integer minLagerbestand) throws ExcIllogicalDataEntry;
 	//ändert den maximalen Lagerbestand des Artikels auf #maxLagerbestand. Wirft eine Exception, wenn der #maxLagerbestand kleiner ist als der aktuelle #minLagerbestand des Artikels
@@ -366,7 +380,7 @@ class Bestellung extends BestellungAbstrakt{
 	//ändert den Status den bestellstatus der Bestellung auf #bestellstatus
 	void aendereStatus(Bestellstatus bestellstatus);
 	//nimmt die Bestellung an, ist nur möglich wenn sich die Bestellung im #bestellstatus geliefert befindet. Ändert den #bestellstatus auf angenommen, verringert #reserviert und #kontostand des ServiceKunde um den #warenwert der KndLieferung. Ebenfalls wird der Status der KndLieferung auf deactivated gesetzt
-	void annehmen();
+	active void annehmen();
 	//sendet die ganze Bestellung zurück. Dabei wird die Bestellung aus dem BestellManager entfernt, #reserviert um den Warenwert der KndLieferung verringert und die Rücksendegebühr vom Konto abgezogen
 	active void allesZuruecksenden##allZrck();
 	//berechnet den aktuellen Warenwert der Bestellung
@@ -467,7 +481,6 @@ singleton Auslauf extends Artikelstatus{}
 
 //Der Bestellstatus ist als Information für den Kunden gedacht
 abstract class Bestellstatus{}
-singleton Verarbeitung extends Bestellstatus{}
 singleton Hinversand extends Bestellstatus{}
 singleton Geliefert extends Bestellstatus{}
 singleton Angenommen extends Bestellstatus{}

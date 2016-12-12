@@ -1263,9 +1263,6 @@ class DetailPanelFactory implements AnythingVisitor {
     public void handleAuslauf(view.AuslaufView object){
         result = new AuslaufDefaultDetailPanel(handler, object);
     }
-    public void handleVerarbeitung(view.VerarbeitungView object){
-        result = new VerarbeitungDefaultDetailPanel(handler, object);
-    }
     public void handleBestellung(view.BestellungView object){
         result = new BestellungDefaultDetailPanel(handler, object);
     }
@@ -1862,19 +1859,6 @@ class AuslaufDefaultDetailPanel extends DefaultDetailPanel{
     }
     protected view.AuslaufView getAnything(){
         return (view.AuslaufView)this.anything;
-    }
-}
-
-class VerarbeitungDefaultDetailPanel extends DefaultDetailPanel{
-    
-    protected VerarbeitungDefaultDetailPanel(ExceptionAndEventHandler exceptionHandler, Anything anything) {
-        super(exceptionHandler, anything);
-    }
-    protected void addFields(){
-        
-    }
-    protected view.VerarbeitungView getAnything(){
-        return (view.VerarbeitungView)this.anything;
     }
 }
 

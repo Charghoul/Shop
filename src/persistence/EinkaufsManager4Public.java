@@ -20,6 +20,8 @@ public interface EinkaufsManager4Public extends Anything, SubjInterface, Abstrac
 				throws PersistenceException;
     public void initialize(final Anything This, final java.util.HashMap<String,Object> final$$Fields) 
 				throws PersistenceException;
+    public void neuePosition(final Artikel4Public artikel, final long menge, final Invoker invoker) 
+				throws PersistenceException;
     public void vorbestellen(final Lieferart4Public lieferart, final Invoker invoker) 
 				throws PersistenceException;
     public void bestellen(final Lieferart4Public lieferart) 

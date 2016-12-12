@@ -7,7 +7,6 @@ public abstract class ServiceAdmin$AuthoriseVisitor extends AnythingStandardVisi
     
     public abstract void handleVerkauf(PersistentVerkauf verkauf) throws PersistenceException;
     public abstract void handleAuslauf(PersistentAuslauf auslauf) throws PersistenceException;
-    public abstract void handleVerarbeitung(PersistentVerarbeitung verarbeitung) throws PersistenceException;
     public abstract void handleErrorDisplay(PersistentErrorDisplay errorDisplay) throws PersistenceException;
     public abstract void handleBestellung(PersistentBestellung bestellung) throws PersistenceException;
     public abstract void handleLieferart(PersistentLieferart lieferart) throws PersistenceException;
@@ -31,8 +30,8 @@ public abstract class ServiceAdmin$AuthoriseVisitor extends AnythingStandardVisi
     public abstract void handleKunde(PersistentKunde kunde) throws PersistenceException;
     public abstract void handleRueckversand(PersistentRueckversand rueckversand) throws PersistenceException;
     public abstract void handleLieferartManager(PersistentLieferartManager lieferartManager) throws PersistenceException;
-    public abstract void handleAngenommen(PersistentAngenommen angenommen) throws PersistenceException;
     public abstract void handleHinversand(PersistentHinversand hinversand) throws PersistenceException;
+    public abstract void handleAngenommen(PersistentAngenommen angenommen) throws PersistenceException;
     public abstract void handleRetourePosition(PersistentRetourePosition retourePosition) throws PersistenceException;
     public abstract void handleWarenlager(PersistentWarenlager warenlager) throws PersistenceException;
     

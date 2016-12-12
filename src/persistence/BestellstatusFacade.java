@@ -25,11 +25,10 @@ public class BestellstatusFacade{
 	}
 
     public long getClass(long objectId) throws PersistenceException{
-        if(Cache.getTheCache().contains(objectId, 134)) return 134;
-        if(Cache.getTheCache().contains(objectId, 145)) return 145;
         if(Cache.getTheCache().contains(objectId, 154)) return 154;
         if(Cache.getTheCache().contains(objectId, 169)) return 169;
         if(Cache.getTheCache().contains(objectId, 172)) return 172;
+        if(Cache.getTheCache().contains(objectId, 134)) return 134;
         
         throw new PersistenceException("No such object: " + new Long(objectId).toString(), 0);
         

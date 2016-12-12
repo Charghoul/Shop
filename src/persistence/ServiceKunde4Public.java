@@ -49,7 +49,7 @@ public interface ServiceKunde4Public extends ServiceShop4Public {
     public void annehmen(final Bestellung4Public bestellung) 
 				throws PersistenceException;
     public void auszahlen(final Konto4Public konto, final long betrag) 
-				throws PersistenceException;
+				throws model.ExcAuszahlungGroesserGutgaben, PersistenceException;
     public void bestellen(final EinkaufsManager4Public einkaufsManager, final Lieferart4Public lieferart) 
 				throws PersistenceException;
     public void copyingPrivateUserAttributes(final Anything copy) 
@@ -63,7 +63,7 @@ public interface ServiceKunde4Public extends ServiceShop4Public {
     public void initializeOnInstantiation() 
 				throws PersistenceException;
     public void neuePosition(final EinkaufsManager4Public einkaufsManager, final Artikel4Public artikel, final long menge) 
-				throws model.UserException, PersistenceException;
+				throws PersistenceException;
     public void suchen(final String bezeichnung) 
 				throws PersistenceException;
     public void vorbestellen(final EinkaufsManager4Public einkaufsManager, final Lieferart4Public lieferart) 

@@ -29,13 +29,6 @@ public class ServiceKundeProxi extends ServiceShopProxi implements ServiceKundeV
             suchManager = view.objects.ViewProxi.createProxi(suchManager$Info,connectionKey);
             suchManager.setToString(suchManager$Info.getToString());
         }
-        ViewProxi warenlager = null;
-        String warenlager$String = (String)resultTable.get("warenlager");
-        if (warenlager$String != null) {
-            common.ProxiInformation warenlager$Info = common.RPCConstantsAndServices.createProxiInformation(warenlager$String);
-            warenlager = view.objects.ViewProxi.createProxi(warenlager$Info,connectionKey);
-            warenlager.setToString(warenlager$Info.getToString());
-        }
         ViewProxi konto = null;
         String konto$String = (String)resultTable.get("konto");
         if (konto$String != null) {
@@ -64,7 +57,7 @@ public class ServiceKundeProxi extends ServiceShopProxi implements ServiceKundeV
             bestellManager = view.objects.ViewProxi.createProxi(bestellManager$Info,connectionKey);
             bestellManager.setToString(bestellManager$Info.getToString());
         }
-        ServiceKundeView result$$ = new ServiceKunde(errors,(ProduktKatalogView)produktKatalog,(SuchManagerView)suchManager,(WarenlagerView)warenlager,(KontoView)konto,(EinkaufsManagerView)einkaufsManager,(LieferartManagerView)lieferartManager,(BestellManagerView)bestellManager, this.getId(), this.getClassId());
+        ServiceKundeView result$$ = new ServiceKunde(errors,(ProduktKatalogView)produktKatalog,(SuchManagerView)suchManager,(KontoView)konto,(EinkaufsManagerView)einkaufsManager,(LieferartManagerView)lieferartManager,(BestellManagerView)bestellManager, this.getId(), this.getClassId());
         ((ViewRoot)result$$).setToString((String) resultTable.get(common.RPCConstantsAndServices.RPCToStringFieldName));
         return result$$;
     }
@@ -123,12 +116,6 @@ public class ServiceKundeProxi extends ServiceShopProxi implements ServiceKundeV
     }
     public void setSuchManager(SuchManagerView newValue) throws ModelException {
         ((ServiceKunde)this.getTheObject()).setSuchManager(newValue);
-    }
-    public WarenlagerView getWarenlager()throws ModelException{
-        return ((ServiceKunde)this.getTheObject()).getWarenlager();
-    }
-    public void setWarenlager(WarenlagerView newValue) throws ModelException {
-        ((ServiceKunde)this.getTheObject()).setWarenlager(newValue);
     }
     public KontoView getKonto()throws ModelException{
         return ((ServiceKunde)this.getTheObject()).getKonto();

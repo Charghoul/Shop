@@ -40,17 +40,14 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     public void handleRueckversand(RueckversandView rueckversand) throws ModelException{
         this.handleBestellstatus(rueckversand);
     }
-    public void handleAngenommen(AngenommenView angenommen) throws ModelException{
-        this.handleBestellstatus(angenommen);
-    }
     public void handleGeliefert(GeliefertView geliefert) throws ModelException{
         this.handleBestellstatus(geliefert);
     }
     public void handleHinversand(HinversandView hinversand) throws ModelException{
         this.handleBestellstatus(hinversand);
     }
-    public void handleVerarbeitung(VerarbeitungView verarbeitung) throws ModelException{
-        this.handleBestellstatus(verarbeitung);
+    public void handleAngenommen(AngenommenView angenommen) throws ModelException{
+        this.handleBestellstatus(angenommen);
     }
     public abstract void handleStatus(StatusView status) throws ModelException;
     
@@ -65,11 +62,11 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     public void handleHstLieferung(HstLieferungView hstLieferung) throws ModelException{
         this.handleZeitObjekt(hstLieferung);
     }
-    public void handleRetourePosition(RetourePositionView retourePosition) throws ModelException{
-        this.handleZeitObjekt(retourePosition);
-    }
     public void handleRetoureLieferung(RetoureLieferungView retoureLieferung) throws ModelException{
         this.handleZeitObjekt(retoureLieferung);
+    }
+    public void handleRetourePosition(RetourePositionView retourePosition) throws ModelException{
+        this.handleZeitObjekt(retourePosition);
     }
     public void handleKndLieferung(KndLieferungView kndLieferung) throws ModelException{
         this.handleZeitObjekt(kndLieferung);

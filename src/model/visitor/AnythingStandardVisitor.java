@@ -35,9 +35,6 @@ public abstract class AnythingStandardVisitor implements AnythingVisitor {
     public void handleRegisterCommand(RegisterCommand4Public registerCommand) throws PersistenceException{
         this.standardHandling(registerCommand);
     }
-    public void handleEinzahlenCommand(EinzahlenCommand4Public einzahlenCommand) throws PersistenceException{
-        this.standardHandling(einzahlenCommand);
-    }
     public void handledeactivated(deactivated4Public deactivated) throws PersistenceException{
         this.standardHandling(deactivated);
     }
@@ -73,6 +70,9 @@ public abstract class AnythingStandardVisitor implements AnythingVisitor {
     }
     public void handleServiceShopProduktKatalog(ServiceShopProduktKatalog4Public serviceShopProduktKatalog) throws PersistenceException{
         this.standardHandling(serviceShopProduktKatalog);
+    }
+    public void handleNeuePositionCommand(NeuePositionCommand4Public neuePositionCommand) throws PersistenceException{
+        this.standardHandling(neuePositionCommand);
     }
     public void handleArtikel(Artikel4Public artikel) throws PersistenceException{
         this.standardHandling(artikel);
@@ -140,12 +140,6 @@ public abstract class AnythingStandardVisitor implements AnythingVisitor {
     public void handleVerkauf(Verkauf4Public verkauf) throws PersistenceException{
         this.standardHandling(verkauf);
     }
-    public void handleReserviereCommand(ReserviereCommand4Public reserviereCommand) throws PersistenceException{
-        this.standardHandling(reserviereCommand);
-    }
-    public void handleVerarbeitung(Verarbeitung4Public verarbeitung) throws PersistenceException{
-        this.standardHandling(verarbeitung);
-    }
     public void handleAuslauf(Auslauf4Public auslauf) throws PersistenceException{
         this.standardHandling(auslauf);
     }
@@ -169,9 +163,6 @@ public abstract class AnythingStandardVisitor implements AnythingVisitor {
     }
     public void handleGeliefert(Geliefert4Public geliefert) throws PersistenceException{
         this.standardHandling(geliefert);
-    }
-    public void handleServiceKundeWarenlager(ServiceKundeWarenlager4Public serviceKundeWarenlager) throws PersistenceException{
-        this.standardHandling(serviceKundeWarenlager);
     }
     public void handleAendereHstLieferzeitCommand(AendereHstLieferzeitCommand4Public aendereHstLieferzeitCommand) throws PersistenceException{
         this.standardHandling(aendereHstLieferzeitCommand);

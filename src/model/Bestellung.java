@@ -305,7 +305,7 @@ public class Bestellung extends model.BestellungAbstrakt implements PersistentBe
 
     }
     public void annehmen() 
-				throws model.ExcIllogicalDataEntry, PersistenceException{
+				throws PersistenceException{
         getThis().setBestellstatus(Angenommen.getTheAngenommen());
         getThis().getBestellManager().getKonto().verringereReserviert(getThis().berechneWarenwert());
         getThis().getBestellManager().getKonto().abbuchen(getThis().getWarenwert());

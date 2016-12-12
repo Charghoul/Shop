@@ -26,7 +26,6 @@ public class TestSupport {
         model.Warenlager.reset$For$Test = true;
         model.Verkauf.reset$For$Test = true;
         model.Auslauf.reset$For$Test = true;
-        model.Verarbeitung.reset$For$Test = true;
         model.KundenManager.reset$For$Test = true;
         model.Geliefert.reset$For$Test = true;
         model.ZeitManager.reset$For$Test = true;

@@ -3,7 +3,7 @@ package model.meta;
 public interface BestellstatusMssgsVisitor extends BestellstatusDOWNMssgsVisitor, BestellstatusUPMssgsVisitor {}
 
 
-interface BestellstatusDOWNMssgsVisitor extends AngenommenDOWNMssgsVisitor, VerarbeitungDOWNMssgsVisitor, GeliefertDOWNMssgsVisitor, RueckversandDOWNMssgsVisitor, HinversandDOWNMssgsVisitor {
+interface BestellstatusDOWNMssgsVisitor extends GeliefertDOWNMssgsVisitor, RueckversandDOWNMssgsVisitor, HinversandDOWNMssgsVisitor, AngenommenDOWNMssgsVisitor {
 
     
 }

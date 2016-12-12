@@ -247,14 +247,6 @@ public class Konto extends PersistentObject implements PersistentKonto{
 		}
 		subService.deregister(observee);
     }
-    public void einzahlen(final long betrag, final Invoker invoker) 
-				throws PersistenceException{
-        java.sql.Date now = new java.sql.Date(new java.util.Date().getTime());
-		EinzahlenCommand4Public command = model.meta.EinzahlenCommand.createEinzahlenCommand(betrag, now, now);
-		command.setInvoker(invoker);
-		command.setCommandReceiver(getThis());
-		model.meta.CommandCoordinator.getTheCommandCoordinator().coordinate(command);
-    }
     public ServiceKunde4Public getMyServiceKunde() 
 				throws PersistenceException{
         ServiceKundeSearchList result = null;
@@ -284,14 +276,6 @@ public class Konto extends PersistentObject implements PersistentKonto{
 		}
 		subService.register(observee);
     }
-    public void reserviere(final long betrag, final Invoker invoker) 
-				throws PersistenceException{
-        java.sql.Date now = new java.sql.Date(new java.util.Date().getTime());
-		ReserviereCommand4Public command = model.meta.ReserviereCommand.createReserviereCommand(betrag, now, now);
-		command.setInvoker(invoker);
-		command.setCommandReceiver(getThis());
-		model.meta.CommandCoordinator.getTheCommandCoordinator().coordinate(command);
-    }
     public synchronized void updateObservers(final model.meta.Mssgs event) 
 				throws PersistenceException{
         SubjInterface subService = getThis().getSubService();
@@ -312,7 +296,7 @@ public class Konto extends PersistentObject implements PersistentKonto{
         
     }
     public void auszahlen(final long betrag) 
-				throws model.ExcAuszahlungGroesserGutgaben, model.ExcIllogicalDataEntry, PersistenceException{
+				throws model.ExcAuszahlungGroesserGutgaben, PersistenceException{
         if(betrag > getThis().getKontostand() - getThis().getLimit()){
             throw new ExcAuszahlungGroesserGutgaben(ErrorMessages.AuszahlungGroesserGuthaben);
         }

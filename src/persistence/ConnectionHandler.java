@@ -71,7 +71,6 @@ public class ConnectionHandler {
     public HerstellerManagerFacade theHerstellerManagerFacade;
     public LieferartFacade theLieferartFacade;
     public RegisterCommandFacade theRegisterCommandFacade;
-    public EinzahlenCommandFacade theEinzahlenCommandFacade;
     public deactivatedFacade thedeactivatedFacade;
     public NeuanlageFacade theNeuanlageFacade;
     public ServiceRegisterFacade theServiceRegisterFacade;
@@ -85,6 +84,7 @@ public class ConnectionHandler {
     public ProduktKatalogFacade theProduktKatalogFacade;
     public BestellstatusFacade theBestellstatusFacade;
     public ServiceShopProduktKatalogFacade theServiceShopProduktKatalogFacade;
+    public NeuePositionCommandFacade theNeuePositionCommandFacade;
     public ArtikelFacade theArtikelFacade;
     public ProduktgruppeFacade theProduktgruppeFacade;
     public StatusFacade theStatusFacade;
@@ -109,9 +109,7 @@ public class ConnectionHandler {
     public VorbestellenCommandFacade theVorbestellenCommandFacade;
     public VerkaufFacade theVerkaufFacade;
     public PositionAbstraktFacade thePositionAbstraktFacade;
-    public ReserviereCommandFacade theReserviereCommandFacade;
     public AuslaufFacade theAuslaufFacade;
-    public VerarbeitungFacade theVerarbeitungFacade;
     public BestellungFacade theBestellungFacade;
     public KundenManagerFacade theKundenManagerFacade;
     public ServiceKundeBestellManagerFacade theServiceKundeBestellManagerFacade;
@@ -121,7 +119,6 @@ public class ConnectionHandler {
     public ZeitManagerZeitObjektListeFacade theZeitManagerZeitObjektListeFacade;
     public ArtikelEinlagernCommandFacade theArtikelEinlagernCommandFacade;
     public GeliefertFacade theGeliefertFacade;
-    public ServiceKundeWarenlagerFacade theServiceKundeWarenlagerFacade;
     public AendereHstLieferzeitCommandFacade theAendereHstLieferzeitCommandFacade;
     public RetoureLieferungFacade theRetoureLieferungFacade;
     public ZeitObjektFacade theZeitObjektFacade;
@@ -158,7 +155,6 @@ public class ConnectionHandler {
             this.theHerstellerManagerFacade= new HerstellerManagerFacade();
             this.theLieferartFacade= new LieferartFacade();
             this.theRegisterCommandFacade= new RegisterCommandFacade();
-            this.theEinzahlenCommandFacade= new EinzahlenCommandFacade();
             this.thedeactivatedFacade= new deactivatedFacade();
             this.theNeuanlageFacade= new NeuanlageFacade();
             this.theServiceRegisterFacade= new ServiceRegisterFacade();
@@ -172,6 +168,7 @@ public class ConnectionHandler {
             this.theProduktKatalogFacade= new ProduktKatalogFacade();
             this.theBestellstatusFacade= new BestellstatusFacade();
             this.theServiceShopProduktKatalogFacade= new ServiceShopProduktKatalogFacade();
+            this.theNeuePositionCommandFacade= new NeuePositionCommandFacade();
             this.theArtikelFacade= new ArtikelFacade();
             this.theProduktgruppeFacade= new ProduktgruppeFacade();
             this.theStatusFacade= new StatusFacade();
@@ -196,9 +193,7 @@ public class ConnectionHandler {
             this.theVorbestellenCommandFacade= new VorbestellenCommandFacade();
             this.theVerkaufFacade= new VerkaufFacade();
             this.thePositionAbstraktFacade= new PositionAbstraktFacade();
-            this.theReserviereCommandFacade= new ReserviereCommandFacade();
             this.theAuslaufFacade= new AuslaufFacade();
-            this.theVerarbeitungFacade= new VerarbeitungFacade();
             this.theBestellungFacade= new BestellungFacade();
             this.theKundenManagerFacade= new KundenManagerFacade();
             this.theServiceKundeBestellManagerFacade= new ServiceKundeBestellManagerFacade();
@@ -208,7 +203,6 @@ public class ConnectionHandler {
             this.theZeitManagerZeitObjektListeFacade= new ZeitManagerZeitObjektListeFacade();
             this.theArtikelEinlagernCommandFacade= new ArtikelEinlagernCommandFacade();
             this.theGeliefertFacade= new GeliefertFacade();
-            this.theServiceKundeWarenlagerFacade= new ServiceKundeWarenlagerFacade();
             this.theAendereHstLieferzeitCommandFacade= new AendereHstLieferzeitCommandFacade();
             this.theRetoureLieferungFacade= new RetoureLieferungFacade();
             this.theZeitObjektFacade= new ZeitObjektFacade();

@@ -19,6 +19,7 @@ public class ServiceKundeTest {
     private static ServiceKunde4Public servKunde;
 
     private static Verkauf4Public verkauf;
+    private static Neuanlage4Public neuanlage;
     private static Artikel4Public artikel1;
     private static Artikel4Public artikel2;
     private static Artikel4Public nichtVerf;
@@ -40,6 +41,7 @@ public class ServiceKundeTest {
         TestSupport.prepareSingletons();
 
         verkauf = Verkauf.getTheVerkauf();
+        neuanlage = Neuanlage.getTheNeuanlage();
 
         ArtikelManager.getTheArtikelManager().neuerArtikel("1", "test1", 10, 10, 100, 3);
         ArtikelManager.getTheArtikelManager().neuerArtikel("2", "test2", 9, 9, 99, 3);
@@ -57,6 +59,7 @@ public class ServiceKundeTest {
         nichtVerf = ((PersistentArtikelManager) ArtikelManager.getTheArtikelManager()).getArtikelListe().findFirst(x -> {
             return ((PersistentArtikel)x).getArtikelnummer().equals("4");
         });
+        ((PersistentArtikel)nichtVerf).setArtikelstatus(neuanlage);
 
 
         LieferartManager.getTheLieferartManager().neueLieferart("express", 3, 499);
@@ -81,56 +84,6 @@ public class ServiceKundeTest {
     @Test
     public void neuePosition1() throws PersistenceException, UserException {
         servKunde.neuePosition(((PersistentServiceKunde)servKunde).getEinkaufsManager(), artikel1, 10);
-    }
-
-    /**
-     * Es wird versucht eine neue Position anzulegen, obwohl der Artikel noch nicht zum Verkauf steht
-     * Es wird eine ExcArtikelNochNichtVerfuegbar erwartet
-     * @throws PersistenceException
-     * @throws UserException
-     */
-    @Test(expected = ExcArtikelNochNichtVerfuegbar.class)
-    public void nochNichtVerfuegbarFail() throws PersistenceException, UserException {
-        servKunde.neuePosition(((PersistentServiceKunde)servKunde).getEinkaufsManager(), nichtVerf, 10);
-    }
-
-    /**
-     * neuePosition anlegen, obwohl der Maximallagerbestand das nicht zu lässt
-     * Es wird eine ExcLagerbestandOverMax erwartet
-     * @throws PersistenceException
-     * @throws UserException
-     */
-    @Test(expected = ExcLagerbestandOverMax.class)
-    public void zuVielBestelltFail() throws PersistenceException, UserException {
-        servKunde.neuePosition(((PersistentServiceKunde)servKunde).getEinkaufsManager(), artikel1, artikel1.getMaxLagerbestand()+1);
-    }
-
-    /**
-     * neue Position mit <artikel1> anlegen
-     * Position aus der Einkaufsliste heraussuchen
-     * Position entfernen
-     * erneut die gleiche Position aus der Liste holen wollen -> <temp> = null
-     * erwarte null in <temp>
-     * @throws PersistenceException
-     * @throws UserException
-     */
-    @Test
-    public void entfernePosition() throws PersistenceException, UserException {
-        servKunde.neuePosition(((PersistentServiceKunde)servKunde).getEinkaufsManager(), artikel1, 10);
-        Position4Public temp = ((PersistentServiceKunde)servKunde).getEinkaufsManager().getEinkaufsListe().findFirst(new Predcate<Position4Public>() {
-            @Override
-            public boolean test(Position4Public argument) throws PersistenceException{
-                return argument.getArtikel().equals(artikel1);
-            }
-        });
-        servKunde.entfernePosition(temp);
-        temp = ((PersistentServiceKunde)servKunde).getEinkaufsManager().getEinkaufsListe().findFirst(new Predcate<Position4Public>() {
-            @Override
-            public boolean test(Position4Public argument) throws PersistenceException {
-                return argument.getArtikel().equals(artikel1);
-            }
-        });
-        Assert.assertEquals( null, temp);
     }
 
     /**
@@ -166,39 +119,4 @@ public class ServiceKundeTest {
         Assert.assertEquals(4999, ((PersistentServiceKunde)servKunde).getKonto().getKontostand());
     }
 
-    /**
-     * Anlegen einer neuen Position
-     * ändern der Menge in der Position
-     * @throws PersistenceException
-     * @throws UserException
-     */
-    @Test
-    public void aendereMenge() throws  PersistenceException, UserException {
-        servKunde.neuePosition(((PersistentServiceKunde)servKunde).getEinkaufsManager(), artikel1, 5);
-        Position4Public temp = ((PersistentServiceKunde)servKunde).getEinkaufsManager().getEinkaufsListe().findFirst(new Predcate<Position4Public>() {
-            @Override
-            public boolean test(Position4Public argument) throws PersistenceException{
-                return argument.getArtikel().equals(artikel1);
-            }
-        });
-        servKunde.aendereMenge(temp, 10);
-        Assert.assertEquals(10, temp.getMenge());
-    }
-
-    /**
-     *
-     * @throws PersistenceException
-     * @throws UserException
-     */
-    @Test(expected = ExcLagerbestandOverMax.class)
-    public void aendereMengeFail() throws  PersistenceException, UserException {
-        servKunde.neuePosition(((PersistentServiceKunde)servKunde).getEinkaufsManager(), artikel1, 5);
-        Position4Public temp = ((PersistentServiceKunde)servKunde).getEinkaufsManager().getEinkaufsListe().findFirst(new Predcate<Position4Public>() {
-            @Override
-            public boolean test(Position4Public argument) throws PersistenceException{
-                return argument.getArtikel().equals(artikel1);
-            }
-        });
-        servKunde.aendereMenge(temp, artikel1.getMaxLagerbestand()+1);
-    }
 }

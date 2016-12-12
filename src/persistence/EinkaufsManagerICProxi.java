@@ -83,6 +83,10 @@ public class EinkaufsManagerICProxi extends PersistentInCacheProxiOptimistic imp
 				throws PersistenceException{
         ((PersistentEinkaufsManager)this.getTheObject()).initialize(This, final$$Fields);
     }
+    public void neuePosition(final Artikel4Public artikel, final long menge, final Invoker invoker) 
+				throws PersistenceException{
+        ((PersistentEinkaufsManager)this.getTheObject()).neuePosition(artikel, menge, invoker);
+    }
     public void register(final ObsInterface observee) 
 				throws PersistenceException{
         ((PersistentEinkaufsManager)this.getTheObject()).register(observee);

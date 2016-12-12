@@ -11,17 +11,15 @@ import view.visitor.*;
 public class ServiceKunde extends view.objects.ServiceShop implements ServiceKundeView{
     
     protected SuchManagerView suchManager;
-    protected WarenlagerView warenlager;
     protected KontoView konto;
     protected EinkaufsManagerView einkaufsManager;
     protected LieferartManagerView lieferartManager;
     protected BestellManagerView bestellManager;
     
-    public ServiceKunde(java.util.Vector<ErrorDisplayView> errors,ProduktKatalogView produktKatalog,SuchManagerView suchManager,WarenlagerView warenlager,KontoView konto,EinkaufsManagerView einkaufsManager,LieferartManagerView lieferartManager,BestellManagerView bestellManager,long id, long classId) {
+    public ServiceKunde(java.util.Vector<ErrorDisplayView> errors,ProduktKatalogView produktKatalog,SuchManagerView suchManager,KontoView konto,EinkaufsManagerView einkaufsManager,LieferartManagerView lieferartManager,BestellManagerView bestellManager,long id, long classId) {
         /* Shall not be used. Objects are created on the server only */
         super(errors,(ProduktKatalogView)produktKatalog,id, classId);
         this.suchManager = suchManager;
-        this.warenlager = warenlager;
         this.konto = konto;
         this.einkaufsManager = einkaufsManager;
         this.lieferartManager = lieferartManager;
@@ -41,12 +39,6 @@ public class ServiceKunde extends view.objects.ServiceShop implements ServiceKun
     }
     public void setSuchManager(SuchManagerView newValue) throws ModelException {
         this.suchManager = newValue;
-    }
-    public WarenlagerView getWarenlager()throws ModelException{
-        return this.warenlager;
-    }
-    public void setWarenlager(WarenlagerView newValue) throws ModelException {
-        this.warenlager = newValue;
     }
     public KontoView getKonto()throws ModelException{
         return this.konto;
@@ -134,10 +126,6 @@ public class ServiceKunde extends view.objects.ServiceShop implements ServiceKun
         SuchManagerView suchManager = this.getSuchManager();
         if (suchManager != null) {
             ((ViewProxi)suchManager).setObject((ViewObject)resultTable.get(common.RPCConstantsAndServices.createHashtableKey(suchManager.getClassId(), suchManager.getId())));
-        }
-        WarenlagerView warenlager = this.getWarenlager();
-        if (warenlager != null) {
-            ((ViewProxi)warenlager).setObject((ViewObject)resultTable.get(common.RPCConstantsAndServices.createHashtableKey(warenlager.getClassId(), warenlager.getId())));
         }
         KontoView konto = this.getKonto();
         if (konto != null) {

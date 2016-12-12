@@ -19,7 +19,6 @@ public class BestellungTest {
 
     private static Lieferart4Public lieferart;
 
-    private static Bestellstatus4Public verarbeitung;
     private static Bestellstatus4Public hinversand;
     private static Bestellstatus4Public geliefert;
     private static Bestellstatus4Public angenommen;
@@ -38,7 +37,6 @@ public class BestellungTest {
         TestSupport.prepareSingletons();
 
         //Bestellstati zum Testen vorbereiten
-        verarbeitung = Verarbeitung.getTheVerarbeitung();
         hinversand = Hinversand.getTheHinversand();
         geliefert = Geliefert.getTheGeliefert();
         angenommen = Angenommen.getTheAngenommen();
@@ -57,12 +55,6 @@ public class BestellungTest {
     public void annehmen() throws PersistenceException, UserException {
         bestellung.annehmen();
         Assert.assertEquals(angenommen, bestellung.getBestellstatus());
-    }
-
-    @Test
-    public void aendereBestellstatus1() throws PersistenceException, UserException {
-        bestellung.aendereStatus(Verarbeitung.getTheVerarbeitung());
-        Assert.assertEquals(verarbeitung, bestellung.getBestellstatus());
     }
 
     @Test

@@ -19,11 +19,10 @@ public interface CommonDateExceptionVisitor<E extends model.UserException> {
     public void handleArtikelEntnehmenCommand(ArtikelEntnehmenCommand4Public artikelEntnehmenCommand) throws PersistenceException, E;
     public void handleAuszahlenCommand(AuszahlenCommand4Public auszahlenCommand) throws PersistenceException, E;
     public void handleBestellenCommand(BestellenCommand4Public bestellenCommand) throws PersistenceException, E;
-    public void handleEinzahlenCommand(EinzahlenCommand4Public einzahlenCommand) throws PersistenceException, E;
+    public void handleNeuePositionCommand(NeuePositionCommand4Public neuePositionCommand) throws PersistenceException, E;
     public void handleNeuerArtikelCommand(NeuerArtikelCommand4Public neuerArtikelCommand) throws PersistenceException, E;
     public void handleProduktgruppeEntfernenCommand(ProduktgruppeEntfernenCommand4Public produktgruppeEntfernenCommand) throws PersistenceException, E;
     public void handleRegisterCommand(RegisterCommand4Public registerCommand) throws PersistenceException, E;
-    public void handleReserviereCommand(ReserviereCommand4Public reserviereCommand) throws PersistenceException, E;
     public void handleStatusAuslaufCommand(StatusAuslaufCommand4Public statusAuslaufCommand) throws PersistenceException, E;
     public void handleStatusVerkaufCommand(StatusVerkaufCommand4Public statusVerkaufCommand) throws PersistenceException, E;
     public void handleVorbestellenCommand(VorbestellenCommand4Public vorbestellenCommand) throws PersistenceException, E;

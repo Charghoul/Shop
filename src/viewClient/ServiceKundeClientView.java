@@ -708,6 +708,9 @@ public class ServiceKundeClientView extends BorderPane implements ExceptionAndEv
 				handleException(me);
 				this.close();
 			}
+			catch(ExcAuszahlungGroesserGutgaben e) {
+				getStatusBar().setText(e.getMessage());
+			}
 			
 		}
 		protected String checkCompleteParameterSet(){
@@ -861,9 +864,6 @@ public class ServiceKundeClientView extends BorderPane implements ExceptionAndEv
 			} catch(ModelException me){
 				handleException(me);
 				this.close();
-			}
-			catch(UserException e) {
-				getStatusBar().setText(e.getMessage());
 			}
 			
 		}

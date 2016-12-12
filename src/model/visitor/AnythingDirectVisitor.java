@@ -41,8 +41,6 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     }
     public abstract void handleZeitManagerZeitObjektListe(ZeitManagerZeitObjektListe4Public zeitManagerZeitObjektListe) throws PersistenceException;
     
-    public abstract void handleServiceKundeWarenlager(ServiceKundeWarenlager4Public serviceKundeWarenlager) throws PersistenceException;
-    
     public abstract void handleProduktKatalog(ProduktKatalog4Public produktKatalog) throws PersistenceException;
     
     public abstract void handleBestellstatus(Bestellstatus4Public bestellstatus) throws PersistenceException;
@@ -50,17 +48,14 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     public void handleRueckversand(Rueckversand4Public rueckversand) throws PersistenceException{
         this.handleBestellstatus(rueckversand);
     }
-    public void handleAngenommen(Angenommen4Public angenommen) throws PersistenceException{
-        this.handleBestellstatus(angenommen);
-    }
     public void handleGeliefert(Geliefert4Public geliefert) throws PersistenceException{
         this.handleBestellstatus(geliefert);
     }
     public void handleHinversand(Hinversand4Public hinversand) throws PersistenceException{
         this.handleBestellstatus(hinversand);
     }
-    public void handleVerarbeitung(Verarbeitung4Public verarbeitung) throws PersistenceException{
-        this.handleBestellstatus(verarbeitung);
+    public void handleAngenommen(Angenommen4Public angenommen) throws PersistenceException{
+        this.handleBestellstatus(angenommen);
     }
     public abstract void handleServiceShopProduktKatalog(ServiceShopProduktKatalog4Public serviceShopProduktKatalog) throws PersistenceException;
     
@@ -79,11 +74,11 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     public void handleHstLieferung(HstLieferung4Public hstLieferung) throws PersistenceException{
         this.handleZeitObjekt(hstLieferung);
     }
-    public void handleRetourePosition(RetourePosition4Public retourePosition) throws PersistenceException{
-        this.handleZeitObjekt(retourePosition);
-    }
     public void handleRetoureLieferung(RetoureLieferung4Public retoureLieferung) throws PersistenceException{
         this.handleZeitObjekt(retoureLieferung);
+    }
+    public void handleRetourePosition(RetourePosition4Public retourePosition) throws PersistenceException{
+        this.handleZeitObjekt(retourePosition);
     }
     public void handleKndLieferung(KndLieferung4Public kndLieferung) throws PersistenceException{
         this.handleZeitObjekt(kndLieferung);
@@ -144,9 +139,6 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     public void handleArtikelEntfernenCommand(ArtikelEntfernenCommand4Public artikelEntfernenCommand) throws PersistenceException{
         this.handleCommonDate(artikelEntfernenCommand);
     }
-    public void handleReserviereCommand(ReserviereCommand4Public reserviereCommand) throws PersistenceException{
-        this.handleCommonDate(reserviereCommand);
-    }
     public void handleAendereLieferartNameCommand(AendereLieferartNameCommand4Public aendereLieferartNameCommand) throws PersistenceException{
         this.handleCommonDate(aendereLieferartNameCommand);
     }
@@ -167,9 +159,6 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     }
     public void handleRegisterCommand(RegisterCommand4Public registerCommand) throws PersistenceException{
         this.handleCommonDate(registerCommand);
-    }
-    public void handleEinzahlenCommand(EinzahlenCommand4Public einzahlenCommand) throws PersistenceException{
-        this.handleCommonDate(einzahlenCommand);
     }
     public void handleStatusVerkaufCommand(StatusVerkaufCommand4Public statusVerkaufCommand) throws PersistenceException{
         this.handleCommonDate(statusVerkaufCommand);
@@ -203,6 +192,9 @@ public abstract class AnythingDirectVisitor implements AnythingVisitor {
     }
     public void handleAendereMinLagerbestandCommand(AendereMinLagerbestandCommand4Public aendereMinLagerbestandCommand) throws PersistenceException{
         this.handleCommonDate(aendereMinLagerbestandCommand);
+    }
+    public void handleNeuePositionCommand(NeuePositionCommand4Public neuePositionCommand) throws PersistenceException{
+        this.handleCommonDate(neuePositionCommand);
     }
     public abstract void handleCommandExecuter(CommandExecuter4Public commandExecuter) throws PersistenceException;
     

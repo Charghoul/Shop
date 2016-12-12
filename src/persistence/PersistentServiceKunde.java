@@ -5,7 +5,6 @@ public interface PersistentServiceKunde extends PersistentServiceShop, ServiceKu
     
     public SuchManager4Public getSuchManager() throws PersistenceException ;
     public void setSuchManager(SuchManager4Public newValue) throws PersistenceException ;
-    public void setWarenlager(ServiceKundeWarenlager4Public newValue) throws PersistenceException ;
     public void setKonto(Konto4Public newValue) throws PersistenceException ;
     public EinkaufsManager4Public getEinkaufsManager() throws PersistenceException ;
     public void setEinkaufsManager(EinkaufsManager4Public newValue) throws PersistenceException ;
@@ -17,15 +16,9 @@ public interface PersistentServiceKunde extends PersistentServiceShop, ServiceKu
     
     public BestellManager4Public getBestellManager() 
 				throws PersistenceException;
-    public Warenlager4Public getWarenlager() 
-				throws PersistenceException;
     public void setBestellManager(final BestellManager4Public bestellManager) 
 				throws PersistenceException;
-    public void setWarenlager(final Warenlager4Public warenlager) 
-				throws PersistenceException;
     public void bestellManager_update(final model.meta.BestellManagerMssgs event) 
-				throws PersistenceException;
-    public void warenlager_update(final model.meta.WarenlagerMssgs event) 
 				throws PersistenceException;
 
 }

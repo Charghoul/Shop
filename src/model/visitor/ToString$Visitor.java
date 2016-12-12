@@ -28,7 +28,6 @@ public abstract class ToString$Visitor extends AnythingStandardVisitor{
     public abstract void handleRetourePosition(RetourePosition4Public retourePosition) throws PersistenceException;
     public abstract void handleWarenlager(Warenlager4Public warenlager) throws PersistenceException;
     public abstract void handleVerkauf(Verkauf4Public verkauf) throws PersistenceException;
-    public abstract void handleVerarbeitung(Verarbeitung4Public verarbeitung) throws PersistenceException;
     public abstract void handleAuslauf(Auslauf4Public auslauf) throws PersistenceException;
     public abstract void handleBestellung(Bestellung4Public bestellung) throws PersistenceException;
     public abstract void handleKundenManager(KundenManager4Public kundenManager) throws PersistenceException;

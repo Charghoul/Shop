@@ -276,13 +276,13 @@ public class Cache {
 		this.number2NameMap = new Hashtable<Integer,String>();
 		this.number2NameMap.put(274, "AbbuchenCommand");
 		this.number2NameMap.put(272, "AendereBezeichnungCommand");
-		this.number2NameMap.put(273, "AendereHstLieferzeitCommand");
+		this.number2NameMap.put(276, "AendereHstLieferzeitCommand");
 		this.number2NameMap.put(129, "AendereLieferartNameCommand");
 		this.number2NameMap.put(170, "AendereMaxLagerbestandCommand");
 		this.number2NameMap.put(138, "AendereMinLagerbestandCommand");
 		this.number2NameMap.put(173, "AllesZuruecksendenCommand");
 		this.number2NameMap.put(134, "Angenommen");
-		this.number2NameMap.put(278, "AnnehmenCommand");
+		this.number2NameMap.put(273, "AnnehmenCommand");
 		this.number2NameMap.put(149, "AnzeigenCommand");
 		this.number2NameMap.put(122, "Artikel");
 		this.number2NameMap.put(153, "ArtikelEinlagernCommand");
@@ -290,7 +290,7 @@ public class Cache {
 		this.number2NameMap.put(106, "ArtikelEntnehmenCommand");
 		this.number2NameMap.put(128, "ArtikelManager");
 		this.number2NameMap.put(144, "Auslauf");
-		this.number2NameMap.put(276, "AuszahlenCommand");
+		this.number2NameMap.put(275, "AuszahlenCommand");
 		this.number2NameMap.put(160, "BestellManager");
 		this.number2NameMap.put(137, "BestellenCommand");
 		this.number2NameMap.put(146, "Bestellung");
@@ -298,7 +298,6 @@ public class Cache {
 		this.number2NameMap.put(-175, "CommandExecuter");
 		this.number2NameMap.put(140, "CommonDate");
 		this.number2NameMap.put(103, "EinkaufsManager");
-		this.number2NameMap.put(275, "EinzahlenCommand");
 		this.number2NameMap.put(-104, "ErrorDisplay");
 		this.number2NameMap.put(154, "Geliefert");
 		this.number2NameMap.put(133, "Hersteller");
@@ -313,6 +312,7 @@ public class Cache {
 		this.number2NameMap.put(108, "Lieferart");
 		this.number2NameMap.put(171, "LieferartManager");
 		this.number2NameMap.put(111, "Neuanlage");
+		this.number2NameMap.put(277, "NeuePositionCommand");
 		this.number2NameMap.put(162, "NeuerArtikelCommand");
 		this.number2NameMap.put(125, "Position");
 		this.number2NameMap.put(167, "PositionInBestellung");
@@ -320,7 +320,6 @@ public class Cache {
 		this.number2NameMap.put(123, "Produktgruppe");
 		this.number2NameMap.put(130, "ProduktgruppeEntfernenCommand");
 		this.number2NameMap.put(109, "RegisterCommand");
-		this.number2NameMap.put(277, "ReserviereCommand");
 		this.number2NameMap.put(156, "RetoureLieferung");
 		this.number2NameMap.put(135, "RetourePosition");
 		this.number2NameMap.put(169, "Rueckversand");
@@ -330,14 +329,12 @@ public class Cache {
 		this.number2NameMap.put(105, "ServiceAdminZeitManager");
 		this.number2NameMap.put(-116, "ServiceKunde");
 		this.number2NameMap.put(148, "ServiceKundeBestellManager");
-		this.number2NameMap.put(155, "ServiceKundeWarenlager");
 		this.number2NameMap.put(-112, "ServiceRegister");
 		this.number2NameMap.put(121, "ServiceShopProduktKatalog");
 		this.number2NameMap.put(161, "StatusAuslaufCommand");
 		this.number2NameMap.put(131, "StatusVerkaufCommand");
 		this.number2NameMap.put(164, "Subj");
 		this.number2NameMap.put(165, "SuchManager");
-		this.number2NameMap.put(145, "Verarbeitung");
 		this.number2NameMap.put(142, "Verkauf");
 		this.number2NameMap.put(141, "VorbestellenCommand");
 		this.number2NameMap.put(166, "Vorbestellung");

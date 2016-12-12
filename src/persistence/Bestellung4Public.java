@@ -33,7 +33,7 @@ public interface Bestellung4Public extends BestellungAbstrakt4Public {
     public void allesZuruecksenden() 
 				throws PersistenceException;
     public void annehmen() 
-				throws model.ExcIllogicalDataEntry, PersistenceException;
+				throws PersistenceException;
     public long berechneWarenwert() 
 				throws PersistenceException;
     public void copyingPrivateUserAttributes(final Anything copy) 

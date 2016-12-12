@@ -165,34 +165,6 @@ public class EinkaufsManagerTest {
     }
 
     /**
-     * neue Position mit <artikel1> anlegen
-     * Position aus der Einkaufsliste heraussuchen
-     * Position entfernen
-     * erneut die gleiche Position aus der Liste holen wollen -> <temp> = null
-     * erwarte null in <temp>
-     * @throws PersistenceException
-     * @throws UserException
-     */
-    @Test
-    public void entfernePosition() throws PersistenceException, UserException {
-        servKunde.neuePosition(einkMan, artikel1, 10);
-        Position4Public temp = einkMan.getEinkaufsListe().findFirst(new Predcate<Position4Public>() {
-            @Override
-            public boolean test(Position4Public argument) throws PersistenceException{
-                return argument.getArtikel().equals(artikel1);
-            }
-        });
-        servKunde.entfernePosition(temp);
-        temp = einkMan.getEinkaufsListe().findFirst(new Predcate<Position4Public>() {
-            @Override
-            public boolean test(Position4Public argument) throws PersistenceException {
-                return argument.getArtikel().equals(artikel1);
-            }
-        });
-        Assert.assertEquals( null, temp);
-    }
-
-    /**
      * Ohne Position mit <artikel1> angelegt zu haben wird versucht diese Position zu finden und in <temp> zu speichern
      * erwarte bei <entfernePosition(temp)> eine NullPointerException
      * @throws PersistenceException
